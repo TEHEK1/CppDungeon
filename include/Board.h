@@ -4,11 +4,10 @@
 
 #ifndef UNTITLED_BOARD_H
 #define UNTITLED_BOARD_H
-#include "Cell.h"
 class Player;
 #include <vector>
 class Board{
-    std::vector<std::vector<Cell>> map;
+
 public:
     std::vector <Player*> players;
     Cell getCurrentCell(Player*);

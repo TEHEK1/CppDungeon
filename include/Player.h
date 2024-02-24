@@ -6,10 +6,11 @@
 #define UNTITLED_PLAYER_H
 #include "Hero.h"
 #include "Board.h"
+#include "Item.h"
 #include <vector>
 class Player{
     std::vector <Hero> squad;
     Board* board;
-
+    std::vector <Item> inventory;
 };
 #endif //UNTITLED_PLAYER_H
