@@ -2,9 +2,10 @@
 // Created by Амир Кашапов on 24.02.2024.
 //
 
-#ifndef НОВАЯ_ПАПКА_ITEM_H
-#define НОВАЯ_ПАПКА_ITEM_H
+#ifndef CPPDUNGEON_ITEM_H
+#define CPPDUNGEON_ITEM_H
+#include "Skill.h"
 class Item{
-
+    Skill* skill;
 };
-#endif //НОВАЯ_ПАПКА_ITEM_H
+#endif //CPPDUNGEON_ITEM_H

@@ -6,8 +6,11 @@
 #define UNTITLED_ENEMYENCOUNTER_H
 #include "Event.h"
 #include "Enemy.h"
+#include <queue>
 #include <vector>
-class EnemyEncounter:Event{
+class EnemyEncounter:public Event{
     std::vector<Enemy> enemies;
+public:
+    void turn();
 };
 #endif //UNTITLED_ENEMYENCOUNTER_H

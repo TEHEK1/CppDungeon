@@ -6,6 +6,7 @@
 #define UNTITLED_ENTITY_H
 class Entity{
     long long Hp;
+    std::vector<Skill*> skills;
 public:
     long long getHp();
 };

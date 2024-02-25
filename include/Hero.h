@@ -5,6 +5,8 @@
 #ifndef UNTITLED_HERO_H
 #define UNTITLED_HERO_H
 #include "Entity.h"
+#include <vector>
+#include "Skill.h"
 class Hero:Entity{
 
 };

@@ -5,6 +5,7 @@
 #ifndef UNTITLED_EVENT_H
 #define UNTITLED_EVENT_H
 class Event{
-
+public:
+    void turn();
 };
 #endif //UNTITLED_EVENT_H
