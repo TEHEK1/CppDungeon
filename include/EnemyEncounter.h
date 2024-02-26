@@ -5,12 +5,11 @@
 #ifndef UNTITLED_ENEMYENCOUNTER_H
 #define UNTITLED_ENEMYENCOUNTER_H
 #include "Event.h"
-#include "Enemy.h"
-#include <queue>
 #include <vector>
+class Enemy;
 class EnemyEncounter:public Event{
-    std::vector<Enemy> enemies;
 public:
-    void turn();
+    void turn() override;
+    std::vector <Enemy*> getEnemies();
 };
 #endif //UNTITLED_ENEMYENCOUNTER_H

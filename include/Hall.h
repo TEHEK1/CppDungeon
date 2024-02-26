@@ -5,7 +5,8 @@
 #ifndef UNTITLED_HALL_H
 #define UNTITLED_HALL_H
 #include "Cell.h"
-class Hall:Cell{
-
+class Hall:public Cell{
+public:
+    void generateEvents() override;
 };
 #endif //UNTITLED_HALL_H

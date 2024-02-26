@@ -5,7 +5,16 @@
 #ifndef CPPDUNGEON_MAP_H
 #define CPPDUNGEON_MAP_H
 #include "Cell.h"
+#include "Position.h"
 class Map{
-    std::vector<std::vector<Cell>> map;
+public:
+    Map(int);
+    Map();
+    Cell* getCell(Position);
+    Position moveLeft(Position);
+    Position moveRight(Position);
+    void setRooms(Position&);
+    std::vector<std::vector<char>> draw();
+    int getSize();
 };
 #endif //CPPDUNGEON_MAP_H

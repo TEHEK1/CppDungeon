@@ -6,7 +6,10 @@
 #define UNTITLED_MONITOR_H
 class Player;
 class Monitor{
-    Player* player;
-
+public:
+    void draw(Player*);//Ask draw functions realizations from Map, Entity and Event if needed
+    void draw();
+    void keyEvent(char);
+    void keyEvent();
 };
 #endif //UNTITLED_MONITOR_H

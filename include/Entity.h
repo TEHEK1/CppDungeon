@@ -4,10 +4,11 @@
 
 #ifndef UNTITLED_ENTITY_H
 #define UNTITLED_ENTITY_H
+#include <vector>
+class Skill;
 class Entity{
-    long long Hp;
-    std::vector<Skill*> skills;
 public:
-    long long getHp();
+    std::vector<Skill*> getSkills;
+    std::vector<std::vector<char>> draw();
 };
 #endif //UNTITLED_ENTITY_H

@@ -4,13 +4,16 @@
 
 #ifndef UNTITLED_PLAYER_H
 #define UNTITLED_PLAYER_H
-#include "Hero.h"
-#include "Board.h"
-#include "Item.h"
 #include <vector>
+class Hero;
+class Position;
+class Map;
+class Monitor;
 class Player{
-    std::vector <Hero> squad;
-    Board* board;
-    std::vector <Item> inventory;
+public:
+    std::vector<Hero*> getHeroes();
+    Monitor* getMonitor();
+    Position getPosition();
+    Map* getMap();
 };
 #endif //UNTITLED_PLAYER_H

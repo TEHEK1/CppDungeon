@@ -5,7 +5,8 @@
 #ifndef UNTITLED_ROOM_H
 #define UNTITLED_ROOM_H
 #include "Cell.h"
-class Room:Cell{
-
+class Room:public Cell{
+public:
+    void generateEvents() override;
 };
 #endif //UNTITLED_ROOM_H

@@ -6,8 +6,6 @@
 #define UNTITLED_HERO_H
 #include "Entity.h"
 #include <vector>
-#include "Skill.h"
-class Hero:Entity{
-
+class Hero:public Entity{
 };
 #endif //UNTITLED_HERO_H

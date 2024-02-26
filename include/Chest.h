@@ -4,7 +4,10 @@
 
 #ifndef CPPDUNGEON_CHEST_H
 #define CPPDUNGEON_CHEST_H
-class Chest{
-
+#include "Event.h"
+class Player;
+class Chest:public Event{
+public:
+    void use(Player*);
 };
 #endif //CPPDUNGEON_CHEST_H

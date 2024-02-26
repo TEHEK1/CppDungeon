@@ -7,6 +7,9 @@
 #include "Event.h"
 #include <vector>
 class Cell{
-    std::vector<Event> events;
+public:
+    virtual void generateEvents() = 0;
+    std::vector<Event*> getEvents();
+    char getLevel();
 };
 #endif //UNTITLED_CELL_H
