@@ -4,9 +4,10 @@
 
 #ifndef CPPDUNGEON_SKILL_H
 #define CPPDUNGEON_SKILL_H
+#include <vector>
 class Entity;
 class Skill{
 public:
-    void use(Entity*);
+    void use(std::vector<Entity*> objects);
 };
 #endif //CPPDUNGEON_SKILL_H
