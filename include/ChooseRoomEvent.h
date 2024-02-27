@@ -7,6 +7,6 @@
 #include "Event.h"
 class ChooseRoomEvent:public Event{
 public:
-    void turn() override;
+    void turn(Player*, int) override;
 };
 #endif //CPPDUNGEON_CHOOSEROOMEVENT_H
