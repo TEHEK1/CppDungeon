@@ -8,6 +8,6 @@
 class Player;
 class Chest:public Event{
 public:
-    void use(Player*);
+    void use(Player*, int);
 };
 #endif //CPPDUNGEON_CHEST_H

@@ -8,7 +8,7 @@
 class Player;
 class Trap:public Event{
 public:
-    void use(Player*);
-    void dontUse(Player*);
+    void use(Player*, int);
+    void dontUse(Player*, int);
 };
 #endif //CPPDUNGEON_TRAP_H
