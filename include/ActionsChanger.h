@@ -8,7 +8,8 @@ class Player;
 class Action;
 class ActionsChanger{
 protected:
-    virtual void addAction(Player*, Action*);
-    virtual void removeAction(Player*, Action*);
+    void addAction(Player*, Action*);
+    void removeAction(Player*, Action*);
+    void returnToDefault(Player*);
 };
 #endif //CPPDUNGEON_ACTIONSCHANGER_H

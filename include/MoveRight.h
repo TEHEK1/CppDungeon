@@ -6,7 +6,8 @@
 #define CPPDUNGEON_MOVERIGHT_H
 #include "Action.h"
 #include "ActionsChanger.h"
-class MoveRight:public Action, public ActionsChanger{
+#include "PositionChanger.h"
+class MoveRight:public Action, public ActionsChanger, public PositionChanger{
 public:
     void act(Player*) override;
 };

@@ -5,7 +5,8 @@
 #ifndef CPPDUNGEON_CHOOSENEXTROOM_H
 #define CPPDUNGEON_CHOOSENEXTROOM_H
 #include "Action.h"
-class ChooseNextRoom:public Action{
+#include "PositionChanger.h"
+class ChooseNextRoom:public Action, public PositionChanger{
 public:
     void act(Player*) override;//Ask arguments from who realizes Map
 };
