@@ -7,6 +7,7 @@
 class Inventory;
 class Player;
 class InventoryChanger{
+protected:
     Inventory& getInventory(Player*);
 };
 #endif //CPPDUNGEON_INVENTORYCHANGER_H
