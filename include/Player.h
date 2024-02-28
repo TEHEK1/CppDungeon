@@ -21,6 +21,7 @@ class Player{
     std::set<Action*> actions;
     friend class ActionChanger;
     friend class PositionChanger;
+    friend class InventoryChanger;
 public:
     std::vector<Hero*> getHeroes();
     Monitor* getMonitor();
