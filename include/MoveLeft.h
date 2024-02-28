@@ -5,7 +5,9 @@
 #ifndef CPPDUNGEON_MOVELEFT_H
 #define CPPDUNGEON_MOVELEFT_H
 #include "Action.h"
-class MoveLeft:public Action{
+#include "ActionsChanger.h"
+#include "PositionChanger.h"
+class MoveLeft:public Action, public ActionsChanger, public PositionChanger{
 public:
     void act(Player*) override;
 };
