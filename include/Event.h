@@ -5,12 +5,10 @@
 #ifndef UNTITLED_EVENT_H
 #define UNTITLED_EVENT_H
 #include <vector>
+#include "ActionsChanger.h"
 class Player;
 class Action;
-class Event{
-protected:
-    virtual void addAction(Player*, Action*);
-    virtual void removeAction(Player*, Action*);
+class Event:ActionsChanger{
 public:
     virtual void turn(Player*, int);
     virtual std::vector<std::vector<char>> draw();
