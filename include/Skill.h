@@ -8,6 +8,6 @@
 class Entity;
 class Skill{
 public:
-    void use(std::vector<Entity*> objects);
+    virtual void use(std::vector<Entity*> objects);
 };
 #endif //CPPDUNGEON_SKILL_H
