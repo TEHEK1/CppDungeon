@@ -8,7 +8,7 @@
 class Chest;
 class DontUse:public Action{
 public:
-    DontUse(Chest*, int)
-    void act() override;
+    DontUse(Chest*, int);
+    void act(Player*) override;
 };
 #endif //CPPDUNGEON_DONTUSE_H

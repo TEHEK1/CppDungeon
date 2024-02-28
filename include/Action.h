@@ -4,8 +4,9 @@
 
 #ifndef CPPDUNGEON_ACTION_H
 #define CPPDUNGEON_ACTION_H
+class Player;
 class Action{
 public:
-    virtual void act() = 0;
+    virtual void act(Player*) = 0;
 };
 #endif //CPPDUNGEON_ACTION_H

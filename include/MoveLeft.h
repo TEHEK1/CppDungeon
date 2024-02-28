@@ -7,6 +7,6 @@
 #include "Action.h"
 class MoveLeft:public Action{
 public:
-    void act() override;
+    void act(Player*) override;
 };
 #endif //CPPDUNGEON_MOVELEFT_H
