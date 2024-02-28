@@ -7,9 +7,16 @@
 #include "Event.h"
 #include <vector>
 class Enemy;
+class Player;
 class EnemyEncounter:public Event{
 public:
-    void turn() override;
+    EnemyEncounter();
+    ~EnemyEncounter();
+    void turn(Player*, int index) override;
     std::vector <Enemy*> getEnemies();
+    std::vector<std::vector<char>> draw() override;
+
+private:
+    std::vector<Enemy*> _enemies;
 };
 #endif //UNTITLED_ENEMYENCOUNTER_H

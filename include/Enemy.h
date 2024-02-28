@@ -6,5 +6,8 @@
 #define UNTITLED_ENEMY_H
 #include "Entity.h"
 class Enemy:public Entity{
+public:
+    Enemy(int accuracyModifier, int criticalDamagehance, int damage,
+            int dodge, int defence, int speed, int HP);
 };
 #endif //UNTITLED_ENEMY_H

@@ -8,8 +8,8 @@
 #include "Action.h"
 class Event{
 public:
-    virtual void turn();
+    virtual void turn(Player*, int index);
     std::vector<Action*> getAvailableActions();
-    std::vector<std::vector<char>> draw();
+    virtual std::vector<std::vector<char>> draw();
 };
 #endif //UNTITLED_EVENT_H
