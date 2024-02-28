@@ -23,7 +23,7 @@ class Player{
     friend class PositionChanger;
     friend class InventoryChanger;
 public:
-    std::vector<Hero*> getHeroes();
+    std::vector<Entity*> getHeroes();
     Monitor* getMonitor();
     Position getPosition();
     std::set<std::unique_ptr<Action>> getActions();
