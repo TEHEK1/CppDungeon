@@ -6,5 +6,7 @@
 #define CPPDUNGEON_EMPTYCELL_H
 #include "Event.h"
 class EmptyCell:public Event{
+    void turn(Player *, int) override;
+    std::vector<std::vector<char>> draw() override;
 };
 #endif //CPPDUNGEON_EMPTYCELL_H

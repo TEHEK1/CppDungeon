@@ -8,7 +8,9 @@
 class Player;
 class Trap:public Event{
 public:
+    void turn(Player *, int) override;
     void use(Player*, int);
     void dontUse(Player*, int);
+    std::vector<std::vector<char>> draw() override;
 };
 #endif //CPPDUNGEON_TRAP_H

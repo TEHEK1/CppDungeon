@@ -8,5 +8,6 @@
 class ChooseRoomEvent:public Event{
 public:
     void turn(Player*, int) override;
+    std::vector<std::vector<char>> draw() override;
 };
 #endif //CPPDUNGEON_CHOOSEROOMEVENT_H

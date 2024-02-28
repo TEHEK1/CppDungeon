@@ -9,6 +9,6 @@ class Player;
 class Event{
 public:
     virtual void turn(Player*, int);
-    std::vector<std::vector<char>> draw();
+    virtual std::vector<std::vector<char>> draw();
 };
 #endif //UNTITLED_EVENT_H

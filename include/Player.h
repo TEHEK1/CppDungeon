@@ -13,6 +13,7 @@ class Monitor;
 class Action;
 class Player{
     std::set<Action*> actions;
+    friend Event::turn();
 public:
     std::vector<Hero*> getHeroes();
     Monitor* getMonitor();

@@ -9,7 +9,8 @@
 class Enemy;
 class EnemyEncounter:public Event{
 public:
-    void turn() override;
+    void turn(Player*, int) override;
     std::vector <Enemy*> getEnemies();
+    std::vector<std::vector<char>> draw();
 };
 #endif //UNTITLED_ENEMYENCOUNTER_H
