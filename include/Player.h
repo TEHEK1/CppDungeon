@@ -11,9 +11,11 @@ class Position;
 class Map;
 class Monitor;
 class Action;
+class Event;
 class Player{
     std::set<Action*> actions;
-    friend Event::turn();
+    friend void Event::addToActions(Player*, Action*);
+    friend void Event::removeFromActions(Player*, Action*);
 public:
     std::vector<Hero*> getHeroes();
     Monitor* getMonitor();
