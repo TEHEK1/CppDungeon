@@ -8,7 +8,7 @@
 #include "Position.h"
 class Map{
 public:
-    Map(int);
+    explicit Map(int);
     Map();
     Cell* getCell(Position);
     Position moveLeft(Position);
@@ -19,5 +19,9 @@ public:
     std::pair<int,int> getNextRoom();
     std::vector<std::vector<char>> draw();
     int getSize();
+private:
+    std::vector<std::vector<char>> m_contents;
+    bool ValidForRoom(int line, int column) const;
+    int getRandomValue(int seed);
 };
 #endif //CPPDUNGEON_MAP_H
