@@ -8,7 +8,7 @@
 #include "ActionsChanger.h"
 class Player;
 class Action;
-class Event:ActionsChanger{
+class Event:public ActionsChanger{
 public:
     virtual void turn(Player*, int);
     virtual std::vector<std::vector<char>> draw();
