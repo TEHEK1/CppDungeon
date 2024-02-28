@@ -5,8 +5,9 @@
 #ifndef CPPDUNGEON_CHEST_H
 #define CPPDUNGEON_CHEST_H
 #include "Event.h"
+#include "InventoryChanger.h"
 class Player;
-class Chest:public Event{
+class Chest:public Event, public InventoryChanger{
 public:
     void turn(Player *, int) override;
     void use(Player*, int);

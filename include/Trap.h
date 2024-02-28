@@ -4,12 +4,12 @@
 
 #ifndef CPPDUNGEON_TRAP_H
 #define CPPDUNGEON_TRAP_H
-#include "Event.h"
+#include "Chest.h"
 class Player;
-class Trap:public Event{
+class Trap:public Chest{
 public:
     void turn(Player *, int) override;
-    void use(Player*, int);
+    void use(Player*, int) override;
     void dontUse(Player*, int);
     std::vector<std::vector<char>> draw() override;
 };
