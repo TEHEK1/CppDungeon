@@ -7,6 +7,7 @@
 #include <vector>
 class Item;
 class Inventory{
+public:
     void addItem(Item*);
     void removeItem(Item*);
     std::vector<Item*> getItems();
