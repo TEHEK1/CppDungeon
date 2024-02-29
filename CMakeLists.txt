@@ -39,4 +39,5 @@ add_executable(CppDungeon
         include/Boss.h
         include/NPC.h
         include/ActionsChanger.h
-        include/PositionChanger.h)
+        include/PositionChanger.h
+        include/SkillStorage.h)
