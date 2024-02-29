@@ -1,2 +1,2 @@
-Checks: '*, -modernize*, -llvmlibc*'
+Checks: '*'
 WarningsAsErrors: '*'
