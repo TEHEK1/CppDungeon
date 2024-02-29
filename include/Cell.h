@@ -8,8 +8,10 @@
 #include <vector>
 class Cell{
 public:
+    void freeMoves(Player*, int);
     virtual void generateEvents() = 0;
     std::vector<Event*> getEvents();
     char getLevel();
+
 };
 #endif //UNTITLED_CELL_H

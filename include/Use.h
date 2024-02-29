@@ -5,8 +5,10 @@
 #ifndef CPPDUNGEON_USE_H
 #define CPPDUNGEON_USE_H
 #include "Action.h"
+class Chest;
 class Use:public Action{
 public:
-    void act() override;
+    Use(Chest*, int);
+    void act(Player*) override;
 };
 #endif //CPPDUNGEON_USE_H

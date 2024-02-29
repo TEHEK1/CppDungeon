@@ -5,8 +5,10 @@
 #ifndef CPPDUNGEON_DONTUSE_H
 #define CPPDUNGEON_DONTUSE_H
 #include "Action.h"
+class Chest;
 class DontUse:public Action{
 public:
-    void act() override;
+    DontUse(Chest*, int);
+    void act(Player*) override;
 };
 #endif //CPPDUNGEON_DONTUSE_H

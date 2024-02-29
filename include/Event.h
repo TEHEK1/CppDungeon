@@ -5,8 +5,10 @@
 #ifndef UNTITLED_EVENT_H
 #define UNTITLED_EVENT_H
 #include <vector>
-#include "Action.h"
-class Event{
+#include "ActionsChanger.h"
+class Player;
+class Action;
+class Event:public ActionsChanger{
 public:
     virtual void turn(Player*, int index);
     std::vector<Action*> getAvailableActions();

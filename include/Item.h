@@ -5,7 +5,6 @@
 #ifndef CPPDUNGEON_ITEM_H
 #define CPPDUNGEON_ITEM_H
 #include "Skill.h"
-class Item{
-    Skill* skill;
+class Item:public Skill{
 };
 #endif //CPPDUNGEON_ITEM_H
