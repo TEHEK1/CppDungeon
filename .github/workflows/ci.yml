@@ -69,7 +69,7 @@ jobs:
          ${{ github.workspace }}
 
      - name: Linting
-       run: clang-tidy -p ${{ steps.strings.outputs.build-output-dir }} **.cpp
+       run: return $(clang-tidy -p ${{ steps.strings.outputs.build-output-dir }} **.cpp)
 
 
 
