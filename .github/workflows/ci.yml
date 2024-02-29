@@ -45,9 +45,14 @@ jobs:
         ${{ github.workspace }};
         cmake --build ${{ steps.strings.outputs.build-output-dir }};
 
-#    - name: Linting
-#      run:
-#        clang-tidy .
+  linting:
+    runs-on: ubuntu-20.04
+    steps:
+     - uses: actions/checkout@v3
+     - name: Linting
+       run: clang-tidy .
+
+
 
 
 #    - name: Tests
