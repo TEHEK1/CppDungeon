@@ -8,6 +8,7 @@
 #include "InventoryChanger.h"
 class Player;
 class Chest:public Event, public InventoryChanger{
+    bool used;
 public:
     void turn(Player *, int) override;
     void use(Player*, int);
