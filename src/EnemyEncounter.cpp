@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Monitor.h"
+#include <memory>
 #include <cstdlib>
 
 EnemyEncounter::EnemyEncounter() {
@@ -16,23 +17,17 @@ EnemyEncounter::EnemyEncounter() {
         int speed = (std::rand() % 100) + 1;
         int HP = (std::rand() % 100) + 1;
 
-        i = new Enemy(accuracyModifier,
+        i = std::unique_ptr<Enemy>{new Enemy(accuracyModifier,
                         criticalDamagehance,
                         damage,
                         dodge,
                         defence,
                         speed,
-                        HP);    
+                        HP)};  
     }
 }
 
-EnemyEncounter::~EnemyEncounter() {
-    for (auto &i: _enemies) {
-        delete i;
-    }
-}
-
-std::vector<Enemy*> EnemyEncounter::getEnemies() {
+std::vector<std::unique_ptr<Enemy>> EnemyEncounter::getEnemies() {
     return _enemies;
 }
 
@@ -40,12 +35,12 @@ void EnemyEncounter::turn(Player *player, int index) {
     for (auto i: player->getHeroes()) {
 
     }
-    Monitor::draw();
+    player->getMonitor()->draw();
 }
 
 std::vector<std::vector<char>> EnemyEncounter::draw() {
     std::vector<std::vector<char>> to_ret;
-    for (auto i: _enemies) {
+    for (auto &i: _enemies) {
         to_ret.insert(to_ret.end(), i->draw().begin(), i->draw().end());
     }
     return to_ret;
