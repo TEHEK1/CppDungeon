@@ -9,8 +9,11 @@
 class Player;
 class Action;
 class Event:public ActionsChanger{
+protected:
+
 public:
     virtual void turn(Player*, int);
     virtual std::vector<std::vector<char>> draw();
+    virtual ~Event() = default;
 };
 #endif //UNTITLED_EVENT_H
