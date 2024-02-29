@@ -11,14 +11,15 @@
 #include "memory"
 #include "Monitor.h"
 #include <iostream>
+
 bool Chest::comp(std::set<std::unique_ptr<Action>>::iterator actionIterator) {
-if (typeid(**actionIterator) == typeid(Use)) {
-Use* use = static_cast<Use*>((*actionIterator).get());
-if (use->getChest() == this) {
-return true;
-}
-}
-return false;
+    if (typeid(**actionIterator) == typeid(Use)) {
+        Use* use = static_cast<Use*>((*actionIterator).get());
+        if (use->getChest() == this) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Chest::turn(Player *player, int index) {
@@ -29,7 +30,6 @@ void Chest::turn(Player *player, int index) {
     }
     player->getMap()->getCell(player->getPosition())->freeMoves(player, index);
 }
-
 
 void Chest::use(Player *player, int index) {
     Item item1 = Item();
