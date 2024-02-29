@@ -12,6 +12,7 @@ public:
             int dodge, int defence, int speed, int HP);
     std::vector<Skill*> getSkills;
     std::vector<std::vector<char>> draw();
+    int getHP();
 protected:
     int _accuracyModifier;
     int _criticalDamagehance;
