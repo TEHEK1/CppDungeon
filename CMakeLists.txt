@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 11)
 include_directories(include)
 
 add_executable(CppDungeon
+        main.cpp
+        src/Chest.cpp
         include/Action.h
         include/Board.h
         include/Cell.h
