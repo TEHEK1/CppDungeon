@@ -42,12 +42,19 @@ jobs:
         -S ${{ github.workspace }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
         ${{ github.workspace }};
         cmake --build ${{ steps.strings.outputs.build-output-dir }};
 
   linting:
     runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            cpp_compiler: g++
+            build_type: Debug
     steps:
      - uses: actions/checkout@v3
      - name: Configure CMake
