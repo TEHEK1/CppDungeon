@@ -12,7 +12,6 @@ class Player;
 class EnemyEncounter:public Event{
 public:
     EnemyEncounter();
-    ~EnemyEncounter();
     void turn(Player*, int index) override;
     std::vector<std::unique_ptr<Entity>> getEnemies();
     std::vector<std::vector<char>> draw() override;
