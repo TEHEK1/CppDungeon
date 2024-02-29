@@ -1,5 +1,6 @@
 #include "EnemyEncounter.h"
 #include "Enemy.h"
+#include "Monitor.h"
 #include <cstdlib>
 
 EnemyEncounter::EnemyEncounter() {
@@ -35,7 +36,7 @@ std::vector<Enemy*> EnemyEncounter::getEnemies() {
 }
 
 void EnemyEncounter::turn(Player*, int index) {
-
+    
 }
 
 std::vector<std::vector<char>> EnemyEncounter::draw() {
