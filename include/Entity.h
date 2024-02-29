@@ -7,6 +7,14 @@
 #include <vector>
 class Skill;
 class Entity{
+protected:
+    int AccuracyModifier;
+    int CriticalDamageChance;
+    int Damage;
+    int Dodge;
+    int Defence;
+    int Speed;
+    int HP;
 public:
     std::vector<Skill*> getSkills;
     std::vector<std::vector<char>> draw();
