@@ -42,6 +42,7 @@ jobs:
         -S ${{ github.workspace }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
         ${{ github.workspace }};
         cmake --build ${{ steps.strings.outputs.build-output-dir }};
 
@@ -49,8 +50,18 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
      - uses: actions/checkout@v3
+     - name: Configure CMake
+       run: >
+         cmake -B ${{ steps.strings.outputs.build-output-dir }}
+         -G Ninja
+         -S ${{ github.workspace }}
+         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+         ${{ github.workspace }}
+
      - name: Linting
-       run: clang-tidy ${{ github.workspace }}/..; echo ${{ github.workspace }}
+       run: clang-tidy ${{ github.workspace }}
 
 
 
