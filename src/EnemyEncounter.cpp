@@ -37,6 +37,8 @@ std::vector<Enemy*> EnemyEncounter::getEnemies() {
 
 void EnemyEncounter::turn(Player*, int index) {
     
+
+    Monitor::draw();
 }
 
 std::vector<std::vector<char>> EnemyEncounter::draw() {
