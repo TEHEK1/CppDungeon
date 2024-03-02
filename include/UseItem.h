@@ -8,9 +8,9 @@
 #include <vector>
 class Entity;
 class Item;
-class UseSkill: public Action{
+class UseItem: public Action{
 public:
-    UseSkill(Entity* actor, Item* item, std::vector<Entity*> entities);
+    UseItem(Player* player, Item* item, std::vector<std::unique_ptr<Enemy>> entities);
     void act(Player*) override;
 };
 #endif //CPPDUNGEON_USEITEM_H
