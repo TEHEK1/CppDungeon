@@ -6,11 +6,14 @@
 #define CPPDUNGEON_USESKILL_H
 #include "Action.h"
 #include <vector>
+#include <memory>
 class Entity;
 class Skill;
 class UseSkill: public Action{
 public:
     UseSkill(Entity* actor, Skill* skill, std::vector<Entity*> entities);
+    UseSkill(Entity* actor, Skill* skill, std::vector<Hero*> entities);
+    UseSkill(Entity* actor, Skill* skill, std::vector<std::unique_ptr<Enemy>> entities);
     void act(Player*) override;
 };
 #endif //CPPDUNGEON_USESKILL_H

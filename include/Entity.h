@@ -10,9 +10,10 @@ class Entity{
 public:
     Entity(int accuracyModifier, int criticalDamagehance, int damage,
             int dodge, int defence, int speed, int HP);
-    std::vector<Skill*> getSkills;
+    std::vector<Skill*> getSkills();
     std::vector<std::vector<char>> draw();
     int getHP();
+    int getSpeed();
 protected:
     int _accuracyModifier;
     int _criticalDamagehance;

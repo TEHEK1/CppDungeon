@@ -17,5 +17,9 @@ public:
 
 private:
     std::vector<std::unique_ptr<Enemy>> _enemies;
+    std::vector<int> _priority;
+    int _start_heroes;
+    int _start_enemies;
+    void _enemy_move(Player*, std::unique_ptr<Enemy>);
 };
 #endif //UNTITLED_ENEMYENCOUNTER_H
