@@ -13,6 +13,7 @@ class Chest:public Event, public InventoryChanger{
 public:
     void turn(Player *, int) override;
     void use(Player*, int);
+    void dontUse(Player*, int);
     std::vector<std::vector<char>> draw() override;
 };
 #endif //CPPDUNGEON_CHEST_H

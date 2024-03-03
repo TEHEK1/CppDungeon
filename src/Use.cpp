@@ -10,7 +10,7 @@ Use::Use(Chest* chest, int index){
 }
 
 void Use::act(Player* player){
-    m_chest -> Chest::use(player, m_index);
+    m_chest -> use(player, m_index);
 }
 
 Chest *Use::getChest() {
