@@ -12,7 +12,7 @@ class Chest:public Event, public InventoryChanger{
     bool comp(std::set<std::unique_ptr<Action>>::iterator actionIterator);
 public:
     void turn(Player *, int) override;
-    void use(Player *player, int index);
+    void use(Player *, int);
     std::vector<std::vector<char>> draw() override;
 };
 #endif //CPPDUNGEON_CHEST_H
