@@ -1,6 +1,0 @@
-# ninja log v5
-0	173	1709497883079160132	CMakeFiles/CppDungeon.dir/main.cpp.o	49e1660f2c8971f0
-3	454	1709499734582169217	CMakeFiles/CppDungeon.dir/src/Event.cpp.o	66f1d3e3e53d656e
-3	454	1709499734582168884	CMakeFiles/CppDungeon.dir/src/EmptyCell.cpp.o	e61235785c597343
-3	525	1709499734653501095	CMakeFiles/CppDungeon.dir/src/Chest.cpp.o	e6c49e3f9ea59b43
-2	362	1709499771225386779	CMakeFiles/CppDungeon.dir/src/ChooseRoomEvent.cpp.o	3b71bc8b443b1f6d
