@@ -7,6 +7,14 @@
 #include <vector>
 class Skill;
 class Entity{
+protected:
+    int AccuracyModifier;
+    int CriticalDamageChance;
+    int Damage;
+    int Dodge;
+    int Defence;
+    int Speed;
+    int HP;
 public:
     Entity(int accuracyModifier, int criticalDamagehance, int damage,
             int dodge, int defence, int speed, int HP);

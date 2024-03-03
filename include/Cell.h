@@ -12,6 +12,6 @@ public:
     virtual void generateEvents() = 0;
     std::vector<Event*> getEvents();
     char getLevel();
-
+    virtual ~Cell() = default;
 };
 #endif //UNTITLED_CELL_H

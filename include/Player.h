@@ -18,7 +18,7 @@ class Inventory;
 class Player{
     Position position;
     Inventory inventory;
-    std::set<Action*> actions;
+    std::set<std::unique_ptr<Action>> actions;
     friend class ActionChanger;
     friend class PositionChanger;
     friend class InventoryChanger;
@@ -26,7 +26,7 @@ public:
     std::vector<Hero*> getHeroes();
     Monitor* getMonitor();
     Position getPosition();
-    std::set<Action*> getActions();
+    std::set<std::unique_ptr<Action>> getActions();
     Inventory getInventory();
     Map* getMap();
 };
