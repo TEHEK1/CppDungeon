@@ -8,6 +8,8 @@ include_directories(include)
 add_executable(CppDungeon
         main.cpp
         src/Chest.cpp
+        src/EmptyCell.cpp
+        src/ChooseRoomEvent.cpp
         include/Action.h
         include/Board.h
         include/Cell.h
