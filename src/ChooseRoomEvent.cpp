@@ -21,9 +21,5 @@ void ChooseRoomEvent::turn(Player *player, int index) {
 
 std::vector<std::vector<char>> ChooseRoomEvent::draw() {
     std::vector<std::vector<char>> sprite;
-    sprite.push_back(std::vector<char>{'/',  '-', '-', '-', '-', '-', '\\'});
-    sprite.push_back(std::vector<char>{'|',  'C', 'R', 'O', 'O', 'M', '|' });
-    sprite.push_back(std::vector<char>{'|',  'E', 'V', 'E', 'N', 'T', '|' });
-    sprite.push_back(std::vector<char>{'\\', '-', '-', '-', '-', '-', '/' });
     return sprite;
 }
