@@ -5,14 +5,15 @@
 #ifndef CPPDUNGEON_DONTUSE_H
 #define CPPDUNGEON_DONTUSE_H
 #include "Action.h"
+#include "Trap.h"
 class Chest;
 class DontUse:public Action{
 public:
-    DontUse(Chest*, int);
+    DontUse(Trap*, int);
     void act(Player*) override;
-    Chest* getChest();
+    Trap* getChest();
 private:
     int m_index;
-    Chest* m_chest;
+    Trap* m_trap;
 };
 #endif //CPPDUNGEON_DONTUSE_H

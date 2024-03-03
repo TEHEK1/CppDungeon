@@ -4,15 +4,15 @@
 #include "DontUse.h"
 #include "Chest.h"
 
-DontUse::DontUse(Chest * chest, int index) {
+DontUse::DontUse(Trap * trap, int index) {
     m_index = index;
-    m_chest = chest;
+    m_trap = trap;
 }
 
 void DontUse::act(Player* player) {
-    m_chest -> dontUse(player, m_index);
+    m_trap -> dontUse(player, m_index);
 }
 
-Chest* DontUse::getChest(){
-    return m_chest;
+Trap* DontUse::getChest(){
+    return m_trap;
 }
