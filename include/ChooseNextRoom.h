@@ -12,6 +12,6 @@
 class ChooseNextRoom:public Action, public PositionChanger{
 public:
     ChooseNextRoom(std::pair<int, int>);
-    void act(Player*) override; //Ask arguments from who realizes Map
+    void act(Player*) override;
 };
 #endif //CPPDUNGEON_CHOOSENEXTROOM_H
