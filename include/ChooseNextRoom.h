@@ -6,8 +6,10 @@
 #define CPPDUNGEON_CHOOSENEXTROOM_H
 #include "Action.h"
 #include "PositionChanger.h"
+#include <utility>
 class ChooseNextRoom:public Action, public PositionChanger{
 public:
+    ChooseNextRoom(std::pair<int,int>);
     void act(Player*) override;//Ask arguments from who realizes Map
 };
 #endif //CPPDUNGEON_CHOOSENEXTROOM_H
