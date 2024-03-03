@@ -1,3 +1,0 @@
-/home/kait/CLionProjects/project_2/CppDungeon/cmake-build-debug/CMakeFiles/CppDungeon.dir
-/home/kait/CLionProjects/project_2/CppDungeon/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/kait/CLionProjects/project_2/CppDungeon/cmake-build-debug/CMakeFiles/rebuild_cache.dir
