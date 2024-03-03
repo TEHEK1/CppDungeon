@@ -11,17 +11,13 @@
 void ChooseRoomEvent::turn(Player *player, int index) {
     player->getMonitor()->draw();
     player->getMap()->getCell(player->getPosition())->freeMoves(player, index);
-//    for (pair<int, int> cords : player->getMap()->getNextRooms()) {
-//        todo: create ChooseNextRoomConstructor and uncomment below with right parameters
-//        this->addAction(
-//            player,
-//            std::move(
-//                std::unique_ptr<ChooseNextRoom>(&ChooseNextRoom(
-//                    player->getMap()->getCell(Position(cords))
-//                    ))
-//                )
-//            );
-//    }
+    for (std::pair<int, int> cords : player->getMap()->getNextRooms()) {
+        Cell *room = player->getMap()->getCell(Position(cords));
+        this->addAction(
+            player,
+            std::move(std::unique_ptr<ChooseNextRoom>(new ChooseNextRoom(room)))
+        );
+    }
 }
 
 std::vector<std::vector<char>> ChooseRoomEvent::draw() {
