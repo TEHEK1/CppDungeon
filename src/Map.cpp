@@ -51,7 +51,8 @@ Map::Map(int seed) {
     roomCounter.resize(4); // there are 4 different positions: top/right/bottom/left
     std::vector<char> roomProperties;
     roomProperties.resize(roomsToGenerate);
-
+    
+    // generating rooms
     while (roomsToGenerate > 0) {
 
         if (generatedCenter == false) { // generating center rooms
@@ -87,8 +88,8 @@ Map::Map(int seed) {
                 roomProperties[roomsToGenerate] = RoomPosition::CENTER;
             }
 
-                roomsToGenerate--;
-                roomProperties[roomsToGenerate] = RoomPosition::CENTER;
+            roomsToGenerate--;
+            roomProperties[roomsToGenerate] = RoomPosition::CENTER;
 
             generatedCenter = true;
 
@@ -154,6 +155,7 @@ Map::Map(int seed) {
 
     }
 
+    // generating coridors
 }
 
 Map::Map()
