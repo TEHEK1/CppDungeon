@@ -9,7 +9,7 @@
 #include "Inventory.h"
 #include "Position.h"
 
-class Hero;
+class Entity;
 class Position;
 class Map;
 class Monitor;
