@@ -35,7 +35,7 @@ void Chest::use(Player *player, int index) {
     Item item1 = Item();
     getInventory(player).addItem(&item1);
     removeAction(player, [this](std::set<std::unique_ptr<Action>>::iterator actionIterator){return comp(actionIterator);});
-    Chest::used = 1;
+    used = 1;
 }
 
 std::vector<std::vector<char>> Chest::draw() {
