@@ -7,6 +7,7 @@
 
 #include "Inventory.h"
 #include "Position.h"
+#include <memory>
 #include <set>
 #include <vector>
 
@@ -14,6 +15,7 @@ class Entity;
 class Position;
 class Map;
 class Monitor;
+class Hero;
 class Action;
 class Inventory;
 class Player{
@@ -23,6 +25,9 @@ class Player{
     friend class ActionChanger;
     friend class PositionChanger;
     friend class InventoryChanger;
+    std::vector<std::shared_ptr<Entity>> heroes;
+    Monitor* monitor;
+    Map* map;
 public:
     std::vector<std::shared_ptr<Entity>> getHeroes();
     Monitor* getMonitor();

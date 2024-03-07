@@ -22,7 +22,6 @@ public:
     std::vector<std::vector<char>> draw();
     int getSpeed();
     int getHP();
-    int getSpeed();
 protected:
     int _accuracyModifier;
     int _criticalDamagehance;

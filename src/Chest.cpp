@@ -11,6 +11,7 @@
 #include <memory>
 #include "Monitor.h"
 
+
 bool Chest::comp(std::set<std::unique_ptr<Action>>::iterator actionIterator) {
     if (typeid(*((*actionIterator).get())) == typeid(Use)) {
         Use* use = static_cast<Use*>((*actionIterator).get());
@@ -38,14 +39,23 @@ void Chest::use(Player *player, int  /*index*/) {
 }
 
 std::vector<std::vector<char>> Chest::draw() {
+    removeAction(player, [this](std::set<std::unique_ptr < Action>>
+    ::iterator
+    actionIterator){ return comp(actionIterator); });
+
+    used = 1;
+
+}
+
+std::vector <std::vector<char>> Chest::draw() {
 //     -------
 //    |___-___|
 //    |__|_|__|
 //    |___-___|
 //     -------
-    return {{' ', '-', '-', '-', '-', '-', '-', '-', ' ' },
-            {'|', '_', '_', '_', '-', '_', '_', '_', '|' },
-            {'|', '_', '_', '|', '-', '|', '_', '_', '|' },
-            {'|', '_', '_', '_', '-', '_', '_', '_', '|' },
-            {' ', '-', '-', '-', '-', '-', '-', '-', ' ' }};
+    return {{' ', '-', '-', '-', '-', '-', '-', '-', ' '},
+            {'|', '_', '_', '_', '-', '_', '_', '_', '|'},
+            {'|', '_', '_', '|', '-', '|', '_', '_', '|'},
+            {'|', '_', '_', '_', '-', '_', '_', '_', '|'},
+            {' ', '-', '-', '-', '-', '-', '-', '-', ' '}};
 }
