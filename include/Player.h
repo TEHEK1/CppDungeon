@@ -8,7 +8,7 @@
 #include <set>
 #include "Inventory.h"
 #include "Position.h"
-
+#include <memory>
 class Hero;
 class Position;
 class Map;

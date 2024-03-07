@@ -12,6 +12,7 @@
 #include "Monitor.h"
 #include <iostream>
 
+
 bool Chest::comp(std::set<std::unique_ptr<Action>>::iterator actionIterator) {
     if (typeid(**actionIterator) == typeid(Use)) {
         Use* use = static_cast<Use*>((*actionIterator).get());
@@ -25,7 +26,7 @@ bool Chest::comp(std::set<std::unique_ptr<Action>>::iterator actionIterator) {
 void Chest::turn(Player *player, int index) {
     player->getMonitor()->draw();
     if (!Chest::used) {
-        std::unique_ptr<Action> u(static_cast<Action*>(new Use(this, index)));
+        std::unique_ptr <Action> u(static_cast<Action *>(new Use(this, index)));
         addAction(player, std::move(u));
     }
     player->getMap()->getCell(player->getPosition())->freeMoves(player, index);
@@ -34,19 +35,23 @@ void Chest::turn(Player *player, int index) {
 void Chest::use(Player *player, int index) {
     Item item1 = Item();
     getInventory(player).addItem(&item1);
-    removeAction(player, [this](std::set<std::unique_ptr<Action>>::iterator actionIterator){return comp(actionIterator);});
+    removeAction(player, [this](std::set<std::unique_ptr < Action>>
+    ::iterator
+    actionIterator){ return comp(actionIterator); });
+
     used = 1;
+
 }
 
-std::vector<std::vector<char>> Chest::draw() {
+std::vector <std::vector<char>> Chest::draw() {
 //     -------
 //    |___-___|
 //    |__|_|__|
 //    |___-___|
 //     -------
-    return {{' ', '-', '-', '-', '-', '-', '-', '-', ' ' },
-            {'|', '_', '_', '_', '-', '_', '_', '_', '|' },
-            {'|', '_', '_', '|', '-', '|', '_', '_', '|' },
-            {'|', '_', '_', '_', '-', '_', '_', '_', '|' },
-            {' ', '-', '-', '-', '-', '-', '-', '-', ' ' }};
+    return {{' ', '-', '-', '-', '-', '-', '-', '-', ' '},
+            {'|', '_', '_', '_', '-', '_', '_', '_', '|'},
+            {'|', '_', '_', '|', '-', '|', '_', '_', '|'},
+            {'|', '_', '_', '_', '-', '_', '_', '_', '|'},
+            {' ', '-', '-', '-', '-', '-', '-', '-', ' '}};
 }

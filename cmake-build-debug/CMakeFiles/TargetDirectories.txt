@@ -1,0 +1,3 @@
+C:/MyDoc/CppProjects/CppDungeon/CppDungeon/cmake-build-debug/CMakeFiles/CppDungeon.dir
+C:/MyDoc/CppProjects/CppDungeon/CppDungeon/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/MyDoc/CppProjects/CppDungeon/CppDungeon/cmake-build-debug/CMakeFiles/rebuild_cache.dir
