@@ -3,6 +3,31 @@
 //
 #include "Hero.h"
 #include "Player.h"
-std::vector<Hero*> Player::getHeroes() {
-    return Player::
+#include "Monitor.h"
+#include "Position.h"
+#include "Inventory.h"
+#include "Action.h"
+
+std::vector<std::shared_ptr<Entity>> Player::getHeroes() {
+    return Player::heroes;
+}
+
+Monitor* Player::getMonitor() {
+    return Player::monitor;
+}
+
+Position Player::getPosition() {
+    return Player::position;
+}
+
+std::set<std::unique_ptr<Action>> Player::getActions() {
+    return Player::actions;
+}
+
+Inventory Player::getInventory() {
+    return Player::inventory;
+}
+
+Map* Player::getMap() {
+    return Player::map;
 }

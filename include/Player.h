@@ -25,6 +25,9 @@ class Player{
     friend class ActionChanger;
     friend class PositionChanger;
     friend class InventoryChanger;
+    std::vector<std::shared_ptr<Entity>> heroes;
+    Monitor* monitor;
+    Map* map;
 public:
     std::vector<std::shared_ptr<Entity>> getHeroes();
     Monitor* getMonitor();
