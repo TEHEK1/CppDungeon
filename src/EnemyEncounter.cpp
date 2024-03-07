@@ -1,12 +1,12 @@
-#include <ActionsChanger.h>
-#include <Enemy.h>
-#include <EnemyEncounter.h>
-#include <Hero.h>
-#include <Map.h>
-#include <Monitor.h>
-#include <Player.h>
-#include <UseSkill.h>
-#include <UseItem.h>
+#include "ActionsChanger.h"
+#include "Enemy.h"
+#include "EnemyEncounter.h"
+#include "Hero.h"
+#include "Map.h"
+#include "Monitor.h"
+#include "Player.h"
+#include "UseSkill.h"
+#include "UseItem.h"
 #include <memory>
 #include <cstdlib>
 
@@ -32,11 +32,11 @@ EnemyEncounter::EnemyEncounter() {
     }
 }
 
-std::vector<std::unique_ptr<Entity>>& EnemyEncounter::getEnemies() {
+std::vector<std::shared_ptr<Entity>> EnemyEncounter::getEnemies() {
     return _enemies;
 }
 
-void EnemyEncounter::_enemyMove(Player* player, Entity* enemy) {
+void EnemyEncounter::_enemyMove(Player* player, std::shared_ptr<Entity> enemy) {
     int max_rand_elem = enemy->getSkills().size();
     int move = (std::rand() % max_rand_elem);
     UseSkill(enemy, enemy->getSkills()[move], player->getHeroes()).act(player);
@@ -113,7 +113,7 @@ void EnemyEncounter::turn(Player *player, int index) {
         if (current_entity < _start_heroes) {
             if (player->getHeroes()[current_entity]->getHP() > 0) {
                 for (auto skill: player->getHeroes()[current_entity]->getSkills()) {
-                    addAction(player, std::move(std::unique_ptr<Action>(new UseSkill(player->getHeroes()[current_entity].get(), skill, _enemies))));
+                    addAction(player, std::move(std::unique_ptr<Action>(new UseSkill(player->getHeroes()[current_entity], skill, _enemies))));
                 }
                 for (auto item: player->getInventory().getItems()) {
                     addAction(player, std::move(std::unique_ptr<Action>(new UseItem(player, item, _enemies))));
@@ -128,7 +128,7 @@ void EnemyEncounter::turn(Player *player, int index) {
         if (_enemies[current_entity]->getHP() <= 0) {
             continue;
         }
-        _enemy_move(player, _enemies[current_entity].get());
+        _enemyMove(player, _enemies[current_entity]);
     }
       
     player->getMonitor()->draw();

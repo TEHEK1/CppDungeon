@@ -12,7 +12,7 @@ class Skill;
 class UseSkill: public Action{
 public:
     // UseSkill(Entity* actor, Skill* skill, std::vector<Entity*> entities);
-    UseSkill(Entity* actor, Skill* skill, std::vector<std::unique_ptr<Entity>> entities);
+    UseSkill(std::shared_ptr<Entity> actor, Skill* skill, std::vector<std::shared_ptr<Entity>> entities);
     void act(Player*) override;
 };
 #endif //CPPDUNGEON_USESKILL_H

@@ -6,11 +6,12 @@
 #define CPPDUNGEON_USEITEM_H
 #include "Action.h"
 #include <vector>
+#include <memory>
 class Entity;
 class Item;
 class UseItem: public Action{
 public:
-    UseItem(Player* player, Item* item, std::vector<std::unique_ptr<Entity>> entities);
+    UseItem(Player* player, Item* item, std::vector<std::shared_ptr<Entity>> entities);
     void act(Player*) override;
 };
 #endif //CPPDUNGEON_USEITEM_H
