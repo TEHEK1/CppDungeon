@@ -14,7 +14,7 @@
 
 
 bool Chest::comp(std::set<std::unique_ptr<Action>>::iterator actionIterator) {
-    if (typeid(**actionIterator) == typeid(Use)) {
+    if (typeid(*((*actionIterator).get())) == typeid(Use)) {
         Use* use = static_cast<Use*>((*actionIterator).get());
         if (use->getChest() == this) {
             return true;
