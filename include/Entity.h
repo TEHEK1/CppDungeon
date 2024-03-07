@@ -16,7 +16,20 @@ protected:
     int Speed;
     int HP;
 public:
-    std::vector<Skill*> getSkills;
+    Entity(int accuracyModifier, int criticalDamagehance, int damage,
+            int dodge, int defence, int speed, int HP);
+    std::vector<Skill*> getSkills();
     std::vector<std::vector<char>> draw();
+    int getSpeed();
+    int getHP();
+    int getSpeed();
+protected:
+    int _accuracyModifier;
+    int _criticalDamagehance;
+    int _damage;
+    int _dodge;
+    int _defence;
+    int _speed;
+    int _HP;
 };
 #endif //UNTITLED_ENTITY_H
