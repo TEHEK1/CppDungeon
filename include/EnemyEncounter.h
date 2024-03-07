@@ -4,8 +4,8 @@
 
 #ifndef UNTITLED_ENEMYENCOUNTER_H
 #define UNTITLED_ENEMYENCOUNTER_H
-#include <Entity.h>
-#include <Event.h>
+#include "Entity.h"
+#include "Event.h"
 #include <vector>
 class Enemy;
 class Player;
@@ -22,6 +22,5 @@ private:
     int _start_heroes;
     std::vector<std::shared_ptr<Entity>> _enemies;
     std::vector<int> _priority;
-    std::vector<std::vector<char>> draw();
 };
 #endif //UNTITLED_ENEMYENCOUNTER_H
