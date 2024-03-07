@@ -4,10 +4,11 @@
 
 #ifndef UNTITLED_PLAYER_H
 #define UNTITLED_PLAYER_H
-#include <vector>
-#include <set>
+
 #include "Inventory.h"
 #include "Position.h"
+#include <set>
+#include <vector>
 
 class Entity;
 class Position;
