@@ -4,10 +4,7 @@
 #include "Use.h"
 #include "Chest.h"
 
-Use::Use(Chest* chest, int index){
-    m_chest = chest;
-    m_index = index;
-}
+Use::Use(Chest* chest, int index):m_chest(chest), m_index(index){}
 
 void Use::act(Player* player){
     m_chest -> use(player, m_index);

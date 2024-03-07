@@ -8,9 +8,8 @@
 #include "Cell.h"
 #include "Map.h"
 #include "Item.h"
-#include "memory"
+#include <memory>
 #include "Monitor.h"
-#include <iostream>
 
 bool Chest::comp(std::set<std::unique_ptr<Action>>::iterator actionIterator) {
     if (typeid(*((*actionIterator).get())) == typeid(Use)) {
@@ -31,11 +30,11 @@ void Chest::turn(Player *player, int index) {
     player->getMap()->getCell(player->getPosition())->freeMoves(player, index);
 }
 
-void Chest::use(Player *player, int index) {
+void Chest::use(Player *player, int  /*index*/) {
     Item item1 = Item();
     getInventory(player).addItem(&item1);
     removeAction(player, [this](std::set<std::unique_ptr<Action>>::iterator actionIterator){return comp(actionIterator);});
-    used = 1;
+    used = true;
 }
 
 std::vector<std::vector<char>> Chest::draw() {
