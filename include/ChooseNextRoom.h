@@ -5,9 +5,13 @@
 #ifndef CPPDUNGEON_CHOOSENEXTROOM_H
 #define CPPDUNGEON_CHOOSENEXTROOM_H
 #include "Action.h"
+#include "Player.h"
+#include "Cell.h"
 #include "PositionChanger.h"
+#include <utility>
 class ChooseNextRoom:public Action, public PositionChanger{
 public:
-    void act(Player*) override;//Ask arguments from who realizes Map
+    ChooseNextRoom(std::pair<int, int>);
+    void act(Player*) override;
 };
 #endif //CPPDUNGEON_CHOOSENEXTROOM_H

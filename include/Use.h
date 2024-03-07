@@ -10,5 +10,9 @@ class Use:public Action{
 public:
     Use(Chest*, int);
     void act(Player*) override;
+    Chest* getChest();
+private:
+    int m_index;
+    Chest* m_chest;
 };
 #endif //CPPDUNGEON_USE_H

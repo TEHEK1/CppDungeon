@@ -4,15 +4,18 @@
 
 #ifndef UNTITLED_PLAYER_H
 #define UNTITLED_PLAYER_H
-#include <vector>
-#include <set>
+
 #include "Inventory.h"
 #include "Position.h"
+#include <memory>
+#include <set>
+#include <vector>
 
-class Hero;
+class Entity;
 class Position;
 class Map;
 class Monitor;
+class Hero;
 class Action;
 class Inventory;
 class Player{
@@ -23,7 +26,7 @@ class Player{
     friend class PositionChanger;
     friend class InventoryChanger;
 public:
-    std::vector<Hero*> getHeroes();
+    std::vector<std::shared_ptr<Entity>> getHeroes();
     Monitor* getMonitor();
     Position getPosition();
     std::set<std::unique_ptr<Action>> getActions();
