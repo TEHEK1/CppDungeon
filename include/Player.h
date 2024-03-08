@@ -16,6 +16,7 @@ class Map;
 class Monitor;
 class Action;
 class Inventory;
+
 class Player{
     Position m_position;
     Inventory m_inventory;
