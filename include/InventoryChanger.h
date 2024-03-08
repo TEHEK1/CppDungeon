@@ -4,10 +4,14 @@
 
 #ifndef CPPDUNGEON_INVENTORYCHANGER_H
 #define CPPDUNGEON_INVENTORYCHANGER_H
+#include "Item.h"
+#include <memory>
 class Inventory;
 class Player;
 class InventoryChanger{
 protected:
-    Inventory& getInventory(Player*);
+    static Inventory& getInventory(Player*);
+    static void addItem(Player*, std::shared_ptr<Item> item);
+    static void removeItem(Player*, std::shared_ptr<Item> item);
 };
 #endif //CPPDUNGEON_INVENTORYCHANGER_H

@@ -22,7 +22,7 @@ EnemyEncounter::EnemyEncounter() {
         int speed = (std::rand() % 100) + 1;
         int HP = (std::rand() % 100) + 1;
 
-        i = std::unique_ptr<Enemy>{new Enemy(accuracyModifier,
+        i = std::shared_ptr<Enemy>{new Enemy(accuracyModifier,
                         criticalDamagehance,
                         damage,
                         dodge,
@@ -113,10 +113,10 @@ void EnemyEncounter::turn(Player *player, int index) {
         if (current_entity < _start_heroes) {
             if (player->getHeroes()[current_entity]->getHP() > 0) {
                 for (auto skill: player->getHeroes()[current_entity]->getSkills()) {
-                    addAction(player, std::move(std::unique_ptr<Action>(new UseSkill(player->getHeroes()[current_entity], skill, _enemies))));
+                    addAction(player, std::move(std::shared_ptr<Action>(new UseSkill(player->getHeroes()[current_entity], skill, _enemies))));
                 }
                 for (auto item: player->getInventory().getItems()) {
-                    addAction(player, std::move(std::unique_ptr<Action>(new UseItem(player, item, _enemies))));
+                    addAction(player, std::move(std::shared_ptr<Action>(new UseItem(player, item, _enemies))));
                 }
                 return;
             }

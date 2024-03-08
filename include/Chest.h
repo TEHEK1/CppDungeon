@@ -9,7 +9,7 @@
 class Player;
 class Chest:public Event, public InventoryChanger{
     bool used;
-    bool comp(std::set<std::unique_ptr<Action>>::iterator actionIterator);
+    bool comp(std::set<std::shared_ptr<Action>>::iterator actionIterator);
 public:
     void turn(Player *, int) override;
     virtual void use(Player*, int);
