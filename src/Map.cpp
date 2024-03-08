@@ -19,12 +19,27 @@ int Map::getRandomValue(int seed) {
     return rand();
 }
 
+std::vector<std::vector<char>> Map::draw() {
+    return m_contents;
+}
+
+int Map::getSize() {
+    return m_size;
+}
+
 bool Map::ValidForRoom(int line, int column) const {
 
-    const char beginLineCheck   = std::max(MAP_SIZE/10, line - 1);
-    const char endLineCheck     = std::min(MAP_SIZE - 1, line + 1);
-    const char beginColumnCheck = std::max(MAP_SIZE/10, column - 1);
-    const char endColumnCheck   = std::min(MAP_SIZE - 1, column + 1);
+    if ((line - 3 < MAP_SIZE/10) || (line + 3 > MAP_SIZE - MAP_SIZE/10)) {
+        return false;
+    }
+    if ((column - 3 < MAP_SIZE/10) || (column + 3 > MAP_SIZE - MAP_SIZE/10)) {
+        return false;
+    }
+
+    const char beginLineCheck   = line - 3;
+    const char endLineCheck     = line + 3;
+    const char beginColumnCheck = column - 3;
+    const char endColumnCheck   = column + 3;
 
     for (char i = beginLineCheck; i <= endLineCheck; i++) {
         for (char j = beginColumnCheck; j <= endColumnCheck; j++)  {
@@ -37,6 +52,11 @@ bool Map::ValidForRoom(int line, int column) const {
     return true;
 }
 
+struct Room {
+    char side;
+    Position pos;
+};
+
 Map::Map(int seed) {
 
     m_contents.resize(MAP_SIZE); // zero means empty cell
@@ -47,10 +67,12 @@ Map::Map(int seed) {
     char roomsToGenerate     = MINIMAL_ROOMS + (getRandomValue(seed) % 4); // we will have from 5 to 8 rooms
     const short CENTER_BEGIN = (MAP_SIZE / 2) - (MAP_SIZE / 10);
     bool generatedCenter     = false;
-    std::vector<char> roomCounter;
+    std::vector<std::vector<char>> roomCounter;
     roomCounter.resize(4); // there are 4 different positions: top/right/bottom/left
-    std::vector<char> roomProperties;
+    std::vector<Room> roomProperties;
     roomProperties.resize(roomsToGenerate);
+
+    std::vector<std::vector<char>> availablePaths(roomsToGenerate, std::vector<char>());
     
     // generating rooms
     while (roomsToGenerate > 0) {
@@ -65,9 +87,14 @@ Map::Map(int seed) {
                     m_contents[i][j] = CellType::ROOM;
                 }
             }
+
+            roomsToGenerate--;
+            roomProperties[roomsToGenerate].side         = RoomPosition::CENTER;
+            roomProperties[roomsToGenerate].pos.m_line   = centerLine;
+            roomProperties[roomsToGenerate].pos.m_column = centerColumn;
             // generaing first center room
 
-            if (roomsToGenerate == 8) {
+            if (roomsToGenerate == 7) {
                 while (true) {
                     centerLine = CENTER_BEGIN + (getRandomValue(seed) % (MAP_SIZE / 5));
                     centerColumn = CENTER_BEGIN + (getRandomValue(seed) % (MAP_SIZE / 5));
@@ -84,12 +111,12 @@ Map::Map(int seed) {
                 }
                 //generating second center room
 
-                roomsToGenerate--;
-                roomProperties[roomsToGenerate] = RoomPosition::CENTER;
             }
 
             roomsToGenerate--;
-            roomProperties[roomsToGenerate] = RoomPosition::CENTER;
+            roomProperties[roomsToGenerate].side         = RoomPosition::CENTER;
+            roomProperties[roomsToGenerate].pos.m_line   = centerLine;
+            roomProperties[roomsToGenerate].pos.m_column = centerColumn;
 
             generatedCenter = true;
 
@@ -97,11 +124,9 @@ Map::Map(int seed) {
 
             char roomPosition = (getRandomValue(seed) % 4);
 
-            while (roomCounter[roomPosition] >= 2) { // preventing overloads
+            while (roomCounter[roomPosition].size() >= 2) { // preventing overloads
                 roomPosition = (roomPosition + 1) % 4;
             }
-
-            roomCounter[roomPosition]++;
 
             char roomLine;
             char roomColumn;
@@ -149,13 +174,29 @@ Map::Map(int seed) {
             }
 
             roomsToGenerate--;
-            roomProperties[roomsToGenerate] = roomPosition;
+            roomProperties[roomsToGenerate].side         = roomPosition;
+            roomProperties[roomsToGenerate].pos.m_line   = roomLine;
+            roomProperties[roomsToGenerate].pos.m_column = roomColumn;
+            roomCounter[roomPosition].push_back(roomsToGenerate);
 
         }
 
     }
 
     // generating coridors
+
+    // connecting rooms
+    std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, 0));
+    for (char i = 0; i < roomProperties.size(); i++) {
+        if (roomProperties[i].side != RoomPosition::CENTER) {
+            occupiedSides[i][roomProperties[i].side] = 1;
+        }
+    }
+
+
+    for (char i = roomProperties.size() - 1; i >= 0; i--) {
+        
+    }
 }
 
 Map::Map()

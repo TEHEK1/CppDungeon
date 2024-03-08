@@ -22,6 +22,9 @@ public:
 private:
     std::vector<std::vector<char>> m_contents;
     bool ValidForRoom(int line, int column) const;
+    void GeneratePath(char A, char A_side, char B, char B_side) const; // creates path between A and B
     int getRandomValue(int seed);
+    int m_size;
+    std::vector< std::pair<int, int> > m_rooms;
 };
 #endif //CPPDUNGEON_MAP_H
