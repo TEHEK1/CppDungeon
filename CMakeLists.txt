@@ -45,4 +45,5 @@ add_executable(CppDungeon
         include/SkillStorage.h
         src/Use.cpp
         src/DontUse.cpp
-        src/Player.cpp)
+        src/Player.cpp
+        src/Inventory.cpp)
