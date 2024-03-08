@@ -5,13 +5,13 @@
 #include "Player.h"
 
 Inventory& InventoryChanger::getInventory(Player *player){
-    return player->inventory;
+    return player->m_inventory;
 }
 
 void InventoryChanger::addItem(Player* player, std::shared_ptr<Item> item) {
-    player->inventory.addItem(item);
+    player->m_inventory.addItem(item);
 }
 
 void InventoryChanger::removeItem(Player* player, std::shared_ptr<Item> item) {
-    player->inventory.removeItem(item);
+    player->m_inventory.removeItem(item);
 }
