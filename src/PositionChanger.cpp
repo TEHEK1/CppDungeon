@@ -5,5 +5,5 @@
 #include "Player.h"
 
 void PositionChanger::setPosition(Player *player, Position newPosition){
-    player->position = newPosition;
+    player->m_position = newPosition;
 }
