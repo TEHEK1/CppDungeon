@@ -17,15 +17,15 @@ class Monitor;
 class Action;
 class Inventory;
 class Player{
-    Position position;
-    Inventory inventory;
-    std::set<std::unique_ptr<Action>> actions;
+    Position m_position;
+    Inventory m_inventory;
+    std::set<std::unique_ptr<Action>> m_actions;
     friend class ActionChanger;
     friend class PositionChanger;
     friend class InventoryChanger;
-    std::vector<std::shared_ptr<Entity>> heroes;
-    Monitor* monitor;
-    Map* map;
+    std::vector<std::shared_ptr<Entity>> m_heroes;
+    Monitor* m_monitor;
+    Map* m_map;
 public:
     std::vector<std::shared_ptr<Entity>> getHeroes();
     Monitor* getMonitor();

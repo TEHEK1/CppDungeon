@@ -10,25 +10,25 @@
 #include "memory"
 
 std::vector<std::shared_ptr<Entity>> Player::getHeroes() {
-    return Player::heroes;
+    return m_heroes;
 }
 
 Monitor* Player::getMonitor() {
-    return Player::monitor;
+    return m_monitor;
 }
 
 Position Player::getPosition() {
-    return Player::position;
+    return m_position;
 }
 
 std::set<std::unique_ptr<Action>> Player::getActions() {
-    return Player::actions;
+    return m_actions;
 }
 
 Inventory Player::getInventory() {
-    return Player::inventory;
+    return m_inventory;
 }
 
 Map* Player::getMap() {
-    return Player::map;
+    return m_map;
 }
