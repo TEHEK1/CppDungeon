@@ -14,7 +14,7 @@ void ChooseRoomEvent::turn(Player *player, int index) {
     for (std::pair<int, int> cords : player->getMap()->getNextRooms()) {
         this->addAction(
             player,
-            std::move(std::unique_ptr<ChooseNextRoom>(new ChooseNextRoom(cords)))
+            std::move(std::shared_ptr<ChooseNextRoom>(new ChooseNextRoom(cords)))
         );
     }
 }
