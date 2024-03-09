@@ -7,7 +7,7 @@
 #include "Inventory.h"
 #include "Action.h"
 #include "Entity.h"
-#include "memory"
+#include <memory>
 
 std::vector<std::shared_ptr<Entity>> Player::getHeroes() {
     return m_heroes;
@@ -21,7 +21,7 @@ Position Player::getPosition() {
     return m_position;
 }
 
-std::set<std::unique_ptr<Action>> Player::getActions() {
+std::set<std::shared_ptr<Action>> Player::getActions() {
     return m_actions;
 }
 

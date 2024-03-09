@@ -6,9 +6,10 @@
 #define CPPDUNGEON_INVENTORY_H
 #include <vector>
 #include <set>
+#include <memory>
 class Item;
 class Inventory {
-    std::multiset<Item*> m_items;
+    std::multiset<std::shared_ptr<Item>> m_items;
 public:
     void addItem(Item*);
     void removeItem(Item*);
