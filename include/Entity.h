@@ -6,6 +6,8 @@
 #define UNTITLED_ENTITY_H
 #include <set>
 #include <memory>
+#include "Skill.h"
+#include "EntityChanger.h"
 class Skill;
 class EntityChanger;
 class Entity{
