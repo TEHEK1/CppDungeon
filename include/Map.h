@@ -26,5 +26,6 @@ private:
     int getRandomValue(int seed);
     int m_size;
     std::vector< std::pair<int, int> > m_rooms;
+    void CreatePath() const;
 };
 #endif //CPPDUNGEON_MAP_H

@@ -52,6 +52,10 @@ bool Map::ValidForRoom(int line, int column) const {
     return true;
 }
 
+void CreatePath () {
+
+}
+
 struct Room {
     char side;
     Position pos;
