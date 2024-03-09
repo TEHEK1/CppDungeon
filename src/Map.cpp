@@ -7,9 +7,13 @@ namespace {
 constexpr int MAP_SIZE = 50; // doesn't depenend on window size
 constexpr int MINIMAL_ROOMS = 5;
 
-enum CellType {EMPTY = 0, ROOM = 1, CORIDOR = 2};
+enum CellType {EMPTY = 0, ROOM = 1, CORIDOR = 2, NEW_CORIDOR = 3};
 enum RoomPosition {TOP = 0, RIGHT = 1, BOTTOM = 2, LEFT = 3, CENTER = 4};
 
+struct Room {
+    char side;
+    Position pos;
+};
 
 int Map::getRandomValue(int seed) {
     #ifndef GENERATOR_RANDOM_SEED
@@ -52,14 +56,214 @@ bool Map::ValidForRoom(int line, int column) const {
     return true;
 }
 
-void CreatePath () {
+bool Map::ValidForCoridor(int line, int column) const  {
 
+    if (line < 0  || line >= MAP_SIZE) {
+        return false;
+    }
+    if (column < 0  || column >= MAP_SIZE) {
+        return false;
+    }
+
+    const char beginLineCheck   = line - 1;
+    const char endLineCheck     = line + 1;
+    const char beginColumnCheck = column - 1;
+    const char endColumnCheck   = column + 1;
+    
+    for (char i = beginLineCheck; i <= endLineCheck; i++) {
+        for (char j = beginColumnCheck; j <= endColumnCheck; j++)  {
+            if (m_contents[i][j] != CellType::EMPTY && m_contents[i][j] != NEW_CORIDOR) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
-struct Room {
-    char side;
-    Position pos;
-};
+void Map::DeleteNewCoridors() {
+    for (std::vector<char> i : m_contents) {
+        for (char j : i) {
+            if (j == CellType::NEW_CORIDOR) {
+                j = CellType::EMPTY;
+            }
+        }
+    }
+}
+
+void Map::SolidifyNewCoridors() {
+    for (std::vector<char> i : m_contents) {
+        for (char j : i) {
+            if (j == CellType::NEW_CORIDOR) {
+                j = CellType::CORIDOR;
+            }
+        }
+    }
+}
+
+bool Map::CreatePath (char begin_line, char begin_column, char end_line, char end_column, int seed, bool main_call) {
+    Position begin, current, end;
+
+    begin.m_column   = begin_column;
+    begin.m_line     = begin_line;
+
+    current.m_column = begin_column;
+    current.m_line   = begin_line;
+
+    end.m_column     = end_column;
+    end.m_line       = end_line;
+
+    Position mainStep, randomStep;
+
+    if (begin_column < end_column && begin_line < end_line) {
+
+        mainStep.m_column   = 1;
+        mainStep.m_line     = 0;
+        randomStep.m_column = 0;
+        randomStep.m_line   = 1;
+
+    } else if (begin_column < end_column && begin_line > end_line) {
+        mainStep.m_column   = 1;
+        mainStep.m_line     = 0;
+        randomStep.m_column = 0;
+        randomStep.m_line   = -1;
+    } else if (begin_column > end_column && begin_line < end_line) {
+
+        mainStep.m_column   = -1;
+        mainStep.m_line     = 0;
+        randomStep.m_column = 0;
+        randomStep.m_line   = 1;
+
+    } else if (begin_column > end_column && begin_line > end_line) {
+
+        mainStep.m_column   = -1;
+        mainStep.m_line     = 0;
+        randomStep.m_column = -1;
+        randomStep.m_line   = 0;
+
+    } else if (begin_column == end_column) {
+
+        char middle_line = (end_line + begin_line)/2;
+        char middle_column = begin_column + (getRandomValue(seed) % 5 - 2);
+
+        bool firstHalf = CreatePath(begin_line, begin_column, middle_line, middle_column, seed, false);
+        bool secondHalf = CreatePath(middle_line, middle_column, end_line, end_column, seed, false);
+
+        if (firstHalf && secondHalf == true) {
+            if (main_call == true) {
+                SolidifyNewCoridors();
+            }
+            return true;
+        } else {
+            if (main_call == true) {
+                DeleteNewCoridors();
+            }
+            return false;
+        }
+
+    } else if (begin_line == end_line) {
+
+        char middle_column = (end_column + begin_column)/2;
+        char middle_line = begin_line + (getRandomValue(seed) % 5 - 2);
+
+        bool firstHalf = CreatePath(begin_line, begin_column, middle_line, middle_column, seed, false);
+        bool secondHalf = CreatePath(middle_line, middle_column, end_line, end_column, seed, false);
+
+        if (firstHalf && secondHalf == true) {
+            if (main_call == true) {
+                SolidifyNewCoridors();
+            }
+            return true;
+        } else {
+            if (main_call == true) {
+                DeleteNewCoridors();
+            }
+            return false;
+        }
+
+    }
+
+    char height = end_column - begin_column;
+
+    if (height < 0) {
+        height = -height;
+    }
+
+    char width = end_line - begin_line;
+    if  (width < 0) {
+        width = -width;
+    }
+
+    if (height > width) {
+        std::swap(mainStep, randomStep);
+    }
+
+    if (main_call == true) {
+        char specifyDirection = getRandomValue(seed)%2;
+
+        if (specifyDirection == 0) {
+            end_line   -= 2 * mainStep.m_line;
+            end_column -= 2 * mainStep.m_column;
+        }  else {
+            end_line   -= 2 * randomStep.m_line;
+            end_column -= 2 * randomStep.m_column;
+        }
+
+    }
+    
+
+    while (current.m_column != end.m_column  &&  current.m_line != end.m_line) {
+
+        int odds;
+
+        if (mainStep.m_column != 0) {
+            odds = (1 - static_cast<double>(current.m_column - end.m_column) / (begin.m_column - end.m_column)) * 100;
+            
+            if (current.m_column - end.m_column == 0) {
+                odds = 100;
+            }
+
+            if (current.m_line - end.m_line  == 0) {
+                odds = 0;
+            }
+        } else {
+            odds = (1 - static_cast<double>(current.m_line - end.m_line) / (begin.m_line - end.m_line)) * 100;
+            
+            if (current.m_line - end.m_line == 0) {
+                odds = 100;
+            }
+
+            if (current.m_column - end.m_column  == 0) {
+                odds = 0;
+            }
+        }
+        int generatedValue = getRandomValue(seed)%100;
+
+        if (generatedValue < odds) {
+
+            current.m_column += randomStep.m_column;
+            current.m_line   += randomStep.m_line;
+
+        } else {
+
+            current.m_column += mainStep.m_column;
+            current.m_line   += mainStep.m_line;
+
+        }
+
+        if (ValidForCoridor(current.m_line, current.m_column) == true)  {
+            m_contents[current.m_line][current.m_column] = CellType::NEW_CORIDOR;
+        } else {
+            DeleteNewCoridors();
+            return false;
+        }
+
+    }  
+
+    SolidifyNewCoridors();
+    return true;
+}
+
 
 Map::Map(int seed) {
 
