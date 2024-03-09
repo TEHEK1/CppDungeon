@@ -1,2 +1,2 @@
 Checks: '*, -modernize*, -llvmlibc*'
-WarningsAsErrors: '*, -modernize*, -llvmlibc*'
+WarningsAsErrors: '*, -modernize*, -llvmlibc*, -fuchsia-default-arguments'
