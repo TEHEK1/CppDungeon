@@ -11,8 +11,8 @@ class Item;
 class Inventory {
     std::multiset<std::shared_ptr<Item>> m_items;
 public:
-    void addItem(Item*);
-    void removeItem(Item*);
-    std::multiset<Item*> getItems();
+    void addItem(std::shared_ptr<Item>);
+    void removeItem(std::shared_ptr<Item>);
+    std::multiset<std::shared_ptr<Item>> getItems();
 };
 #endif //CPPDUNGEON_INVENTORY_H

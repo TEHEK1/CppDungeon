@@ -3,14 +3,14 @@
 //
 #include "Inventory.h"
 #include <set>
-void Inventory::addItem(Item *item) {
+void Inventory::addItem(std::shared_ptr<Item> item) {
     m_items.insert(item);
 }
 
-void Inventory::removeItem(Item *item) {
+void Inventory::removeItem(std::shared_ptr<Item> item) {
     m_items.erase(item);
 }
 
-std::multiset<Item*> Inventory::getItems() {
+std::multiset<std::shared_ptr<Item>> Inventory::getItems() {
     return m_items;
 }
