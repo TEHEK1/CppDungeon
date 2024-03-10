@@ -7,11 +7,17 @@ include_directories(include)
 
 add_executable(CppDungeon
         main.cpp
+        src/BattleField.cpp
+        src/BattleFieldChanger.cpp
         src/Chest.cpp
-        src/EmptyCell.cpp
         src/ChooseRoomEvent.cpp
+        src/EmptyCell.cpp
+        src/Squad.cpp
+        src/SquadChanger.cpp
         include/Action.h
         include/Board.h
+        include/BattleField.h
+        include/BattleFieldChanger.h
         include/Cell.h
         include/Chest.h
         include/Enemy.h
@@ -43,5 +49,7 @@ add_executable(CppDungeon
         include/ActionsChanger.h
         include/PositionChanger.h
         include/SkillStorage.h
+        include/Squad.h
+        include/SquadChanger.h
         src/Use.cpp
         src/DontUse.cpp)
