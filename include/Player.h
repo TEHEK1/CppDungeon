@@ -7,6 +7,7 @@
 #include <vector>
 #include <set>
 #include "Inventory.h"
+#include "Entity.h"
 #include "Position.h"
 
 class Hero;

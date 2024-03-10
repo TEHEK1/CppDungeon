@@ -1,5 +1,6 @@
 #include "ActionsChanger.h"
 #include "Enemy.h"
+#include "Entity.h"
 #include "EnemyEncounter.h"
 #include "Hero.h"
 #include "Map.h"
