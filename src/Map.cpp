@@ -102,6 +102,7 @@ void Map::SolidifyNewCoridors() {
 }
 
 bool Map::CreatePath (char begin_line, char begin_column, char end_line, char end_column, int seed, bool main_call) {
+    // returns true if path has been built without problems
     Position begin, current, end;
 
     begin.m_column   = begin_column;
@@ -395,16 +396,61 @@ Map::Map(int seed) {
 
     // connecting rooms
     std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, 0));
-    for (char i = 0; i < roomProperties.size(); i++) {
-        if (roomProperties[i].side != RoomPosition::CENTER) {
-            occupiedSides[i][roomProperties[i].side] = 1;
-        }
-    }
+    std::vector<std::vector<char>> connections(roomProperties.size());
+    // for (char i = 0; i < roomProperties.size(); i++) {
+    //     if (roomProperties[i].side != RoomPosition::CENTER) {
+    //         occupiedSides[i][roomProperties[i].side] = 1;
+    //     }
+    // }
 
+    bool davai_po_novoi_misha = true;
 
-    for (char i = roomProperties.size() - 1; i >= 0; i--) {
-        
-    }
+    while (davai_po_novoi_misha) {
+
+        davai_po_novoi_misha = false;
+
+        for (char i = roomProperties.size() - 1; i >= 0; i--) {
+            for (char side = TOP; side <= LEFT; side++) {
+
+                if (roomProperties[i].side != RoomPosition::CENTER) {
+                    char generatedValue = getRandomValue(seed)%100;
+
+                    if (generatedValue < 30) {
+
+                        char destination = getRandomValue(seed)%roomProperties.size();
+                        if (destination != i) {
+
+                            char beginLine   = roomProperties[i].pos.m_line;
+                            char beginColumn = roomProperties[i].pos.m_column;
+
+                            if (side == TOP) {
+                                beginColumn -= 2;
+                            } else if (side == RIGHT) {
+                                beginLine += 2;
+                            } else if (side == BOTTOM) {
+                                beginColumn += 2;
+                            } else if (side == LEFT)  {
+                                beginLine  -= 2;
+                            }
+
+                            char endLine     = roomProperties[destination].pos.m_line;
+                            char endColumn   = roomProperties[destination].pos.m_column;
+
+                            if (CreatePath(beginLine, beginColumn, endLine, endColumn, seed, true)) {
+                                davai_po_novoi_misha = true;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            } // second for loop
+        } // first for loop
+
+    } // while loop
+
 }
 
 Map::Map()
