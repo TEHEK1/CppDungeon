@@ -18,8 +18,9 @@ bool Chest::comp(std::set<std::shared_ptr<Action>>::iterator actionIterator) {
 //            return true;
 //        }
 //    }
-    Use* use = dynamic_cast<Use*>((*actionIterator).get());
-    if (use->getChest() == this) {
+//std::dynamic_pointer_cast<Use>()
+    std::shared_ptr<Use> use = std::dynamic_pointer_cast<Use>((*actionIterator));
+    if (use && use->getChest() == this) {
         return true;
     }
     return false;

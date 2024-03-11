@@ -20,7 +20,7 @@ class Inventory;
 class Player{
     Position m_position;
     Inventory m_inventory;
-    std::set<std::shared_ptr<Action>> m_actions;
+    std::set<std::shared_ptr<Action>> m_squad;
     friend class ActionChanger;
     friend class PositionChanger;
     friend class InventoryChanger;
