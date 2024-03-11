@@ -410,36 +410,86 @@ Map::Map(int seed) {
         davai_po_novoi_misha = false;
 
         for (char i = roomProperties.size() - 1; i >= 0; i--) {
+            if (davai_po_novoi_misha) {
+                break;
+            }
             for (char side = TOP; side <= LEFT; side++) {
+                if (occupiedSides[i][side] == true) {
+                    continue;
+                }
 
+                char generatedValue;
                 if (roomProperties[i].side != RoomPosition::CENTER) {
-                    char generatedValue = getRandomValue(seed)%100;
+                    generatedValue = getRandomValue(seed)%100;
+                } else {
+                    generatedValue = 0;
+                }
 
-                    if (generatedValue < 30) {
+                if (generatedValue < 30) {
 
-                        char destination = getRandomValue(seed)%roomProperties.size();
-                        if (destination != i) {
+                    char destination = getRandomValue(seed)%roomProperties.size();
 
-                            char beginLine   = roomProperties[i].pos.m_line;
-                            char beginColumn = roomProperties[i].pos.m_column;
+                    while(destination == i) {
+                        destination = getRandomValue(seed)%roomProperties.size();
+                    }
 
-                            if (side == TOP) {
-                                beginColumn -= 2;
-                            } else if (side == RIGHT) {
-                                beginLine += 2;
-                            } else if (side == BOTTOM) {
-                                beginColumn += 2;
-                            } else if (side == LEFT)  {
-                                beginLine  -= 2;
+                    char beginLine   = roomProperties[i].pos.m_line;
+                    char beginColumn = roomProperties[i].pos.m_column;
+
+                    if (side == TOP) {
+                        beginColumn -= 2;
+                    } else if (side == RIGHT) {
+                        beginLine += 2;
+                    } else if (side == BOTTOM) {
+                        beginColumn += 2;
+                    } else if (side == LEFT)  {
+                        beginLine  -= 2;
+                    }
+
+                    char endLine     = roomProperties[destination].pos.m_line;
+                    char endColumn   = roomProperties[destination].pos.m_column;
+
+                    bool createdSuccessfuly = CreatePath(beginLine, beginColumn, endLine, endColumn, seed, true);
+
+                    if (createdSuccessfuly == false) {
+                        davai_po_novoi_misha = true;
+                        break;
+                    } else {
+                        connections[i].push_back(destination);
+                        connections[destination].push_back(i);
+
+                        occupiedSides[i][side] = true;
+                        for (char side_checker = TOP; side_checker <= LEFT; side_checker++) {
+                            if (occupiedSides[destination][side_checker] == false) {
+
+                                if (side_checker == TOP) {
+
+                                    if (m_contents[endLine][endColumn + 2] == CellType::CORIDOR) {
+                                        occupiedSides[destination][side_checker] = true;
+                                    }
+
+                                } else if (side_checker == RIGHT) {
+
+                                    if (m_contents[endLine + 2][endColumn] == CellType::CORIDOR) {
+                                        occupiedSides[destination][side_checker] = true;
+                                    }
+
+                                } else if (side_checker == BOTTOM) {
+
+                                    if (m_contents[endLine][endColumn - 2] == CellType::CORIDOR) {
+                                            occupiedSides[destination][side_checker] = true;
+                                    }
+
+                                } else if (side_checker  == LEFT) {
+
+                                    if (m_contents[endLine - 2][endColumn] == CellType::CORIDOR) {
+                                        occupiedSides[destination][side_checker] = true;
+                                    }
+
+                                }
+
                             }
-
-                            char endLine     = roomProperties[destination].pos.m_line;
-                            char endColumn   = roomProperties[destination].pos.m_column;
-
-                            if (CreatePath(beginLine, beginColumn, endLine, endColumn, seed, true)) {
-                                davai_po_novoi_misha = true;
-                            }
-
+                                
                         }
 
                     }
@@ -447,7 +497,25 @@ Map::Map(int seed) {
                 }
 
             } // second for loop
+
+            if (davai_po_novoi_misha) {
+                break;
+            }
+
         } // first for loop
+
+        // check for existance of room with 4 neighbours
+        bool flag = false;
+        for (char from  = 0; from < connections.size(); from++) {
+            if (connections[from].size() >= 4) {
+                flag = true;
+            }
+        }
+        if (flag == false) {
+            davai_po_novoi_misha = true;
+        } else {
+            // BFS for vertexes
+        }
 
     } // while loop
 

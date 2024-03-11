@@ -30,5 +30,6 @@ private:
     bool CreatePath (char begin_line, char begin_column, char end_line, char end_column, int seed, bool main_call);
     void DeleteNewCoridors();
     void SolidifyNewCoridors();
+    void HolocaustCoridors();
 };
 #endif //CPPDUNGEON_MAP_H
