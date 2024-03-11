@@ -21,8 +21,8 @@ Position Player::getPosition() {
     return m_position;
 }
 
-std::set<std::shared_ptr<Action>> Player::getActions() {
-    return m_actions;
+std::shared_ptr<Squad> Player::getActions() {
+    return m_squad;
 }
 
 Inventory Player::getInventory() {

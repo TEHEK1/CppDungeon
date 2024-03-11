@@ -9,18 +9,18 @@
 #include "Position.h"
 #include <set>
 #include <vector>
-
+#include "Squad.h"
 class Entity;
 class Position;
 class Map;
 class Monitor;
 class Action;
 class Inventory;
-
+class Squad;
 class Player{
     Position m_position;
     Inventory m_inventory;
-    std::set<std::shared_ptr<Action>> m_squad;
+    std::shared_ptr<Squad> m_squad;
     friend class ActionChanger;
     friend class PositionChanger;
     friend class InventoryChanger;
@@ -31,7 +31,7 @@ public:
     std::vector<std::shared_ptr<Entity>> getHeroes();
     Monitor* getMonitor();
     Position getPosition();
-    std::set<std::shared_ptr<Action>> getActions();
+    std::shared_ptr<Squad> getActions();
     Inventory getInventory();
     Map* getMap();
 };

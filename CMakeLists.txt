@@ -46,4 +46,5 @@ add_executable(CppDungeon
         src/Use.cpp
         src/DontUse.cpp
         src/Player.cpp
-        src/Inventory.cpp)
+        src/Inventory.cpp
+        include/Squad.h)
