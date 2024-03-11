@@ -8,8 +8,8 @@
 void Cell::freeMoves(Player * player, int index) {
     m_indexes.insert(index);
     if (m_indexes.size() == getEvents().size()) {
-        std::shared_ptr<Action>(new MoveLeft);
-        std::shared_ptr<Action>(new MoveRight);
+        addAction(player, std::shared_ptr<Action>(new MoveLeft));
+        addAction(player, std::shared_ptr<Action>(new MoveRight));
     }
 }
 

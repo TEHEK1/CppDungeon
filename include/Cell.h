@@ -6,7 +6,7 @@
 #define UNTITLED_CELL_H
 #include "Event.h"
 #include <vector>
-class Cell{
+class Cell: public ActionsChanger{
 public:
     void freeMoves(Player*, int);
     virtual void generateEvents() = 0;
