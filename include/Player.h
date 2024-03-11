@@ -8,6 +8,7 @@
 #include <set>
 #include "Inventory.h"
 #include "Entity.h"
+#include "Squad.h"
 #include "Position.h"
 
 class Hero;
@@ -25,6 +26,7 @@ class Player{
     friend class InventoryChanger;
 public:
     std::vector<std::shared_ptr<Entity>> getHeroes();
+    Squad getSquad();
     Monitor* getMonitor();
     Position getPosition();
     std::set<std::unique_ptr<Action>> getActions();
