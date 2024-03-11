@@ -31,7 +31,7 @@ public:
     std::vector<std::shared_ptr<Entity>> getHeroes();
     Monitor* getMonitor();
     Position getPosition();
-    std::shared_ptr<Squad> getActions();
+    std::shared_ptr<Squad> getSquad();
     Inventory getInventory();
     Map* getMap();
 };

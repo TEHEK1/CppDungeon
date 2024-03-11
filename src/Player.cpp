@@ -21,7 +21,7 @@ Position Player::getPosition() {
     return m_position;
 }
 
-std::shared_ptr<Squad> Player::getActions() {
+std::shared_ptr<Squad> Player::getSquad() {
     return m_squad;
 }
 

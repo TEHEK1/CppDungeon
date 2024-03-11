@@ -36,7 +36,7 @@ void Chest::turn(Player *player, int index) {
 }
 
 void Chest::use(Player *player, int  /*index*/) {
-    std::shared_ptr<Item> item = {};
+    std::shared_ptr<Item> item = std::make_shared<Item>();
     getInventory(player).addItem(item);
     removeAction(player, [this](std::set<std::shared_ptr<Action>>::iterator actionIterator){return comp(actionIterator);});
     used = true;
