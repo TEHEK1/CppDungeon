@@ -13,5 +13,9 @@ public:
     std::vector<Event*> getEvents();
     char getLevel();
     virtual ~Cell() = default;
+protected:
+    std::vector<std::shared_ptr<Event>> m_events;
+private:
+    std::set<int> m_indexes;
 };
 #endif //UNTITLED_CELL_H
