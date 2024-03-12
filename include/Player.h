@@ -21,6 +21,7 @@ class Player{
     Position m_position;
     Inventory m_inventory;
     std::shared_ptr<Squad> m_squad;
+    std::set<std::shared_ptr<Action>> m_actions;
     friend class ActionChanger;
     friend class PositionChanger;
     friend class InventoryChanger;
@@ -32,6 +33,7 @@ public:
     Monitor* getMonitor();
     Position getPosition();
     std::shared_ptr<Squad> getSquad();
+    std::set<std::shared_ptr<Action>> getActions();
     Inventory getInventory();
     Map* getMap();
 };

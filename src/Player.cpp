@@ -32,3 +32,7 @@ Inventory Player::getInventory() {
 Map* Player::getMap() {
     return m_map;
 }
+
+std::set<std::shared_ptr<Action>> Player::getActions() {
+    return m_actions;
+}
