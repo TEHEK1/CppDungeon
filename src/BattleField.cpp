@@ -51,4 +51,3 @@ bool BattleField::areAllies(std::shared_ptr<Entity> ent1, std::shared_ptr<Entity
     return ent1_squad == ent2_squad;
 }
 
-

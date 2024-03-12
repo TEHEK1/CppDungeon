@@ -33,4 +33,3 @@ void BattleFieldChanger::add(const std::shared_ptr<BattleField>& field, std::sha
     if (squad != nullptr) { throw std::logic_error("entity is already on the field"); }
     SquadChanger::add(squad, entity);
 }
-

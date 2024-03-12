@@ -1,3 +1,6 @@
+//
+// Created by Arseniy Borodulin on 10.03.2024.
+//
 #ifndef CPPDUNGEON_SQUAD_H
 #define CPPDUNGEON_SQUAD_H
 
