@@ -44,4 +44,7 @@ add_executable(CppDungeon
         include/PositionChanger.h
         include/SkillStorage.h
         src/Use.cpp
-        src/DontUse.cpp)
+        src/DontUse.cpp
+        src/Player.cpp
+        src/Inventory.cpp
+        include/Squad.h)
