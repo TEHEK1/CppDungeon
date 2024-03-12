@@ -23,6 +23,7 @@ void SquadChanger::move(const std::shared_ptr<Squad>& squad, int index1, int ind
         std::swap(tmp, squad->squad[ptr]);
         ptr += move_to;
     }
+    if (tmp != nullptr) squad->squad[index2] = tmp;
 }
 void SquadChanger::move(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>& entity, int index2) {
     for (int i = 0; i < squad->squad.size(); ++i) {
