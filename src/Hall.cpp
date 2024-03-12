@@ -7,14 +7,12 @@
 #include <vector>
 #include <random>
 
-std::random_device rd;
-std::mt19937 gen(rd());
-
 int random(int low, int high)
 {
+    std::random_device rd;
+    std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(low, high);
-    int random = dist(gen);
-    return random;
+    return dist(gen);
 }
 
 void Hall::generateEvents() {
