@@ -52,4 +52,7 @@ add_executable(CppDungeon
         include/Squad.h
         include/SquadChanger.h
         src/Use.cpp
-        src/DontUse.cpp)
+        src/DontUse.cpp
+        src/Player.cpp
+        src/Inventory.cpp
+        include/Squad.h)
