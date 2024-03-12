@@ -24,6 +24,7 @@ int Map::getSize() {
 
 bool Map::ValidForRoom(int line, int column) const {
 
+
     if ((line - 5 < MAP_SIZE/10) || (line + 5 > MAP_SIZE - MAP_SIZE/10)) {
         return false;
     }
@@ -270,13 +271,16 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
 
 
 void Map::PrintWholeMap() {
-    for (int i = 0; i < MAP_SIZE; i++) {
-        for (int j = 0; j < MAP_SIZE; j++) {
-            std::cout << (int)m_contents[i][j];
+    for (auto i : m_contents) {
+        for (auto j : i) {
+            if  (j == 0) {
+                std::cout << "  ";
+            } else {
+                std::cout << (int)j << ' ';
+            }
         }
-        std::cout<<std::endl;
+        std::cout << std::endl;
     }
-    std::cout <<  std::endl;
 }
 
 Map::Map(int seed) {
@@ -324,10 +328,11 @@ Map::Map(int seed) {
                 while (true) {
                     centerLine = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
                     centerColumn = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
-
-                    if ( ValidForRoom(centerLine, centerColumn) == true ) {
-                        break;
-                    }
+                    if (centerLine != roomProperties[7].pos.m_line && centerColumn != roomProperties[7].pos.m_column) {
+                        if ( ValidForRoom(centerLine, centerColumn) == true ) {
+                            break;
+                        }
+                    } 
                 }
 
                 for (char i = centerLine - 1; i <= centerLine + 1; i++) {
@@ -386,8 +391,13 @@ Map::Map(int seed) {
                     roomColumn = DEFAULT_POSITION + generator() % BIG_RANGE;
 
                 }
-
-                if ( ValidForRoom(roomLine, roomColumn) == true ) {
+                bool noLinearMatches = true;
+                for (int index = roomProperties.size() - 1; index >= roomsToGenerate; index--) {
+                    if (roomLine == roomProperties[index].pos.m_line || roomColumn == roomProperties[index].pos.m_column) {
+                        noLinearMatches = false;
+                    }
+                }
+                if ( ValidForRoom(roomLine, roomColumn) == true && noLinearMatches == true) {
                     break;
                 }
 
@@ -416,9 +426,15 @@ Map::Map(int seed) {
     std::vector<std::vector<char>> connections(roomProperties.size());
 
     bool davai_po_novoi_misha = true;
+    unsigned int iterationCounter = 0;
 
     while (davai_po_novoi_misha) {
 
+        if (iterationCounter > 1e+7) {
+            std::cout <<  "Generation failed\n";
+            break;
+        }
+        iterationCounter++;
         HolocaustCoridors();
         for (std::vector<char>& occupied : occupiedSides) {
             occupied = std::vector<char>(4, 0);
@@ -440,7 +456,7 @@ Map::Map(int seed) {
                 }
 
                 char generatedValue;
-                if (roomProperties[i].side != RoomPosition::CENTER) {
+                if (i == roomProperties.size() - 1) {
                     generatedValue = generator() % 100;
                 } else {
                     generatedValue = 0;
@@ -502,7 +518,11 @@ Map::Map(int seed) {
                         }
                         beginColumn--;
                     }
-                    m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                    if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
+                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                    } else {
+                        continue;
+                    }
 
                     char endLine     = roomProperties[destination].pos.m_line;
                     char endColumn   = roomProperties[destination].pos.m_column;
@@ -599,9 +619,9 @@ Map::Map(int seed) {
                 }
             }
         }
-        
+
     } // while loop
-    std::cout << "Generated successfuly\n";
+    std::cout << "Generated successfuly, seeded by " << seed << std::endl;
 }
 
 Map::Map()

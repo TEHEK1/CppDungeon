@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 11)
 include_directories(include)
 
 add_executable(ugabuga
-        main.cpp
+        tests/main.cpp
         # src/Chest.cpp
         # src/EmptyCell.cpp
         # src/ChooseRoomEvent.cpp

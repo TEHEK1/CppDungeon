@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main() {
-    Map test = Map(); // 1710271398
+    Map test = Map(1710271398); // 1710271398
     auto drawing = test.draw();
     for (auto i : drawing) {
         for (auto j : i) {
