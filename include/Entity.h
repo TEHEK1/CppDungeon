@@ -6,33 +6,34 @@
 #define UNTITLED_ENTITY_H
 #include <set>
 #include <memory>
+#include <map>
+#include <string>
+
 #include "Skill.h"
 #include "EntityChanger.h"
+#include "Effect.h"
+#include "Characteristic.h"
+
 class Skill;
 class EntityChanger;
+class Effect;
 class Entity{
 protected:
-    int m_accuracyModifier;
-    int m_criticalDamageChance;
-    int m_damage;
-    int m_dodge;
-    int m_defence;
-    int m_speed;
-    int m_HP;
-    int m_maxHP;
+    std::set<std::shared_ptr<Skill>> m_skills;
+    std::map<std::size_t, int> m_characteristics;
+    std::set<std::shared_ptr<Effect>> m_effects;
+    std::string m_name;
 
     friend class EntityChanger;
 public:
-    int getAccuracyModifier() const { return m_accuracyModifier; }
-    int getCriticalDamageChance() const { return m_criticalDamageChance; }
-    int getDamage() const { return m_damage; }
-    int getDodge() const { return m_dodge; }
-    int getDefence() const { return m_defence; }
-    int getSpeed() const { return m_speed; }
-    int getHP() const { return m_HP; }
-    int getMaxHP() const { return m_maxHP; }
-
-    std::set<std::shared_ptr<Skill>> getSkills() const;
+    virtual int get(size_t key) const;
+    virtual int get(Characteristic characteristic) const;
+    const std::set<std::shared_ptr<Effect>>& getEffects() const;
+    const std::set<std::shared_ptr<Skill>>& getSkills() const;
+    virtual std::string getName() const;
     virtual bool isAlive() const final;
+    virtual bool isTurnable() const final;
+    virtual bool dodged() const final;
+    virtual bool resisted(size_t effectHash) const final;
 };
 #endif //UNTITLED_ENTITY_H
