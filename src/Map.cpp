@@ -144,19 +144,8 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
         randomStep.m_line   = -1;
 
     } else if (begin_column == end_column || begin_line == end_line) {
-        char shiftingLine   = generator()%5 - 2;
-        char shiftingColumn = generator()%5 - 2;
-        char middle_line    = begin_line + (end_line - begin_line) / 2 +  shiftingLine;
-        char middle_column  = begin_column + (end_column - begin_column) / 2 +  shiftingColumn;
-        bool firstHalf      = CreatePath(begin_line, begin_column, middle_line, middle_column, seed, false);
-        bool secondHalf     = CreatePath(middle_line, middle_column, end_line, end_column, seed, false);
-        if (firstHalf && secondHalf) {
-            SolidifyNewCoridors();
-            return true;
-        } else {
-            DeleteNewCoridors();
-            return false;
-        }
+        DeleteNewCoridors();
+        return false;
     } 
 
     char height = end_column - begin_column;
@@ -430,10 +419,6 @@ Map::Map(int seed) {
 
     while (davai_po_novoi_misha) {
 
-        if (iterationCounter > 1e+7) {
-            std::cout <<  "Generation failed\n";
-            break;
-        }
         iterationCounter++;
         HolocaustCoridors();
         for (std::vector<char>& occupied : occupiedSides) {
