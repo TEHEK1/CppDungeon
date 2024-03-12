@@ -11,7 +11,7 @@
 #include <utility>
 class ChooseNextRoom:public Action, public PositionChanger{
 public:
-    ChooseNextRoom(std::pair<int, int>);
+    ChooseNextRoom(Position);
     void act(Player*) override;
 };
 #endif //CPPDUNGEON_CHOOSENEXTROOM_H

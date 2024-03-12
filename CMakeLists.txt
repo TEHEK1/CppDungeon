@@ -44,4 +44,7 @@ add_executable(CppDungeon
         include/PositionChanger.h
         include/SkillStorage.h
         src/Use.cpp
+        src/Cell.cpp
+        src/Room.cpp
+        src/Hall.cpp
         src/DontUse.cpp)
