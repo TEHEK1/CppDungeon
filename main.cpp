@@ -2,11 +2,15 @@
 #include <iostream>
 
 int main() {
-    Map test = Map(123456789);
+    Map test = Map();
     auto drawing = test.draw();
     for (auto i : drawing) {
         for (auto j : i) {
-            std::cout << (int)j << ' ';
+            if  (j == 0) {
+                std::cout << "  ";
+            } else {
+                std::cout << (int)j << ' ';
+            }
         }
         std::cout << std::endl;
     }

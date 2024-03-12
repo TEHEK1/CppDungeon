@@ -24,17 +24,17 @@ int Map::getSize() {
 
 bool Map::ValidForRoom(int line, int column) const {
 
-    if ((line - 3 < MAP_SIZE/10) || (line + 3 > MAP_SIZE - MAP_SIZE/10)) {
+    if ((line - 5 < MAP_SIZE/10) || (line + 5 > MAP_SIZE - MAP_SIZE/10)) {
         return false;
     }
-    if ((column - 3 < MAP_SIZE/10) || (column + 3 > MAP_SIZE - MAP_SIZE/10)) {
+    if ((column - 5 < MAP_SIZE/10) || (column + 5 > MAP_SIZE - MAP_SIZE/10)) {
         return false;
     }
 
-    const char beginLineCheck   = line - 3;
-    const char endLineCheck     = line + 3;
-    const char beginColumnCheck = column - 3;
-    const char endColumnCheck   = column + 3;
+    const char beginLineCheck   = line - 5;
+    const char endLineCheck     = line + 5;
+    const char beginColumnCheck = column - 5;
+    const char endColumnCheck   = column + 5;
 
     for (char i = beginLineCheck; i <= endLineCheck; i++) {
         for (char j = beginColumnCheck; j <= endColumnCheck; j++)  {
@@ -142,7 +142,21 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
         randomStep.m_column = 0;
         randomStep.m_line   = -1;
 
-    }
+    } else if (begin_column == end_column || begin_line == end_line) {
+        char shiftingLine   = generator()%5 - 2;
+        char shiftingColumn = generator()%5 - 2;
+        char middle_line    = begin_line + (end_line - begin_line) / 2 +  shiftingLine;
+        char middle_column  = begin_column + (end_column - begin_column) / 2 +  shiftingColumn;
+        bool firstHalf      = CreatePath(begin_line, begin_column, middle_line, middle_column, seed, false);
+        bool secondHalf     = CreatePath(middle_line, middle_column, end_line, end_column, seed, false);
+        if (firstHalf && secondHalf) {
+            SolidifyNewCoridors();
+            return true;
+        } else {
+            DeleteNewCoridors();
+            return false;
+        }
+    } 
 
     char height = end_column - begin_column;
 
@@ -165,14 +179,32 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
         if (specifyDirection == 0) {
             end.m_line   -= 2 * mainStep.m_line;
             end.m_column -= 2 * mainStep.m_column;
-            m_contents[end.m_line][end.m_column] = CellType::NEW_CORIDOR;
+            if (m_contents[end.m_line][end.m_column] == CellType::EMPTY) {
+
+                m_contents[end.m_line][end.m_column] = CellType::NEW_CORIDOR;
+
+            } else {
+
+                DeleteNewCoridors();
+                return false;
+
+            }
             end.m_line   -= mainStep.m_line;
             end.m_column -= mainStep.m_column;
 
         } else {
             end.m_line   -= 2 * randomStep.m_line;
             end.m_column -= 2 * randomStep.m_column;
-            m_contents[end.m_line][end.m_column] = CellType::NEW_CORIDOR;
+            if (m_contents[end.m_line][end.m_column] == CellType::EMPTY) {
+
+                m_contents[end.m_line][end.m_column] = CellType::NEW_CORIDOR;
+
+            } else {
+
+                DeleteNewCoridors();
+                return false;
+
+            }
             end.m_line   -= randomStep.m_line;
             end.m_column -= randomStep.m_column;
         }
@@ -238,8 +270,8 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
 
 
 void Map::PrintWholeMap() {
-    for (int i = 5; i < 45; i++) {
-        for (int j = 5; j < 45; j++) {
+    for (int i = 0; i < MAP_SIZE; i++) {
+        for (int j = 0; j < MAP_SIZE; j++) {
             std::cout << (int)m_contents[i][j];
         }
         std::cout<<std::endl;
@@ -377,6 +409,8 @@ Map::Map(int seed) {
 
     }
 
+    //PrintWholeMap();
+
     // connecting rooms
     std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, 0));
     std::vector<std::vector<char>> connections(roomProperties.size());
@@ -386,8 +420,8 @@ Map::Map(int seed) {
     while (davai_po_novoi_misha) {
 
         HolocaustCoridors();
-        for (std::vector<char>& occupatied : occupiedSides) {
-            occupatied = std::vector<char>(4, 0);
+        for (std::vector<char>& occupied : occupiedSides) {
+            occupied = std::vector<char>(4, 0);
         }
 
         for (std::vector<char>& paths : connections) {
@@ -412,7 +446,7 @@ Map::Map(int seed) {
                     generatedValue = 0;
                 }
 
-                if (generatedValue < 30) {
+                if (generatedValue < 50) {
 
                     bool needNewDestination  = true;
                     char destination;  
@@ -437,19 +471,35 @@ Map::Map(int seed) {
 
                     if (side == TOP) {
                         beginLine -= 2;
-                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
+                            m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        } else {
+                            continue;
+                        }
                         beginLine--;
                     } else if (side == RIGHT) {
                         beginColumn += 2;
-                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
+                            m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        } else {
+                            continue;
+                        }
                         beginColumn++;
                     } else if (side == BOTTOM) {
                         beginLine += 2;
-                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
+                            m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        } else {
+                            continue;
+                        }
                         beginLine++;
                     } else if (side == LEFT)  {
                         beginColumn -= 2;
-                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
+                            m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        } else {
+                            continue;
+                        }
                         beginColumn--;
                     }
                     m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
@@ -460,7 +510,9 @@ Map::Map(int seed) {
                     bool createdSuccessfuly = CreatePath(beginLine, beginColumn, endLine, endColumn, seed, true);
 
                     if (createdSuccessfuly == false) {
-                        davai_po_novoi_misha = true;
+                        if (roomProperties[i].side == RoomPosition::CENTER) {
+                            davai_po_novoi_misha = true;
+                        }
                         break;
                     } else {
                         connections[i].push_back(destination);
@@ -509,6 +561,7 @@ Map::Map(int seed) {
             if (davai_po_novoi_misha) {
                 break;
             }
+            //PrintWholeMap();
 
         } // first for loop
 
@@ -540,15 +593,15 @@ Map::Map(int seed) {
                 }
 
                 for (char visited : checked) {
-                    if (visited  == 0) {
+                    if (visited == 0) {
                         davai_po_novoi_misha  = true;
                     }
                 }
             }
         }
         
-
     } // while loop
+    std::cout << "Generated successfuly\n";
 }
 
 Map::Map()

@@ -34,6 +34,7 @@ private:
     void DeleteNewCoridors();
     void SolidifyNewCoridors();
     void HolocaustCoridors();
+    void CastrateLooseEnds();
     std::mt19937 generator;
 };
 
