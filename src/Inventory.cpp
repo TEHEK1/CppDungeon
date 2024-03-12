@@ -3,11 +3,11 @@
 //
 #include "Inventory.h"
 #include <set>
-void Inventory::addItem(std::shared_ptr<Item>& item) {
+void Inventory::addItem(const std::shared_ptr<Item>& item) {
     m_items.insert(item);
 }
 
-void Inventory::removeItem(std::shared_ptr<Item>& item) {
+void Inventory::removeItem(const std::shared_ptr<Item>& item) {
     m_items.erase(item);
 }
 
