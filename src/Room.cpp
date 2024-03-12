@@ -15,18 +15,17 @@ std::mt19937 gen(rd());
 int random(int low, int high)
 {
     std::uniform_int_distribution<> dist(low, high);
-    return dist(gen);
+    int random = dist(gen);
+    return random;
 }
 
 void Room::generateEvents(){
-    int random1 = random(1,2);
-    int random2 = random(1,2);
-    if(random1 == 1) {
+    if(random(1,2) == 1) {
         m_events.push_back(std::shared_ptr<Event>(new EmptyCell));
     }else{
         m_events.push_back(std::shared_ptr<Event>(new Chest));
     }
-    if(random2 == 1) {
+    if(random(1,2) == 1) {
         m_events.push_back(std::shared_ptr<Event>(new EmptyCell));
     }else{
         m_events.push_back(std::shared_ptr<Event>(new Chest));
