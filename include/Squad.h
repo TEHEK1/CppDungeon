@@ -11,6 +11,6 @@ class Squad {
     std::vector<std::shared_ptr<Entity>> m_entities;
 public:
     Squad(std::vector<std::shared_ptr<Entity>>);
-    std::vector<std::shared_ptr<Entity>> getEntities()
+    std::vector<std::shared_ptr<Entity>> getEntities();
 };
 #endif //CPPDUNGEON_SQUAD_H
