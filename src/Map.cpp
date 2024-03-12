@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 
-namespace {
 
 constexpr int MAP_SIZE = 50; // doesn't depenend on window size
 constexpr int MINIMAL_ROOMS = 5;
@@ -14,14 +13,6 @@ struct Room {
     char side;
     Position pos;
 };
-
-int Map::getRandomValue(int seed) {
-    #ifndef GENERATOR_RANDOM_SEED
-        #define GENERATOR_RANDOM_SEED
-        srand(seed);
-    #endif
-    return rand();
-}
 
 std::vector<std::vector<char>> Map::draw() {
     return m_contents;
@@ -52,16 +43,15 @@ bool Map::ValidForRoom(int line, int column) const {
             }
         }
     }
-
     return true;
 }
 
 bool Map::ValidForCoridor(int line, int column) const  {
 
-    if (line < 0  || line >= MAP_SIZE) {
+    if (line < 2  || line >= MAP_SIZE - 2) {
         return false;
     }
-    if (column < 0  || column >= MAP_SIZE) {
+    if (column < 2  || column >= MAP_SIZE - 2) {
         return false;
     }
 
@@ -72,7 +62,7 @@ bool Map::ValidForCoridor(int line, int column) const  {
     
     for (char i = beginLineCheck; i <= endLineCheck; i++) {
         for (char j = beginColumnCheck; j <= endColumnCheck; j++)  {
-            if (m_contents[i][j] != CellType::EMPTY && m_contents[i][j] != NEW_CORIDOR) {
+            if (!(m_contents[i][j] == CellType::EMPTY || m_contents[i][j] == NEW_CORIDOR)) {
                 return false;
             }
         }
@@ -82,8 +72,8 @@ bool Map::ValidForCoridor(int line, int column) const  {
 }
 
 void Map::DeleteNewCoridors() {
-    for (std::vector<char> i : m_contents) {
-        for (char j : i) {
+    for (std::vector<char>& i : m_contents) {
+        for (char& j : i) {
             if (j == CellType::NEW_CORIDOR) {
                 j = CellType::EMPTY;
             }
@@ -92,10 +82,20 @@ void Map::DeleteNewCoridors() {
 }
 
 void Map::SolidifyNewCoridors() {
-    for (std::vector<char> i : m_contents) {
-        for (char j : i) {
+    for (std::vector<char>& i : m_contents) {
+        for (char& j : i) {
             if (j == CellType::NEW_CORIDOR) {
                 j = CellType::CORIDOR;
+            }
+        }
+    }
+}
+
+void Map::HolocaustCoridors() {
+    for (std::vector<char>& i : m_contents) {
+        for (char& j : i) {
+            if (j == CellType::CORIDOR) {
+                j = CellType::EMPTY;
             }
         }
     }
@@ -139,48 +139,8 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
 
         mainStep.m_column   = -1;
         mainStep.m_line     = 0;
-        randomStep.m_column = -1;
-        randomStep.m_line   = 0;
-
-    } else if (begin_column == end_column) {
-
-        char middle_line = (end_line + begin_line)/2;
-        char middle_column = begin_column + (getRandomValue(seed) % 5 - 2);
-
-        bool firstHalf = CreatePath(begin_line, begin_column, middle_line, middle_column, seed, false);
-        bool secondHalf = CreatePath(middle_line, middle_column, end_line, end_column, seed, false);
-
-        if (firstHalf && secondHalf == true) {
-            if (main_call == true) {
-                SolidifyNewCoridors();
-            }
-            return true;
-        } else {
-            if (main_call == true) {
-                DeleteNewCoridors();
-            }
-            return false;
-        }
-
-    } else if (begin_line == end_line) {
-
-        char middle_column = (end_column + begin_column)/2;
-        char middle_line = begin_line + (getRandomValue(seed) % 5 - 2);
-
-        bool firstHalf = CreatePath(begin_line, begin_column, middle_line, middle_column, seed, false);
-        bool secondHalf = CreatePath(middle_line, middle_column, end_line, end_column, seed, false);
-
-        if (firstHalf && secondHalf == true) {
-            if (main_call == true) {
-                SolidifyNewCoridors();
-            }
-            return true;
-        } else {
-            if (main_call == true) {
-                DeleteNewCoridors();
-            }
-            return false;
-        }
+        randomStep.m_column = 0;
+        randomStep.m_line   = -1;
 
     }
 
@@ -200,20 +160,29 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
     }
 
     if (main_call == true) {
-        char specifyDirection = getRandomValue(seed)%2;
+        char specifyDirection = generator() % 2;
 
         if (specifyDirection == 0) {
-            end_line   -= 2 * mainStep.m_line;
-            end_column -= 2 * mainStep.m_column;
-        }  else {
-            end_line   -= 2 * randomStep.m_line;
-            end_column -= 2 * randomStep.m_column;
+            end.m_line   -= 2 * mainStep.m_line;
+            end.m_column -= 2 * mainStep.m_column;
+            m_contents[end.m_line][end.m_column] = CellType::NEW_CORIDOR;
+            end.m_line   -= mainStep.m_line;
+            end.m_column -= mainStep.m_column;
+
+        } else {
+            end.m_line   -= 2 * randomStep.m_line;
+            end.m_column -= 2 * randomStep.m_column;
+            m_contents[end.m_line][end.m_column] = CellType::NEW_CORIDOR;
+            end.m_line   -= randomStep.m_line;
+            end.m_column -= randomStep.m_column;
         }
+
+        bool flag = CreatePath(begin.m_line, begin.m_column, end.m_line, end.m_column, seed, false);
+        return flag;
 
     }
     
-
-    while (current.m_column != end.m_column  &&  current.m_line != end.m_line) {
+    while (current.m_column != end.m_column || current.m_line != end.m_line) {
 
         int odds;
 
@@ -238,7 +207,8 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
                 odds = 0;
             }
         }
-        int generatedValue = getRandomValue(seed)%100;
+
+        int generatedValue = generator()%100;
 
         if (generatedValue < odds) {
 
@@ -259,21 +229,35 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
             return false;
         }
 
-    }  
+    }
+    
 
     SolidifyNewCoridors();
     return true;
 }
 
 
+void Map::PrintWholeMap() {
+    for (int i = 5; i < 45; i++) {
+        for (int j = 5; j < 45; j++) {
+            std::cout << (int)m_contents[i][j];
+        }
+        std::cout<<std::endl;
+    }
+    std::cout <<  std::endl;
+}
+
 Map::Map(int seed) {
 
+    generator.seed(seed);
+
     m_contents.resize(MAP_SIZE); // zero means empty cell
-    for (auto line : m_contents) {
+    for (std::vector<char>& line : m_contents) {
         line.resize(MAP_SIZE);
     }
 
-    char roomsToGenerate     = MINIMAL_ROOMS + (getRandomValue(seed) % 4); // we will have from 5 to 8 rooms
+    char roomsToGenerate = MINIMAL_ROOMS + (generator() % 4); // we will have from 5 to 8 rooms
+
     const short CENTER_BEGIN = (MAP_SIZE / 2) - (MAP_SIZE / 10);
     bool generatedCenter     = false;
     std::vector<std::vector<char>> roomCounter;
@@ -283,13 +267,13 @@ Map::Map(int seed) {
 
     std::vector<std::vector<char>> availablePaths(roomsToGenerate, std::vector<char>());
     
-    // generating rooms
+    // generating rooms (works!)
     while (roomsToGenerate > 0) {
 
         if (generatedCenter == false) { // generating center rooms
 
-            char centerLine = CENTER_BEGIN + (getRandomValue(seed) % (MAP_SIZE / 5));
-            char centerColumn = CENTER_BEGIN + (getRandomValue(seed) % (MAP_SIZE / 5));
+            char centerLine = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
+            char centerColumn = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
 
             for (char i = centerLine - 1; i <= centerLine + 1; i++) {
                 for (char j = centerColumn - 1; j <= centerColumn + 1; j++) {
@@ -303,10 +287,11 @@ Map::Map(int seed) {
             roomProperties[roomsToGenerate].pos.m_column = centerColumn;
             // generaing first center room
 
+
             if (roomsToGenerate == 7) {
                 while (true) {
-                    centerLine = CENTER_BEGIN + (getRandomValue(seed) % (MAP_SIZE / 5));
-                    centerColumn = CENTER_BEGIN + (getRandomValue(seed) % (MAP_SIZE / 5));
+                    centerLine = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
+                    centerColumn = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
 
                     if ( ValidForRoom(centerLine, centerColumn) == true ) {
                         break;
@@ -320,18 +305,18 @@ Map::Map(int seed) {
                 }
                 //generating second center room
 
-            }
+                roomsToGenerate--;
+                roomProperties[roomsToGenerate].side         = RoomPosition::CENTER;
+                roomProperties[roomsToGenerate].pos.m_line   = centerLine;
+                roomProperties[roomsToGenerate].pos.m_column = centerColumn;
 
-            roomsToGenerate--;
-            roomProperties[roomsToGenerate].side         = RoomPosition::CENTER;
-            roomProperties[roomsToGenerate].pos.m_line   = centerLine;
-            roomProperties[roomsToGenerate].pos.m_column = centerColumn;
+            }
 
             generatedCenter = true;
 
         } else { // generating ordinary rooms
 
-            char roomPosition = (getRandomValue(seed) % 4);
+            char roomPosition = (generator() % 4);
 
             while (roomCounter[roomPosition].size() >= 2) { // preventing overloads
                 roomPosition = (roomPosition + 1) % 4;
@@ -350,23 +335,23 @@ Map::Map(int seed) {
 
                 if (roomPosition == RoomPosition::BOTTOM) {
 
-                    roomLine   = MOVED_POSITION + getRandomValue(seed) % SMALL_RANGE;
-                    roomColumn = DEFAULT_POSITION + getRandomValue(seed) % BIG_RANGE;
+                    roomLine   = MOVED_POSITION + generator() % SMALL_RANGE;
+                    roomColumn = DEFAULT_POSITION + generator() % BIG_RANGE;
 
                 } else if (roomPosition == RoomPosition::LEFT) {
 
-                    roomLine   = DEFAULT_POSITION + getRandomValue(seed) % BIG_RANGE;
-                    roomColumn = DEFAULT_POSITION + getRandomValue(seed) % SMALL_RANGE;
+                    roomLine   = DEFAULT_POSITION + generator() % BIG_RANGE;
+                    roomColumn = DEFAULT_POSITION + generator() % SMALL_RANGE;
 
                 } else if (roomPosition == RoomPosition::RIGHT) {
 
-                    roomLine   = DEFAULT_POSITION + getRandomValue(seed) % BIG_RANGE;
-                    roomColumn = MOVED_POSITION + getRandomValue(seed) % SMALL_RANGE;
+                    roomLine   = DEFAULT_POSITION + generator() % BIG_RANGE;
+                    roomColumn = MOVED_POSITION + generator() % SMALL_RANGE;
 
                 } else { // TOP
 
-                    roomLine   = DEFAULT_POSITION + getRandomValue(seed) % SMALL_RANGE;
-                    roomColumn = DEFAULT_POSITION + getRandomValue(seed) % BIG_RANGE;
+                    roomLine   = DEFAULT_POSITION + generator() % SMALL_RANGE;
+                    roomColumn = DEFAULT_POSITION + generator() % BIG_RANGE;
 
                 }
 
@@ -392,20 +377,22 @@ Map::Map(int seed) {
 
     }
 
-    // generating coridors
-
     // connecting rooms
     std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, 0));
     std::vector<std::vector<char>> connections(roomProperties.size());
-    // for (char i = 0; i < roomProperties.size(); i++) {
-    //     if (roomProperties[i].side != RoomPosition::CENTER) {
-    //         occupiedSides[i][roomProperties[i].side] = 1;
-    //     }
-    // }
 
     bool davai_po_novoi_misha = true;
 
     while (davai_po_novoi_misha) {
+
+        HolocaustCoridors();
+        for (std::vector<char>& occupatied : occupiedSides) {
+            occupatied = std::vector<char>(4, 0);
+        }
+
+        for (std::vector<char>& paths : connections) {
+            paths = std::vector<char>();
+        }
 
         davai_po_novoi_misha = false;
 
@@ -420,31 +407,52 @@ Map::Map(int seed) {
 
                 char generatedValue;
                 if (roomProperties[i].side != RoomPosition::CENTER) {
-                    generatedValue = getRandomValue(seed)%100;
+                    generatedValue = generator() % 100;
                 } else {
                     generatedValue = 0;
                 }
 
                 if (generatedValue < 30) {
 
-                    char destination = getRandomValue(seed)%roomProperties.size();
+                    bool needNewDestination  = true;
+                    char destination;  
 
-                    while(destination == i) {
-                        destination = getRandomValue(seed)%roomProperties.size();
+                    while(needNewDestination == true) {
+                        needNewDestination =  false;
+                        destination = generator() % roomProperties.size();
+                        if (destination == i) {
+                            needNewDestination = true;
+                        } else {
+                            for (int iter = 0; iter < connections[i].size(); iter++) {
+                                if (connections[i][iter] == destination) {
+                                    needNewDestination = true;
+                                }
+                            }
+                        }
+                        
                     }
 
                     char beginLine   = roomProperties[i].pos.m_line;
                     char beginColumn = roomProperties[i].pos.m_column;
 
                     if (side == TOP) {
-                        beginColumn -= 2;
+                        beginLine -= 2;
+                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        beginLine--;
                     } else if (side == RIGHT) {
-                        beginLine += 2;
-                    } else if (side == BOTTOM) {
                         beginColumn += 2;
+                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        beginColumn++;
+                    } else if (side == BOTTOM) {
+                        beginLine += 2;
+                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        beginLine++;
                     } else if (side == LEFT)  {
-                        beginLine  -= 2;
+                        beginColumn -= 2;
+                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        beginColumn--;
                     }
+                    m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
 
                     char endLine     = roomProperties[destination].pos.m_line;
                     char endColumn   = roomProperties[destination].pos.m_column;
@@ -504,24 +512,44 @@ Map::Map(int seed) {
 
         } // first for loop
 
-        // check for existance of room with 4 neighbours
-        bool flag = false;
-        for (char from  = 0; from < connections.size(); from++) {
-            if (connections[from].size() >= 4) {
-                flag = true;
+        if (davai_po_novoi_misha == false) {
+            // check for existance of room with 4 neighbours
+            bool flag = false;
+            for (char from  = 0; from < connections.size(); from++) {
+                if (connections[from].size() >= 4) {
+                    flag = true;
+                }
+            }
+            if (flag == false) {
+                davai_po_novoi_misha = true;
+            } else {
+                // BFS for vertexes
+                std::queue<char> vertex;
+                std::vector<char> checked(roomProperties.size(), 0);
+                vertex.push(0);
+                while (!vertex.empty()) {
+                    char tmp = vertex.front();
+                    vertex.pop();
+                    checked[tmp] = 1;
+                    for (char iter = 0; iter < connections[tmp].size(); iter++) {
+                        if (checked[connections[tmp][iter]] == 0) {
+                            vertex.push(connections[tmp][iter]);
+                            checked[connections[tmp][iter]] = 1;
+                        }
+                    }
+                }
+
+                for (char visited : checked) {
+                    if (visited  == 0) {
+                        davai_po_novoi_misha  = true;
+                    }
+                }
             }
         }
-        if (flag == false) {
-            davai_po_novoi_misha = true;
-        } else {
-            // BFS for vertexes
-        }
+        
 
     } // while loop
-
 }
 
 Map::Map()
 : Map::Map(time(NULL)) {}
-
-} // namespace

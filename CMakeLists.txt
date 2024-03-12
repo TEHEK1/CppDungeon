@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.27)
-project(CppDungeon)
+project(ugabuga)
 
 set(CMAKE_CXX_STANDARD 11)
 
 include_directories(include)
 
-add_executable(CppDungeon
+add_executable(ugabuga
         main.cpp
-        src/Chest.cpp
-        src/EmptyCell.cpp
-        src/ChooseRoomEvent.cpp
+        # src/Chest.cpp
+        # src/EmptyCell.cpp
+        # src/ChooseRoomEvent.cpp
         include/Action.h
         include/Board.h
         include/Cell.h
@@ -43,5 +43,6 @@ add_executable(CppDungeon
         include/ActionsChanger.h
         include/PositionChanger.h
         include/SkillStorage.h
-        src/Use.cpp
-        src/DontUse.cpp)
+        # src/Use.cpp
+        # src/DontUse.cpp
+        src/Map.cpp)

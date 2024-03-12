@@ -6,7 +6,11 @@
 #define CPPDUNGEON_MAP_H
 #include "Cell.h"
 #include "Position.h"
-class Map{
+#include <queue>
+#include <ctime>
+#include <random>
+
+class Map final {
 public:
     explicit Map(int);
     Map();
@@ -19,17 +23,18 @@ public:
     std::pair<int,int> getNextRoom();
     std::vector<std::vector<char>> draw();
     int getSize();
+    void PrintWholeMap();
 private:
     std::vector<std::vector<char>> m_contents;
     bool ValidForRoom(int line, int column) const;
     bool ValidForCoridor(int line, int column) const;
-    void GeneratePath(char A, char A_side, char B, char B_side) const; // creates path between A and B
-    int getRandomValue(int seed);
     int m_size;
     std::vector< std::pair<int, int> > m_rooms;
     bool CreatePath (char begin_line, char begin_column, char end_line, char end_column, int seed, bool main_call);
     void DeleteNewCoridors();
     void SolidifyNewCoridors();
     void HolocaustCoridors();
+    std::mt19937 generator;
 };
+
 #endif //CPPDUNGEON_MAP_H
