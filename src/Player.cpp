@@ -1,13 +1,13 @@
 //
 // Created by artem on 08.03.2024.
 //
+#include <memory>
 #include "Action.h"
 #include "Entity.h"
-#include <memory>
-#include "Monitor.h"
-#include "Position.h"
-#include "Player.h"
 #include "Inventory.h"
+#include "Monitor.h"
+#include "Player.h"
+#include "Position.h"
 
 std::vector<std::shared_ptr<Entity>> Player::getHeroes() {
     return m_heroes;
