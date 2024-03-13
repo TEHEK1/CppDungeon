@@ -6,9 +6,10 @@
 #define UNTITLED_ENTITY_H
 #include <vector>
 #include <set>
-#include "Effect.h"
+#include "effects/Effect.h"
 #include "trick.h"
 class Skill;
+class EntityChanger;
 class Entity{
 protected:
     int AccuracyModifier;
@@ -18,9 +19,10 @@ protected:
     int Defence;
     int Speed;
     int HP;
-
+    friend EntityChanger;
     std::set<std::shared_ptr<effects::Effect>> m_effects;
 public:
+    int get(size_t);
     Entity(int accuracyModifier, int criticalDamagehance, int damage,
             int dodge, int defence, int speed, int HP);
     std::vector<Skill*> getSkills();

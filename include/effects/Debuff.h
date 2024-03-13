@@ -4,7 +4,7 @@
 
 #ifndef CPPDUNGEON_DEBUFF_H
 #define CPPDUNGEON_DEBUFF_H
-#include "Effect.h"
+#include "effects/Effect.h"
 
 namespace effects {
     class Debuff: public Effect {

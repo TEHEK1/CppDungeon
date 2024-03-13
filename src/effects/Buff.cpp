@@ -1,8 +1,8 @@
 //
 // Created by artem on 12.03.2024.
 //
-#include "Buff.h"
-#include "Effect.h"
+#include "effects/Buff.h"
+#include "effects/Effect.h"
 #include "Entity.h"
 namespace effects {
     Buff::Buff(std::weak_ptr<Entity> entity, int numberOfTurns, std::map<size_t, int> modifier) : Effect(entity, modifier) {
@@ -15,7 +15,7 @@ namespace effects {
 
     void Buff::turn() {
         --m_numberOfTurns;
-        if (m_numberOfTurns <= 0) {
+        if (m_numberOfTurns < 0) {
             endBattleTurn();
         }
     }

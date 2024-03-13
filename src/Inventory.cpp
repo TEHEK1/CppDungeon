@@ -3,7 +3,6 @@
 //
 #include "Inventory.h"
 #include <set>
-
 void Inventory::addItem(const std::shared_ptr<Item>& item) {
     m_items.insert(item);
 }

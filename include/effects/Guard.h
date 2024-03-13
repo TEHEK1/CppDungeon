@@ -5,7 +5,7 @@
 #ifndef CPPDUNGEON_GUARD_H
 #define CPPDUNGEON_GUARD_H
 #include <memory>
-#include "Buff.h"
+#include "effects/Buff.h"
 namespace effects {
     class Guard: public Buff {
     public:

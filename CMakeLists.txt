@@ -48,21 +48,41 @@ add_executable(CppDungeon
         src/Player.cpp
         src/Inventory.cpp
         include/Squad.h
-        include/Effect.h
-        src/Effect.cpp
-        include/Buff.h
-        src/Buff.cpp
-        include/Guard.h
-        src/Guard.cpp
-        include/Debuff.h
-        src/Debuff.cpp
-        include/Stun.h
-        src/Stun.cpp
-        include/PassiveBuff.h
+        include/effects/Effect.h
+        src/effects/Effect.cpp
+        include/effects/Buff.h
+        src/effects/Buff.cpp
+        include/effects/Guard.h
+        src/effects/Guard.cpp
+        include/effects/Debuff.h
+        src/effects/Debuff.cpp
+        include/effects/Stun.h
+        src/effects/Stun.cpp
+        include/effects/PassiveBuff.h
         include/trick.h
-        src/PassiveBuff.cpp
-        include/PassiveDebuff.h
-        src/PassiveDebuff.cpp
-        include/Disease.h
-        src/Disease.cpp
-)
+        src/effects/PassiveBuff.cpp
+        include/effects/PassiveDebuff.h
+        src/effects/PassiveDebuff.cpp
+        include/effects/Disease.h
+        src/effects/Disease.cpp
+        include/effects/AutoAction.h
+        src/effects/AutoAction.cpp
+        include/EntityChanger.h
+        include/effects/Bleed.h
+        src/effects/Bleed.cpp
+        include/effects/Blight.h
+        src/effects/Blight.cpp
+        include/effects/ImmediateEffect.h
+        src/effects/ImmediateEffect.cpp
+        include/effects/Damage.h
+        src/effects/Damege.cpp
+        include/effects/Heal.h
+        src/effects/Heal.cpp
+        include/effects/PercentHeal.h
+        src/effects/PercentHeal.cpp
+        include/effects/Move.h
+        include/BattleField.h
+        src/effects/Move.cpp
+        include/effects/ForceMove.h
+        src/effects/ForceMove.cpp)
+

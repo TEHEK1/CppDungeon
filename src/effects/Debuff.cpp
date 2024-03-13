@@ -1,8 +1,8 @@
 //
 // Created by artem on 12.03.2024.
 //
-#include "Debuff.h"
-#include "Effect.h"
+#include "effects/Debuff.h"
+#include "effects/Effect.h"
 #include "Entity.h"
 
 namespace effects {
@@ -16,7 +16,7 @@ namespace effects {
 
     void Debuff::turn() {
         --m_numberOfTurns;
-        if (m_numberOfTurns <= 0) {
+        if (m_numberOfTurns < 0) {
             endBattleTurn();
         }
     }
