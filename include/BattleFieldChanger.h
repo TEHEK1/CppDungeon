@@ -4,5 +4,14 @@
 
 #ifndef CPPDUNGEON_BATTLEFIELDCHANGER_H
 #define CPPDUNGEON_BATTLEFIELDCHANGER_H
+#include "BattleField.h"
+
+class BattleFieldChanger {
+  static void move(const std::shared_ptr<BattleField>&, std::shared_ptr<Entity> entity, int index2);
+  static void relativeMove(const std::shared_ptr<BattleField>&, std::shared_ptr<Entity>entity, int offset);
+  static void remove(const std::shared_ptr<BattleField>&, std::shared_ptr<Entity>entity);
+  static void add(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity>entity, int index);
+  static void add(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity>entity);
+};
 
 #endif //CPPDUNGEON_BATTLEFIELDCHANGER_H
