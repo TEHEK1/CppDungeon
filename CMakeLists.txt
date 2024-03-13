@@ -47,4 +47,22 @@ add_executable(CppDungeon
         src/DontUse.cpp
         src/Player.cpp
         src/Inventory.cpp
-        include/Squad.h)
+        include/Squad.h
+        include/Effect.h
+        src/Effect.cpp
+        include/Buff.h
+        src/Buff.cpp
+        include/Guard.h
+        src/Guard.cpp
+        include/Debuff.h
+        src/Debuff.cpp
+        include/Stun.h
+        src/Stun.cpp
+        include/PassiveBuff.h
+        include/trick.h
+        src/PassiveBuff.cpp
+        include/PassiveDebuff.h
+        src/PassiveDebuff.cpp
+        include/Disease.h
+        src/Disease.cpp
+)
