@@ -3,12 +3,13 @@
 //
 #ifndef CPPDUNGEON_SQUAD_H
 #define CPPDUNGEON_SQUAD_H
-
-#include "Entity.h"
+#include <memory>
+#include <vector>
+class Entity;
 
 class Squad {
 private:
-    std::vector<std::shared_ptr<Entity>> squad;
+    std::vector<std::shared_ptr<Entity>> m_squad;
 public:
     explicit Squad(std::vector<std::shared_ptr<Entity>> new_squad);
     Squad(std::vector<std::shared_ptr<Entity>> new_squad, int size);

@@ -4,8 +4,9 @@
 
 #ifndef CPPDUNGEON_SQUADCHANGER_H
 #define CPPDUNGEON_SQUADCHANGER_H
-
-#include "Squad.h"
+#include "memory"
+class Squad;
+class Entity;
 
 class SquadChanger {
 public:

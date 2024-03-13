@@ -4,12 +4,16 @@
 
 #ifndef CPPDUNGEON_BATTLEFIELD_H
 #define CPPDUNGEON_BATTLEFIELD_H
-#include "Squad.h"
+#include "memory"
+class Squad;
+class Entity;
 
 class BattleField {
-    std::shared_ptr<Squad> ally;
-    std::shared_ptr<Squad> enemy;
+private:
+    std::shared_ptr<Squad> m_ally;
+    std::shared_ptr<Squad> m_enemy;
 
+public:
     BattleField(std::shared_ptr<Squad>& ally, std::shared_ptr<Squad>& enemy);
     std::vector<std::shared_ptr<Entity>> getEntities() const;
     std::shared_ptr<Squad> getSquad(std::shared_ptr<Entity>& target) const;
