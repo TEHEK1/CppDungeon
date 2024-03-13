@@ -48,3 +48,7 @@ add_executable(CppDungeon
         src/Room.cpp
         src/Hall.cpp
         src/DontUse.cpp)
+        src/DontUse.cpp
+        src/Player.cpp
+        src/Inventory.cpp
+        include/Squad.h)
