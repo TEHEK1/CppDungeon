@@ -24,7 +24,7 @@ namespace effects {
             endBattleTurn();
         }
         for (auto i : m_turner) {
-            
+            set(i.first, i.second + m_entity.lock().get()->get(i.first));
         }
     }
 
