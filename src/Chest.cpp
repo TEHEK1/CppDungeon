@@ -13,11 +13,16 @@
 #include "Monitor.h"
 
 bool Chest::comp(std::set<std::shared_ptr<Action>>::iterator actionIterator) {
-    if (typeid(*((*actionIterator).get())) == typeid(Use)) {
-        Use* use = static_cast<Use*>((*actionIterator).get());
-        if (use->getChest() == this) {
-            return true;
-        }
+//    if (typeid(*((*actionIterator).get())) == typeid(Use)) {
+//        Use* use = static_cast<Use*>((*actionIterator).get());
+//        if (use->getChest() == this) {
+//            return true;
+//        }
+//    }
+//std::dynamic_pointer_cast<Use>()
+    std::shared_ptr<Use> use = std::dynamic_pointer_cast<Use>((*actionIterator));
+    if (use && use->getChest() == this) {
+        return true;
     }
     return false;
 }
@@ -32,8 +37,8 @@ void Chest::turn(Player *player, int index) {
 }
 
 void Chest::use(Player *player, int  /*index*/) {
-    Item item1 = Item();
-    getInventory(player).addItem(&item1);
+    std::shared_ptr<Item> item = std::make_shared<Item>();
+    getInventory(player).addItem(item);
     removeAction(player, [this](std::set<std::shared_ptr<Action>>::iterator actionIterator){return comp(actionIterator);});
     used = true;
 }
