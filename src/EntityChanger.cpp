@@ -24,6 +24,9 @@ void EntityChanger::set(std::shared_ptr<Entity> entity, Characteristic character
     }
 }
 
+void EntityChanger::set(std::shared_ptr<Entity> entity, size_t characteristic, int value) {
+    set(entity, static_cast<Characteristic>(characteristic), value);
+}
 
 void EntityChanger::turnEffects(std::shared_ptr<Entity> entity) {
     for (const auto& effect : entity->m_effects) {

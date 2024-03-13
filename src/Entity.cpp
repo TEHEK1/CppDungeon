@@ -4,10 +4,27 @@
 #include "Entity.h"
 #include <random>
 
+std::vector<std::vector<char>> draw(){
+    return {
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '},
+        {' ', '1', '1', '1', '1', '1', '1', ' ', ' '}, 
+        {' ', '1', ' ', '1', '1', ' ', '1', ' ', ' '}, 
+        {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '}, 
+        {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '}, 
+        {' ', ' ', '1', ' ', ' ', '1', ' ', ' ', ' '}, 
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
+    };
+}
+
 int Entity::get(std::size_t key) const {
-    int result = m_characteristics.at(key);
-    for (const auto& effect : m_effects) {
-        result += effect->getModifier(key);
+    int result = 0;
+    if (m_characteristics.count(key)){
+        result = m_characteristics.at(key);
+        for (const auto& effect : m_effects) {
+            result += effect->getModifier(key);
+        }
     }
     return result;
 }

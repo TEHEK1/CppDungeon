@@ -15,6 +15,7 @@ class Entity;
 class EntityChanger {
 protected:
     void set(std::shared_ptr<Entity> entity, Characteristic characteristic, int value);
+    void set(std::shared_ptr<Entity> entity, size_t characteristic, int value);
     void turnEffects(std::shared_ptr<Entity> entity);
     void endBattleTurnEffects(std::shared_ptr<Entity> entity);
     void addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<Effect> effect);
