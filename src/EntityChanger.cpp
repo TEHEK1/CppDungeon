@@ -40,7 +40,7 @@ void EntityChanger::endBattleTurnEffects(std::shared_ptr<Entity> entity) {
     }
 }
 
-void EntityChanger::addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<Effect> effect) {
+void EntityChanger::addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect) {
     entity->m_effects.insert(effect); 
 
     if (dynamic_cast<ImmediateEffect*>(effect.get()) != nullptr) {
@@ -48,7 +48,7 @@ void EntityChanger::addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<Ef
     }
 }
 
-void EntityChanger::removeEffect(std::shared_ptr<Entity> entity, std::shared_ptr<Effect> effect) {
+void EntityChanger::removeEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect) {
     entity->m_effects.erase(effect);
 }
 

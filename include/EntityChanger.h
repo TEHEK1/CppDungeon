@@ -18,8 +18,8 @@ protected:
     void set(std::shared_ptr<Entity> entity, size_t characteristic, int value);
     void turnEffects(std::shared_ptr<Entity> entity);
     void endBattleTurnEffects(std::shared_ptr<Entity> entity);
-    void addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<Effect> effect);
-    void removeEffect(std::shared_ptr<Entity> entity, std::shared_ptr<Effect> effect);
+    void addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect);
+    void removeEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect);
     void addSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill);
     void removeSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill);
 };

@@ -33,7 +33,7 @@ int Entity::get(Characteristic characteristic) const {
     return get(static_cast<std::size_t>(characteristic));
 }
 
-const std::set<std::shared_ptr<Effect>>& Entity::getEffects() const {
+const std::set<std::shared_ptr<effects::Effect>>& Entity::getEffects() const {
     return m_effects;
 }
 
