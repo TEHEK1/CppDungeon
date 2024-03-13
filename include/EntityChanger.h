@@ -13,19 +13,14 @@
 class Entity;
 
 class EntityChanger {
-private:
-    Entity* m_entity;
-
-public:
-    EntityChanger(Entity* entity);
-
-    void set(Characteristic characteristic, int value);
-    void turnEffects();
-    void endBattleTurnEffects();
-    void addEffect(std::shared_ptr<Effect> effect);
-    void removeEffect(std::shared_ptr<Effect> effect);
-    void addSkill(std::shared_ptr<Skill> skill);
-    void removeSkill(std::shared_ptr<Skill> skill);
+protected:
+    void set(std::shared_ptr<Entity> entity, Characteristic characteristic, int value);
+    void turnEffects(std::shared_ptr<Entity> entity);
+    void endBattleTurnEffects(std::shared_ptr<Entity> entity);
+    void addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<Effect> effect);
+    void removeEffect(std::shared_ptr<Entity> entity, std::shared_ptr<Effect> effect);
+    void addSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill);
+    void removeSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill);
 };
 
 #endif // ENTITY_CHANGER_H

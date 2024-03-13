@@ -26,6 +26,8 @@ protected:
 
     friend class EntityChanger;
 public:
+    Entity(std::map<size_t, int>);
+    std::vector<std::vector<char>> draw();
     virtual int get(size_t key) const;
     virtual int get(Characteristic characteristic) const;
     const std::set<std::shared_ptr<Effect>>& getEffects() const;
@@ -33,7 +35,7 @@ public:
     virtual std::string getName() const;
     virtual bool isAlive() const final;
     virtual bool isTurnable() const final;
-    virtual bool dodged() const final;
-    virtual bool resisted(size_t effectHash) const final;
+    virtual int dodged() const final;
+    virtual int resisted(size_t effectHash) const final;
 };
 #endif //UNTITLED_ENTITY_H

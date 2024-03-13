@@ -13,11 +13,6 @@ int Entity::get(std::size_t key) const {
 }
 
 int Entity::get(Characteristic characteristic) const {
-    if (characteristic == Characteristic::dodge) {
-        if (get(Characteristic::turnable) < 0) {
-            return 0;
-        }
-    }
     return get(static_cast<std::size_t>(characteristic));
 }
 
@@ -42,16 +37,16 @@ bool Entity::isTurnable() const {
     return get(Characteristic::turnable) >= 0;
 }
 
-bool Entity::dodged() const {
+int Entity::dodged() const {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0, 100);
-    return dis(gen) < get(Characteristic::dodge);
+    return get(Characteristic::dodge) - dis(gen);
 }
 
-bool Entity::resisted(std::size_t effectHash) const {
+int Entity::resisted(std::size_t effectHash) const {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0, 100);
-    return dis(gen) < get(effectHash);
+    return get(effectHash) - dis(gen);
 }
