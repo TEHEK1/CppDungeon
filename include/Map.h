@@ -12,29 +12,32 @@
 
 class Map final {
 public:
-    explicit Map(int);
-    Map();
-    Cell* getCell(Position);
+    explicit Map(int); // done
+    Map(); // done
+    std::shared_ptr<Cell> getCell(Position); // done
     Position moveLeft(Position);
     Position moveRight(Position);
     void setRooms(Position&);
-    std::vector<std::pair<int,int>> getNextRooms();
+    std::vector<Position> getNextRooms(Position); // done
     Position chooseNextRoom(Position, std::pair<int,int>);
     std::pair<int,int> getNextRoom();
-    std::vector<std::vector<char>> draw();
-    int getSize();
-    void PrintWholeMap();
+    std::vector<std::vector<char>> draw(); // done
+    int getSize(); // done
+    int getSeed(); // done
 private:
     std::vector<std::vector<char>> m_contents;
-    bool ValidForRoom(int line, int column) const;
-    bool ValidForCoridor(int line, int column) const;
+    std::vector<std::vector<std::shared_ptr<Cell>>> m_cells;
+    std::vector<std::vector<char>> m_edges;
+    std::vector<Position> m_roomPositions;
+    bool validForRoom(int line, int column) const;
+    bool validForHall(int line, int column) const;
     int m_size;
+    int generatorSeed;
     std::vector< std::pair<int, int> > m_rooms;
-    bool CreatePath (char begin_line, char begin_column, char end_line, char end_column, int seed, bool main_call);
-    void DeleteNewCoridors();
-    void SolidifyNewCoridors();
-    void HolocaustCoridors();
-    void CastrateLooseEnds();
+    bool createPath (char begin_line, char begin_column, char end_line, char end_column, int seed, bool main_call);
+    void deleteNewHalls();
+    void solidifyNewHalls();
+    void holocaustHalls();
     std::mt19937 generator;
 };
 

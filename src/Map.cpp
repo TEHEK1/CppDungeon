@@ -1,4 +1,8 @@
 #include "Map.h"
+#include "Cell.h"
+#include "Hall.h"
+#include "Room.h"
+#include "EmptyCell.h"
 #include <iostream>
 #include <vector>
 
@@ -6,23 +10,54 @@
 constexpr int MAP_SIZE = 50; // doesn't depenend on window size
 constexpr int MINIMAL_ROOMS = 5;
 
-enum CellType {EMPTY = 0, ROOM = 1, CORIDOR = 2, NEW_CORIDOR = 3};
-enum RoomPosition {TOP = 0, RIGHT = 1, BOTTOM = 2, LEFT = 3, CENTER = 4};
+enum CellType {empty = 0, room = 1, hall = 2, new_hall = 3};
+enum RoomPosition {top = 0, right = 1, bottom = 2, left = 3, center = 4};
 
-struct Room {
+struct MyDefinitionRoom {
     char side;
     Position pos;
 };
+
+int Map::getSeed() {
+    return generatorSeed;
+}
 
 std::vector<std::vector<char>> Map::draw() {
     return m_contents;
 }
 
-int Map::getSize() {
-    return m_size;
+std::shared_ptr<Cell> Map::getCell(Position pos) {
+    return m_cells[pos.m_line][pos.m_column];
 }
 
-bool Map::ValidForRoom(int line, int column) const {
+std::vector<Position> Map::getNextRooms(Position pos) {
+    int roomIndex = -1;
+    std::vector<Position> answer;
+    for (int i = 0; i < m_roomPositions.size(); i++) {
+        if (m_roomPositions[i].m_column == pos.m_column && m_roomPositions[i].m_line  == pos.m_line) {
+            roomIndex = i;
+            break;
+        }
+    }
+    for (int i = 0; i < m_edges[roomIndex].size(); i++) {
+        answer.push_back(m_roomPositions[m_edges[roomIndex][i]]);
+    }
+    return answer;
+}
+
+int Map::getSize() {
+    int answer = 0;
+    for (std::vector<char> i : m_contents) {
+        for (char j : i) {
+            if (j != CellType::empty) {
+                answer++;
+            }
+        }
+    }
+    return answer;
+}
+
+bool Map::validForRoom(int line, int column) const {
 
 
     if ((line - 5 < MAP_SIZE/10) || (line + 5 > MAP_SIZE - MAP_SIZE/10)) {
@@ -39,7 +74,7 @@ bool Map::ValidForRoom(int line, int column) const {
 
     for (char i = beginLineCheck; i <= endLineCheck; i++) {
         for (char j = beginColumnCheck; j <= endColumnCheck; j++)  {
-            if (m_contents[i][j] != CellType::EMPTY) {
+            if (m_contents[i][j] != CellType::empty) {
                 return false;
             }
         }
@@ -47,7 +82,7 @@ bool Map::ValidForRoom(int line, int column) const {
     return true;
 }
 
-bool Map::ValidForCoridor(int line, int column) const  {
+bool Map::validForHall(int line, int column) const  {
 
     if (line < 2  || line >= MAP_SIZE - 2) {
         return false;
@@ -63,7 +98,7 @@ bool Map::ValidForCoridor(int line, int column) const  {
     
     for (char i = beginLineCheck; i <= endLineCheck; i++) {
         for (char j = beginColumnCheck; j <= endColumnCheck; j++)  {
-            if (!(m_contents[i][j] == CellType::EMPTY || m_contents[i][j] == NEW_CORIDOR)) {
+            if (!(m_contents[i][j] == CellType::empty || m_contents[i][j] == new_hall)) {
                 return false;
             }
         }
@@ -72,37 +107,37 @@ bool Map::ValidForCoridor(int line, int column) const  {
     return true;
 }
 
-void Map::DeleteNewCoridors() {
+void Map::deleteNewHalls() {
     for (std::vector<char>& i : m_contents) {
         for (char& j : i) {
-            if (j == CellType::NEW_CORIDOR) {
-                j = CellType::EMPTY;
+            if (j == CellType::new_hall) {
+                j = CellType::empty;
             }
         }
     }
 }
 
-void Map::SolidifyNewCoridors() {
+void Map::solidifyNewHalls() {
     for (std::vector<char>& i : m_contents) {
         for (char& j : i) {
-            if (j == CellType::NEW_CORIDOR) {
-                j = CellType::CORIDOR;
+            if (j == CellType::new_hall) {
+                j = CellType::hall;
             }
         }
     }
 }
 
-void Map::HolocaustCoridors() {
+void Map::holocaustHalls() {
     for (std::vector<char>& i : m_contents) {
         for (char& j : i) {
-            if (j == CellType::CORIDOR) {
-                j = CellType::EMPTY;
+            if (j == CellType::hall) {
+                j = CellType::empty;
             }
         }
     }
 }
 
-bool Map::CreatePath (char begin_line, char begin_column, char end_line, char end_column, int seed, bool main_call) {
+bool Map::createPath (char begin_line, char begin_column, char end_line, char end_column, int seed, bool main_call) {
     // returns true if path has been built without problems
     Position begin, current, end;
 
@@ -144,7 +179,7 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
         randomStep.m_line   = -1;
 
     } else if (begin_column == end_column || begin_line == end_line) {
-        DeleteNewCoridors();
+        deleteNewHalls();
         return false;
     } 
 
@@ -169,13 +204,13 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
         if (specifyDirection == 0) {
             end.m_line   -= 2 * mainStep.m_line;
             end.m_column -= 2 * mainStep.m_column;
-            if (m_contents[end.m_line][end.m_column] == CellType::EMPTY) {
+            if (m_contents[end.m_line][end.m_column] == CellType::empty) {
 
-                m_contents[end.m_line][end.m_column] = CellType::NEW_CORIDOR;
+                m_contents[end.m_line][end.m_column] = CellType::new_hall;
 
             } else {
 
-                DeleteNewCoridors();
+                deleteNewHalls();
                 return false;
 
             }
@@ -185,13 +220,13 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
         } else {
             end.m_line   -= 2 * randomStep.m_line;
             end.m_column -= 2 * randomStep.m_column;
-            if (m_contents[end.m_line][end.m_column] == CellType::EMPTY) {
+            if (m_contents[end.m_line][end.m_column] == CellType::empty) {
 
-                m_contents[end.m_line][end.m_column] = CellType::NEW_CORIDOR;
+                m_contents[end.m_line][end.m_column] = CellType::new_hall;
 
             } else {
 
-                DeleteNewCoridors();
+                deleteNewHalls();
                 return false;
 
             }
@@ -199,7 +234,7 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
             end.m_column -= randomStep.m_column;
         }
 
-        bool flag = CreatePath(begin.m_line, begin.m_column, end.m_line, end.m_column, seed, false);
+        bool flag = createPath(begin.m_line, begin.m_column, end.m_line, end.m_column, seed, false);
         return flag;
 
     }
@@ -244,32 +279,18 @@ bool Map::CreatePath (char begin_line, char begin_column, char end_line, char en
 
         }
 
-        if (ValidForCoridor(current.m_line, current.m_column) == true)  {
-            m_contents[current.m_line][current.m_column] = CellType::NEW_CORIDOR;
+        if (validForHall(current.m_line, current.m_column) == true)  {
+            m_contents[current.m_line][current.m_column] = CellType::new_hall;
         } else {
-            DeleteNewCoridors();
+            deleteNewHalls();
             return false;
         }
 
     }
     
 
-    SolidifyNewCoridors();
+    solidifyNewHalls();
     return true;
-}
-
-
-void Map::PrintWholeMap() {
-    for (auto i : m_contents) {
-        for (auto j : i) {
-            if  (j == 0) {
-                std::cout << "  ";
-            } else {
-                std::cout << (int)j << ' ';
-            }
-        }
-        std::cout << std::endl;
-    }
 }
 
 Map::Map(int seed) {
@@ -287,7 +308,8 @@ Map::Map(int seed) {
     bool generatedCenter     = false;
     std::vector<std::vector<char>> roomCounter;
     roomCounter.resize(4); // there are 4 different positions: top/right/bottom/left
-    std::vector<Room> roomProperties;
+    std::vector<MyDefinitionRoom> roomProperties;
+    m_roomPositions.resize(roomsToGenerate);
     roomProperties.resize(roomsToGenerate);
 
     std::vector<std::vector<char>> availablePaths(roomsToGenerate, std::vector<char>());
@@ -302,12 +324,12 @@ Map::Map(int seed) {
 
             for (char i = centerLine - 1; i <= centerLine + 1; i++) {
                 for (char j = centerColumn - 1; j <= centerColumn + 1; j++) {
-                    m_contents[i][j] = CellType::ROOM;
+                    m_contents[i][j] = CellType::room;
                 }
             }
 
             roomsToGenerate--;
-            roomProperties[roomsToGenerate].side         = RoomPosition::CENTER;
+            roomProperties[roomsToGenerate].side         = RoomPosition::center;
             roomProperties[roomsToGenerate].pos.m_line   = centerLine;
             roomProperties[roomsToGenerate].pos.m_column = centerColumn;
             // generaing first center room
@@ -318,7 +340,7 @@ Map::Map(int seed) {
                     centerLine = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
                     centerColumn = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
                     if (centerLine != roomProperties[7].pos.m_line && centerColumn != roomProperties[7].pos.m_column) {
-                        if ( ValidForRoom(centerLine, centerColumn) == true ) {
+                        if ( validForRoom(centerLine, centerColumn) == true ) {
                             break;
                         }
                     } 
@@ -326,13 +348,13 @@ Map::Map(int seed) {
 
                 for (char i = centerLine - 1; i <= centerLine + 1; i++) {
                     for (char j = centerColumn - 1; j <= centerColumn + 1; j++) {
-                        m_contents[i][j] = CellType::ROOM;
+                        m_contents[i][j] = CellType::room;
                     }
                 }
                 //generating second center room
 
                 roomsToGenerate--;
-                roomProperties[roomsToGenerate].side         = RoomPosition::CENTER;
+                roomProperties[roomsToGenerate].side         = RoomPosition::center;
                 roomProperties[roomsToGenerate].pos.m_line   = centerLine;
                 roomProperties[roomsToGenerate].pos.m_column = centerColumn;
 
@@ -359,22 +381,22 @@ Map::Map(int seed) {
 
             while (true) {
 
-                if (roomPosition == RoomPosition::BOTTOM) {
+                if (roomPosition == RoomPosition::bottom) {
 
                     roomLine   = MOVED_POSITION + generator() % SMALL_RANGE;
                     roomColumn = DEFAULT_POSITION + generator() % BIG_RANGE;
 
-                } else if (roomPosition == RoomPosition::LEFT) {
+                } else if (roomPosition == RoomPosition::left) {
 
                     roomLine   = DEFAULT_POSITION + generator() % BIG_RANGE;
                     roomColumn = DEFAULT_POSITION + generator() % SMALL_RANGE;
 
-                } else if (roomPosition == RoomPosition::RIGHT) {
+                } else if (roomPosition == RoomPosition::right) {
 
                     roomLine   = DEFAULT_POSITION + generator() % BIG_RANGE;
                     roomColumn = MOVED_POSITION + generator() % SMALL_RANGE;
 
-                } else { // TOP
+                } else { // top
 
                     roomLine   = DEFAULT_POSITION + generator() % SMALL_RANGE;
                     roomColumn = DEFAULT_POSITION + generator() % BIG_RANGE;
@@ -386,7 +408,7 @@ Map::Map(int seed) {
                         noLinearMatches = false;
                     }
                 }
-                if ( ValidForRoom(roomLine, roomColumn) == true && noLinearMatches == true) {
+                if ( validForRoom(roomLine, roomColumn) == true && noLinearMatches == true) {
                     break;
                 }
 
@@ -394,7 +416,7 @@ Map::Map(int seed) {
 
             for (char i = roomLine - 1; i <= roomLine + 1; i++) {
                 for (char j = roomColumn - 1; j <= roomColumn + 1; j++) {
-                    m_contents[i][j] = CellType::ROOM;
+                    m_contents[i][j] = CellType::room;
                 }
             }
 
@@ -407,20 +429,22 @@ Map::Map(int seed) {
         }
 
     }
-
+    for (int index = 0; index < m_roomPositions.size(); index++) {
+        m_roomPositions[index] = roomProperties[index].pos;
+    }
     //PrintWholeMap();
 
     // connecting rooms
     std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, 0));
     std::vector<std::vector<char>> connections(roomProperties.size());
 
-    bool davai_po_novoi_misha = true;
+    bool generateAgain = true;
     unsigned int iterationCounter = 0;
 
-    while (davai_po_novoi_misha) {
+    while (generateAgain) {
 
         iterationCounter++;
-        HolocaustCoridors();
+        holocaustHalls();
         for (std::vector<char>& occupied : occupiedSides) {
             occupied = std::vector<char>(4, 0);
         }
@@ -429,13 +453,13 @@ Map::Map(int seed) {
             paths = std::vector<char>();
         }
 
-        davai_po_novoi_misha = false;
+        generateAgain = false;
 
         for (char i = roomProperties.size() - 1; i >= 0; i--) {
-            if (davai_po_novoi_misha) {
+            if (generateAgain) {
                 break;
             }
-            for (char side = TOP; side <= LEFT; side++) {
+            for (char side = top; side <= left; side++) {
                 if (occupiedSides[i][side] == true) {
                     continue;
                 }
@@ -470,53 +494,54 @@ Map::Map(int seed) {
                     char beginLine   = roomProperties[i].pos.m_line;
                     char beginColumn = roomProperties[i].pos.m_column;
 
-                    if (side == TOP) {
+                    if (side == top) {
                         beginLine -= 2;
-                        if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
-                            m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        if (m_contents[beginLine][beginColumn] == CellType::empty) {
+                            m_contents[beginLine][beginColumn] = CellType::new_hall;
                         } else {
                             continue;
                         }
                         beginLine--;
-                    } else if (side == RIGHT) {
+                    } else if (side == right) {
                         beginColumn += 2;
-                        if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
-                            m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        if (m_contents[beginLine][beginColumn] == CellType::empty) {
+                            m_contents[beginLine][beginColumn] = CellType::new_hall;
                         } else {
                             continue;
                         }
                         beginColumn++;
-                    } else if (side == BOTTOM) {
+                    } else if (side == bottom) {
                         beginLine += 2;
-                        if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
-                            m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        if (m_contents[beginLine][beginColumn] == CellType::empty) {
+                            m_contents[beginLine][beginColumn] = CellType::new_hall;
                         } else {
                             continue;
                         }
                         beginLine++;
-                    } else if (side == LEFT)  {
+                    } else if (side == left)  {
                         beginColumn -= 2;
-                        if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
-                            m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                        if (m_contents[beginLine][beginColumn] == CellType::empty) {
+                            m_contents[beginLine][beginColumn] = CellType::new_hall;
                         } else {
                             continue;
                         }
                         beginColumn--;
                     }
-                    if (m_contents[beginLine][beginColumn] == CellType::EMPTY) {
-                        m_contents[beginLine][beginColumn] = CellType::NEW_CORIDOR;
+                    if ( validForHall(beginLine, beginColumn) ) {
+                        m_contents[beginLine][beginColumn] = CellType::new_hall;
                     } else {
+                        deleteNewHalls();
                         continue;
                     }
 
                     char endLine     = roomProperties[destination].pos.m_line;
                     char endColumn   = roomProperties[destination].pos.m_column;
 
-                    bool createdSuccessfuly = CreatePath(beginLine, beginColumn, endLine, endColumn, seed, true);
+                    bool createdSuccessfuly = createPath(beginLine, beginColumn, endLine, endColumn, seed, true);
 
                     if (createdSuccessfuly == false) {
-                        if (roomProperties[i].side == RoomPosition::CENTER) {
-                            davai_po_novoi_misha = true;
+                        if (roomProperties[i].side == RoomPosition::center) {
+                            generateAgain = true;
                         }
                         break;
                     } else {
@@ -524,30 +549,30 @@ Map::Map(int seed) {
                         connections[destination].push_back(i);
 
                         occupiedSides[i][side] = true;
-                        for (char side_checker = TOP; side_checker <= LEFT; side_checker++) {
+                        for (char side_checker = top; side_checker <= left; side_checker++) {
                             if (occupiedSides[destination][side_checker] == false) {
 
-                                if (side_checker == TOP) {
+                                if (side_checker == top) {
 
-                                    if (m_contents[endLine][endColumn + 2] == CellType::CORIDOR) {
+                                    if (m_contents[endLine][endColumn + 2] == CellType::hall) {
                                         occupiedSides[destination][side_checker] = true;
                                     }
 
-                                } else if (side_checker == RIGHT) {
+                                } else if (side_checker == right) {
 
-                                    if (m_contents[endLine + 2][endColumn] == CellType::CORIDOR) {
+                                    if (m_contents[endLine + 2][endColumn] == CellType::hall) {
                                         occupiedSides[destination][side_checker] = true;
                                     }
 
-                                } else if (side_checker == BOTTOM) {
+                                } else if (side_checker == bottom) {
 
-                                    if (m_contents[endLine][endColumn - 2] == CellType::CORIDOR) {
+                                    if (m_contents[endLine][endColumn - 2] == CellType::hall) {
                                             occupiedSides[destination][side_checker] = true;
                                     }
 
-                                } else if (side_checker  == LEFT) {
+                                } else if (side_checker  == left) {
 
-                                    if (m_contents[endLine - 2][endColumn] == CellType::CORIDOR) {
+                                    if (m_contents[endLine - 2][endColumn] == CellType::hall) {
                                         occupiedSides[destination][side_checker] = true;
                                     }
 
@@ -563,14 +588,14 @@ Map::Map(int seed) {
 
             } // second for loop
 
-            if (davai_po_novoi_misha) {
+            if (generateAgain) {
                 break;
             }
             //PrintWholeMap();
 
         } // first for loop
 
-        if (davai_po_novoi_misha == false) {
+        if (generateAgain == false) {
             // check for existance of room with 4 neighbours
             bool flag = false;
             for (char from  = 0; from < connections.size(); from++) {
@@ -579,7 +604,7 @@ Map::Map(int seed) {
                 }
             }
             if (flag == false) {
-                davai_po_novoi_misha = true;
+                generateAgain = true;
             } else {
                 // BFS for vertexes
                 std::queue<char> vertex;
@@ -599,14 +624,38 @@ Map::Map(int seed) {
 
                 for (char visited : checked) {
                     if (visited == 0) {
-                        davai_po_novoi_misha  = true;
+                        generateAgain  = true;
                     }
                 }
             }
         }
 
     } // while loop
-    std::cout << "Generated successfuly, seeded by " << seed << std::endl;
+    generatorSeed = seed;
+    m_cells.resize(m_contents.size()); // zero means empty cell
+    for (std::vector<std::shared_ptr<Cell>>& line : m_cells) {
+        line.resize(m_contents[0].size());
+    }
+
+    // Uncomment this when Constructors for Room and Hall are ready
+    // for (int i = 0; i < m_cells.size(); i++) {
+    //     for (int j = 0; j < m_cells[i].size(); j++) {
+    //         if (m_contents[i][j] == 0) {
+    //             m_cells[i][j] = nullptr;
+    //         } else if (m_contents[i][j] == 1) {
+    //             if (m_contents[i][j - 1] == 1) {
+    //                 m_cells[i][j] = m_cells[i][j - 1];
+    //             } else if (m_contents[i - 1][j] == 1) {
+    //                 m_cells[i][j] = m_cells[i - 1][j];
+    //             } else {
+    //                 m_cells[i][j] = std::shared_ptr<Room>(new Room());
+    //             }
+    //         } else if (m_contents[i][j] == 2) {
+    //             m_cells[i][j] = std::shared_ptr<Hall>(new Hall());
+    //         }
+    //     }
+    // }
+    m_edges = connections;
 }
 
 Map::Map()
