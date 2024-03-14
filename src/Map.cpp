@@ -15,26 +15,224 @@ enum RoomPosition {top = 0, right = 1, bottom = 2, left = 3, center = 4};
 
 struct MyDefinitionRoom {
     char side;
-    Position pos;
+    char m_line;
+    char m_column;
 };
+
+Position Map::chooseNextRoom(Position position, char index) {
+    position.m_destination = index;
+    return position;
+}
+
+Position Map::getStartPosition() {
+    Position answer;
+    answer.m_line = m_roomPositions[m_roomPositions.size() - 1].m_line;
+    answer.m_column = m_roomPositions[m_roomPositions.size() - 1].m_column;
+    return answer;
+}
+
+Position Map::moveLeft(Position pos) {
+    // moving backwards
+
+    if (m_contents[pos.m_line][pos.m_column] == CellType::hall) {
+
+        char newPreviousColumn;
+        char newPreviousLine;
+        if (m_contents[pos.m_prevLine][pos.m_prevColumn + 1] != CellType::empty) {
+            if (pos.m_prevLine != pos.m_line || pos.m_prevColumn + 1 != pos.m_column) {
+                newPreviousColumn = pos.m_prevColumn + 1;
+                newPreviousLine = pos.m_prevLine;
+                if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
+                    newPreviousColumn++;
+                }
+            } 
+        } else if (m_contents[pos.m_prevLine][pos.m_prevColumn - 1] != CellType::empty) {
+            if (pos.m_prevLine != pos.m_line || pos.m_prevColumn - 1 != pos.m_column) {
+                newPreviousColumn = pos.m_prevColumn - 1;
+                newPreviousLine = pos.m_prevLine;
+                if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
+                    newPreviousColumn--;
+                }
+            } 
+        } else if (m_contents[pos.m_prevLine + 1][pos.m_prevColumn] != CellType::empty) {
+            if (pos.m_prevLine + 1 != pos.m_line || pos.m_prevColumn != pos.m_column) {
+                newPreviousColumn = pos.m_prevColumn;
+                newPreviousLine = pos.m_prevLine + 1;
+                if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
+                    newPreviousLine++;
+                }
+            } 
+        } else if (m_contents[pos.m_prevLine - 1][pos.m_prevColumn] != CellType::empty) {
+            if (pos.m_prevLine - 1 != pos.m_line || pos.m_prevColumn != pos.m_column) {
+                newPreviousColumn = pos.m_prevColumn;
+                newPreviousLine = pos.m_prevLine - 1;
+                if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
+                    newPreviousLine--;
+                }
+            } 
+        }
+        pos.m_column     = pos.m_prevColumn;
+        pos.m_line       = pos.m_prevLine;
+        pos.m_prevColumn = newPreviousColumn;
+        pos.m_prevLine   = newPreviousLine;
+
+    } else if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+
+        int roomIndex = -1;
+        for (int i = 0; i < m_roomPositions.size(); i++) {
+            if (m_roomPositions[i].m_column == pos.m_column && m_roomPositions[i].m_line  == pos.m_line) {
+                roomIndex = i;
+                break;
+            }
+        }
+
+        if (roomIndex == pos.m_destination) {
+            char newPreviousColumn;
+            char newPreviousLine;
+            
+            if (m_contents[pos.m_prevLine][pos.m_prevColumn + 2] != CellType::empty) {
+                if (pos.m_prevLine != pos.m_line || pos.m_prevColumn + 2 != pos.m_column) {
+                    newPreviousColumn = pos.m_prevColumn + 2;
+                    newPreviousLine = pos.m_prevLine;
+                } 
+            } else if (m_contents[pos.m_prevLine][pos.m_prevColumn - 2] != CellType::empty) {
+                if (pos.m_prevLine != pos.m_line || pos.m_prevColumn - 2 != pos.m_column) {
+                    newPreviousColumn = pos.m_prevColumn - 2;
+                    newPreviousLine = pos.m_prevLine;
+                } 
+            } else if (m_contents[pos.m_prevLine + 2][pos.m_prevColumn] != CellType::empty) {
+                if (pos.m_prevLine + 2 != pos.m_line || pos.m_prevColumn != pos.m_column) {
+                    newPreviousColumn = pos.m_prevColumn;
+                    newPreviousLine = pos.m_prevLine + 2;
+                } 
+            } else if (m_contents[pos.m_prevLine - 2][pos.m_prevColumn] != CellType::empty) {
+                if (pos.m_prevLine - 2 != pos.m_line || pos.m_prevColumn != pos.m_column) {
+                    newPreviousColumn = pos.m_prevColumn;
+                    newPreviousLine = pos.m_prevLine - 2;
+                } 
+            }
+
+            pos.m_column     = pos.m_prevColumn;
+            pos.m_line       = pos.m_prevLine;
+            pos.m_prevColumn = newPreviousColumn;
+            pos.m_prevLine   = newPreviousLine;
+        }
+    }
+    return pos;
+}
+
+Position Map::moveRight(Position pos) {
+    // moving forward
+    if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+
+        int roomIndex = -1;
+        for (int i = 0; i < m_roomPositions.size(); i++) {
+            if (m_roomPositions[i].m_column == pos.m_column && m_roomPositions[i].m_line  == pos.m_line) {
+                roomIndex = i;
+                break;
+            }
+        }
+
+        for (int side = RoomPosition::top; side <= RoomPosition::left; side++) {
+
+            if (m_directions[roomIndex][side] == pos.m_destination) {
+                pos.m_prevColumn = pos.m_column;
+                pos.m_prevLine   = pos.m_line;
+                if (side == RoomPosition::top) {
+                    pos.m_line += 2;
+                } else if (side == RoomPosition::right) {
+                    pos.m_column += 2;
+                } else if (side == RoomPosition::bottom) {
+                    pos.m_line -= 2;
+                } else if (side == RoomPosition::left) {
+                    pos.m_column -= 2;
+                }
+            }
+
+        }
+
+    } else if (m_contents[pos.m_line][pos.m_column] == CellType::hall) {
+        if (m_contents[pos.m_line + 1][pos.m_column] != CellType::empty) {
+            if (pos.m_line + 1 != pos.m_prevLine || pos.m_column != pos.m_prevColumn) {
+                pos.m_prevLine = pos.m_line;
+                pos.m_line++;
+                // column doesn't change
+                if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+                    pos.m_line++;
+                }
+            }
+        } else if (m_contents[pos.m_line - 1][pos.m_column] != CellType::empty) {
+            if (pos.m_line - 1 != pos.m_prevLine || pos.m_column != pos.m_prevColumn) {
+                pos.m_prevLine = pos.m_line;
+                pos.m_line--;
+                // column doesn't change
+                if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+                    pos.m_line--;
+                }
+            }
+        } else if (m_contents[pos.m_line][pos.m_column + 1] != CellType::empty) {
+            if (pos.m_line != pos.m_prevLine || pos.m_column + 1 != pos.m_prevColumn) {
+                pos.m_prevColumn = pos.m_column;
+                pos.m_column++;
+                // column doesn't change
+                if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+                    pos.m_column++;
+                }
+            }
+        } else if (m_contents[pos.m_line][pos.m_column - 1] != CellType::empty) {
+            if (pos.m_line != pos.m_prevLine || pos.m_column - 1 != pos.m_prevColumn) {
+                pos.m_prevColumn = pos.m_column;
+                pos.m_column--;
+                // column doesn't change
+                if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+                    pos.m_column--;
+                }
+            }
+        }
+    }
+    return pos;
+}
+
+char Map::getNextRoom(Position pos) {
+    return pos.m_destination;
+}
 
 int Map::getSeed() {
     return generatorSeed;
 }
 
-std::vector<std::vector<char>> Map::draw() {
-    return m_contents;
+std::vector<std::vector<char>> Map::draw(Position pos, int line, int column) {
+    // return m_contents;
+    int centerLine   = pos.m_line;
+    int centerColumn = pos.m_column;
+    int shiftLine = line/2;
+    int shiftColumn = column/2;
+    std::vector<std::vector<char>> answer(line, std::vector<char>(column, 0));
+    int beginLine = centerLine - shiftLine + (line + 1)%2;
+    int beginColumn = centerColumn - shiftColumn + (column + 1)%2; 
+    
+    for (int i = beginLine; i <= centerLine + shiftLine; i++) {
+        for (int j = beginColumn; j <= centerColumn + shiftColumn; j++) {
+            if (i < 0 || j < 0 || i >= MAP_SIZE || j >= MAP_SIZE) {
+                answer[i - beginLine][j - beginColumn] = 0;
+            } else {
+                answer[i - beginLine][j - beginColumn] = m_contents[i][j];
+            }
+        }
+    }
+
+    return answer;
 }
 
 std::shared_ptr<Cell> Map::getCell(Position pos) {
-    return m_cells[pos.m_line][pos.m_column];
+    return m_cells[pos.getLine()][pos.getColumn()];
 }
 
 std::vector<Position> Map::getNextRooms(Position pos) {
     int roomIndex = -1;
     std::vector<Position> answer;
     for (int i = 0; i < m_roomPositions.size(); i++) {
-        if (m_roomPositions[i].m_column == pos.m_column && m_roomPositions[i].m_line  == pos.m_line) {
+        if (m_roomPositions[i].getColumn() == pos.getColumn() && m_roomPositions[i].getLine()  == pos.getLine()) {
             roomIndex = i;
             break;
         }
@@ -329,9 +527,9 @@ Map::Map(int seed) {
             }
 
             roomsToGenerate--;
-            roomProperties[roomsToGenerate].side         = RoomPosition::center;
-            roomProperties[roomsToGenerate].pos.m_line   = centerLine;
-            roomProperties[roomsToGenerate].pos.m_column = centerColumn;
+            roomProperties[roomsToGenerate].side     = RoomPosition::center;
+            roomProperties[roomsToGenerate].m_line   = centerLine;
+            roomProperties[roomsToGenerate].m_column = centerColumn;
             // generaing first center room
 
 
@@ -339,7 +537,7 @@ Map::Map(int seed) {
                 while (true) {
                     centerLine = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
                     centerColumn = CENTER_BEGIN + (generator() % (MAP_SIZE / 5));
-                    if (centerLine != roomProperties[7].pos.m_line && centerColumn != roomProperties[7].pos.m_column) {
+                    if (centerLine != roomProperties[7].m_line && centerColumn != roomProperties[7].m_column) {
                         if ( validForRoom(centerLine, centerColumn) == true ) {
                             break;
                         }
@@ -354,9 +552,9 @@ Map::Map(int seed) {
                 //generating second center room
 
                 roomsToGenerate--;
-                roomProperties[roomsToGenerate].side         = RoomPosition::center;
-                roomProperties[roomsToGenerate].pos.m_line   = centerLine;
-                roomProperties[roomsToGenerate].pos.m_column = centerColumn;
+                roomProperties[roomsToGenerate].side     = RoomPosition::center;
+                roomProperties[roomsToGenerate].m_line   = centerLine;
+                roomProperties[roomsToGenerate].m_column = centerColumn;
 
             }
 
@@ -404,7 +602,7 @@ Map::Map(int seed) {
                 }
                 bool noLinearMatches = true;
                 for (int index = roomProperties.size() - 1; index >= roomsToGenerate; index--) {
-                    if (roomLine == roomProperties[index].pos.m_line || roomColumn == roomProperties[index].pos.m_column) {
+                    if (roomLine == roomProperties[index].m_line || roomColumn == roomProperties[index].m_column) {
                         noLinearMatches = false;
                     }
                 }
@@ -421,21 +619,22 @@ Map::Map(int seed) {
             }
 
             roomsToGenerate--;
-            roomProperties[roomsToGenerate].side         = roomPosition;
-            roomProperties[roomsToGenerate].pos.m_line   = roomLine;
-            roomProperties[roomsToGenerate].pos.m_column = roomColumn;
+            roomProperties[roomsToGenerate].side     = roomPosition;
+            roomProperties[roomsToGenerate].m_line   = roomLine;
+            roomProperties[roomsToGenerate].m_column = roomColumn;
             roomCounter[roomPosition].push_back(roomsToGenerate);
 
         }
 
     }
     for (int index = 0; index < m_roomPositions.size(); index++) {
-        m_roomPositions[index] = roomProperties[index].pos;
+        m_roomPositions[index].m_column = roomProperties[index].m_column;
+        m_roomPositions[index].m_line   = roomProperties[index].m_line;
     }
     //PrintWholeMap();
 
     // connecting rooms
-    std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, 0));
+    std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, -1));
     std::vector<std::vector<char>> connections(roomProperties.size());
 
     bool generateAgain = true;
@@ -446,7 +645,7 @@ Map::Map(int seed) {
         iterationCounter++;
         holocaustHalls();
         for (std::vector<char>& occupied : occupiedSides) {
-            occupied = std::vector<char>(4, 0);
+            occupied = std::vector<char>(4, -1);
         }
 
         for (std::vector<char>& paths : connections) {
@@ -460,12 +659,12 @@ Map::Map(int seed) {
                 break;
             }
             for (char side = top; side <= left; side++) {
-                if (occupiedSides[i][side] == true) {
+                if (occupiedSides[i][side] != -1) {
                     continue;
                 }
 
                 char generatedValue;
-                if (i == roomProperties.size() - 1) {
+                if (i != roomProperties.size() - 1) {
                     generatedValue = generator() % 100;
                 } else {
                     generatedValue = 0;
@@ -478,7 +677,7 @@ Map::Map(int seed) {
 
                     while(needNewDestination == true) {
                         needNewDestination =  false;
-                        destination = generator() % roomProperties.size();
+                        destination        = generator() % roomProperties.size();
                         if (destination == i) {
                             needNewDestination = true;
                         } else {
@@ -491,8 +690,8 @@ Map::Map(int seed) {
                         
                     }
 
-                    char beginLine   = roomProperties[i].pos.m_line;
-                    char beginColumn = roomProperties[i].pos.m_column;
+                    char beginLine   = roomProperties[i].m_line;
+                    char beginColumn = roomProperties[i].m_column;
 
                     if (side == top) {
                         beginLine -= 2;
@@ -534,8 +733,8 @@ Map::Map(int seed) {
                         continue;
                     }
 
-                    char endLine     = roomProperties[destination].pos.m_line;
-                    char endColumn   = roomProperties[destination].pos.m_column;
+                    char endLine     = roomProperties[destination].m_line;
+                    char endColumn   = roomProperties[destination].m_column;
 
                     bool createdSuccessfuly = createPath(beginLine, beginColumn, endLine, endColumn, seed, true);
 
@@ -548,32 +747,32 @@ Map::Map(int seed) {
                         connections[i].push_back(destination);
                         connections[destination].push_back(i);
 
-                        occupiedSides[i][side] = true;
+                        occupiedSides[i][side] = destination;
                         for (char side_checker = top; side_checker <= left; side_checker++) {
-                            if (occupiedSides[destination][side_checker] == false) {
+                            if (occupiedSides[destination][side_checker] == -1) {
 
                                 if (side_checker == top) {
 
                                     if (m_contents[endLine][endColumn + 2] == CellType::hall) {
-                                        occupiedSides[destination][side_checker] = true;
+                                        occupiedSides[destination][side_checker] = i;
                                     }
 
                                 } else if (side_checker == right) {
 
                                     if (m_contents[endLine + 2][endColumn] == CellType::hall) {
-                                        occupiedSides[destination][side_checker] = true;
+                                        occupiedSides[destination][side_checker] = i;
                                     }
 
                                 } else if (side_checker == bottom) {
 
                                     if (m_contents[endLine][endColumn - 2] == CellType::hall) {
-                                            occupiedSides[destination][side_checker] = true;
+                                            occupiedSides[destination][side_checker] = i;
                                     }
 
                                 } else if (side_checker  == left) {
 
                                     if (m_contents[endLine - 2][endColumn] == CellType::hall) {
-                                        occupiedSides[destination][side_checker] = true;
+                                        occupiedSides[destination][side_checker] = i;
                                     }
 
                                 }
@@ -656,6 +855,7 @@ Map::Map(int seed) {
     //     }
     // }
     m_edges = connections;
+    m_directions = occupiedSides;
 }
 
 Map::Map()

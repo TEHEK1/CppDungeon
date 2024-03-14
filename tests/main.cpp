@@ -4,7 +4,7 @@
 
 int main() {
     Map test = Map();
-    auto drawing = test.draw();
+    auto drawing = test.draw(test.getStartPosition(), 5, 5);
     for (auto i : drawing) {
         for (auto j : i) {
             if  (j == 0) {
