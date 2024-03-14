@@ -2,7 +2,6 @@
 #include "Cell.h"
 #include "Hall.h"
 #include "Room.h"
-#include "EmptyCell.h"
 #include <iostream>
 #include <vector>
 
