@@ -10,13 +10,13 @@
 #include <vector>
 #include <random>
 
-int random(int low, int high)
+/*int random(int low, int high)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(low, high);
     return dist(gen);
-}
+}*/
 
 void Room::generateEvents(){
     /*if(random(1,2) == 1) {
