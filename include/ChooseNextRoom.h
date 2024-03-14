@@ -5,8 +5,6 @@
 #ifndef CPPDUNGEON_CHOOSENEXTROOM_H
 #define CPPDUNGEON_CHOOSENEXTROOM_H
 #include "Action.h"
-#include "Player.h"
-#include "Cell.h"
 #include "PositionChanger.h"
 #include <utility>
 
