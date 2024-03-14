@@ -20,6 +20,7 @@ public:
     std::vector<Position> getNextRooms(Position); // done
     Position chooseNextRoom(Position, char index); // done
     char getNextRoom(Position); // done
+    std::vector<std::vector<char>> draw(); // done
     std::vector<std::vector<char>> draw(Position, int line, int column); // done
     int getSize(); // done
     int getSeed(); // done

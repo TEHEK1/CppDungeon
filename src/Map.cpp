@@ -200,6 +200,10 @@ int Map::getSeed() {
     return generatorSeed;
 }
 
+std::vector<std::vector<char>> Map::draw() {
+    return m_contents;
+}
+
 std::vector<std::vector<char>> Map::draw(Position pos, int line, int column) {
     // return m_contents;
     int centerLine   = pos.m_line;
