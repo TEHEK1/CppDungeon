@@ -18,6 +18,6 @@ char Cell::getLevel() {
     return a;
 }
 
-std::vector<Event*> Cell::getEvents(){
+std::vector<std::shared_ptr<Event>> Cell::getEvents(){
     return m_events;
 }
