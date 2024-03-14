@@ -3,7 +3,7 @@
 //
 #include "Entity.h"
 #include <random>
-#include "Effect.h"
+#include "effects/Effect.h"
 
 std::vector<std::vector<char>> draw(){
     return {
@@ -23,7 +23,7 @@ int Entity::get(std::size_t key) const {
     int result = 0;
     if (m_characteristics.count(key)){
         result = m_characteristics.at(key);
-        for (std::shared_ptr<Effect> effect : m_effects) {
+        for (const auto& effect : m_effects) {
             result += effect->getModifier(key);
         }
     }
@@ -34,7 +34,7 @@ int Entity::get(Characteristic characteristic) const {
     return get(static_cast<std::size_t>(characteristic));
 }
 
-const std::set<std::shared_ptr<Effect>>& Entity::getEffects() const {
+const std::set<std::shared_ptr<effects::Effect>>& Entity::getEffects() const {
     return m_effects;
 }
 

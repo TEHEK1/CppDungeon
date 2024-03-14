@@ -18,7 +18,8 @@ namespace effects {
         friend EntityChanger;
     public:
         Effect(std::weak_ptr<Entity>, std::map<std::size_t, int>);
-        std::map<std::size_t, int> getModifier();
+        std::map<std::size_t, int> getModifier() const;
+        int getModifier(size_t) const;
     protected:
         virtual void turn() = 0;
         virtual void endBattleTurn() = 0;

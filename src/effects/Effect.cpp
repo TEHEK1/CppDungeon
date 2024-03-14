@@ -8,7 +8,11 @@ namespace effects {
         m_modifier = modifier;
     }
 
-    std::map<size_t, int> Effect::getModifier() {
+    std::map<size_t, int> Effect::getModifier() const {
         return m_modifier;
+    }
+
+    int Effect::getModifier(size_t characteristic) const {
+        return getModifier()[characteristic];
     }
 }
