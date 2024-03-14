@@ -11,7 +11,7 @@
 class Entity;
 namespace effects{class Effect;};
 //#include "Effect.h"
-#include "Skill.h"
+class Skill;
 
 class EntityChanger {
 protected:

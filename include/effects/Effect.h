@@ -17,7 +17,7 @@ namespace effects {
         friend EnemyEncounter;
     public:
         Effect(std::weak_ptr<Entity>, std::map<std::size_t, int>);
-        std::map<size_t, int> getModifier();
+        std::map<std::size_t, int> getModifier();
     protected:
         virtual void turn() = 0;
         virtual void endBattle() = 0;
