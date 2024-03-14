@@ -15,7 +15,7 @@ public:
     static Position moveRight(Position);
     void setRooms(Position&);
     std::vector<std::pair<int,int>> getNextRooms();
-    Position chooseNextRoom(Position, std::pair<int,int>);
+    Position chooseNextRoom(Position, char);
     std::pair<int,int> getNextRoom();
     std::vector<std::vector<char>> draw();
     int getSize();

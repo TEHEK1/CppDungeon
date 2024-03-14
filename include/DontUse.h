@@ -7,13 +7,18 @@
 #include "Action.h"
 #include "Trap.h"
 class Chest;
-class DontUse:public Action{
-public:
-    DontUse(Trap*, int);
-    void act(Player*) override;
-    Trap* getChest();
-private:
-    int m_index;
-    Trap* m_trap;
-};
+namespace actions {
+    class DontUse : public Action {
+    public:
+        DontUse(Trap *, int);
+
+        void act(Player *) override;
+
+        Trap *getChest();
+
+    private:
+        int m_index;
+        Trap *m_trap;
+    };
+}
 #endif //CPPDUNGEON_DONTUSE_H

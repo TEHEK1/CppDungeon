@@ -9,9 +9,14 @@
 #include "Cell.h"
 #include "PositionChanger.h"
 #include <utility>
-class ChooseNextRoom:public Action, public PositionChanger{
-public:
-    ChooseNextRoom(Position);
-    void act(Player*) override;
-};
+
+namespace actions {
+    class ChooseNextRoom : public Action, public PositionChanger {
+    public:
+        ChooseNextRoom(char);
+        void act(Player *) override;
+    private:
+        char m_room;
+    };
+}
 #endif //CPPDUNGEON_CHOOSENEXTROOM_H

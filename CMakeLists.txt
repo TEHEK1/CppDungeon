@@ -38,4 +38,8 @@ add_executable(CppDungeon
         include/UseItem.h
         include/UseSkill.h
         src/Use.cpp
+        src/MoveRight.cpp
+        src/MoveLeft.cpp
+        src/DontUse.cpp
+        src/ChooseNextRoom.cpp
 )

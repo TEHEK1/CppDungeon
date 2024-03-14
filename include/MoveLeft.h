@@ -7,8 +7,11 @@
 #include "Action.h"
 #include "ActionsChanger.h"
 #include "PositionChanger.h"
-class MoveLeft:public Action, public ActionsChanger, public PositionChanger{
-public:
-    void act(Player*) override;
-};
+namespace actions {
+    class MoveLeft : public Action, public ActionsChanger, public PositionChanger {
+    public:
+        void act(Player *) override;
+    };
+
 #endif //CPPDUNGEON_MOVELEFT_H
+}

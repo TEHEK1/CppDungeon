@@ -5,11 +5,15 @@
 #include "Map.h"
 #include "Player.h"
 
+namespace actions {
 
-void MoveLeft::act(Player * player) {
-    setPosition(player, Map::moveLeft(player -> getPosition()));
-    player -> getMap() -> getCell(player -> getPosition()) -> generateEvents();
-    int i = 0; //хз что такое i
-    player -> getMap() -> getCell(player -> getPosition()) -> getEvents()[i] -> turn(player, i);
-    returnToDefault(player);
+    void MoveLeft::act(Player *player) {
+        setPosition(player, player -> getMap() -> moveLeft(player->getPosition()));
+        Cell * temp = player->getMap()->getCell(player->getPosition());
+        temp->generateEvents();
+        for(int i = 0; i < temp->getEvents().size(); i++) {
+            temp->getEvents()[i]->turn(player, i);
+        }
+        returnToDefault(player);
+    }
 }

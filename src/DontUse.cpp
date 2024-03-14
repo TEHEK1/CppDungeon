@@ -4,12 +4,14 @@
 #include "DontUse.h"
 #include "Trap.h"
 
-DontUse::DontUse(Trap * trap, int index):m_trap(trap), m_index(index) {}
+namespace actions {
+    DontUse::DontUse(Trap *trap, int index) : m_trap(trap), m_index(index) {}
 
-void DontUse::act(Player* player) {
-    m_trap -> dontUse(player, m_index);
-}
+    void DontUse::act(Player *player) {
+        m_trap->dontUse(player, m_index);
+    }
 
-Trap* DontUse::getChest(){
-    return m_trap;
+    Trap *DontUse::getChest() {
+        return m_trap;
+    }
 }
