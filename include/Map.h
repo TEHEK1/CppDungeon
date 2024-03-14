@@ -11,9 +11,12 @@ public:
     Map(int);
     Map();
     Cell* getCell(Position);
-    Position moveLeft(Position);
-    Position moveRight(Position);
+    static Position moveLeft(Position);
+    static Position moveRight(Position);
     void setRooms(Position&);
+    std::vector<std::pair<int,int>> getNextRooms();
+    Position chooseNextRoom(Position, std::pair<int,int>);
+    std::pair<int,int> getNextRoom();
     std::vector<std::vector<char>> draw();
     int getSize();
 };

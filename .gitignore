@@ -1,0 +1,9 @@
+.vscode
+build
+.idea
+CMakeLists.txt
+main.cpp
+.clang-tidy
+.gitignore
+.github
+cmake-build-debug

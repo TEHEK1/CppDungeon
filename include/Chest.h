@@ -8,9 +8,11 @@
 #include "InventoryChanger.h"
 class Player;
 class Chest:public Event, public InventoryChanger{
+    bool used;
+    bool comp(std::set<std::shared_ptr<Action>>::iterator actionIterator);
 public:
     void turn(Player *, int) override;
-    void use(Player*, int);
+    virtual void use(Player*, int);
     std::vector<std::vector<char>> draw() override;
 };
 #endif //CPPDUNGEON_CHEST_H

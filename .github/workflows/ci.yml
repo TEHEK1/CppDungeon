@@ -1,0 +1,75 @@
+on:
+  pull_request:
+    branches: 
+      - "**"
+      - "!main"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        include:
+          - os: macos-latest
+            cpp_compiler: g++
+            build_type: Debug
+          - os: ubuntu-20.04
+            cpp_compiler: g++
+            build_type: Debug
+
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Set build directory variable
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+    - name: Build
+      run: >
+        cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -G Ninja
+        -S ${{ github.workspace }}
+        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        ${{ github.workspace }};
+        cmake --build ${{ steps.strings.outputs.build-output-dir }};
+
+  linting:
+    runs-on: ubuntu-20.04
+
+    steps:
+     - uses: actions/checkout@v3
+     - uses: seanmiddleditch/gha-setup-ninja@master
+
+     - name: Set build directory variable
+       id: strings
+       shell: bash
+       run: |
+         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+     - name: Configure CMake
+       run: >
+         cmake -B ${{ steps.strings.outputs.build-output-dir }}
+         -G Ninja
+         -S ${{ github.workspace }}
+         -DCMAKE_CXX_COMPILER=g++
+         -DCMAKE_BUILD_TYPE=Debug
+         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+         ${{ github.workspace }}
+
+     - name: Linting
+       run: clang-tidy -p ${{ steps.strings.outputs.build-output-dir }} src/*.cpp include/*.h
+
+
+
+
+#    - name: Tests
+#      working-directory: ${{ steps.strings.outputs.build-output-dir }}/tests
+#      run: ./tests

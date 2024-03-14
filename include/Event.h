@@ -4,13 +4,14 @@
 
 #ifndef UNTITLED_EVENT_H
 #define UNTITLED_EVENT_H
-#include <vector>
 #include "ActionsChanger.h"
+#include <vector>
 class Player;
 class Action;
 class Event:public ActionsChanger{
 public:
-    virtual void turn(Player*, int);
-    virtual std::vector<std::vector<char>> draw();
+    virtual void turn(Player*, int) = 0;
+    virtual std::vector<std::vector<char>> draw() = 0;
+    virtual ~Event() = default;
 };
 #endif //UNTITLED_EVENT_H

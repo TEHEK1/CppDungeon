@@ -4,13 +4,23 @@
 
 #ifndef UNTITLED_ENEMYENCOUNTER_H
 #define UNTITLED_ENEMYENCOUNTER_H
+#include "Entity.h"
 #include "Event.h"
 #include <vector>
 class Enemy;
+class Player;
 class EnemyEncounter:public Event{
 public:
-    void turn(Player*, int) override;
-    std::vector <Enemy*> getEnemies();
-    std::vector<std::vector<char>> draw();
+    EnemyEncounter();
+    void turn(Player*, int index) override;
+    std::vector<std::shared_ptr<Entity>> getEnemies();
+    std::vector<std::vector<char>> draw() override;
+
+private:
+    void _enemyMove(Player*, std::shared_ptr<Entity>);
+    int _start_enemies;
+    int _start_heroes;
+    std::vector<std::shared_ptr<Entity>> _enemies;
+    std::vector<int> _priority;
 };
 #endif //UNTITLED_ENEMYENCOUNTER_H

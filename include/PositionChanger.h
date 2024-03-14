@@ -8,6 +8,6 @@ class Player;
 class Position;
 class PositionChanger{
 protected:
-    void setPosition(Player*, Position);
+    static void setPosition(Player*, Position);
 };
 #endif //CPPDUNGEON_POSITIONCHANGER_H
