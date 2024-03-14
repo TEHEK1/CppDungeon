@@ -2,7 +2,7 @@
 // Created by Владимир Попов on 12.03.2024
 //
 #include "EntityChanger.h"
-#include "Effect.h"
+#include "effects/Effect.h"
 #include "Entity.h"
 #include <set>
 #include "Characteristic.h"

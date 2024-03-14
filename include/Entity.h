@@ -13,14 +13,14 @@
 #include "Skill.h"
 #include "EntityChanger.h"
 //#include "Effect.h"
-class Effect;
+namespace effects {class Effect;};
 #include "Characteristic.h"
 
 class Entity{
 protected:
     std::set<std::shared_ptr<Skill>> m_skills;
     std::map<std::size_t, int> m_characteristics;
-    std::set<std::shared_ptr<Effect>> m_effects;
+    std::set<std::shared_ptr<effects::Effect>> m_effects;
     std::string m_name;
 
     friend class EntityChanger;
@@ -29,7 +29,7 @@ public:
     std::vector<std::vector<char>> draw();
     virtual int get(size_t key) const;
     virtual int get(Characteristic characteristic) const;
-    const std::set<std::shared_ptr<Effect>>& getEffects() const;
+    const std::set<std::shared_ptr<effects::Effect>>& getEffects() const;
     const std::set<std::shared_ptr<Skill>>& getSkills() const;
     virtual std::string getName() const;
     virtual bool isAlive() const final;
