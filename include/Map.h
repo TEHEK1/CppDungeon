@@ -23,7 +23,7 @@ public:
     std::vector<std::vector<char>> draw(Position, int line, int column); // done
     int getSize(); // done
     int getSeed(); // done
-    Position getStartPosition();
+    Position getStartPosition(); // done
 private:
     std::vector<std::vector<char>> m_contents;
     std::vector<std::vector<std::shared_ptr<Cell>>> m_cells;
