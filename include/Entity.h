@@ -4,42 +4,37 @@
 
 #ifndef UNTITLED_ENTITY_H
 #define UNTITLED_ENTITY_H
-#include <vector>
 #include <set>
-#include "effects/Effect.h"
-#include "trick.h"
-class Skill;
-class EntityChanger;
+#include <memory>
+#include <map>
+#include <string>
+#include <vector>
+
+#include "Skill.h"
+#include "EntityChanger.h"
+//#include "Effect.h"
+class Effect;
+#include "Characteristic.h"
+
 class Entity{
 protected:
-    int AccuracyModifier;
-    int CriticalDamageChance;
-    int Damage;
-    int Dodge;
-    int Defence;
-    int Speed;
-    int HP;
-    friend EntityChanger;
-    std::set<std::shared_ptr<effects::Effect>> m_effects;
-public:
-    int get(size_t);
-    Entity(int accuracyModifier, int criticalDamagehance, int damage,
-            int dodge, int defence, int speed, int HP);
-    std::vector<Skill*> getSkills();
-    std::vector<std::vector<char>> draw();
-    int getSpeed();
-    int getHP();
-    std::set<std::shared_ptr<effects::Effect>> getEffects();
-protected:
-    int _accuracyModifier;
-    int _criticalDamagehance;
-    int _damage;
-    int _dodge;
-    int _defence;
-    int _speed;
-    int _HP;
-};
+    std::set<std::shared_ptr<Skill>> m_skills;
+    std::map<std::size_t, int> m_characteristics;
+    std::set<std::shared_ptr<Effect>> m_effects;
+    std::string m_name;
 
-enum class Characteristic {
-    accuracyModifier = trick::hash("accuracyModifier"), dodge = trick::hash("dodge"), defence = trick::hash("defence"), speed = trick::hash("speed"), HP = trick::hash("HP"), maxHP = trick::hash("maxHP"), marked = trick::hash("marked"), turnable = trick::hash("turnable"), movable = trick::hash("movable"), enemyType = trick::hash("enemyType"), minDamage = trick::hash("minDamage"), maxDamage = trick::hash("maxDamage"), criticalDamageChance = trick::hash("criticalDamageChance")};
+    friend class EntityChanger;
+public:
+    Entity(std::map<size_t, int>);
+    std::vector<std::vector<char>> draw();
+    virtual int get(size_t key) const;
+    virtual int get(Characteristic characteristic) const;
+    const std::set<std::shared_ptr<Effect>>& getEffects() const;
+    const std::set<std::shared_ptr<Skill>>& getSkills() const;
+    virtual std::string getName() const;
+    virtual bool isAlive() const final;
+    virtual bool isTurnable() const final;
+    virtual int dodged() const final;
+    virtual int resisted(size_t effectHash) const final;
+};
 #endif //UNTITLED_ENTITY_H

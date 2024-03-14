@@ -5,6 +5,7 @@
 #ifndef CPPDUNGEON_BUFF_H
 #define CPPDUNGEON_BUFF_H
 #include "effects/Effect.h"
+#include "EntityChanger.h"
 namespace effects {
     class Buff: public Effect {
     int m_numberOfTurns;

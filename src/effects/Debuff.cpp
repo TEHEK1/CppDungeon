@@ -24,7 +24,7 @@ namespace effects {
     void Debuff::endBattleTurn() {
         std::shared_ptr<Entity> entity = m_entity.lock();
         if (entity) {
-            (entity.get())->getEffects().erase(static_cast<std::shared_ptr<Effect>>(this));
+            removeEffect(static_cast<std::shared_ptr<Entity>>(entity), static_cast<std::shared_ptr<Effect>>(this));
         }
     }
 }

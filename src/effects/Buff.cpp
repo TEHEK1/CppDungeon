@@ -23,7 +23,7 @@ namespace effects {
     void Buff::endBattleTurn() {
         std::shared_ptr<Entity> entity = m_entity.lock();
         if (entity) {
-            (entity.get())->getEffects().erase(static_cast<std::shared_ptr<Effect>>(this));
+            removeEffect(entity, static_cast<std::shared_ptr<Effect>>(this));
         }
     }
 }

@@ -7,7 +7,7 @@
 #include "effects/Effect.h"
 #include "EntityChanger.h"
 namespace effects {
-    class AutoAction : public Effect, EntityChanger {
+    class AutoAction : public Effect {
         std::map<size_t, int> m_turner;
         int m_numberOfTurns;
         int m_crited;

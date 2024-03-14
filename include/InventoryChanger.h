@@ -11,7 +11,7 @@ class Player;
 class InventoryChanger{
 protected:
     static Inventory& getInventory(Player*);
-    static void addItem(Player*, std::shared_ptr<Item> item);
-    static void removeItem(Player*, std::shared_ptr<Item> item);
+    static void addItem(Player*,const std::shared_ptr<Item>& item);
+    static void removeItem(Player*,const std::shared_ptr<Item>& item);
 };
 #endif //CPPDUNGEON_INVENTORYCHANGER_H

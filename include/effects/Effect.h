@@ -7,16 +7,17 @@
 
 #include <map>
 #include <memory>
-
+#include "EntityChanger.h"
+//class EntityChanger;
 class Entity;
 class EnemyEncounter;
 namespace effects {
-    class Effect {
+    class Effect: public EntityChanger {
         std::map<std::size_t, int> m_modifier;
         friend EnemyEncounter;
     public:
         Effect(std::weak_ptr<Entity>, std::map<std::size_t, int>);
-        int getModifier();
+        std::map<size_t, int> getModifier();
     protected:
         virtual void turn() = 0;
         virtual void endBattle() = 0;

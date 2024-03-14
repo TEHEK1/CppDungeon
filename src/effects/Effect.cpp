@@ -7,4 +7,8 @@ namespace effects {
         m_entity = entity;
         m_modifier = modifier;
     }
+
+    std::map<size_t, int> Effect::getModifier() {
+        return m_modifier;
+    }
 }

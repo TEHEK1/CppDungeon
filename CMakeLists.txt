@@ -84,5 +84,7 @@ add_executable(CppDungeon
         include/BattleField.h
         src/effects/Move.cpp
         include/effects/ForceMove.h
-        src/effects/ForceMove.cpp)
+        src/effects/ForceMove.cpp
+        src/EntityChanger.cpp
+        src/Entity.cpp)
 

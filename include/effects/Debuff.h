@@ -5,7 +5,7 @@
 #ifndef CPPDUNGEON_DEBUFF_H
 #define CPPDUNGEON_DEBUFF_H
 #include "effects/Effect.h"
-
+#include "EntityChanger.h"
 namespace effects {
     class Debuff: public Effect {
         int m_numberOfTurns;
