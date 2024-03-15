@@ -4,13 +4,14 @@
 
 #ifndef CPPDUNGEON_DISEASE_H
 #define CPPDUNGEON_DISEASE_H
-#include "Debuff.h"
+#include "Effect.h"
 namespace effects {
-    class Disease: public Debuff {
+    class Disease: public Effect {
     public:
         Disease(std::map<size_t, int> modifier);
-        void turn();
-        virtual void endBattleTurn();
+    protected:
+        std::function<int(entity::Entity)> getTurnFunction() override;
+        virtual std::function<int(entity::Entity)> getEndBattleTurnFunction() override;
     };
 }
 #endif //CPPDUNGEON_DISEASE_H

@@ -7,6 +7,7 @@
 
 #include <map>
 #include <memory>
+#include <functional>
 #include "changers/EntityChanger.h"
 #include "namespaces/entity.h"
 #include "namespaces/events.h"
@@ -17,12 +18,11 @@ namespace effects {
         friend changers::EffectChanger;
     public:
         virtual ~Effect() = default;
-        Effect(std::weak_ptr<entity::Entity> entity, const std::map<std::size_t, int>& modifier);
+        explicit Effect(const std::map<std::size_t, int>& modifier);
         std::map<std::size_t, int> getModifier();
     protected:
-        virtual void turn() = 0;
-        virtual void endBattleTurn() = 0;
-        std::weak_ptr<entity::Entity> m_entity;
+        virtual std::function<int(entity::Entity)> getTurnFunction() = 0;
+        virtual std::function<int(entity::Entity)> getEndBattleTurnFunction() = 0;
     };
 }
 

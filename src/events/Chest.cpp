@@ -11,7 +11,7 @@
 #include <memory>
 #include "monitor/Monitor.h"
 
-bool Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
+bool events::Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
 //    if (typeid(*((*actionIterator).get())) == typeid(Use)) {
 //        Use* use = static_cast<Use*>((*actionIterator).get());
 //        if (use->getChest() == this) {
@@ -23,7 +23,7 @@ bool Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIter
     return static_cast<bool>(use && (use->getChest()).get() == this);
 }
 
-void Chest::turn(Player *player) {
+void events::Chest::turn(Player *player) {
     player->getMonitor()->draw();
     if (!m_used) {
         std::shared_ptr<actions::Action> useAction(new actions::Use(std::shared_ptr<Chest>(this)));
@@ -32,14 +32,14 @@ void Chest::turn(Player *player) {
     player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<Event>(this));
 }
 
-void Chest::use(Player *player) {
-    std::shared_ptr<Item> item = std::make_shared<Item>();//TODO: Change it to grabbing from Main fabric
+void events::Chest::use(Player *player) {
+    std::shared_ptr<items::Item> item = std::make_shared<items::Item>();//TODO: Change it to grabbing from Main fabric
     addItem(player, item);
     removeAction(player, [this](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return comp(actionIterator);});
     m_used = true;
 }
 
-std::vector<std::vector<char>> Chest::draw() {
+std::vector<std::vector<char>> events::Chest::draw() {
 //     -------
 //    |___-___|
 //    |__|_|__|

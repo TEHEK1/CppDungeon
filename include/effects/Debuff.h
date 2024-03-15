@@ -4,16 +4,17 @@
 
 #ifndef CPPDUNGEON_DEBUFF_H
 #define CPPDUNGEON_DEBUFF_H
-#include "effects/Effect.h"
+#include "effects/Disease.h"
 #include "changers/EntityChanger.h"
 namespace effects {
-    class Debuff: public Effect {
+    class Debuff: public Disease {
         int m_numberOfTurns;
     public:
-        Debuff(std::weak_ptr<entity::Entity>, int numberOfTurns, std::map<size_t, int> modifier);
+        Debuff(int numberOfTurns, std::map<size_t, int> modifier);
         int getRemainingTurns();
-        void turn();
-        virtual void endBattleTurn();
+    protected:
+        std::function<int(entity::Entity)> getTurnFunction() override;
+        virtual std::function<int(entity::Entity)> getEndBattleTurnFunction() override;
     };
 
 }

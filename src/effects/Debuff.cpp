@@ -6,7 +6,7 @@
 #include "entity/Entity.h"
 
 namespace effects {
-    Debuff::Debuff(std::weak_ptr<entity::Entity> entity, int numberOfTurns, std::map<size_t, int> modifier) : Effect(entity, modifier) {
+    Debuff::Debuff(int numberOfTurns, std::map<size_t, int> modifier) : Disease(modifier) {
         m_numberOfTurns = numberOfTurns;
     }
 
@@ -15,6 +15,7 @@ namespace effects {
     }
 
     void Debuff::turn() {
+        return [&m_numberOfTurns]()
         --m_numberOfTurns;
         if (m_numberOfTurns < 0) {
             endBattleTurn();
@@ -26,5 +27,12 @@ namespace effects {
         if (entity) {
             removeEffect(static_cast<std::shared_ptr<Entity>>(entity), static_cast<std::shared_ptr<Effect>>(this));
         }
+    }
+    std::function<int(entity::Entity)> Debuff::getTurnFunction() {
+        m_numberOfTurns =2;
+        auto s =  [m_numberOfTurns](entity::Entity object){return m_numberOfTurns;};
+    }
+    std::function<int(entity::Entity)> Debuff::getEndBattleTurnFunction(){
+        return [](entity::Entity object){return 1;};
     }
 }
