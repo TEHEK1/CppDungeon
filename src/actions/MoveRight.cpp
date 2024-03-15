@@ -12,7 +12,7 @@ namespace actions {
         Cell * temp = player->getMap()->getCell(player->getPosition());
         temp->generateEvents();
         for(int i = 0; i < temp->getEvents().size(); i++) {
-            temp->getEvents()[i]->turn(player, i);
+            temp->getEvents()[i]->turn(player);
         }
         returnToDefault(player);
     }

@@ -9,10 +9,8 @@ class Chest;
 namespace actions {
     class Use : public Action {
     public:
-        Use(Chest *, int);
-
+        explicit Use(Chest *);
         void act(Player *player) override;
-
         Chest *getChest();
 
     private:

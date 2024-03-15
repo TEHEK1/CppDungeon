@@ -12,10 +12,8 @@ class Chest;
 namespace actions {
     class DontUse : public Action {
     public:
-        DontUse(const std::shared_ptr<Trap>&, int);
-
+        explicit DontUse(const std::shared_ptr<Trap>&);
         void act(Player *player) override;
-
         std::shared_ptr<Trap> getTrap() const;
     private:
         int m_index;
