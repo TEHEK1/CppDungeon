@@ -3,6 +3,7 @@
 //
 #include "effects/MarkedAsTurnable.h"
 #include "entity/Entity.h"
+#include <iostream>
 effects::MarkedAsTurnable::MarkedAsTurnable(int numberOfTurns): m_numberOfTurns(numberOfTurns) {}
 int effects::MarkedAsTurnable::getRemainingTurns() {
     return m_numberOfTurns;
