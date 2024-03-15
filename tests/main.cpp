@@ -3,8 +3,9 @@
 #include <stdio.h>
 
 int main() {
-    Map test = Map();
-    auto drawing = test.draw(test.getStartPosition(), 5, 5);
+    Map test = Map(123456);
+    Position startPosition = test.getStartPosition();
+    auto drawing = test.draw(startPosition, 25, 25);
     for (auto i : drawing) {
         for (auto j : i) {
             if  (j == 0) {
@@ -19,5 +20,18 @@ int main() {
         }
         std::cout << std::endl;
     }
+    std::vector<Position> nextRooms = test.getNextRooms(startPosition);
+    std::cout << "Starting from " << (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
+    for (int i = 0; i < nextRooms.size(); i++) {
+            std::cout << (int)(nextRooms[i]).getLine() << ", " << (int)(nextRooms[i]).getColumn() << std::endl;
+    }
+    startPosition = test.chooseNextRoom(startPosition, nextRooms[0]);
+    std::cout << (int)startPosition.getDestination() << std::endl;
+    startPosition = test.moveRight(startPosition);
+    std::cout << (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
+    startPosition = test.moveRight(startPosition);
+    std::cout << (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
+    startPosition = test.moveLeft(startPosition);
+    std::cout << (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
     return 0;
 }

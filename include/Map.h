@@ -18,7 +18,7 @@ public:
     Position moveLeft(Position); // done
     Position moveRight(Position); // done
     std::vector<Position> getNextRooms(Position); // done
-    Position chooseNextRoom(Position, char index); // done
+    Position chooseNextRoom(Position, Position); // done
     char getNextRoom(Position); // done
     std::vector<std::vector<char>> draw(Position, int line, int column); // done
     int getSize(); // done
