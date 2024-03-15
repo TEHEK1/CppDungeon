@@ -8,8 +8,8 @@
 #include "MarkedAsEndBattle.h"
 namespace effects {
     class PassiveBuff: public PermanentEffect, public MarkedAsEndBattle {
+    public:
         PassiveBuff(int numberOfBattles, std::map<int, int> modifier);
-    protected:
     };
 } // namespace effects
 #endif //CPPDUNGEON_PASSIVEBUFF_H

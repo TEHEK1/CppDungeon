@@ -2,6 +2,7 @@
 // Created by Владимир Попов on 09.03.2024
 //
 #include "entity/Entity.h"
+#include "effects/PermanentEffect.h"
 #include <random>
 entity::Entity::Entity(std::map<int, int> characteristics):m_characteristics(characteristics){}
 std::vector<std::vector<char>> entity::Entity::draw(){
@@ -23,7 +24,9 @@ int entity::Entity::get(int key) const {
     if (m_characteristics.contains(key)){
         result = m_characteristics.at(key);
         for (const auto& effect : m_effects) {
-            result += effect->getModifier()[key];
+            auto permanentEffect = std::dynamic_pointer_cast<effects::PermanentEffect>(effect);
+            if(permanentEffect != nullptr)
+            result += permanentEffect->getModifier()[key];
         }
     }
     return result;

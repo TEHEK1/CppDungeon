@@ -17,8 +17,10 @@ add_executable(test
         EffectTest.cpp
         EffectTest.h
         ../src/effects/Buff.cpp
+        ../src/effects/PassiveBuff.cpp
+        ../src/effects/AutoAction.cpp
+        ../src/effects/ImmediateEffect.cpp
         ../src/effects/PermanentEffect.cpp
-        ../include/effects/MarkedAsResistable.h
-        ../include/effects/MarkedAsBattleFieldNeeded.h
-        ../include/effects/MarkedAsTurnable.h
+        ../src/effects/MarkedAsTurnable.cpp
+        ../src/effects/MarkedAsEndBattle.cpp
 )

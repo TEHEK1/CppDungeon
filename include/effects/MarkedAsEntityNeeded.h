@@ -9,8 +9,8 @@
 namespace effects{
     class MarkedAsEntityNeeded{
     protected:
-        virtual std::function<int(std::shared_ptr<entity::Entity>)> getTurnFunction() = 0;
-        virtual std::function<int(std::shared_ptr<entity::Entity>)> getEndBattleTurnFunction() = 0;
+        friend changers::EffectChanger;
+        virtual std::function<int(const std::shared_ptr<entity::Entity>& )> getTurnFunctionEntity() = 0;
     public:
         virtual ~MarkedAsEntityNeeded() = default;
     };

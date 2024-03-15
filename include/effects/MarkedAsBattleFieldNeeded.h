@@ -8,9 +8,11 @@
 #include <functional>
 #include "changers/BattleFieldChanger.h"
 #include "namespaces/entity.h"
+#include "events/BattleField.h"
+
 class MarkedAsBattleFieldNeeded: public BattleFieldChanger{
-    virtual std::function<int(std::shared_ptr<entity::Entity>, std::shared_ptr<BattleField>)> getTurnBattleFieldFunction() = 0;
+    friend changers::EffectChanger;
 protected:
-    virtual std::function<int(std::shared_ptr<entity::Entity>)>getTurnFunction() = delete;
+    virtual std::function<int(std::shared_ptr<entity::Entity>, std::shared_ptr<BattleField>)> getTurnFunctionBattleField() = 0;
 };
 #endif //TEST_MARKEDASBATTLEFIELDNEEDED_H

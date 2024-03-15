@@ -8,11 +8,12 @@
 #include "changers/EntityChanger.h"
 #include "entity/Entity.h"
 #include "effects/Effect.h"
-class EffectTest: public changers::EntityChanger{
+class EffectTest: public changers::EffectChanger{
 public:
-    using changers::EntityChanger::addEffect;
-    using changers::EntityChanger::turnEffects;
-    using changers::EntityChanger::removeEffect;
+    using changers::EffectChanger::addEffect;
+    using changers::EffectChanger::turnEffects;
+    using changers::EffectChanger::removeEffect;
+    using changers::EffectChanger::endBattleTurnEffects;
 };
 
 

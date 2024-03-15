@@ -10,7 +10,7 @@ namespace effects {
         std::map<int, int> m_modifier;
         friend changers::EffectChanger;
     public:
-        PermanentEffect(const std::map<int, int>& modifier);
+        explicit PermanentEffect(const std::map<int, int>& modifier);
         std::map<int, int> getModifier();
     };
 } //namespace effects
