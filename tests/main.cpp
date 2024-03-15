@@ -3,9 +3,8 @@
 #include <stdio.h>
 
 int main() {
-    Map test = Map(123456);
-    Position startPosition = test.getStartPosition();
-    auto drawing = test.draw(startPosition, 25, 25);
+    Map test = Map();
+    auto drawing = test.draw(test.getStartPosition(), 5, 5);
     for (auto i : drawing) {
         for (auto j : i) {
             if  (j == 0) {

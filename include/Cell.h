@@ -4,8 +4,9 @@
 
 #ifndef UNTITLED_CELL_H
 #define UNTITLED_CELL_H
-#include "Event.h"
+#include "ActionsChanger.h"
 #include <vector>
+class Event;
 class Cell: public ActionsChanger{
 public:
     void freeMoves(Player*, int);
