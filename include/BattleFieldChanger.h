@@ -9,9 +9,10 @@ class BattleField;
 class Entity;
 
 class BattleFieldChanger {
-  static void move(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity> entity, int index2);
-  static void relativeMove(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity>entity, int offset);
-  static void remove(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity>entity);
+protected:
+    static void move(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity> entity, int index2);
+    static void relativeMove(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity>entity, int offset);
+    static void remove(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity>entity);
 };
 
 #endif //CPPDUNGEON_BATTLEFIELDCHANGER_H
