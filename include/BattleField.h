@@ -18,7 +18,7 @@ public:
     std::vector<std::shared_ptr<Entity>> getEntities() const;
     std::shared_ptr<Squad> getSquad(std::shared_ptr<Entity>& target) const;
     std::shared_ptr<Squad> getEnemySquad(std::shared_ptr<Entity>& target) const;
-    bool areAllies(std::shared_ptr<Entity>, std::shared_ptr<Entity>) const;
+    bool areAllies(std::shared_ptr<Entity> ent1, std::shared_ptr<Entity> ent2) const;
 
     friend class BattleFieldChanger;
 };

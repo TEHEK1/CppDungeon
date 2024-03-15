@@ -10,11 +10,11 @@ class Entity;
 
 class SquadChanger {
 public:
-    static void move(const std::shared_ptr<Squad>&, int index1, int index2);
-    static void move(const std::shared_ptr<Squad>&, const std::shared_ptr<Entity>&entity, int index2);
-    static void relativeMove(const std::shared_ptr<Squad>&, int index, int offset);
-    static void relativeMove(const std::shared_ptr<Squad>&, const std::shared_ptr<Entity>&entity, int offset);
-    static void remove(const std::shared_ptr<Squad>&, int index);
+    static void move(const std::shared_ptr<Squad>& squad, int index1, int index2);
+    static void move(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>&entity, int index2);
+    static void relativeMove(const std::shared_ptr<Squad>& squad, int index, int offset);
+    static void relativeMove(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>&entity, int offset);
+    static void remove(const std::shared_ptr<Squad>& squad, int index);
     static void remove(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>&entity);
     static void add(const std::shared_ptr<Squad>& squad, std::shared_ptr<Entity>entity, int index);
     static void add(const std::shared_ptr<Squad>& squad, std::shared_ptr<Entity>entity);
