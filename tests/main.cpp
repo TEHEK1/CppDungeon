@@ -3,8 +3,9 @@
 #include <stdio.h>
 
 int main() {
-    Map test = Map();
-    auto drawing = test.draw(test.getStartPosition(), 5, 5);
+    Map test = Map(123456789);
+    Position startPosition = test.getStartPosition();
+    auto drawing = test.draw(test.getStartPosition(), 40, 40);
     for (auto i : drawing) {
         for (auto j : i) {
             if  (j == 0) {
@@ -21,16 +22,21 @@ int main() {
     }
     std::vector<Position> nextRooms = test.getNextRooms(startPosition);
     std::cout << "Starting from " << (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
+    std::cout << "Neighbours coords:" << std::endl;
     for (int i = 0; i < nextRooms.size(); i++) {
-            std::cout << (int)(nextRooms[i]).getLine() << ", " << (int)(nextRooms[i]).getColumn() << std::endl;
+            std::cout << i + 1 << ": " <<(int)(nextRooms[i]).getLine() << ", " << (int)(nextRooms[i]).getColumn() << std::endl;
     }
     startPosition = test.chooseNextRoom(startPosition, nextRooms[0]);
-    std::cout << (int)startPosition.getDestination() << std::endl;
-    startPosition = test.moveRight(startPosition);
-    std::cout << (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
-    startPosition = test.moveRight(startPosition);
-    std::cout << (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
-    startPosition = test.moveLeft(startPosition);
-    std::cout << (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
+    std::cout << "Next room has coords: " <<(int)nextRooms[0].getLine() << ", " << (int)nextRooms[0].getColumn() << std::endl;
+
+    for (int i = 0; i < 15; i++) {
+        startPosition = test.moveRight(startPosition);
+        std::cout << "Moved towards next room: "<< (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
+    }
+
+    for (int i = 0; i < 12; i++) {
+        startPosition = test.moveLeft(startPosition);
+        std::cout << "Moved backwards: "<< (int)startPosition.getLine() << ", " << (int)startPosition.getColumn() << std::endl;
+    }
     return 0;
 }

@@ -37,94 +37,115 @@ Position Map::getStartPosition() {
     answer.m_line = m_roomPositions[m_roomPositions.size() - 1].m_line;
     answer.m_column = m_roomPositions[m_roomPositions.size() - 1].m_column;
     answer.m_destination = -1;
+    answer.m_prevColumn = -1;
+    answer.m_prevLine = -1;
     return answer;
 }
 
 Position Map::moveLeft(Position pos) {
     // moving backwards
+    if (pos.m_prevColumn != -1) {
 
-    if (m_contents[pos.m_line][pos.m_column] == CellType::hall) {
+        if (m_contents[pos.m_line][pos.m_column] == CellType::hall) {
 
-        char newPreviousColumn;
-        char newPreviousLine;
-        if (m_contents[pos.m_prevLine][pos.m_prevColumn + 1] != CellType::empty) {
-            if (pos.m_prevLine != pos.m_line || pos.m_prevColumn + 1 != pos.m_column) {
-                newPreviousColumn = pos.m_prevColumn + 1;
-                newPreviousLine = pos.m_prevLine;
-                if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
-                    newPreviousColumn++;
-                }
-            } 
-        } else if (m_contents[pos.m_prevLine][pos.m_prevColumn - 1] != CellType::empty) {
-            if (pos.m_prevLine != pos.m_line || pos.m_prevColumn - 1 != pos.m_column) {
-                newPreviousColumn = pos.m_prevColumn - 1;
-                newPreviousLine = pos.m_prevLine;
-                if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
-                    newPreviousColumn--;
-                }
-            } 
-        } else if (m_contents[pos.m_prevLine + 1][pos.m_prevColumn] != CellType::empty) {
-            if (pos.m_prevLine + 1 != pos.m_line || pos.m_prevColumn != pos.m_column) {
-                newPreviousColumn = pos.m_prevColumn;
-                newPreviousLine = pos.m_prevLine + 1;
-                if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
-                    newPreviousLine++;
-                }
-            } 
-        } else if (m_contents[pos.m_prevLine - 1][pos.m_prevColumn] != CellType::empty) {
-            if (pos.m_prevLine - 1 != pos.m_line || pos.m_prevColumn != pos.m_column) {
-                newPreviousColumn = pos.m_prevColumn;
-                newPreviousLine = pos.m_prevLine - 1;
-                if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
-                    newPreviousLine--;
-                }
-            } 
-        }
-        pos.m_column     = pos.m_prevColumn;
-        pos.m_line       = pos.m_prevLine;
-        pos.m_prevColumn = newPreviousColumn;
-        pos.m_prevLine   = newPreviousLine;
-
-    } else if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
-
-        int roomIndex = -1;
-        for (int i = 0; i < m_roomPositions.size(); i++) {
-            if (m_roomPositions[i].m_column == pos.m_column && m_roomPositions[i].m_line  == pos.m_line) {
-                roomIndex = i;
-                break;
-            }
-        }
-
-        if (roomIndex == pos.m_destination) {
             char newPreviousColumn;
             char newPreviousLine;
-            
-            if (m_contents[pos.m_prevLine][pos.m_prevColumn + 2] != CellType::empty) {
-                if (pos.m_prevLine != pos.m_line || pos.m_prevColumn + 2 != pos.m_column) {
-                    newPreviousColumn = pos.m_prevColumn + 2;
-                    newPreviousLine = pos.m_prevLine;
-                } 
-            } else if (m_contents[pos.m_prevLine][pos.m_prevColumn - 2] != CellType::empty) {
-                if (pos.m_prevLine != pos.m_line || pos.m_prevColumn - 2 != pos.m_column) {
-                    newPreviousColumn = pos.m_prevColumn - 2;
-                    newPreviousLine = pos.m_prevLine;
-                } 
-            } else if (m_contents[pos.m_prevLine + 2][pos.m_prevColumn] != CellType::empty) {
-                if (pos.m_prevLine + 2 != pos.m_line || pos.m_prevColumn != pos.m_column) {
-                    newPreviousColumn = pos.m_prevColumn;
-                    newPreviousLine = pos.m_prevLine + 2;
-                } 
-            } else if (m_contents[pos.m_prevLine - 2][pos.m_prevColumn] != CellType::empty) {
-                if (pos.m_prevLine - 2 != pos.m_line || pos.m_prevColumn != pos.m_column) {
-                    newPreviousColumn = pos.m_prevColumn;
-                    newPreviousLine = pos.m_prevLine - 2;
-                } 
-            }
+            bool searchingPath = true;
 
+            if (searchingPath && m_contents[pos.m_prevLine][pos.m_prevColumn + 1] != CellType::empty) {
+
+                if (pos.m_prevLine != pos.m_line || pos.m_prevColumn + 1 != pos.m_column) {
+                    newPreviousColumn = pos.m_prevColumn + 1;
+                    newPreviousLine = pos.m_prevLine;
+                    if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
+                        newPreviousColumn++;
+                    }
+                    searchingPath = false;
+                }
+
+            }
+            if (searchingPath && m_contents[pos.m_prevLine][pos.m_prevColumn - 1] != CellType::empty) {
+
+                if (pos.m_prevLine != pos.m_line || pos.m_prevColumn - 1 != pos.m_column) {
+                    newPreviousColumn = pos.m_prevColumn - 1;
+                    newPreviousLine = pos.m_prevLine;
+                    if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
+                        newPreviousColumn--;
+                    }
+                    searchingPath = false;
+                } 
+
+            }
+            if (searchingPath && m_contents[pos.m_prevLine + 1][pos.m_prevColumn] != CellType::empty) {
+
+                if (pos.m_prevLine + 1 != pos.m_line || pos.m_prevColumn != pos.m_column) {
+                    newPreviousColumn = pos.m_prevColumn;
+                    newPreviousLine = pos.m_prevLine + 1;
+                    if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
+                        newPreviousLine++;
+                    }
+                    searchingPath = false;
+                } 
+
+            }
+            if (searchingPath && m_contents[pos.m_prevLine - 1][pos.m_prevColumn] != CellType::empty) {
+
+                if (pos.m_prevLine - 1 != pos.m_line || pos.m_prevColumn != pos.m_column) {
+                    newPreviousColumn = pos.m_prevColumn;
+                    newPreviousLine = pos.m_prevLine - 1;
+                    if (m_contents[newPreviousLine][newPreviousColumn] == CellType::room) {
+                        newPreviousLine--;
+                    }
+                    searchingPath = false;
+                } 
+
+            }
             pos.m_column     = pos.m_prevColumn;
             pos.m_line       = pos.m_prevLine;
             pos.m_prevColumn = newPreviousColumn;
             pos.m_prevLine   = newPreviousLine;
+
+        } else if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+
+            int roomIndex = -1;
+            for (int i = 0; i < m_roomPositions.size(); i++) {
+                if (m_roomPositions[i].m_column == pos.m_column && m_roomPositions[i].m_line  == pos.m_line) {
+                    roomIndex = i;
+                    break;
+                }
+            }
+
+            if (roomIndex == pos.m_destination) {
+                char newPreviousColumn;
+                char newPreviousLine;
+                bool searchingPath = true;
+
+                if (searchingPath && m_contents[pos.m_prevLine][pos.m_prevColumn + 1] == CellType::hall) {
+                    newPreviousColumn = pos.m_prevColumn + 1;
+                    newPreviousLine = pos.m_prevLine;
+                    searchingPath = false; 
+                }
+                if (searchingPath && m_contents[pos.m_prevLine][pos.m_prevColumn - 1] == CellType::hall) {
+                    newPreviousColumn = pos.m_prevColumn - 1;
+                    newPreviousLine = pos.m_prevLine;
+                    searchingPath = false; 
+                }
+                if (searchingPath && m_contents[pos.m_prevLine + 1][pos.m_prevColumn] == CellType::hall) {
+                    newPreviousColumn = pos.m_prevColumn;
+                    newPreviousLine = pos.m_prevLine + 1;
+                    searchingPath = false; 
+                }
+                if (searchingPath && m_contents[pos.m_prevLine - 1][pos.m_prevColumn] == CellType::hall) {
+                    newPreviousColumn = pos.m_prevColumn;
+                    newPreviousLine = pos.m_prevLine - 1;
+                    searchingPath = false; 
+                }
+
+                pos.m_column     = pos.m_prevColumn;
+                pos.m_line       = pos.m_prevLine;
+                pos.m_prevColumn = newPreviousColumn;
+                pos.m_prevLine   = newPreviousLine;
+            }
         }
     }
     return pos;
@@ -134,7 +155,7 @@ Position Map::moveRight(Position pos) {
     // moving forward
     if (pos.m_destination != -1) {
         if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
-
+            
             int roomIndex = -1;
             for (int i = 0; i < m_roomPositions.size(); i++) {
                 if (m_roomPositions[i].m_column == pos.m_column && m_roomPositions[i].m_line  == pos.m_line) {
@@ -150,11 +171,11 @@ Position Map::moveRight(Position pos) {
                         pos.m_prevColumn = pos.m_column;
                         pos.m_prevLine   = pos.m_line;
                         if (side == RoomPosition::top) {
-                            pos.m_line += 2;
+                            pos.m_line -= 2;
                         } else if (side == RoomPosition::right) {
                             pos.m_column += 2;
                         } else if (side == RoomPosition::bottom) {
-                            pos.m_line -= 2;
+                            pos.m_line += 2;
                         } else if (side == RoomPosition::left) {
                             pos.m_column -= 2;
                         }
@@ -164,42 +185,94 @@ Position Map::moveRight(Position pos) {
             }
 
         } else if (m_contents[pos.m_line][pos.m_column] == CellType::hall) {
-            if (m_contents[pos.m_line + 1][pos.m_column] != CellType::empty) {
-                if (pos.m_line + 1 != pos.m_prevLine || pos.m_column != pos.m_prevColumn) {
-                    pos.m_prevLine = pos.m_line;
-                    pos.m_line++;
-                    // column doesn't change
-                    if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+
+            bool searchingPath = true;
+            if (searchingPath && m_contents[pos.m_line + 1][pos.m_column] != CellType::empty) {
+                if (m_contents[pos.m_line + 1][pos.m_column] == CellType::room) {
+                    if (pos.m_line + 2 != pos.m_prevLine || pos.m_column != pos.m_prevColumn) {
+                        pos.m_prevLine = pos.m_line;
+                        pos.m_prevColumn = pos.m_column;
+                        pos.m_line += 2;
+                        searchingPath = false;
+                    }
+                } else if (m_contents[pos.m_line + 1][pos.m_column] == CellType::hall) {
+
+                    if (pos.m_line + 1 != pos.m_prevLine || pos.m_column != pos.m_prevColumn) {
+                        pos.m_prevLine = pos.m_line;
+                        pos.m_prevColumn = pos.m_column;
                         pos.m_line++;
+                        searchingPath = false;
+                        // column doesn't change
                     }
+
                 }
-            } else if (m_contents[pos.m_line - 1][pos.m_column] != CellType::empty) {
-                if (pos.m_line - 1 != pos.m_prevLine || pos.m_column != pos.m_prevColumn) {
-                    pos.m_prevLine = pos.m_line;
-                    pos.m_line--;
-                    // column doesn't change
-                    if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+
+            }
+            if (searchingPath && m_contents[pos.m_line - 1][pos.m_column] != CellType::empty) {
+                if (m_contents[pos.m_line - 1][pos.m_column] == CellType::room) {
+                    if (pos.m_line - 2 != pos.m_prevLine || pos.m_column != pos.m_prevColumn) {
+                        pos.m_prevLine = pos.m_line;
+                        pos.m_prevColumn = pos.m_column;
+                        pos.m_line -= 2;
+                        searchingPath = false;
+                        // column doesn't change
+                    }
+                } else if (m_contents[pos.m_line - 1][pos.m_column] == CellType::hall) {
+
+                    if (pos.m_line - 1 != pos.m_prevLine || pos.m_column != pos.m_prevColumn) {
+                        pos.m_prevLine = pos.m_line;
+                        pos.m_prevColumn = pos.m_column;
                         pos.m_line--;
+                        searchingPath = false;
                     }
+
                 }
-            } else if (m_contents[pos.m_line][pos.m_column + 1] != CellType::empty) {
-                if (pos.m_line != pos.m_prevLine || pos.m_column + 1 != pos.m_prevColumn) {
-                    pos.m_prevColumn = pos.m_column;
-                    pos.m_column++;
-                    // column doesn't change
-                    if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+            }
+            if (searchingPath && m_contents[pos.m_line][pos.m_column + 1] != CellType::empty) {
+
+                if (m_contents[pos.m_line][pos.m_column + 1] == CellType::room) {
+
+                    if (pos.m_line != pos.m_prevLine || pos.m_column + 2 != pos.m_prevColumn) {
+                        pos.m_prevColumn = pos.m_column;
+                        pos.m_prevLine = pos.m_line;
+                        pos.m_column += 2;
+                        searchingPath = false;
+                    }
+
+                } else if (m_contents[pos.m_line][pos.m_column + 1] == CellType::hall) {
+
+                    if (pos.m_line != pos.m_prevLine || pos.m_column + 1 != pos.m_prevColumn) {
+                        pos.m_prevColumn = pos.m_column;
+                        pos.m_prevLine = pos.m_line;
                         pos.m_column++;
+                        searchingPath = false;
                     }
+
                 }
-            } else if (m_contents[pos.m_line][pos.m_column - 1] != CellType::empty) {
-                if (pos.m_line != pos.m_prevLine || pos.m_column - 1 != pos.m_prevColumn) {
-                    pos.m_prevColumn = pos.m_column;
-                    pos.m_column--;
-                    // column doesn't change
-                    if (m_contents[pos.m_line][pos.m_column] == CellType::room) {
+
+            }
+            if (searchingPath && m_contents[pos.m_line][pos.m_column - 1] != CellType::empty) {
+
+                if (m_contents[pos.m_line][pos.m_column - 1] == CellType::room) {
+
+                    if (pos.m_line != pos.m_prevLine || pos.m_column - 2 != pos.m_prevColumn) {
+                        pos.m_prevColumn = pos.m_column;
+                        pos.m_prevLine = pos.m_line;
+                        pos.m_column -= 2;
+                        searchingPath = false;
+                    }
+
+                } else if (m_contents[pos.m_line][pos.m_column - 1] == CellType::hall) {
+
+                    if (pos.m_line != pos.m_prevLine || pos.m_column - 1 != pos.m_prevColumn) {
+                        pos.m_prevColumn = pos.m_column;
+                        pos.m_prevLine = pos.m_line;
                         pos.m_column--;
+                        searchingPath = false;
                     }
+
                 }
+
             }
         }
     }
