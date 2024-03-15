@@ -3,7 +3,7 @@
 //
 
 #include "BattleField.h"
-#include "Squad.h"
+#include "player/Squad.h"
 #include <memory>
 #include <vector>
 

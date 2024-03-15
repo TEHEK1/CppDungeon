@@ -1,3 +1,27 @@
+#include <iostream>
+#include "include/BattleField.h"
+#include "include/player/Squad.h"
+#include "entity/Entity.h"
+class Entity1: public Entity{
+public:
+    Entity1(int i): Entity({}){
+        m_name = std::to_string(i);
+    }
+};
 int main() {
+    std::vector<std::shared_ptr<Entity>> allies;
+    for(int i =0;i<4;i++){
+        allies.push_back(std::shared_ptr<Entity1>(new Entity1(i)));
+    }
+    std::vector<std::shared_ptr<Entity>> enemies;
+    for(int i =5;i<8;i++){
+        enemies.push_back(std::shared_ptr<Entity1>(new Entity1(i)));
+    }
+    std::shared_ptr<Squad> sq1 = std::shared_ptr<Squad>(new Squad(allies));
+    std::shared_ptr<Squad> sq2 = std::shared_ptr<Squad>(new Squad(enemies));
+    BattleField battle = BattleField(sq1, sq2);
+    for(int i = 0;i<battle.getEntities().size();i++){
+        std::cout<<battle.getEntities()[i]->getName()<<" ";
+    }
     return 0;
 }

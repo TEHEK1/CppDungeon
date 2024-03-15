@@ -2,7 +2,7 @@
 // Created by Арсений Бородулин on 10.03.2024.
 //
 #include "SquadChanger.h"
-#include "Squad.h"
+#include "player/Squad.h"
 
 void SquadChanger::move(const std::shared_ptr<Squad>& squad, int index1, int index2) {
     if (index1 < 0 || index1 >= squad->m_squad.size()) { throw std::invalid_argument("index is out of range"); }
