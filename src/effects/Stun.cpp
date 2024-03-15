@@ -4,7 +4,7 @@
 #include <map>
 #include "effects/Debuff.h"
 #include "effects/Stun.h"
-#include "trick.h"
+#include "entity/Trick.h"
 namespace effects {
     Stun::Stun(std::weak_ptr<Entity> entity, int numberOfTurns) : Debuff(entity, numberOfTurns, std::map<size_t, int>{{trick::hash("turnable"), -1}}) {
     }

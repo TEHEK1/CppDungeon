@@ -2,7 +2,7 @@
 // Created by artem on 13.03.2024.
 //
 #include "effects/Blight.h"
-#include "trick.h"
+#include "entity/Trick.h"
 namespace effects {
     Blight::Blight(std::weak_ptr<Entity> entity, int numberOfTurns, int HPturner, int crited, int critModifier) :
     AutoAction(entity, crited < 0 ? numberOfTurns : numberOfTurns * critModifier / 100,

@@ -2,7 +2,7 @@
 // Created by artem on 13.03.2024.
 //
 #include "effects/Heal.h"
-#include "trick.h"
+#include "entity/Trick.h"
 #include "random"
 std::mt19937 rnd(time(0));
 namespace effects {

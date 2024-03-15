@@ -3,8 +3,8 @@
 //
 #include "effects/AutoAction.h"
 #include "effects/Effect.h"
-#include "Entity.h"
-#include "EntityChanger.h"
+#include "entity/Entity.h"
+#include "changers/EntityChanger.h"
 
 namespace effects {
     AutoAction::AutoAction(std::weak_ptr<Entity> entity, int numberOfTurns, std::map<size_t, int> modifier,

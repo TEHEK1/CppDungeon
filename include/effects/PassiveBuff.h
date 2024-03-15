@@ -5,7 +5,7 @@
 #ifndef CPPDUNGEON_PASSIVEBUFF_H
 #define CPPDUNGEON_PASSIVEBUFF_H
 #include "Buff.h"
-#include "EntityChanger.h"
+#include "changers/EntityChanger.h"
 namespace effects {
     class PassiveBuff: public Buff {
         int m_numberOfBattles;

@@ -3,7 +3,7 @@
 //
 #include "effects/Debuff.h"
 #include "effects/Effect.h"
-#include "Entity.h"
+#include "entity/Entity.h"
 
 namespace effects {
     Debuff::Debuff(std::weak_ptr<Entity> entity, int numberOfTurns, std::map<size_t, int> modifier) : Effect(entity, modifier) {

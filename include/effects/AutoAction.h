@@ -5,7 +5,7 @@
 #ifndef CPPDUNGEON_AUTOACTION_H
 #define CPPDUNGEON_AUTOACTION_H
 #include "effects/Effect.h"
-#include "EntityChanger.h"
+#include "changers/EntityChanger.h"
 namespace effects {
     class AutoAction : public Effect {
         std::map<size_t, int> m_turner;

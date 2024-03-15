@@ -4,8 +4,8 @@
 #include <memory>
 #include "random"
 #include "effects/PercentHeal.h"
-#include "trick.h"
-#include "Entity.h"
+#include "entity/Trick.h"
+#include "entity/Entity.h"
 std::mt19937 rnd(time(0));
 namespace effects {
     PercentHeal::PercentHeal(std::weak_ptr<Entity> entity, int minPercentHeal, int maxPercentHeal, int crited, int critModifier) :

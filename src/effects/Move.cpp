@@ -1,7 +1,7 @@
 //
 // Created by artem on 13.03.2024.
 //
-#include "BattleField.h"
+#include "events/BattleField.h"
 #include "effects/Move.h"
 namespace effects {
     Move::Move(std::weak_ptr<Entity> entity, std::weak_ptr<BattleField> battleField, int offset) : ImmediateEffect(entity, std::map<size_t, int>{}, 0, 0) {

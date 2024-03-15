@@ -7,7 +7,7 @@
 
 #include <map>
 #include <memory>
-#include "EntityChanger.h"
+#include "changers/EntityChanger.h"
 //class EntityChanger;
 class Entity;
 class EnemyEncounter;

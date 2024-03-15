@@ -1,7 +1,7 @@
 //
 // Created by artem on 13.03.2024.
 //
-#include "BattleField.h"
+#include "events/BattleField.h"
 #include "effects/ForceMove.h"
 
 namespace effects {
