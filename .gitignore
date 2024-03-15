@@ -1,6 +1,4 @@
 .vscode
 build
 .idea
-.clang-tidy
-.github
 cmake-build-debug

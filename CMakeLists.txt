@@ -6,11 +6,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
 
 add_executable(CppDungeon
-        src/Use.cpp
-        src/MoveRight.cpp
-        src/MoveLeft.cpp
-        src/DontUse.cpp
-        src/ChooseNextRoom.cpp
-        src/Player.cpp
-        src/PositionChanger.cpp
-        src/Cell.cpp)
+        src/actions/Use.cpp
+        src/actions/MoveRight.cpp
+        src/actions/MoveLeft.cpp
+        src/actions/DontUse.cpp
+        src/actions/ChooseNextRoom.cpp
+        src/player/Player.cpp
+        src/changers/PositionChanger.cpp
+        src/navigation/Cell.cpp)
