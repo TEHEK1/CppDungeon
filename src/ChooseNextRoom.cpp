@@ -3,10 +3,11 @@
 //
 #include "ChooseNextRoom.h"
 #include "Map.h"
+#include "Player.h"
 
 namespace actions{
-    ChooseNextRoom::ChooseNextRoom(char room):m_room(room) {};
+    ChooseNextRoom::ChooseNextRoom(char room):m_room(room) {}
     void ChooseNextRoom::act(Player * player) {
         setPosition(player, player -> getMap() -> chooseNextRoom(player ->getPosition(), m_room));
     }
-}
+} // namespace actions

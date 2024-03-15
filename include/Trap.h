@@ -8,8 +8,8 @@
 class Player;
 class Trap:public Chest{
 public:
-    void turn(Player *, int) override;
-    void use(Player*, int) override;
+    void turn(Player * /*unused*/, int /*unused*/) override;
+    void use(Player* /*unused*/, int /*unused*/) override;
     void dontUse(Player*, int);
     std::vector<std::vector<char>> draw() override;
 };

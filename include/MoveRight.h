@@ -10,8 +10,8 @@
 namespace actions {
     class MoveRight : public Action, public ActionsChanger, public PositionChanger {
     public:
-        void act(Player *) override;
+        void act(Player *player) override;
     };
 
 #endif //CPPDUNGEON_MOVERIGHT_H
-}
+} // namespace actions

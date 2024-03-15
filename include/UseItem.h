@@ -9,7 +9,7 @@
 #include <memory>
 class Entity;
 class Item;
-class UseItem: public Action{
+class UseItem: public actions::Action{
 public:
     UseItem(Player* player, Item* item, std::vector<std::shared_ptr<Entity>> entities);
     void act(Player*) override;

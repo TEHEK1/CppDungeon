@@ -14,4 +14,4 @@ enum class Resistances {
     Move = trick::hash("Move")
 };
 
-#endif //RESISTANCES_H
+#endif //UNTITLED_RESISTANCES_H

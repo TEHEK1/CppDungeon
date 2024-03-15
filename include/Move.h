@@ -5,7 +5,7 @@
 #ifndef CPPDUNGEON_MOVE_H
 #define CPPDUNGEON_MOVE_H
 #include "Action.h"
-class Move:public Action{
+class Move:public actions::Action{
 
 };
 #endif //CPPDUNGEON_MOVE_H

@@ -9,7 +9,7 @@
 #include <memory>
 class Entity;
 class Skill;
-class UseSkill: public Action{
+class UseSkill: public actions::Action{
 public:
     // UseSkill(Entity* actor, Skill* skill, std::vector<Entity*> entities);
     UseSkill(std::shared_ptr<Entity> actor, Skill* skill, std::vector<std::shared_ptr<Entity>> entities);

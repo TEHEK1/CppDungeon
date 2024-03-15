@@ -1,6 +1,7 @@
 //
 // Created by Владимир Попов on 12.03.2024
 //
+#include "Entity.h"
 #include "EntityChanger.h"
 #include "Effect.h"
 
@@ -43,7 +44,7 @@ void EntityChanger::endBattleTurnEffects(std::shared_ptr<Entity> entity) {
 void EntityChanger::addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect) {
     entity->m_effects.insert(effect); 
 
-    if (dynamic_cast<ImmediateEffect*>(effect.get()) != nullptr) {
+    if (dynamic_cast<effects::ImmediateEffect*>(effect.get()) != nullptr) {
         effect->turn();
     }
 }

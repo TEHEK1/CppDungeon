@@ -5,11 +5,11 @@
 #ifndef UNTITLED_PLAYER_H
 #define UNTITLED_PLAYER_H
 #include "Inventory.h"
+#include "Position.h"
 #include <memory>
 #include <set>
 #include <vector>
 class Entity;
-class Position;
 class Map;
 class Monitor;
 namespace actions {
@@ -32,7 +32,7 @@ public:
     Monitor* getMonitor();
     Position getPosition();
     std::shared_ptr<Squad> getSquad();
-    std::set<std::shared_ptr<Action>> getActions();
+    std::set<std::shared_ptr<actions::Action>> getActions();
     Inventory getInventory();
     Map* getMap();
 };

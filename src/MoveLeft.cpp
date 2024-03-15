@@ -16,4 +16,4 @@ namespace actions {
         }
         returnToDefault(player);
     }
-}
+}//namespace actions

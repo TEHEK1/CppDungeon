@@ -8,13 +8,13 @@
 #include "Position.h"
 class Map{
 public:
-    Map(int);
+    explicit Map(int);
     Map();
     Cell* getCell(Position);
-    static Position moveLeft(Position);
-    static Position moveRight(Position);
+    Position moveLeft(Position);
+    Position moveRight(Position);
     void setRooms(Position&);
-    std::vector<std::pair<int,int>> getNextRooms();
+    std::vector<int> getNextRooms();
     Position chooseNextRoom(Position, char);
     std::pair<int,int> getNextRoom();
     std::vector<std::vector<char>> draw();

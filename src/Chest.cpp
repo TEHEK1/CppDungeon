@@ -11,7 +11,7 @@
 #include <memory>
 #include "Monitor.h"
 
-bool Chest::comp(std::set<std::shared_ptr<Action>>::iterator actionIterator) {
+bool Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
 //    if (typeid(*((*actionIterator).get())) == typeid(Use)) {
 //        Use* use = static_cast<Use*>((*actionIterator).get());
 //        if (use->getChest() == this) {
@@ -19,18 +19,15 @@ bool Chest::comp(std::set<std::shared_ptr<Action>>::iterator actionIterator) {
 //        }
 //    }
 //std::dynamic_pointer_cast<Use>()
-    std::shared_ptr<Use> use = std::dynamic_pointer_cast<Use>((*actionIterator));
-    if (use && use->getChest() == this) {
-        return true;
-    }
-    return false;
+    std::shared_ptr<actions::Use> use = std::dynamic_pointer_cast<actions::Use>((*actionIterator));
+    return static_cast<bool>(use && use->getChest() == this);
 }
 
 void Chest::turn(Player *player, int index) {
     player->getMonitor()->draw();
     if (!Chest::used) {
-        std::shared_ptr<Action> u(static_cast<Action*>(new Use(this, index)));
-        addAction(player, std::move(u));
+        std::shared_ptr<actions::Action> useAction(new actions::Use(this, index));
+        addAction(player, std::move(useAction));
     }
     player->getMap()->getCell(player->getPosition())->freeMoves(player, index);
 }
@@ -38,7 +35,7 @@ void Chest::turn(Player *player, int index) {
 void Chest::use(Player *player, int  /*index*/) {
     std::shared_ptr<Item> item = std::make_shared<Item>();
     getInventory(player).addItem(item);
-    removeAction(player, [this](std::set<std::shared_ptr<Action>>::iterator actionIterator){return comp(actionIterator);});
+    removeAction(player, [this](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return comp(actionIterator);});
     used = true;
 }
 

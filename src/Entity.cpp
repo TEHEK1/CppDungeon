@@ -3,8 +3,8 @@
 //
 #include "Entity.h"
 #include <random>
-
-std::vector<std::vector<char>> draw(){
+Entity::Entity(std::map<size_t, int> characteristics):m_characteristics(characteristics){}
+std::vector<std::vector<char>> Entity::draw(){
     return {
         {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '},

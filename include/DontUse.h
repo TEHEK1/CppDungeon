@@ -4,21 +4,22 @@
 
 #ifndef CPPDUNGEON_DONTUSE_H
 #define CPPDUNGEON_DONTUSE_H
+
 #include "Action.h"
-#include "Trap.h"
+#include <memory>
+class Trap;
 class Chest;
 namespace actions {
     class DontUse : public Action {
     public:
-        DontUse(Trap *, int);
+        DontUse(const std::shared_ptr<Trap>&, int);
 
-        void act(Player *) override;
+        void act(Player *player) override;
 
-        Trap *getChest();
-
+        std::shared_ptr<Trap> getTrap() const;
     private:
         int m_index;
-        Trap *m_trap;
+        std::shared_ptr<Trap> m_trap;
     };
-}
+}//namespace actions
 #endif //CPPDUNGEON_DONTUSE_H

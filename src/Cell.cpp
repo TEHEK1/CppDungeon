@@ -8,8 +8,8 @@
 void Cell::freeMoves(Player * player, int index) {
     m_indexes.insert(index);
     if (m_indexes.size() == getEvents().size()) {
-        addAction(player, std::shared_ptr<Action>(new MoveLeft));
-        addAction(player, std::shared_ptr<Action>(new MoveRight));
+        addAction(player, std::shared_ptr<actions::Action>(new actions::MoveLeft));
+        addAction(player, std::shared_ptr<actions::Action>(new actions::MoveRight));
     }
 }
 
@@ -18,6 +18,6 @@ char Cell::getLevel() {
     return a;
 }
 
-std::vector<Event*> Cell::getEvents(){
+std::vector<std::shared_ptr<Event>> Cell::getEvents(){
     return m_events;
 }

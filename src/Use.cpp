@@ -10,4 +10,4 @@ namespace actions {
     Chest *Use::getChest() {
         return m_chest;
     }
-}
+}//namespace actions

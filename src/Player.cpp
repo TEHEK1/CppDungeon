@@ -1,13 +1,13 @@
 //
 // Created by artem on 08.03.2024.
 //
-#include <memory>
 #include "Action.h"
 #include "Entity.h"
 #include "Inventory.h"
 #include "Monitor.h"
 #include "Player.h"
 #include "Position.h"
+#include <memory>
 
 std::vector<std::shared_ptr<Entity>> Player::getHeroes() {
     return m_heroes;
@@ -33,6 +33,6 @@ Map* Player::getMap() {
     return m_map;
 }
 
-std::set<std::shared_ptr<Action>> Player::getActions() {
+std::set<std::shared_ptr<actions::Action>> Player::getActions() {
     return m_actions;
 }

@@ -5,6 +5,7 @@ namespace effects{
     class Effect {
         void turn();
         void endBattleTurn();
+        friend class EntityChanger;
     };
-}
+} // namespace effects
 #endif

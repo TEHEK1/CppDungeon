@@ -22,4 +22,4 @@ enum class Characteristic {
     criticalDamageChance = trick::hash("criticalDamageChance")
 };
 
-#endif //CHARACTERISTIC_H
+#endif //UNTITLED_CHARACTERISTIC_H

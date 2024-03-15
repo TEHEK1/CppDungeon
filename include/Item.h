@@ -6,5 +6,7 @@
 #define CPPDUNGEON_ITEM_H
 #include "Skill.h"
 class Item:public Skill{
+public:
+    virtual ~Item() = default;
 };
 #endif //CPPDUNGEON_ITEM_H

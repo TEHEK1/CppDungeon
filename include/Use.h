@@ -11,7 +11,7 @@ namespace actions {
     public:
         Use(Chest *, int);
 
-        void act(Player *) override;
+        void act(Player *player) override;
 
         Chest *getChest();
 
@@ -21,4 +21,4 @@ namespace actions {
     };
 
 #endif //CPPDUNGEON_USE_H
-}
+}//namespace actions

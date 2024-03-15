@@ -6,7 +6,6 @@
 #include "ChooseRoomEvent.h"
 #include "Chest.h"
 #include <vector>
-#include <vector>
 #include <random>
 
 int random(int low, int high)
@@ -20,12 +19,14 @@ int random(int low, int high)
 void Room::generateEvents(){
     if(random(1,2) == 1) {
         m_events.push_back(std::shared_ptr<Event>(new EmptyCell));
-    }else{
+    }
+    else{
         m_events.push_back(std::shared_ptr<Event>(new Chest));
     }
     if(random(1,2) == 1) {
         m_events.push_back(std::shared_ptr<Event>(new EmptyCell));
-    }else{
+    }
+    else{
         m_events.push_back(std::shared_ptr<Event>(new Chest));
     }
     m_events.push_back(std::shared_ptr<Event>(new ChooseRoomEvent));

@@ -13,6 +13,5 @@ namespace actions {
 
         virtual ~Action() = default;
     };
-
+} // namespace actions
 #endif //CPPDUNGEON_ACTION_H
-}

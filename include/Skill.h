@@ -8,6 +8,7 @@
 class Entity;
 class Skill{
 public:
+    virtual ~Skill() = default;
     virtual void use(std::vector<Entity*> objects);
 };
 #endif //CPPDUNGEON_SKILL_H

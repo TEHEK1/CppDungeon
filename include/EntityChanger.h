@@ -5,23 +5,23 @@
 #ifndef ENTITY_CHANGER_H
 #define ENTITY_CHANGER_H
 
+#include "Characteristic.h"
 #include <memory>
-#include "Entity.h"
-#include "Effect.h"
-#include "Skill.h"
-
 class Entity;
-
+namespace effects{
+    class Effect;
+}//namespace effects
+class Skill;
 class EntityChanger {
 protected:
-    void set(std::shared_ptr<Entity> entity, Characteristic characteristic, int value);
-    void set(std::shared_ptr<Entity> entity, size_t characteristic, int value);
-    void turnEffects(std::shared_ptr<Entity> entity);
-    void endBattleTurnEffects(std::shared_ptr<Entity> entity);
-    void addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect);
-    void removeEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect);
-    void addSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill);
-    void removeSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill);
+    static void set(std::shared_ptr<Entity> entity, Characteristic characteristic, int value);
+    static void set(std::shared_ptr<Entity> entity, size_t characteristic, int value);
+    static void turnEffects(std::shared_ptr<Entity> entity);
+    static void endBattleTurnEffects(std::shared_ptr<Entity> entity);
+    static void addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect);
+    static void removeEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect);
+    static void addSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill);
+    static void removeSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill);
 };
 
 #endif // ENTITY_CHANGER_H

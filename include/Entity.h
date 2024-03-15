@@ -1,18 +1,16 @@
 //
 // Created by Амир Кашапов on 24.02.2024.
 //
-
 #ifndef UNTITLED_ENTITY_H
 #define UNTITLED_ENTITY_H
-#include <set>
-#include <memory>
 #include <map>
+#include <memory>
+#include <set>
 #include <string>
 
 #include "Skill.h"
-#include "EntityChanger.h"
-#include "Effect.h"
 #include "Characteristic.h"
+#include "Effect.h"
 
 class Skill;
 class EntityChanger;
@@ -26,7 +24,8 @@ protected:
 
     friend class EntityChanger;
 public:
-    Entity(std::map<size_t, int>);
+    virtual ~Entity() = default;
+    explicit Entity(std::map<size_t, int>);
     std::vector<std::vector<char>> draw();
     virtual int get(size_t key) const;
     virtual int get(Characteristic characteristic) const;
