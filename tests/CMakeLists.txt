@@ -16,4 +16,9 @@ add_executable(test
         ../src/changers/EntityChanger.cpp
         EffectTest.cpp
         EffectTest.h
-        ../src/effects/Buff.cpp)
+        ../src/effects/Buff.cpp
+        ../src/effects/PermanentEffect.cpp
+        ../include/effects/MarkedAsResistable.h
+        ../include/effects/MarkedAsBattleFieldNeeded.h
+        ../include/effects/MarkedAsTurnable.h
+)

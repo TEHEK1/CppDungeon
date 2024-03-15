@@ -3,7 +3,5 @@
 //
 #include "effects/ImmediateEffect.h"
 namespace effects {
-    ImmediateEffect::ImmediateEffect(std::weak_ptr<entity::Entity> entity, std::map<size_t, int> turner, int crited, int critModifier) : AutoAction(entity, 0, std::map<size_t, int>{}, turner, crited, critModifier) {
-
-    }
+    ImmediateEffect::ImmediateEffect(const std::map<int, int>& turner) : AutoAction(0, std::map<int, int>{}, turner) {}
 }

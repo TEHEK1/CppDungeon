@@ -3,7 +3,7 @@
 //
 #include "entity/Entity.h"
 #include <random>
-entity::Entity::Entity(std::map<size_t, int> characteristics):m_characteristics(characteristics){}
+entity::Entity::Entity(std::map<int, int> characteristics):m_characteristics(characteristics){}
 std::vector<std::vector<char>> entity::Entity::draw(){
     return {
         {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -18,19 +18,19 @@ std::vector<std::vector<char>> entity::Entity::draw(){
     };
 }
 
-int entity::Entity::get(std::size_t key) const {
+int entity::Entity::get(int key) const {
     int result = 0;
-    if (m_characteristics.count(key)){
+    if (m_characteristics.contains(key)){
         result = m_characteristics.at(key);
         for (const auto& effect : m_effects) {
-            result += effect->getModifier()[key];//FIXME: add getModifier(size_t)
+            result += effect->getModifier()[key];
         }
     }
     return result;
 }
 
 int entity::Entity::get(Characteristic characteristic) const {
-    return get(static_cast<std::size_t>(characteristic));
+    return get(static_cast<int>(characteristic));
 }
 
 const std::set<std::shared_ptr<effects::Effect>>& entity::Entity::getEffects() const {
@@ -61,9 +61,13 @@ int entity::Entity::dodged() const {
     return get(Characteristic::dodge) - dis(gen);
 }
 
-int entity::Entity::resisted(std::size_t effectHash) const {
+int entity::Entity::resisted(int effectHash) const {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0, 100);
     return get(effectHash) - dis(gen);
+}
+
+int entity::Entity::getReal(int key) const {
+    return m_characteristics.contains(key) ? m_characteristics.at(key): 0;
 }

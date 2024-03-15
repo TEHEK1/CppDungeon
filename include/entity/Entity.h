@@ -18,19 +18,20 @@ namespace entity {
     class Entity {
     protected:
         std::set<std::shared_ptr<Skill>> m_skills;
-        std::map<std::size_t, int> m_characteristics;
+        std::map<int, int> m_characteristics;
         std::set<std::shared_ptr<effects::Effect>> m_effects;
         std::string m_name;
         friend changers::EntityChanger;
+        friend changers::EffectChanger;
     public:
         virtual ~Entity() = default;
 
-        explicit Entity(std::map<size_t, int>);
+        explicit Entity(std::map<int, int>);
 
         std::vector<std::vector<char>> draw();
 
-        virtual int get(size_t key) const;
-
+        virtual int get(int key) const final;
+        virtual int getReal(int key) const final;
         virtual int get(Characteristic characteristic) const;
 
         const std::set<std::shared_ptr<effects::Effect>> &getEffects() const;
@@ -45,7 +46,7 @@ namespace entity {
 
         virtual int dodged() const final;
 
-        virtual int resisted(size_t effectHash) const final;
+        virtual int resisted(int effectHash) const final;
     };
 } // namespace entity
 #endif //UNTITLED_ENTITY_H

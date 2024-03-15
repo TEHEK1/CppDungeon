@@ -11,22 +11,12 @@
 #include "namespaces/entity.h"
 class Skill;
 namespace changers {
-    class EntityChanger: public EffectChanger{
+    class EntityChanger{
     protected:
         static void set(std::shared_ptr<entity::Entity> entity, Characteristic characteristic, int value);
-
-        static void set(std::shared_ptr<entity::Entity> entity, size_t characteristic, int value);
-
-        static void turnEffects(std::shared_ptr<entity::Entity> entity);
-
-        static void endBattleTurnEffects(std::shared_ptr<entity::Entity> entity);
-
-        static void addEffect(std::shared_ptr<entity::Entity> entity, std::shared_ptr<effects::Effect> effect);
-
-        static void removeEffect(std::shared_ptr<entity::Entity> entity, std::shared_ptr<effects::Effect> effect);
+        static void set(std::shared_ptr<entity::Entity> entity, int characteristic, int value);
 
         static void addSkill(std::shared_ptr<entity::Entity> entity, std::shared_ptr<Skill> skill);
-
         static void removeSkill(std::shared_ptr<entity::Entity> entity, std::shared_ptr<Skill> skill);
     };
 } // namespace changers

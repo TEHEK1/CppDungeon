@@ -4,12 +4,7 @@
 #include "effects/Heal.h"
 #include "entity/Trick.h"
 #include "random"
-std::mt19937 rnd(time(0));
 namespace effects {
-    Heal::Heal(std::weak_ptr<entity::Entity> entity, int minHeal, int maxHeal, int crited, int critModifier) :
-            ImmediateEffect(entity, std::map<size_t, int>{{trick::hash("HP"), crited < 0 ? (rnd() % ((maxHeal - minHeal + 1)) + minHeal) : -maxHeal * critModifier / 100}}, crited, critModifier) {
-        if (minHeal < 0 || minHeal > maxHeal) {
-            throw "Incorrect value of minHeal";
-        }
-    }
+    Heal::Heal(int heal) :
+            ImmediateEffect(std::map<int, int>{{trick::hash("HP"), heal}}){}
 }

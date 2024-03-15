@@ -9,7 +9,7 @@
 namespace effects {
     class Guard: public Buff {
     public:
-        Guard(std::weak_ptr<entity::Entity>, int numberOfTurns, int defenceModifier);
+        Guard(int numberOfTurns, int defenceModifier);
     };
 
 }

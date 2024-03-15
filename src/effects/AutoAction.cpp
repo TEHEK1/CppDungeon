@@ -7,31 +7,17 @@
 #include "changers/EntityChanger.h"
 
 namespace effects {
-    AutoAction::AutoAction(std::weak_ptr<entity::Entity> entity, int numberOfTurns, std::map<size_t, int> modifier,
-                           std::map<size_t, int> turner, int crited, int critModifier): Effect(entity, modifier) {
-        m_numberOfTurns = numberOfTurns;
-        m_turner = turner;
-        m_crited = crited;
-        m_critModifier = critModifier;
-    }
-    int AutoAction::getRemainingTurns() {
-        return m_numberOfTurns;
-    }
+    AutoAction::AutoAction(int numberOfTurns, const std::map<int, int>& turner):
+ m_turner(turner), MarkedAsTurnable(numberOfTurns) {}
 
-    void AutoAction::turn() {
-        --m_numberOfTurns;
-        if (m_numberOfTurns < 0) {
-            endBattleTurn();
-        }
-        for (auto i : m_turner) {
-            set(static_cast<std::shared_ptr<entity::Entity>>(m_entity), i.first, i.second + m_entity.lock().get()->get(i.first));
-        }
+    std::map<int, int> AutoAction::getTurner() {
+        return m_turner;
     }
-
-    void AutoAction::endBattleTurn() {
-        std::shared_ptr<entity::Entity> p = static_cast<std::shared_ptr<entity::Entity>>(m_entity);
-        if (p) {
-            removeEffect(p, static_cast<std::shared_ptr<Effect>>(this));
-        }
+    std::function<int(std::shared_ptr<entity::Entity>)> AutoAction::getTurnFunction() {
+        return [turn = this->MarkAsTurnable::getTurnFunction(), &turner = this->m_turner](std::shared_ptr<entity::Entity> object){
+            for(auto &characteristic:turner){
+                set(object, characteristic.first, object->getReal(characteristic.first) + characteristic.second);
+            }
+            return turn(object);};
     }
-}
+} // namespace effects

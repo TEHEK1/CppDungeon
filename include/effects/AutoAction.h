@@ -4,21 +4,17 @@
 
 #ifndef CPPDUNGEON_AUTOACTION_H
 #define CPPDUNGEON_AUTOACTION_H
-#include "effects/Effect.h"
-#include "changers/EntityChanger.h"
+#include "effects/Buff.h"
+#include "effects/MarkedAsEntityNeeded.h"
 namespace effects {
-    class AutoAction : public Effect {
-        std::map<size_t, int> m_turner;
-        int m_numberOfTurns;
-        int m_crited;
-        int m_critModifier = 150;
+    class AutoAction : public Effect, public changers::EntityChanger, public MarkedAsEntityNeeded, public MarkedAsTurnable{
+        std::map<int, int> m_turner;
     public:
         ~AutoAction() override = default;
-        AutoAction(std::weak_ptr<entity::Entity>, int numberOfTurns, std::map<size_t, int> modifier, std::map<size_t, int> turner, int crited, int critModifier = 150);
-        int getRemainingTurns();
-        int getTurner();
-        void turn() override;
-        virtual void endBattleTurn() override;
+        AutoAction(int numberOfTurns, const std::map<int, int>& turner);
+        std::map<int, int> getTurner();
+    protected:
+        std::function<int(std::shared_ptr<entity::Entity>)> getTurnFunction() override;//TODO: Leave just here
     };
 }
 #endif //CPPDUNGEON_AUTOACTION_H

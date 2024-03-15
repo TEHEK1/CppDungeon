@@ -13,16 +13,10 @@
 #include "namespaces/events.h"
 #include "namespaces/changers.h"
 namespace effects {
-    class Effect: public changers::EntityChanger {
-        std::map<std::size_t, int> m_modifier;
-        friend changers::EffectChanger;
+    class Effect{
     public:
         virtual ~Effect() = default;
-        explicit Effect(const std::map<std::size_t, int>& modifier);
-        std::map<std::size_t, int> getModifier();
-    protected:
-        virtual std::function<int(entity::Entity)> getTurnFunction() = 0;
-        virtual std::function<int(entity::Entity)> getEndBattleTurnFunction() = 0;
+
     };
 }
 

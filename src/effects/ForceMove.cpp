@@ -5,7 +5,7 @@
 #include "effects/ForceMove.h"
 
 namespace effects {
-    ForceMove::ForceMove(std::weak_ptr<entity::Entity> entity, std::weak_ptr<BattleField> battleField, int offset) : ImmediateEffect(entity, std::map<size_t, int>{}, 0, 0) {
+    ForceMove::ForceMove(std::weak_ptr<entity::Entity> entity, std::weak_ptr<BattleField> battleField, int offset) : ImmediateEffect(entity, std::map<int, int>{}, 0, 0) {
         m_battleField = battleField;
         m_offset = offset;
     }

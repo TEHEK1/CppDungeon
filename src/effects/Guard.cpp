@@ -6,5 +6,6 @@
 #include "effects/Guard.h"
 #include "entity/Trick.h"
 namespace effects {
-    Guard::Guard(std::weak_ptr<entity::Entity> entity, int numberOfTurns, int defenceModifier): Buff(entity, numberOfTurns, std::map<size_t, int>{{trick::hash("defence"), defenceModifier}}) {};
+    Guard::Guard(int numberOfTurns, int defenceModifier):
+    Buff(numberOfTurns, std::map<int, int>{{trick::hash("defence"), defenceModifier}}) {};
 }

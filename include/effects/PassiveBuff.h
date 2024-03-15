@@ -4,16 +4,12 @@
 
 #ifndef CPPDUNGEON_PASSIVEBUFF_H
 #define CPPDUNGEON_PASSIVEBUFF_H
-#include "Buff.h"
-#include "changers/EntityChanger.h"
+#include "PermanentEffect.h"
+#include "MarkedAsEndBattle.h"
 namespace effects {
-    class PassiveBuff: public Buff {
-        int m_numberOfBattles;
-    public:
-        void turn();
-        virtual void endBattleTurn();
-        int getRemainingBattles();
-        PassiveBuff(std::weak_ptr<entity::Entity>, int numberOfBattles, std::map<size_t, int> modifier);
+    class PassiveBuff: public PermanentEffect, public MarkedAsEndBattle {
+        PassiveBuff(int numberOfBattles, std::map<int, int> modifier);
+    protected:
     };
-}
+} // namespace effects
 #endif //CPPDUNGEON_PASSIVEBUFF_H

@@ -4,12 +4,36 @@
 
 #include "changers/EffectChanger.h"
 #include "effects/Effect.h"
-void changers::EffectChanger::turnEffect(const std::shared_ptr<effects::Effect>& effect) {
-    effect -> turn();
+#include "entity/Entity.h"
+#include "effects/ImmediateEffect.h"
+void changers::EffectChanger::turnEffects(const std::shared_ptr<entity::Entity>& entity) {
+    for (const auto& effect : entity->getEffects()) {
+        turnEffect(entity, effect);
+    }
 }
-void changers::EffectChanger::endBattleTurnEffect(const std::shared_ptr<effects::Effect>& effect) {
-    effect ->endBattleTurn();
+
+void changers::EffectChanger::endBattleTurnEffects(const std::shared_ptr<entity::Entity>& entity) {
+    for (const auto& effect : entity->getEffects()) {
+        turnEffect(entity, effect);
+    }
 }
-std::weak_ptr<entity::Entity> changers::EffectChanger::getEntity(const std::shared_ptr<effects::Effect>& effect) {
-    return effect->m_entity;
+void changers::EffectChanger::turnEffect(const std::shared_ptr<entity::Entity>& entity,
+                                         const std::shared_ptr<effects::Effect>& effect) {
+
+}
+void changers::EffectChanger::endBattleTurnEffect(const std::shared_ptr<entity::Entity>& entity,
+                                                  const std::shared_ptr<effects::Effect>& effect) {
+    effect->getEndBattleTurnFunction()(entity);
+}
+void changers::EffectChanger::addEffect(const std::shared_ptr<entity::Entity>& entity,
+                                        const std::shared_ptr<effects::Effect>& effect) {
+    entity->m_effects.insert(effect);
+    if (dynamic_cast<effects::ImmediateEffect*>(effect.get()) != nullptr) {
+        turnEffect(entity, effect);
+    }
+}
+
+void changers::EffectChanger::removeEffect(const std::shared_ptr<entity::Entity>& entity,
+                                           const std::shared_ptr<effects::Effect>& effect) {
+    entity->m_effects.erase(effect);
 }

@@ -4,12 +4,8 @@
 #include "effects/Disease.h"
 #include "entity/Entity.h"
 namespace effects {
-    Disease::Disease(std::map<size_t, int> modifier) : Effect(modifier) {}
-
-    std::function<int(entity::Entity)> Disease::getTurnFunction() {
-        return [](entity::Entity object){return 1;};
-    }
-    std::function<int(entity::Entity)> Disease::getEndBattleTurnFunction(){
-        return [](entity::Entity object){return 1;};
+    Disease::Disease(const std::map<int, int>& modifier) : PermanentEffect(modifier) {}
+    int Disease::resistanceHash() {
+        return static_cast<int>(Resistances::Debuff);
     }
 }

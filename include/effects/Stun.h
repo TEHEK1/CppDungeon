@@ -7,9 +7,10 @@
 #include <memory>
 #include "Debuff.h"
 namespace effects {
-    class Stun: public Debuff {
+    class Stun: public Debuff{
     public:
-        Stun(std::weak_ptr<entity::Entity>, int numberOfTurns);
+        Stun(int numberOfTurns);
+        int resistanceHash() override;
     };
 }
 #endif //CPPDUNGEON_STUN_H

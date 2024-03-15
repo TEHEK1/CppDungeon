@@ -10,9 +10,12 @@
 namespace changers {
     class EffectChanger {
     protected:
-        static void turnEffect(const std::shared_ptr<effects::Effect>& effect);
-        static void endBattleTurnEffect(const std::shared_ptr<effects::Effect>& effect);
-        static std::weak_ptr<entity::Entity> getEntity(const std::shared_ptr<effects::Effect>& effect);
+        static void turnEffects(const std::shared_ptr<entity::Entity>& entity);
+        static void endBattleTurnEffects(const std::shared_ptr<entity::Entity>& entity);
+        static void turnEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
+        static void endBattleTurnEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
+        static void addEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
+        static void removeEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
     };
 } // namespace changers
 
