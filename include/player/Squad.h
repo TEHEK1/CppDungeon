@@ -6,11 +6,11 @@
 #define CPPDUNGEON_SQUAD_H
 #include <memory>
 #include "entity/Entity.h"
-class Entity;
+#include "namespaces/entity.h"
 class Squad {
-    std::vector<std::shared_ptr<Entity>> m_entities;
+    std::vector<std::shared_ptr<entity::Entity>> m_entities;
 public:
-    Squad(std::vector<std::shared_ptr<Entity>>);
-    std::vector<std::shared_ptr<Entity>> getEntities();
+    Squad(std::vector<std::shared_ptr<entity::Entity>>);
+    std::vector<std::shared_ptr<entity::Entity>> getEntities();
 };
 #endif //CPPDUNGEON_SQUAD_H

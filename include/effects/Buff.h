@@ -10,10 +10,11 @@ namespace effects {
     class Buff: public Effect {
     int m_numberOfTurns;
     public:
-        Buff(std::weak_ptr<Entity>, int numberOfTurns, std::map<size_t, int> modifier);
+        ~Buff() override = default;
+        Buff(entity::Entity*, int numberOfTurns, const std::map<size_t, int>& modifier);
         int getRemainingTurns();
-        void turn();
-        virtual void endBattleTurn();
+        void turn() override;
+        void endBattleTurn() override;
     };
 }
 #endif //CPPDUNGEON_BUFF_H

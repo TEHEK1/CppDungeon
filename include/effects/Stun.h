@@ -9,7 +9,7 @@
 namespace effects {
     class Stun: public Debuff {
     public:
-        Stun(std::weak_ptr<Entity>, int numberOfTurns);
+        Stun(std::weak_ptr<entity::Entity>, int numberOfTurns);
     };
 }
 #endif //CPPDUNGEON_STUN_H

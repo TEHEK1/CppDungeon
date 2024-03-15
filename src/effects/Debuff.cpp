@@ -6,7 +6,7 @@
 #include "entity/Entity.h"
 
 namespace effects {
-    Debuff::Debuff(std::weak_ptr<Entity> entity, int numberOfTurns, std::map<size_t, int> modifier) : Effect(entity, modifier) {
+    Debuff::Debuff(std::weak_ptr<entity::Entity> entity, int numberOfTurns, std::map<size_t, int> modifier) : Effect(entity, modifier) {
         m_numberOfTurns = numberOfTurns;
     }
 

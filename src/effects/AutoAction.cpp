@@ -7,7 +7,7 @@
 #include "changers/EntityChanger.h"
 
 namespace effects {
-    AutoAction::AutoAction(std::weak_ptr<Entity> entity, int numberOfTurns, std::map<size_t, int> modifier,
+    AutoAction::AutoAction(std::weak_ptr<entity::Entity> entity, int numberOfTurns, std::map<size_t, int> modifier,
                            std::map<size_t, int> turner, int crited, int critModifier): Effect(entity, modifier) {
         m_numberOfTurns = numberOfTurns;
         m_turner = turner;
@@ -24,12 +24,12 @@ namespace effects {
             endBattleTurn();
         }
         for (auto i : m_turner) {
-            set(static_cast<std::shared_ptr<Entity>>(m_entity), i.first, i.second + m_entity.lock().get()->get(i.first));
+            set(static_cast<std::shared_ptr<entity::Entity>>(m_entity), i.first, i.second + m_entity.lock().get()->get(i.first));
         }
     }
 
     void AutoAction::endBattleTurn() {
-        std::shared_ptr<Entity> p = static_cast<std::shared_ptr<Entity>>(m_entity);
+        std::shared_ptr<entity::Entity> p = static_cast<std::shared_ptr<entity::Entity>>(m_entity);
         if (p) {
             removeEffect(p, static_cast<std::shared_ptr<Effect>>(this));
         }

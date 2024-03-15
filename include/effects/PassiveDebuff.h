@@ -12,7 +12,7 @@ namespace effects {
         void turn();
         virtual void endBattleTurn();
         int getRemainingBattles();
-        PassiveDebuff(std::weak_ptr<Entity>, int numberOfBattles, std::map<size_t, int> modifier);
+        PassiveDebuff(std::weak_ptr<entity::Entity>, int numberOfBattles, std::map<size_t, int> modifier);
     };
 }
 #endif //CPPDUNGEON_PASSIVEDEBUFF_H

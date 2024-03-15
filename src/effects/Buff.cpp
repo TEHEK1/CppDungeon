@@ -5,9 +5,8 @@
 #include "effects/Effect.h"
 #include "entity/Entity.h"
 namespace effects {
-    Buff::Buff(std::weak_ptr<Entity> entity, int numberOfTurns, std::map<size_t, int> modifier) : Effect(entity, modifier) {
-        m_numberOfTurns = numberOfTurns;
-    }
+    Buff::Buff(entity::Entity* entity, int numberOfTurns, const std::map<size_t, int>& modifier) :
+    Effect(entity, modifier), m_numberOfTurns(numberOfTurns){}
 
     int Buff::getRemainingTurns() {
         return m_numberOfTurns;
@@ -21,7 +20,7 @@ namespace effects {
     }
 
     void Buff::endBattleTurn() {
-        std::shared_ptr<Entity> entity = m_entity.lock();
+        std::shared_ptr<entity::Entity> entity = m_entity.lock();
         if (entity) {
             removeEffect(entity, static_cast<std::shared_ptr<Effect>>(this));
         }

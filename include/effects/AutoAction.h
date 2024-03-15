@@ -13,11 +13,12 @@ namespace effects {
         int m_crited;
         int m_critModifier = 150;
     public:
-        AutoAction(std::weak_ptr<Entity>, int numberOfTurns, std::map<size_t, int> modifier, std::map<size_t, int> turner, int crited, int critModifier = 150);
+        ~AutoAction() override = default;
+        AutoAction(std::weak_ptr<entity::Entity>, int numberOfTurns, std::map<size_t, int> modifier, std::map<size_t, int> turner, int crited, int critModifier = 150);
         int getRemainingTurns();
         int getTurner();
-        void turn();
-        virtual void endBattleTurn();
+        void turn() override;
+        virtual void endBattleTurn() override;
     };
 }
 #endif //CPPDUNGEON_AUTOACTION_H

@@ -8,7 +8,7 @@
 namespace effects{
     class Blight:public AutoAction {
     public:
-        Blight(std::weak_ptr<Entity>, int numberOfTurns, int HPturner, int crited, int critModifier = 150);
+        Blight(std::weak_ptr<entity::Entity>, int numberOfTurns, int HPturner, int crited, int critModifier = 150);
     };
 }
 

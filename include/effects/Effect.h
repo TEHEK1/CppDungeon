@@ -8,20 +8,21 @@
 #include <map>
 #include <memory>
 #include "changers/EntityChanger.h"
-//class EntityChanger;
-class Entity;
-class EnemyEncounter;
+#include "namespaces/entity.h"
+#include "namespaces/events.h"
+#include "namespaces/changers.h"
 namespace effects {
-    class Effect: public EntityChanger {
+    class Effect: public changers::EntityChanger {
         std::map<std::size_t, int> m_modifier;
-        friend EnemyEncounter;
+        friend changers::EffectChanger;
     public:
-        Effect(std::weak_ptr<Entity>, std::map<std::size_t, int>);
+        virtual ~Effect() = default;
+        Effect(entity::Entity *entity, const std::map<std::size_t, int>& modifier);
         std::map<std::size_t, int> getModifier();
     protected:
         virtual void turn() = 0;
-        virtual void endBattle() = 0;
-        std::weak_ptr<Entity> m_entity;
+        virtual void endBattleTurn() = 0;
+        entity::Entity* m_entity;
     };
 }
 

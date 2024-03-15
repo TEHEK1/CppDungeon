@@ -8,7 +8,7 @@
 namespace effects {
     class PercentHeal: ImmediateEffect {
     public:
-        PercentHeal(std::weak_ptr<Entity>, int minPercentHeal, int maxPercentHeal, int crited, int critModifier = 200);
+        PercentHeal(std::weak_ptr<entity::Entity>, int minPercentHeal, int maxPercentHeal, int crited, int critModifier = 200);
     };
 }
 #endif //CPPDUNGEON_PERCENTHEAL_H

@@ -3,8 +3,8 @@
 //
 #include "entity/Entity.h"
 #include <random>
-Entity::Entity(std::map<size_t, int> characteristics):m_characteristics(characteristics){}
-std::vector<std::vector<char>> Entity::draw(){
+entity::Entity::Entity(std::map<size_t, int> characteristics):m_characteristics(characteristics){}
+std::vector<std::vector<char>> entity::Entity::draw(){
     return {
         {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '},
@@ -18,50 +18,50 @@ std::vector<std::vector<char>> Entity::draw(){
     };
 }
 
-int Entity::get(std::size_t key) const {
+int entity::Entity::get(std::size_t key) const {
     int result = 0;
     if (m_characteristics.count(key)){
         result = m_characteristics.at(key);
         for (const auto& effect : m_effects) {
-            result += effect->getModifier(key);
+            result += effect->getModifier()[key];//FIXME: add getModifier(size_t)
         }
     }
     return result;
 }
 
-int Entity::get(Characteristic characteristic) const {
+int entity::Entity::get(Characteristic characteristic) const {
     return get(static_cast<std::size_t>(characteristic));
 }
 
-const std::set<std::shared_ptr<effects::Effect>>& Entity::getEffects() const {
+const std::set<std::shared_ptr<effects::Effect>>& entity::Entity::getEffects() const {
     return m_effects;
 }
 
-const std::set<std::shared_ptr<Skill>>& Entity::getSkills() const {
+const std::set<std::shared_ptr<Skill>>& entity::Entity::getSkills() const {
     return m_skills;
 }
 
-std::string Entity::getName() const {
+std::string entity::Entity::getName() const {
     return m_name;
 }
 
-bool Entity::isAlive() const {
+bool entity::Entity::isAlive() const {
     int currentHP = get(Characteristic::HP);
     return currentHP > 0;
 }
 
-bool Entity::isTurnable() const {
+bool entity::Entity::isTurnable() const {
     return get(Characteristic::turnable) >= 0;
 }
 
-int Entity::dodged() const {
+int entity::Entity::dodged() const {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0, 100);
     return get(Characteristic::dodge) - dis(gen);
 }
 
-int Entity::resisted(std::size_t effectHash) const {
+int entity::Entity::resisted(std::size_t effectHash) const {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0, 100);

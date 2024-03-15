@@ -8,7 +8,8 @@
 namespace effects {
     class ImmediateEffect:public AutoAction {
     public:
-        ImmediateEffect(std::weak_ptr<Entity>, std::map<size_t, int> turner, int crited, int critModifier);
+        ~ImmediateEffect() override = default;
+        ImmediateEffect(std::weak_ptr<entity::Entity>, std::map<size_t, int> turner, int crited, int critModifier);
     };
 }
 #endif //CPPDUNGEON_IMMEDIATEEFFECT_H

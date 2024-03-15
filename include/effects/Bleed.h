@@ -8,7 +8,7 @@
 namespace effects {
     class Bleed:public AutoAction {
     public:
-        Bleed(std::weak_ptr<Entity>, int numberOfTurns, int HPturner, int crited, int critModifier = 150);
+        Bleed(std::weak_ptr<entity::Entity>, int numberOfTurns, int HPturner, int crited, int critModifier = 150);
     };
 }
 #endif //CPPDUNGEON_BLEED_H

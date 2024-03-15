@@ -8,7 +8,7 @@
 namespace effects {
     class Damage: public ImmediateEffect {
     public:
-        Damage(std::weak_ptr<Entity>, int minDamage, int maxDamage, int crited, int critModifier = 150);
+        Damage(std::weak_ptr<entity::Entity>, int minDamage, int maxDamage, int crited, int critModifier = 150);
     };
 }
 #endif //CPPDUNGEON_DAMAGE_H

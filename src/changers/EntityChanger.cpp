@@ -4,8 +4,9 @@
 #include "entity/Entity.h"
 #include "changers/EntityChanger.h"
 #include "effects/Effect.h"
+#include "effects/ImmediateEffect.h"
 
-void changers::EntityChanger::set(std::shared_ptr<Entity> entity, Characteristic characteristic, int value) {
+void changers::EntityChanger::set(std::shared_ptr<entity::Entity> entity, Characteristic characteristic, int value) {
     switch (characteristic) {
         case Characteristic::accuracyModifier:
         case Characteristic::criticalDamageChance :
@@ -25,38 +26,38 @@ void changers::EntityChanger::set(std::shared_ptr<Entity> entity, Characteristic
     }
 }
 
-void changers::EntityChanger::set(std::shared_ptr<Entity> entity, size_t characteristic, int value) {
+void changers::EntityChanger::set(std::shared_ptr<entity::Entity> entity, size_t characteristic, int value) {
     set(entity, static_cast<Characteristic>(characteristic), value);
 }
 
-void changers::EntityChanger::turnEffects(std::shared_ptr<Entity> entity) {
+void changers::EntityChanger::turnEffects(std::shared_ptr<entity::Entity> entity) {
     for (const auto& effect : entity->m_effects) {
-        effect->turn();
+        turnEffect(effect);
     }
 }
 
-void changers::EntityChanger::endBattleTurnEffects(std::shared_ptr<Entity> entity) {
+void changers::EntityChanger::endBattleTurnEffects(std::shared_ptr<entity::Entity> entity) {
     for (const auto& effect : entity->m_effects) {
-        effect->endBattleTurn();
+        endBattleTurnEffect(effect);
     }
 }
 
-void changers::EntityChanger::addEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect) {
-    entity->m_effects.insert(effect); 
+void changers::EntityChanger::addEffect(std::shared_ptr<entity::Entity> entity, std::shared_ptr<effects::Effect> effect) {
+    entity->m_effects.insert(effect);
 
     if (dynamic_cast<effects::ImmediateEffect*>(effect.get()) != nullptr) {
-        effect->turn();
+        turnEffect(effect);
     }
 }
 
-void changers::EntityChanger::removeEffect(std::shared_ptr<Entity> entity, std::shared_ptr<effects::Effect> effect) {
+void changers::EntityChanger::removeEffect(std::shared_ptr<entity::Entity> entity, std::shared_ptr<effects::Effect> effect) {
     entity->m_effects.erase(effect);
 }
 
-void changers::EntityChanger::addSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill) {
+void changers::EntityChanger::addSkill(std::shared_ptr<entity::Entity> entity, std::shared_ptr<Skill> skill) {
     entity->m_skills.insert(skill);
 }
 
-void changers::EntityChanger::removeSkill(std::shared_ptr<Entity> entity, std::shared_ptr<Skill> skill) {
+void changers::EntityChanger::removeSkill(std::shared_ptr<entity::Entity> entity, std::shared_ptr<Skill> skill) {
     entity->m_skills.erase(skill);
 }

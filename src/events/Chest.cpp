@@ -7,7 +7,7 @@
 #include "actions/Use.h"
 #include "navigation/Cell.h"
 #include "navigation/Map.h"
-#include "player/Item.h"
+#include "items/Item.h"
 #include <memory>
 #include "monitor/Monitor.h"
 
@@ -20,13 +20,13 @@ bool Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIter
 //    }
 //std::dynamic_pointer_cast<Use>()
     std::shared_ptr<actions::Use> use = std::dynamic_pointer_cast<actions::Use>((*actionIterator));
-    return static_cast<bool>(use && use->getChest() == this);
+    return static_cast<bool>(use && (use->getChest()).get() == this);
 }
 
 void Chest::turn(Player *player) {
     player->getMonitor()->draw();
     if (!m_used) {
-        std::shared_ptr<actions::Action> useAction(new actions::Use(this));
+        std::shared_ptr<actions::Action> useAction(new actions::Use(std::shared_ptr<Chest>(this)));
         addAction(player, std::move(useAction));
     }
     player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<Event>(this));

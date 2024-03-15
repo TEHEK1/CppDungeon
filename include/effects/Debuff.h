@@ -10,7 +10,7 @@ namespace effects {
     class Debuff: public Effect {
         int m_numberOfTurns;
     public:
-        Debuff(std::weak_ptr<Entity>, int numberOfTurns, std::map<size_t, int> modifier);
+        Debuff(std::weak_ptr<entity::Entity>, int numberOfTurns, std::map<size_t, int> modifier);
         int getRemainingTurns();
         void turn();
         virtual void endBattleTurn();
