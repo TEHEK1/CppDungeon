@@ -17,12 +17,12 @@ namespace effects {
         friend changers::EffectChanger;
     public:
         virtual ~Effect() = default;
-        Effect(entity::Entity *entity, const std::map<std::size_t, int>& modifier);
+        Effect(std::weak_ptr<entity::Entity> entity, const std::map<std::size_t, int>& modifier);
         std::map<std::size_t, int> getModifier();
     protected:
         virtual void turn() = 0;
         virtual void endBattleTurn() = 0;
-        entity::Entity* m_entity;
+        std::weak_ptr<entity::Entity> m_entity;
     };
 }
 

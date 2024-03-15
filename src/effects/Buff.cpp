@@ -5,7 +5,7 @@
 #include "effects/Effect.h"
 #include "entity/Entity.h"
 namespace effects {
-    Buff::Buff(entity::Entity* entity, int numberOfTurns, const std::map<size_t, int>& modifier) :
+    Buff::Buff(const std::weak_ptr<entity::Entity>& entity, int numberOfTurns, const std::map<size_t, int>& modifier) :
     Effect(entity, modifier), m_numberOfTurns(numberOfTurns){}
 
     int Buff::getRemainingTurns() {

@@ -10,6 +10,6 @@ void changers::EffectChanger::turnEffect(const std::shared_ptr<effects::Effect>&
 void changers::EffectChanger::endBattleTurnEffect(const std::shared_ptr<effects::Effect>& effect) {
     effect ->endBattleTurn();
 }
-entity::Entity* changers::EffectChanger::getEntity(const std::shared_ptr<effects::Effect>& effect) {
+std::weak_ptr<entity::Entity> changers::EffectChanger::getEntity(const std::shared_ptr<effects::Effect>& effect) {
     return effect->m_entity;
 }

@@ -12,7 +12,7 @@ namespace changers {
     protected:
         static void turnEffect(const std::shared_ptr<effects::Effect>& effect);
         static void endBattleTurnEffect(const std::shared_ptr<effects::Effect>& effect);
-        static entity::Entity* getEntity(const std::shared_ptr<effects::Effect>& effect);
+        static std::weak_ptr<entity::Entity> getEntity(const std::shared_ptr<effects::Effect>& effect);
     };
 } // namespace changers
 

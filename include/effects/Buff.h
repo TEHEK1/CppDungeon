@@ -11,7 +11,7 @@ namespace effects {
     int m_numberOfTurns;
     public:
         ~Buff() override = default;
-        Buff(entity::Entity*, int numberOfTurns, const std::map<size_t, int>& modifier);
+        Buff(const std::weak_ptr<entity::Entity>& entity, int numberOfTurns, const std::map<size_t, int>& modifier);
         int getRemainingTurns();
         void turn() override;
         void endBattleTurn() override;
