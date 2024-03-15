@@ -10,7 +10,7 @@ class Map{
 public:
     explicit Map(int);
     Map();
-    Cell* getCell(Position);
+    std::shared_ptr<Cell> getCell(Position);
     Position moveLeft(Position);
     Position moveRight(Position);
     void setRooms(Position&);

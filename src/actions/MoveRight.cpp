@@ -9,7 +9,7 @@ namespace actions {
 
     void MoveRight::act(Player *player) {
         setPosition(player, player -> getMap() -> moveRight(player->getPosition()));
-        Cell * temp = player->getMap()->getCell(player->getPosition());
+        std::shared_ptr<Cell> temp = player->getMap()->getCell(player->getPosition());
         temp->generateEvents();
         for(int i = 0; i < temp->getEvents().size(); i++) {
             temp->getEvents()[i]->turn(player);

@@ -4,18 +4,18 @@
 
 #ifndef CPPDUNGEON_USE_H
 #define CPPDUNGEON_USE_H
+#include <memory>
 #include "actions/Action.h"
 class Chest;
 namespace actions {
     class Use : public Action {
     public:
-        explicit Use(Chest *);
+        explicit Use(const std::shared_ptr<Chest>&);
         void act(Player *player) override;
-        Chest *getChest();
+        std::shared_ptr<Chest> getChest();
 
     private:
-        int m_index;
-        Chest *m_chest;
+        std::shared_ptr<Chest> m_chest;
     };
 
 #endif //CPPDUNGEON_USE_H

@@ -16,7 +16,6 @@ namespace actions {
         void act(Player *player) override;
         std::shared_ptr<Trap> getTrap() const;
     private:
-        int m_index;
         std::shared_ptr<Trap> m_trap;
     };
 }//namespace actions
