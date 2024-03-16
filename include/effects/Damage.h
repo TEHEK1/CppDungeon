@@ -4,9 +4,9 @@
 
 #ifndef CPPDUNGEON_DAMAGE_H
 #define CPPDUNGEON_DAMAGE_H
-#include "effects/ImmediateEffect.h"
+#include "effects/ImmediateCharacteristicEffect.h"
 namespace effects {
-    class Damage: public ImmediateEffect {
+    class Damage: public ImmediateCharacteristicEffect {
     public:
         Damage(int damage);
     };

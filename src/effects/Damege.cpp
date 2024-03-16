@@ -3,8 +3,7 @@
 //
 #include "effects/Damage.h"
 #include "entity/Trick.h"
-#include "random"
 namespace effects {
     Damage::Damage(int damage) :
-    ImmediateEffect(std::map<int, int>{{trick::hash("HP"), std::max(-damage, 0)}}){}
+    ImmediateCharacteristicEffect(std::map<int, int>{{static_cast<int>(Characteristic::HP), std::min(-damage, 0)}}){}
 }

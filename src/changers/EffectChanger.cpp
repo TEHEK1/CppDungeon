@@ -1,7 +1,6 @@
 //
 // Created by Амир Кашапов on 15.03.2024.
 //
-
 #include "changers/EffectChanger.h"
 #include "effects/Effect.h"
 #include "entity/Entity.h"
@@ -13,6 +12,9 @@
 #include "effects/MarkedAsEntityNeeded.h"
 #include "effects/MarkedAsBattleFieldNeeded.h"
 void changers::EffectChanger::turnEffects(const std::shared_ptr<entity::Entity>& entity) {
+    if(entity == nullptr){
+        return;
+    }
     auto& effects = entity->m_effects;
     for (auto effectIterator = effects.begin(); effectIterator != effects.end();)
     {
@@ -26,6 +28,9 @@ void changers::EffectChanger::turnEffects(const std::shared_ptr<entity::Entity>&
 }
 
 void changers::EffectChanger::endBattleTurnEffects(const std::shared_ptr<entity::Entity>& entity) {
+    if(entity == nullptr){
+        return;
+    }
     auto& effects = entity->m_effects;
     for (auto effectIterator = effects.begin(); effectIterator != effects.end();)
     {
@@ -39,10 +44,10 @@ void changers::EffectChanger::endBattleTurnEffects(const std::shared_ptr<entity:
 }
 int changers::EffectChanger::turnEffect(const std::shared_ptr<entity::Entity>& entity,
                                          const std::shared_ptr<effects::Effect>& effect) {
-    if (dynamic_pointer_cast<effects::MarkedAsEntityNeeded>(effect) != nullptr) {
+    if (entity!= nullptr && dynamic_pointer_cast<effects::MarkedAsEntityNeeded>(effect) != nullptr) {
         return dynamic_pointer_cast<effects::MarkedAsEntityNeeded>(effect)->getTurnFunctionEntity()(entity);
     }
-    else if (dynamic_pointer_cast<effects::MarkedAsTurnable>(effect) != nullptr) {
+    else if (entity!= nullptr && dynamic_pointer_cast<effects::MarkedAsTurnable>(effect) != nullptr) {
         return dynamic_pointer_cast<effects::MarkedAsTurnable>(effect)->getTurnFunction()();
     }
     else {
@@ -51,10 +56,10 @@ int changers::EffectChanger::turnEffect(const std::shared_ptr<entity::Entity>& e
 }
 int changers::EffectChanger::endBattleTurnEffect(const std::shared_ptr<entity::Entity>& entity,
                                                   const std::shared_ptr<effects::Effect>& effect) {
-    if (dynamic_pointer_cast<effects::MarkedAsEndBattleEntityNeeded>(effect) != nullptr) {
+    if (entity!= nullptr && dynamic_pointer_cast<effects::MarkedAsEndBattleEntityNeeded>(effect) != nullptr) {
         return dynamic_pointer_cast<effects::MarkedAsEndBattleEntityNeeded>(effect)->getEndBattleTurnFunctionEntity()(entity);
     }
-    else if (dynamic_pointer_cast<effects::MarkedAsEndBattle>(effect) != nullptr) {
+    else if (entity!= nullptr && dynamic_pointer_cast<effects::MarkedAsEndBattle>(effect) != nullptr) {
         return dynamic_pointer_cast<effects::MarkedAsEndBattle>(effect)->getEndBattleTurnFunction()();
     }
     else {
@@ -63,15 +68,17 @@ int changers::EffectChanger::endBattleTurnEffect(const std::shared_ptr<entity::E
 }
 void changers::EffectChanger::addEffect(const std::shared_ptr<entity::Entity>& entity,
                                         const std::shared_ptr<effects::Effect>& effect) {
-    if (dynamic_pointer_cast<effects::ImmediateEffect>(effect) != nullptr) {
+    if (entity != nullptr && dynamic_pointer_cast<effects::ImmediateEffect>(effect) != nullptr) {
         turnEffect(entity, effect);
     }
-    else {
+    else if(entity != nullptr) {
         entity->m_effects.insert(effect);
     }
 }
 
 void changers::EffectChanger::removeEffect(const std::shared_ptr<entity::Entity>& entity,
                                            const std::shared_ptr<effects::Effect>& effect) {
-    entity->m_effects.erase(effect);
+    if(entity != nullptr) {
+        entity->m_effects.erase(effect);
+    }
 }

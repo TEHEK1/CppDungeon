@@ -4,9 +4,8 @@
 #include <map>
 #include "effects/Debuff.h"
 #include "effects/Stun.h"
-#include "entity/Trick.h"
 namespace effects {
-    Stun::Stun(int numberOfTurns) : Debuff(numberOfTurns, std::map<int, int>{{trick::hash("turnable"), -1}}) {}
+    Stun::Stun(int numberOfTurns) : Debuff(numberOfTurns, std::map<int, int>{{static_cast<int>(Characteristic::turnable), -1}}) {}
     int Stun::resistanceHash() {
         return static_cast<int>(Resistances::Stun);
     }
