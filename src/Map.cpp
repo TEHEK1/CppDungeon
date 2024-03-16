@@ -28,6 +28,8 @@ Position Map::chooseNextRoom(Position startPos, Position endPos) {
             }
         }
         startPos.m_destination = roomIndex;
+        startPos.m_prevLine = -1;
+        startPos.m_prevColumn = -1;
     }
     return startPos;
 }
@@ -843,25 +845,25 @@ Map::Map(int seed) {
 
                                 if (side_checker == top) {
 
-                                    if (m_contents[endLine][endColumn + 2] == CellType::hall) {
+                                    if (m_contents[endLine - 2][endColumn] == CellType::hall) {
                                         occupiedSides[destination][side_checker] = i;
                                     }
 
                                 } else if (side_checker == right) {
 
-                                    if (m_contents[endLine + 2][endColumn] == CellType::hall) {
+                                    if (m_contents[endLine][endColumn + 2] == CellType::hall) {
                                         occupiedSides[destination][side_checker] = i;
                                     }
 
                                 } else if (side_checker == bottom) {
 
-                                    if (m_contents[endLine][endColumn - 2] == CellType::hall) {
+                                    if (m_contents[endLine + 2][endColumn] == CellType::hall) {
                                             occupiedSides[destination][side_checker] = i;
                                     }
 
                                 } else if (side_checker  == left) {
 
-                                    if (m_contents[endLine - 2][endColumn] == CellType::hall) {
+                                    if (m_contents[endLine][endColumn - 2] == CellType::hall) {
                                         occupiedSides[destination][side_checker] = i;
                                     }
 
@@ -880,7 +882,6 @@ Map::Map(int seed) {
             if (generateAgain) {
                 break;
             }
-            //PrintWholeMap();
 
         } // first for loop
 
@@ -888,7 +889,7 @@ Map::Map(int seed) {
             // check for existance of room with 4 neighbours
             bool flag = false;
             for (char from  = 0; from < connections.size(); from++) {
-                if (connections[from].size() >= 4) {
+                if (connections[from].size() == 4) {
                     flag = true;
                 }
             }
