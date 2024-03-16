@@ -5,6 +5,8 @@
 #ifndef CPPDUNGEON_ITEM_H
 #define CPPDUNGEON_ITEM_H
 #include "skillDesigns/Skill.h"
-class Item:public Skill{
-};
+namespace items {
+    class Item : public Skill {
+    };
+}
 #endif //CPPDUNGEON_ITEM_H

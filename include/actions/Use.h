@@ -8,6 +8,9 @@
 #include "actions/Action.h"
 #include "events/UsableEvent.h"
 class Chest;
+namespace events {
+    class UsableEvent;
+} // namespace events
 namespace actions {
     class Use : public Action {
     public:

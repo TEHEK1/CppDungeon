@@ -10,7 +10,6 @@ namespace events {
     public:
         virtual void use(Player*) = 0;
     };
-
 } // namespace events
 
 #endif //CPPDUNGEON_USABLEEVENT_H
