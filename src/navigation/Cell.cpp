@@ -5,7 +5,7 @@
 #include "actions/MoveLeft.h"
 #include "actions/MoveRight.h"
 
-void Cell::freeMoves(Player * player, const std::shared_ptr<Event>& event) {
+void Cell::freeMoves(Player * player, const std::shared_ptr<events::Event>& event) {
     m_endedEvents.insert(event);
     if (m_endedEvents.size() == getEvents().size()) {
         addAction(player, std::shared_ptr<actions::Action>(new actions::MoveLeft));
@@ -18,6 +18,6 @@ char Cell::getLevel() {
     return a;
 }
 
-std::vector<std::shared_ptr<Event>> Cell::getEvents(){
+std::vector<std::shared_ptr<events::Event>> Cell::getEvents(){
     return m_events;
 }

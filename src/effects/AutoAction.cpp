@@ -2,36 +2,27 @@
 // Created by artem on 13.03.2024.
 //
 #include "effects/AutoAction.h"
-#include "effects/Effect.h"
-#include "Entity.h"
-#include "EntityChanger.h"
+#include "effects/MarkedAsTurnable.h"
+#include "entity/Entity.h"
+#include "changers/EntityChanger.h"
 
 namespace effects {
-    AutoAction::AutoAction(std::weak_ptr<Entity> entity, int numberOfTurns, std::map<size_t, int> modifier,
-                           std::map<size_t, int> turner, int crited, int critModifier): Effect(entity, modifier) {
-        m_numberOfTurns = numberOfTurns;
-        m_turner = turner;
-        m_crited = crited;
-        m_critModifier = critModifier;
+    AutoAction::AutoAction(int numberOfTurns, const std::map<int, int>& turner):
+ m_turner(turner), MarkedAsTurnable(numberOfTurns), MarkedAsEndBattle(-1) {}
+
+    std::map<int, int> AutoAction::getTurner() {
+        return m_turner;
     }
-    int AutoAction::getRemainingTurns() {
-        return m_numberOfTurns;
+    std::function<int()> AutoAction::getTurnFunction() {
+        throw std::logic_error("Adapter called unneeded function or function called without adapter");
+    }
+    std::function<int(const std::shared_ptr<entity::Entity>& )> AutoAction::getTurnFunctionEntity() {
+        return [turn = this->MarkedAsTurnable::getTurnFunction(), &turner = this->m_turner]
+        (const std::shared_ptr<entity::Entity>& object){
+            for(auto &characteristic:turner){
+                set(object, characteristic.first, object->getReal(characteristic.first) + characteristic.second);
+            }
+            return turn();};
     }
 
-    void AutoAction::turn() {
-        --m_numberOfTurns;
-        if (m_numberOfTurns < 0) {
-            endBattleTurn();
-        }
-        for (auto i : m_turner) {
-            set(static_cast<std::shared_ptr<Entity>>(m_entity), i.first, i.second + m_entity.lock().get()->get(i.first));
-        }
-    }
-
-    void AutoAction::endBattleTurn() {
-        std::shared_ptr<Entity> p = static_cast<std::shared_ptr<Entity>>(m_entity);
-        if (p) {
-            removeEffect(p, static_cast<std::shared_ptr<Effect>>(this));
-        }
-    }
-}
+} // namespace effects

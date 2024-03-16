@@ -5,10 +5,12 @@
 #ifndef CPPDUNGEON_BLEED_H
 #define CPPDUNGEON_BLEED_H
 #include "effects/AutoAction.h"
+#include "effects/MarkedAsResistable.h"
 namespace effects {
-    class Bleed:public AutoAction {
+    class Bleed:public AutoAction, public MarkedAsResistable{
     public:
-        Bleed(std::weak_ptr<Entity>, int numberOfTurns, int HPturner, int crited, int critModifier = 150);
+        Bleed(int numberOfTurns, int HPturner);
+        int resistanceHash() override;
     };
 }
 #endif //CPPDUNGEON_BLEED_H

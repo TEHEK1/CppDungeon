@@ -4,11 +4,11 @@
 
 #ifndef CPPDUNGEON_BLIGHT_H
 #define CPPDUNGEON_BLIGHT_H
-#include "effects/AutoAction.h"
+#include "effects/Bleed.h"
 namespace effects{
-    class Blight:public AutoAction {
+    class Blight:public Bleed {
     public:
-        Blight(std::weak_ptr<Entity>, int numberOfTurns, int HPturner, int crited, int critModifier = 150);
+        Blight(int numberOfTurns, int HPturner);
     };
 }
 

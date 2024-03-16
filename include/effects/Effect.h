@@ -1,4 +1,3 @@
-
 //
 // Created by artem on 12.03.2024.
 //
@@ -8,28 +7,17 @@
 
 #include <map>
 #include <memory>
+#include <functional>
 #include "changers/EntityChanger.h"
-
-namespace changers{
-    class EntityChanger;
-} // namespace changers
-
-class EnemyEncounter;
+#include "namespaces/entity.h"
+#include "namespaces/events.h"
+#include "namespaces/changers.h"
 namespace effects {
-    class Effect: public changers::EntityChanger {
-        std::map<std::size_t, int> m_modifier;
-        friend EnemyEncounter;
-        friend EntityChanger;
+    class Effect{
     public:
-        Effect(std::weak_ptr<Entity>, std::map<std::size_t, int>);
-        std::map<std::size_t, int> getModifier() const;
-        int getModifier(size_t) const;
-    protected:
-        virtual void turn() = 0;
-        virtual void endBattleTurn() = 0;
-        std::weak_ptr<Entity> m_entity;
+        virtual ~Effect() = default;
+
     };
 }
 
 #endif //CPPDUNGEON_EFFECT_H
-

@@ -11,7 +11,7 @@ namespace effects {
         int m_offset;
         std::weak_ptr<BattleField> m_battleField;
     public:
-        ForceMove(std::weak_ptr<Entity>, std::weak_ptr<BattleField>, int offset);
+        ForceMove(std::weak_ptr<entity::Entity>, std::weak_ptr<BattleField>, int offset);
         void turn();
     };
 }

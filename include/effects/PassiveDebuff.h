@@ -4,15 +4,13 @@
 
 #ifndef CPPDUNGEON_PASSIVEDEBUFF_H
 #define CPPDUNGEON_PASSIVEDEBUFF_H
-#include "Debuff.h"
+#include "effects/PassiveBuff.h"
+#include "effects/MarkedAsResistable.h"
 namespace effects {
-    class PassiveDebuff: public Debuff {
-        int m_numberOfBattles;
+    class PassiveDebuff: public PassiveBuff, public MarkedAsResistable {
     public:
-        void turn();
-        virtual void endBattleTurn();
-        int getRemainingBattles();
-        PassiveDebuff(std::weak_ptr<Entity>, int numberOfBattles, std::map<size_t, int> modifier);
+        PassiveDebuff(int numberOfBattles, std::map<int, int> modifier);
+        int resistanceHash() override;
     };
-}
+} // namespace effects
 #endif //CPPDUNGEON_PASSIVEDEBUFF_H

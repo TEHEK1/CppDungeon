@@ -4,16 +4,14 @@
 
 #ifndef CPPDUNGEON_BUFF_H
 #define CPPDUNGEON_BUFF_H
-#include "effects/Effect.h"
-#include "EntityChanger.h"
+#include "effects/PermanentEffect.h"
+#include "changers/EntityChanger.h"
+#include "effects/MarkedAsTurnable.h"
+#include "effects/MarkedAsEndBattle.h"
 namespace effects {
-    class Buff: public Effect {
-    int m_numberOfTurns;
+    class Buff: public PermanentEffect, public MarkedAsTurnable, public MarkedAsEndBattle{
     public:
-        Buff(std::weak_ptr<Entity>, int numberOfTurns, std::map<size_t, int> modifier);
-        int getRemainingTurns();
-        void turn();
-        virtual void endBattleTurn();
+        Buff(int numberOfTurns, const std::map<int, int>& modifier);
     };
 }
 #endif //CPPDUNGEON_BUFF_H

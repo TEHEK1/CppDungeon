@@ -4,17 +4,14 @@
 
 #ifndef CPPDUNGEON_DEBUFF_H
 #define CPPDUNGEON_DEBUFF_H
-#include "effects/Effect.h"
-#include "EntityChanger.h"
+#include "effects/Buff.h"
+#include "changers/EntityChanger.h"
+#include "effects/MarkedAsResistable.h"
 namespace effects {
-    class Debuff: public Effect {
-        int m_numberOfTurns;
+    class Debuff: public Buff, public MarkedAsResistable {
     public:
-        Debuff(std::weak_ptr<Entity>, int numberOfTurns, std::map<size_t, int> modifier);
-        int getRemainingTurns();
-        void turn();
-        virtual void endBattleTurn();
+        Debuff(int numberOfTurns, std::map<int, int> modifier);
+        int resistanceHash() override;
     };
-
-}
+} //namespace effects
 #endif //CPPDUNGEON_DEBUFF_H

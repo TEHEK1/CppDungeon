@@ -6,9 +6,10 @@
 #define CPPDUNGEON_IMMEDIATEEFFECT_H
 #include "effects/AutoAction.h"
 namespace effects {
-    class ImmediateEffect:public AutoAction {
+    class ImmediateEffect:public MarkedAsTurnable, public MarkedAsEntityNeeded {
     public:
-        ImmediateEffect(std::weak_ptr<Entity>, std::map<size_t, int> turner, int crited, int critModifier);
+        ~ImmediateEffect() override = default;
+        ImmediateEffect(const std::map<int, int>& turner);
     };
 }
 #endif //CPPDUNGEON_IMMEDIATEEFFECT_H

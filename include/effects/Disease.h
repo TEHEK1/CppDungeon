@@ -4,13 +4,14 @@
 
 #ifndef CPPDUNGEON_DISEASE_H
 #define CPPDUNGEON_DISEASE_H
-#include "Debuff.h"
+#include "Effect.h"
+#include "PermanentEffect.h"
+#include "MarkedAsResistable.h"
 namespace effects {
-    class Disease: public Debuff {
+    class Disease: public PermanentEffect, public MarkedAsResistable{
     public:
-        Disease(std::map<size_t, int> modifier);
-        void turn();
-        virtual void endBattleTurn();
+        Disease(const std::map<int, int>& modifier);
+        int resistanceHash() override;
     };
 }
 #endif //CPPDUNGEON_DISEASE_H

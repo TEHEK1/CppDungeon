@@ -5,7 +5,7 @@
 #ifndef CPPDUNGEON_MAP_H
 #define CPPDUNGEON_MAP_H
 #include "navigation/Cell.h"
-#include "Position.h"
+#include "navigation/Position.h"
 class Map{
 public:
     explicit Map(int);

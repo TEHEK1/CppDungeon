@@ -2,9 +2,11 @@
 // Created by artem on 13.03.2024.
 //
 #include "effects/Bleed.h"
-#include "trick.h"
+#include "entity/Trick.h"
 namespace effects {
-    Bleed::Bleed(std::weak_ptr<Entity> entity, int numberOfTurns, int HPturner, int crited, int critModifier):
-    AutoAction(entity, crited < 0 ? numberOfTurns : numberOfTurns * 150 / 100,
-               std::map<size_t, int>{}, std::map<size_t, int>{{trick::hash("HP"), HPturner}}, crited, critModifier){};
+    Bleed::Bleed(int numberOfTurns, int HPturner):
+    AutoAction(numberOfTurns, std::map<int, int>{{trick::hash("HP"), HPturner}}){};
+    int Bleed::resistanceHash() {
+        return static_cast<int>(Resistances::Debuff);
+    }
 }

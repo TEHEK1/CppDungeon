@@ -4,15 +4,14 @@
 
 #ifndef CPPDUNGEON_MOVE_H
 #define CPPDUNGEON_MOVE_H
-#include "ImmediateEffect.h"
+#include "effects/ImmediateEffect.h"
+#include "effects/MarkedAsBattleFieldNeeded.h"
 class BattleField;
 namespace effects {
-    class Move: public ImmediateEffect {
+    class Move: public ImmediateEffect, public MarkedAsBattleFieldNeeded {
         int m_offset;
-        std::weak_ptr<BattleField> m_battleField;
     public:
-        Move(std::weak_ptr<Entity>, std::weak_ptr<BattleField> battleField, int offset);
-        void turn();
+        Move(int offset);
     };
 }
 #endif //CPPDUNGEON_MOVE_H
