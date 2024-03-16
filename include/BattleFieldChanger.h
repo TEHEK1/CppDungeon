@@ -1,0 +1,7 @@
+#ifndef CPPDUNGEON_BATTLEFIELDCHANGER_H
+#define CPPDUNGEON_BATTLEFIELDCHANGER_H
+#include <vector>
+class BattleFieldChanger {
+public:
+};
+#endif //CPPDUNGEON_BATTLEFIELDCHANGER_H
