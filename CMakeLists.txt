@@ -17,4 +17,5 @@ add_executable(CppDungeon
         src/changers/PositionChanger.cpp
         src/navigation/Cell.cpp
         src/events/Trap.cpp
-        src/events/Chest.cpp)
+        src/events/Chest.cpp
+        src/events/ChooseRoomEvent.cpp)
