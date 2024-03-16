@@ -9,18 +9,24 @@
 #include <vector>
 class Enemy;
 class Player;
-class EnemyEncounter:public Event{
-public:
-    EnemyEncounter();
-    void turn(Player*) override;
-    std::vector<std::shared_ptr<Entity>> getEnemies();
-    std::vector<std::vector<char>> draw() override;
+namespace events {
+    class EnemyEncounter : public Event {
+    public:
+        EnemyEncounter();
 
-private:
-    void _enemyMove(Player*, std::shared_ptr<Entity>);
-    int _start_enemies;
-    int _start_heroes;
-    std::vector<std::shared_ptr<Entity>> _enemies;
-    std::vector<int> _priority;
-};
+        void turn(Player *) override;
+
+        std::vector<std::shared_ptr<entity::Entity>> getEnemies();
+
+        std::vector<std::vector<char>> draw() override;
+
+    private:
+        void _enemyMove(Player *, std::shared_ptr<entity::Entity>);
+
+        int _start_enemies;
+        int _start_heroes;
+        std::vector<std::shared_ptr<entity::Entity>> _enemies;
+        std::vector<int> _priority;
+    };
+} // namespace events
 #endif //UNTITLED_ENEMYENCOUNTER_H

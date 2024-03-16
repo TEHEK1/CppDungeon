@@ -8,9 +8,7 @@
 #include <memory>
 #include <set>
 class Player;
-namespace actions {
-    class Action;
-} // namespace actions
+#include "namespaces/actions.h"
 namespace changers {
     class ActionsChanger {
     protected:

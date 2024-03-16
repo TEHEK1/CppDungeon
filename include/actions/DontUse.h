@@ -7,16 +7,15 @@
 
 #include "actions/Action.h"
 #include <memory>
-class Trap;
-class Chest;
+#include "namespaces/events.h"
 namespace actions {
     class DontUse : public Action {
     public:
-        explicit DontUse(const std::shared_ptr<Trap>&);
+        explicit DontUse(const std::shared_ptr<events::Trap>&);
         void act(Player *player) override;
-        std::shared_ptr<Trap> getTrap() const;
+        std::shared_ptr<events::Trap> getTrap() const;
     private:
-        std::shared_ptr<Trap> m_trap;
+        std::shared_ptr<events::Trap> m_trap;
     };
 }//namespace actions
 #endif //CPPDUNGEON_DONTUSE_H

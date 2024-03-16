@@ -7,12 +7,18 @@
 #include "events/UsableEvent.h"
 #include "changers/InventoryChanger.h"
 class Player;
-class Chest:public events::UsableEvent, public changers::InventoryChanger{
-    bool m_used = false;
-    bool comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator);
-public:
-    void turn(Player *player) override;
-    void use(Player *player) override;
-    std::vector<std::vector<char>> draw() override;
-};
+namespace events {
+    class Chest : public events::UsableEvent, public changers::InventoryChanger {
+        bool m_used = false;
+
+        bool comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator);
+
+    public:
+        void turn(Player *player) override;
+
+        void use(Player *player) override;
+
+        std::vector<std::vector<char>> draw() override;
+    };
+} // namespace events
 #endif //CPPDUNGEON_CHEST_H

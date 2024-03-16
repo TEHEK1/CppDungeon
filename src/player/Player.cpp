@@ -9,10 +9,6 @@
 #include "navigation/Position.h"
 #include <memory>
 
-std::vector<std::shared_ptr<Entity>> Player::getHeroes() {
-    return m_heroes;
-}
-
 Monitor* Player::getMonitor() {
     return m_monitor;
 }
