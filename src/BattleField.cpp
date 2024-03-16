@@ -3,7 +3,7 @@
 //
 
 #include "BattleField.h"
-#include "Squad.h"
+#include "player/Squad.h"
 #include <memory>
 #include <vector>
 
@@ -31,7 +31,7 @@ std::shared_ptr<Squad> BattleField::getSquad(std::shared_ptr<Entity>& target) co
         }
     }
     for (const auto& entity : m_enemy->getEntities()) {
-        if (entity == target || ans != nullptr) {
+        if (entity == target && ans != nullptr) {
             throw std::logic_error("squads are corrupted, they have similar entity");
         }
         if (entity == target) {

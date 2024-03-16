@@ -2,6 +2,7 @@
 // Created by Владимир Попов on 09.03.2024
 //
 #include "entity/Entity.h"
+#include "effects/Effect.h"
 #include <random>
 Entity::Entity(std::map<size_t, int> characteristics):m_characteristics(characteristics){}
 std::vector<std::vector<char>> Entity::draw(){
@@ -23,7 +24,7 @@ int Entity::get(std::size_t key) const {
     if (m_characteristics.count(key)){
         result = m_characteristics.at(key);
         for (const auto& effect : m_effects) {
-            result += effect->getModifier(key);
+            result += effect->getModifier()[key];
         }
     }
     return result;
