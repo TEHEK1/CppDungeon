@@ -35,8 +35,8 @@ int main() {
     for(int i = 0;i<battle->getEntities().size();i++){
         std::cout<<battle->getEntities()[i]->getName()<<" ";
     }
-
-    BattleFieldChangerAdapter::move(battle, allies[0], 1);
+    std::cout<<"\n";
+    BattleFieldChangerAdapter::move(battle, allies[0], 3);
     for(int i = 0;i<battle->getEntities().size();i++){
         std::cout<<battle->getEntities()[i]->getName()<<" ";
     }
