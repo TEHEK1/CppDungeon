@@ -6,7 +6,7 @@ int main() {
     Map test = Map();
     Position startPosition = test.getStartPosition();
     Position currentPosition = startPosition;
-    auto drawing = test.draw(currentPosition, 40, 40);
+    auto drawing = test.draw(currentPosition, 50, 50);
     for (auto i : drawing) {
         for (auto j : i) {
             if  (j == 0) {
