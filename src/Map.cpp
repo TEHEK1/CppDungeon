@@ -329,8 +329,10 @@ std::vector<Position> Map::getNextRooms(Position pos) {
             break;
         }
     }
-    for (int i = 0; i < m_edges[roomIndex].size(); i++) {
-        answer.push_back(m_roomPositions[m_edges[roomIndex][i]]);
+    if (roomIndex != -1) {
+        for (int i = 0; i < m_edges[roomIndex].size(); i++) {
+            answer.push_back(m_roomPositions[m_edges[roomIndex][i]]);
+        }
     }
     return answer;
 }

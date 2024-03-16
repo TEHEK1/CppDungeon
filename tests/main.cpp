@@ -39,7 +39,7 @@ void printNextRooms(Map map, Coord coord){
 }
 
 int main() {
-    Map test = Map(12);
+    Map test = Map();
     Position startPosition = test.getStartPosition();
     Position currentPosition = startPosition;
     Coord currentCoord = {currentPosition, '@', '@'};
