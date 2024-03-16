@@ -1,18 +1,44 @@
-#include "Map.h"
 #include <iostream>
+#include "include/BattleField.h"
+#include "include/BattleFIeldChanger.h"
+#include "include/player/Squad.h"
+#include "entity/Entity.h"
+#include <random>
+class Entity1: public Entity{
+public:
+    Entity1(int i): Entity({}){
+        m_name = std::to_string(i);
+    }
+};
 
+std::map<int, int> effects::Effect::getModifier() {
+    return {};
+}
+class BattleFieldChangerAdapter:public BattleFieldChanger{
+public:
+    using BattleFieldChanger::move;
+    using BattleFieldChanger::relativeMove;
+    using BattleFieldChanger::remove;
+};
 int main() {
-    Map test = Map(); // 1710271398
-    auto drawing = test.draw();
-    for (auto i : drawing) {
-        for (auto j : i) {
-            if  (j == 0) {
-                std::cout << "  ";
-            } else {
-                std::cout << (int)j << ' ';
-            }
-        }
-        std::cout << std::endl;
+    std::vector<std::shared_ptr<Entity>> allies;
+    for(int i =0;i<4;i++){
+        allies.push_back(std::shared_ptr<Entity1>(new Entity1(i)));
+    }
+    std::vector<std::shared_ptr<Entity>> enemies;
+    for(int i =4;i<8;i++){
+        enemies.push_back(std::shared_ptr<Entity1>(new Entity1(i)));
+    }
+    std::shared_ptr<Squad> sq1 = std::shared_ptr<Squad>(new Squad(allies));
+    std::shared_ptr<Squad> sq2 = std::shared_ptr<Squad>(new Squad(enemies));
+    std::shared_ptr<BattleField> battle = std::shared_ptr<BattleField>(new BattleField(sq1, sq2));
+    for(int i = 0;i<battle->getEntities().size();i++){
+        std::cout<<battle->getEntities()[i]->getName()<<" ";
+    }
+    std::cout<<"\n";
+    BattleFieldChangerAdapter::move(battle, allies[0], 3);
+    for(int i = 0;i<battle->getEntities().size();i++){
+        std::cout<<battle->getEntities()[i]->getName()<<" ";
     }
     return 0;
 }
