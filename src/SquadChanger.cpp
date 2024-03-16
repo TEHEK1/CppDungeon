@@ -3,43 +3,48 @@
 //
 #include "SquadChanger.h"
 #include "player/Squad.h"
-
 void SquadChanger::move(const std::shared_ptr<Squad>& squad, int index1, int index2) {
     if (index1 < 0 || index1 >= squad->m_squad.size()) { throw std::invalid_argument("index is out of range"); }
     if (index2 >= squad->m_squad.size())  { index2 = static_cast<int>(squad->m_squad.size()) - 1;}
     if (index2 < 0)                     { index2 = 0; }
+    if (index1 == index2) { return; }
     if (squad->m_squad[index2] == nullptr) {
         squad->m_squad[index2] = squad->m_squad[index1];
         squad->m_squad[index1] = nullptr;
         return;
     }
-    if (index1 == index2) { return; }
-
-    std::shared_ptr<Entity> tmp = squad->m_squad[index2];
-    squad->m_squad[index2] = nullptr;
-    int const move_to = index1 < index2 ? -1 : 1;
-    int ptr = index2 + move_to;
-    while (tmp != nullptr && ptr - move_to != index1) { // index(tmp) < ptr, just chainswap
-        std::swap(tmp, squad->m_squad[ptr]);
-        ptr += move_to;
+    int direction = (index2 -index1) / abs(index2 -index1);
+    int closestNullptr = index2;
+    const std::shared_ptr<Entity> tempIndex1 = squad->getEntity(index1);
+    squad->m_squad[index1] = nullptr;
+    for(;squad->getEntity(closestNullptr) != nullptr; closestNullptr-=direction){
+    };
+    for(closestNullptr;closestNullptr!=index2;closestNullptr+=direction){
+        squad->m_squad[closestNullptr] = squad->m_squad[closestNullptr + direction];
+        squad->m_squad[closestNullptr + direction] = nullptr;
     }
-    if (tmp != nullptr) squad->m_squad[index2] = tmp;
+    squad->m_squad[index2] = tempIndex1;
 }
 
 
 void SquadChanger::move(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>& entity, int index1) {
     for (int i = 0; i < squad->m_squad.size(); ++i) {
         if (squad->m_squad[i] == entity) {
-            return SquadChanger::move(squad, index1, i);
+            return SquadChanger::move(squad, i, index1);
         }
     }
     throw std::invalid_argument("entity is not in m_squad");
 }
 void SquadChanger::relativeMove(const std::shared_ptr<Squad>& squad, int index, int offset) {
-    SquadChanger::move(squad, index, offset);
+    SquadChanger::move(squad, index, index + offset);
 }
 void SquadChanger::relativeMove(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>& entity, int offset) {
-    SquadChanger::move(squad, entity, offset);
+    for (int i = 0; i < squad->m_squad.size(); ++i) {
+        if (squad->m_squad[i] == entity) {
+            return SquadChanger::relativeMove(squad, i, offset);
+        }
+    }
+    throw std::invalid_argument("entity is not in m_squad");
 }
 void SquadChanger::remove(const std::shared_ptr<Squad>& squad, int index) {
     if (index < 0 || index >= squad->m_squad.size()) { throw std::invalid_argument("index is out of range"); }
