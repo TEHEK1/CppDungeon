@@ -6,9 +6,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
 
 add_executable(CppDungeon
+        main.cpp
+        src/entity/Entity.cpp
         src/Squad.cpp
         src/SquadChanger.cpp
         src/BattleFieldChanger.cpp
-        src/BattleField.cpp
-)
+        src/BattleField.cpp)
 
