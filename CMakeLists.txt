@@ -4,13 +4,51 @@ project(CppDungeon)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
+include_directories(include/skillDesignes)
+
+file(GLOB skillsSrc 
+        "include/skillDesigns/*.h"
+        "src/skillDesignes/*.cpp"
+)
 
 add_executable(CppDungeon
-        src/actions/Use.cpp
-        src/actions/MoveRight.cpp
-        src/actions/MoveLeft.cpp
-        src/actions/DontUse.cpp
-        src/actions/ChooseNextRoom.cpp
-        src/player/Player.cpp
-        src/changers/PositionChanger.cpp
-        src/navigation/Cell.cpp)
+        main.cpp
+        src/Chest.cpp
+        src/EmptyCell.cpp
+        src/ChooseRoomEvent.cpp
+        include/Action.h
+        include/Board.h
+        include/Cell.h
+        include/Chest.h
+        include/Enemy.h
+        include/EnemyEncounter.h        
+        include/Entity.h
+        include/Event.h
+        include/Hall.h
+        include/Hero.h
+        include/Item.h
+        include/Map.h
+        include/Monitor.h
+        include/Player.h
+        include/Room.h
+        include/Skill.h
+        include/MoveLeft.h
+        include/MoveRight.h
+        include/ChooseNextRoom.h
+        include/ChooseRoomEvent.h
+        include/EmptyCell.h
+        include/Use.h
+        include/Trap.h
+        include/DontUse.h
+        include/Move.h
+        include/Position.h
+        include/UseSkill.h
+        include/UseItem.h
+        include/Boss.h
+        include/NPC.h
+        include/ActionsChanger.h
+        include/PositionChanger.h
+        include/SkillStorage.h
+        ${skillsSrc}
+        src/Use.cpp
+        src/DontUse.cpp)
