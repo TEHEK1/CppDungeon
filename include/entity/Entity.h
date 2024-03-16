@@ -11,6 +11,7 @@
 #include "skillDesigns/Skill.h"
 #include "entity/Characteristic.h"
 #include "effects/Effect.h"
+#include "Resistances.h"
 
 class Skill;
 #include "namespaces/changers.h"
@@ -19,6 +20,7 @@ namespace entity {
     protected:
         std::set<std::shared_ptr<Skill>> m_skills;
         std::map<int, int> m_characteristics;
+        std::map<int, int> m_resistances;
         std::set<std::shared_ptr<effects::Effect>> m_effects;
         std::string m_name;
         friend changers::EntityChanger;
