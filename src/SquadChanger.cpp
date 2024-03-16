@@ -19,12 +19,14 @@ void SquadChanger::move(const std::shared_ptr<Squad>& squad, int index1, int ind
     squad->m_squad[index2] = nullptr;
     int const move_to = index1 < index2 ? -1 : 1;
     int ptr = index2 + move_to;
-    while (tmp != nullptr || ptr != index1) { // index(tmp) < ptr, just chainswap
+    while (tmp != nullptr && ptr != index1) { // index(tmp) < ptr, just chainswap
         std::swap(tmp, squad->m_squad[ptr]);
         ptr += move_to;
     }
     if (tmp != nullptr) squad->m_squad[index2] = tmp;
 }
+
+
 void SquadChanger::move(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>& entity, int index2) {
     for (int i = 0; i < squad->m_squad.size(); ++i) {
         if (squad->m_squad[i] == entity) {
