@@ -7,11 +7,12 @@
 #include "changers/ActionsChanger.h"
 #include <vector>
 class Player;
-class Action;
-class Event:public changers::ActionsChanger{
-public:
-    virtual void turn(Player*) = 0;
-    virtual std::vector<std::vector<char> > draw() = 0;
-    virtual ~Event() = default;
-};
+namespace events {
+    class Event : public changers::ActionsChanger {
+    public:
+        virtual void turn(Player *) = 0;
+        virtual std::vector<std::vector<char> > draw() = 0;
+        virtual ~Event() = default;
+    };
+} // namespace events
 #endif //UNTITLED_EVENT_H

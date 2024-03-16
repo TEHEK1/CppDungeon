@@ -7,11 +7,14 @@
 #include "actions/Action.h"
 #include <vector>
 #include <memory>
-class Entity;
-class Item;
-class UseItem: public actions::Action{
-public:
-    UseItem(Player* player, Item* item, std::vector<std::shared_ptr<Entity>> entities);
-    void act(Player*) override;
-};
+#include "namespaces/entity.h"
+#include "namespaces/items.h"
+namespace actions {
+    class UseItem : public Action {
+    public:
+        UseItem(Player *player, items::Item *item, std::vector<std::shared_ptr<entity::Entity>> entities);
+
+        void act(Player *) override;
+    };
+} // namespace actions
 #endif //CPPDUNGEON_USEITEM_H

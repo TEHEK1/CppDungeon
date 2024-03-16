@@ -4,7 +4,7 @@
 #ifndef UNTITLED_CHARACTERISTIC_H
 #define UNTITLED_CHARACTERISTIC_H
 
-#include "Trick.h"
+#include "entity/Trick.h"
 
 enum class Characteristic {
     accuracyModifier = trick::hash("accuracyModifier"),

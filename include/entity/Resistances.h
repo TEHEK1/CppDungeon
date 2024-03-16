@@ -4,7 +4,7 @@
 #ifndef UNTITLED_RESISTANCES_H
 #define UNTITLED_RESISTANCES_H
 
-#include "Trick.h"
+#include "entity/Trick.h"
 
 enum class Resistances {
     Stun = trick::hash("Stun"),
