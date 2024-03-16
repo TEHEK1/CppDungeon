@@ -1,11 +1,16 @@
 #include "RangeSkill.h"
+#include "Skill.h"
+#include "BattleField.h"
 #include <vector>
 #include <memory>
 #include <algorithm>
 
-template <int Size>
+RangeSkill::RangeSkill(int size): UniqueSizedSkill(size) {
+
+}
+
 std::string isDesignUsable(std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor, std::vector<std::weak_ptr<Entity>> objects) {
-    std::string parentRet = UniqueSizedSkill<Size>::isDesignUsable(battleField, actor, objects);
+    std::string parentRet = UniqueSizedSkill::isDesignUsable(battleField, actor, objects);
     if (!parentRet.empty()) {
         return parentRet;
     }
@@ -14,9 +19,11 @@ std::string isDesignUsable(std::shared_ptr<BattleField> battleField, std::weak_p
     int prev_pos = -1;
     for (auto obj: objects) {
         int newPos = std::find(battleFieldVector.begin(), battleFieldVector.end(), obj) - battleFieldVector.begin();
-        if (std::find(newPos < prev_pos) {
+        if (newPos < prev_pos) {
             return "Given objects must be in row on the BattleField";
         }
         prev_pos = newPos;
     }
+
+    return std::string();
 }

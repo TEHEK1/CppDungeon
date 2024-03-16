@@ -20,9 +20,9 @@ public:
     virtual std::vector<int> getAvaibleEnemyTarget();
     virtual void use(std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor, std::vector<std::weak_ptr<Entity>> objects) final;
     virtual std::string isUsable(std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor, std::vector<std::weak_ptr<Entity>> objects) final;
-    std::string getName();
+    virtual std::string getName() final;
 protected:
-    void unsafeUse(int isCrit, std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor , std::vector<std::weak_ptr<Entity>> objects);
+    virtual void unsafeUse(int isCrit, std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor , std::vector<std::weak_ptr<Entity>> objects) final;
     virtual void unsafeSelfUse(int isCrit, std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> object) = 0;
     virtual void unsafeTargetUse(int isCrit, std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor, std::weak_ptr<Entity> object) = 0;
     virtual std::string isImplementationUsable(std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor, std::vector<std::weak_ptr<Entity>> objects);

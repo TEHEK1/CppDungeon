@@ -2,7 +2,11 @@
 #define CPPDUNGEON_SIZEDSKILL_H
 #include "Skill.h"
 
-template <int Size> class SizedSkill: public Skill {
+class SizedSkill: public Skill {
+public: 
+    SizedSkill(int size);
+protected:
+    int m_size;
 
 };
 

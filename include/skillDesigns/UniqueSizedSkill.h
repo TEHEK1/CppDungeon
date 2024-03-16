@@ -2,8 +2,9 @@
 #define CPPDUNGEON_UNIQUESIZEDSKILL_H
 #include "SizedSkill.h"
 
-template <int Size> class UniqueSizedSkill: public SizedSkill<Size> {
-
+class UniqueSizedSkill: public SizedSkill {
+public:
+    UniqueSizedSkill(int size);
 };
 
 #endif //CPPDUNGEON_UNIQUESIZEDSKILL_H
