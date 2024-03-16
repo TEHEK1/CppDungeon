@@ -1,13 +1,13 @@
 #include "actions/Use.h"
 #include "events/Chest.h"
 namespace actions {
-    Use::Use(const std::shared_ptr<Chest>& chest) : m_chest(chest) {}
+    Use::Use(const std::shared_ptr<events::UsableEvent>& usableEvent) : m_usableEvent(usableEvent) {}
 
     void Use::act(Player *player) {
-        m_chest->use(player);
+        m_usableEvent->use(player);
     }
 
-    std::shared_ptr<Chest> Use::getChest() {
-        return m_chest;
+    std::shared_ptr<events::UsableEvent> Use::UsableEvent() {
+        return m_usableEvent;
     }
 }//namespace actions

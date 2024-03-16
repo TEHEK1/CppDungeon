@@ -6,16 +6,17 @@
 #define CPPDUNGEON_USE_H
 #include <memory>
 #include "actions/Action.h"
+#include "events/UsableEvent.h"
 class Chest;
 namespace actions {
     class Use : public Action {
     public:
-        explicit Use(const std::shared_ptr<Chest>&);
+        explicit Use(const std::shared_ptr<events::UsableEvent>&);
         void act(Player *player) override;
-        std::shared_ptr<Chest> getChest();
+        std::shared_ptr<events::UsableEvent> UsableEvent();
 
     private:
-        std::shared_ptr<Chest> m_chest;
+        std::shared_ptr<events::UsableEvent> m_usableEvent;
     };
 
 #endif //CPPDUNGEON_USE_H
