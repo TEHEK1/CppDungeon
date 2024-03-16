@@ -5,6 +5,6 @@
 #ifndef UNTITLED_ENEMY_H
 #define UNTITLED_ENEMY_H
 #include "entity/Entity.h"
-class Enemy:public Entity{
+class Enemy:public entity::Entity{
 };
 #endif //UNTITLED_ENEMY_H
