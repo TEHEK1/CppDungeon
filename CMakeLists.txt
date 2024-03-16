@@ -1,9 +1,15 @@
 cmake_minimum_required(VERSION 3.27)
 project(CppDungeon)
 
-set(CMAKE_CXX_STANDARD 11)
-
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
+include_directories(include/skillDesignes)
+
+file(GLOB skillsSrc 
+        "include/skillDesigns/*.h"
+        "src/skillDesignes/*.cpp"
+)
 
 add_executable(CppDungeon
         main.cpp
@@ -15,7 +21,7 @@ add_executable(CppDungeon
         include/Cell.h
         include/Chest.h
         include/Enemy.h
-        include/EnemyEncounter.h
+        include/EnemyEncounter.h        
         include/Entity.h
         include/Event.h
         include/Hall.h
@@ -43,8 +49,6 @@ add_executable(CppDungeon
         include/ActionsChanger.h
         include/PositionChanger.h
         include/SkillStorage.h
+        ${skillsSrc}
         src/Use.cpp
-        src/DontUse.cpp
-        src/Player.cpp
-        src/Inventory.cpp
-        include/Squad.h)
+        src/DontUse.cpp)
