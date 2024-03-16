@@ -2,13 +2,13 @@
 // Created by artem on 13.03.2024.
 //
 
-#ifndef CPPDUNGEON_DAMAGE_H
-#define CPPDUNGEON_DAMAGE_H
-#include "effects/ImmediateEffect.h"
+#ifndef CPPDUNGEON_HEAL_H
+#define CPPDUNGEON_HEAL_H
+#include "effects/ImmediateCharacteristicEffect.h"
 namespace effects {
-    class Heal: public ImmediateEffect {
+    class Heal: public ImmediateCharacteristicEffect {
     public:
         Heal(int heal);
     };
 }
-#endif //CPPDUNGEON_DAMAGE_H
+#endif //CPPDUNGEON_HEAL_H

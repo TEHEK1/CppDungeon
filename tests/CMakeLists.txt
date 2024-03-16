@@ -10,7 +10,6 @@ add_executable(test
         ../src/effects/AutoAction.cpp
         ../src/effects/Effect.cpp
         ../src/effects/Buff.cpp
-        ../src/effects/ImmediateEffect.cpp
         ../src/entity/Entity.cpp
         ../src/changers/EffectChanger.cpp
         ../src/changers/EntityChanger.cpp
@@ -20,6 +19,9 @@ add_executable(test
         ../src/effects/PassiveBuff.cpp
         ../src/effects/AutoAction.cpp
         ../src/effects/ImmediateEffect.cpp
+        ../src/effects/ImmediateCharacteristicEffect.cpp
+        ../src/effects/Damege.cpp
+        ../src/effects/Heal.cpp
         ../src/effects/PermanentEffect.cpp
         ../src/effects/MarkedAsTurnable.cpp
         ../src/effects/MarkedAsEndBattle.cpp
