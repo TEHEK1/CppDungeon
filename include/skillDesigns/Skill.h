@@ -38,7 +38,7 @@ protected:
     std::vector<int> m_avaibleAllyTarget;
     std::vector<int> m_avaibleEnemyTarget;
     std::string m_name;
-private:
+
     virtual std::string isDesignUsable(std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor, std::vector<std::weak_ptr<Entity>> objects);
 };
 #endif //CPPDUNGEON_SKILL_H
