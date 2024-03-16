@@ -1,3 +1,4 @@
+
 //
 // Created by artem on 12.03.2024.
 //
@@ -7,12 +8,15 @@
 
 #include <map>
 #include <memory>
-#include "EntityChanger.h"
-//class EntityChanger;
-class Entity;
+#include "changers/EntityChanger.h"
+
+namespace changers{
+    class EntityChanger;
+} // namespace changers
+
 class EnemyEncounter;
 namespace effects {
-    class Effect: public EntityChanger {
+    class Effect: public changers::EntityChanger {
         std::map<std::size_t, int> m_modifier;
         friend EnemyEncounter;
         friend EntityChanger;
@@ -28,3 +32,4 @@ namespace effects {
 }
 
 #endif //CPPDUNGEON_EFFECT_H
+
