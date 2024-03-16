@@ -1,16 +1,19 @@
-cmake_minimum_required(VERSION 3.27)
-project(CppDungeon)
+cmake_minimum_required(VERSION 3.24)
+project(ugabuga)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 11)
+
+add_subdirectory(tests/MapTest)
+
 include_directories(include)
 
-add_executable(CppDungeon
-        src/actions/Use.cpp
-        src/actions/MoveRight.cpp
-        src/actions/MoveLeft.cpp
-        src/actions/DontUse.cpp
-        src/actions/ChooseNextRoom.cpp
-        src/player/Player.cpp
-        src/changers/PositionChanger.cpp
-        src/navigation/Cell.cpp)
+add_executable(ugabuga
+        tests/MapTest/main.cpp
+        # src/Chest.cpp
+        # src/EmptyCell.cpp
+        # src/ChooseRoomEvent.cpp
+        
+        # src/Use.cpp
+        # src/DontUse.cpp
+        src/navigation/Position.cpp
+        src/navigation/Map.cpp)
