@@ -27,10 +27,10 @@ void SquadChanger::move(const std::shared_ptr<Squad>& squad, int index1, int ind
 }
 
 
-void SquadChanger::move(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>& entity, int index2) {
+void SquadChanger::move(const std::shared_ptr<Squad>& squad, const std::shared_ptr<Entity>& entity, int index1) {
     for (int i = 0; i < squad->m_squad.size(); ++i) {
         if (squad->m_squad[i] == entity) {
-            return SquadChanger::move(squad, i, index2);
+            return SquadChanger::move(squad, index1, i);
         }
     }
     throw std::invalid_argument("entity is not in m_squad");

@@ -5,10 +5,10 @@
 #include "BattleField.h"
 #include "SquadChanger.h"
 
-void BattleFieldChanger::move(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity> entity, int index2) {
+void BattleFieldChanger::move(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity> entity, int index1) {
     std::shared_ptr<Squad> const squad = field->getSquad(entity);
     if (squad == nullptr) { throw std::logic_error("entity is not on the field"); }
-    SquadChanger::move(squad, entity, index2);
+    SquadChanger::move(squad, entity, index1);
 }
 void BattleFieldChanger::relativeMove(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity> entity, int offset) {
     std::shared_ptr<Squad> const squad = field->getSquad(entity);
