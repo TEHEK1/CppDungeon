@@ -1,6 +1,8 @@
-#include "Map.h"
+#include "navigation/Map.h"
+#include "navigation/Room.h"
+#include "navigation/Hall.h"
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
 struct Coord{
     Position pos;
     char symbol1, symbol2;
@@ -56,6 +58,9 @@ int main() {
             case 'a':
                 currentCoord.pos = test.moveLeft(currentCoord.pos);
                 draw(test, {currentCoord});
+                break;
+            case 's':
+                std::cout<<(dynamic_cast<Room*>(test.getCell(currentCoord.pos).get()) == nullptr);
                 break;
             default:
                 currentCoord.pos = test.chooseNextRoom(currentCoord.pos, test.getNextRooms(currentCoord.pos)[action-'0']);

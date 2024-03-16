@@ -1,4 +1,4 @@
-#include "Position.h"
+#include "navigation/Position.h"
 
 char Position::getColumn() {
     return m_column;

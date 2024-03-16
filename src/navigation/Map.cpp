@@ -1,7 +1,7 @@
-#include "Map.h"
-#include "Cell.h"
-#include "Hall.h"
-#include "Room.h"
+#include "navigation/Map.h"
+#include "navigation/Cell.h"
+#include "navigation/Hall.h"
+#include "navigation/Room.h"
 #include <iostream>
 #include <vector>
 
@@ -928,25 +928,23 @@ Map::Map(int seed) {
     for (std::vector<std::shared_ptr<Cell>>& line : m_cells) {
         line.resize(m_contents[0].size());
     }
-
-    // Uncomment this when Constructors for Room and Hall are ready
-    // for (int i = 0; i < m_cells.size(); i++) {
-    //     for (int j = 0; j < m_cells[i].size(); j++) {
-    //         if (m_contents[i][j] == 0) {
-    //             m_cells[i][j] = nullptr;
-    //         } else if (m_contents[i][j] == 1) {
-    //             if (m_contents[i][j - 1] == 1) {
-    //                 m_cells[i][j] = m_cells[i][j - 1];
-    //             } else if (m_contents[i - 1][j] == 1) {
-    //                 m_cells[i][j] = m_cells[i - 1][j];
-    //             } else {
-    //                 m_cells[i][j] = std::shared_ptr<Room>(new Room());
-    //             }
-    //         } else if (m_contents[i][j] == 2) {
-    //             m_cells[i][j] = std::shared_ptr<Hall>(new Hall());
-    //         }
-    //     }
-    // }
+    for (int i = 0; i < m_cells.size(); i++) {
+        for (int j = 0; j < m_cells[i].size(); j++) {
+            if (m_contents[i][j] == 0) {
+                m_cells[i][j] = nullptr;
+            } else if (m_contents[i][j] == 1) {
+                if (m_contents[i][j - 1] == 1) {
+                    m_cells[i][j] = m_cells[i][j - 1];
+                } else if (m_contents[i - 1][j] == 1) {
+                    m_cells[i][j] = m_cells[i - 1][j];
+                } else {
+                    m_cells[i][j] = std::shared_ptr<Room>(new Room());
+                }
+            } else if (m_contents[i][j] == 2) {
+                m_cells[i][j] = std::shared_ptr<Hall>(new Hall());
+            }
+        }
+    }
     m_edges = connections;
     m_directions = occupiedSides;
 }

@@ -12,14 +12,7 @@
 #include "monitor/Monitor.h"
 
 bool events::Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
-//    if (typeid(*((*actionIterator).get())) == typeid(Use)) {
-//        Use* use = static_cast<Use*>((*actionIterator).get());
-//        if (use->getChest() == this) {
-//            return true;
-//        }
-//    }
-//std::dynamic_pointer_cast<Use>()
-    std::shared_ptr<actions::Use> use = std::dynamic_pointer_cast<actions::Use>((*actionIterator));
+    actions::Use* use = dynamic_cast<actions::Use*>((*actionIterator).get());
     return static_cast<bool>(use && (use->getChest()).get() == this);
 }
 
