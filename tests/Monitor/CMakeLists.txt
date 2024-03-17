@@ -3,13 +3,9 @@ project(MonitorTest)
 
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(PkgConfig)
-pkg_search_module(NCURSES REQUIRED ncurses)
-
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
 include_directories(../../include)
-
-include_directories (${NCURSES_INCLUDE_DIRS})
-link_directories (${NCURSES_LIBRARY_DIRS})
 
 add_executable(monitorTest
         main.cpp
@@ -24,5 +20,4 @@ add_executable(monitorTest
         ../../src/navigation/Room.cpp
         ../../src/navigation/Position.cpp
 )
-add_definitions (${NCURSES_CXXFLAGS_OTHER})
-target_link_libraries (monitorTest ${NCURSES_LIBRARIES})
+target_link_libraries(monitorTest ${CURSES_LIBRARIES})

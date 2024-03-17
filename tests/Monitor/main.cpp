@@ -23,6 +23,7 @@ int main()
 
 
     getch();
+    endwin();
     delete player;
 	return 0;
 }

@@ -8,7 +8,6 @@
 #include "events/Event.h"
 #include "navigation/Cell.h"
 #include "monitor/Monitor.h"
-#include "monitor.h"
 #include "Squad.h"
 #include <iostream>
 #include <vector>
@@ -17,8 +16,8 @@
 
 
 namespace {
-    static const int ENTITY_NUM = 8;
-    enum Entity_position { NPC_POSITION, HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
+    static const int ENTITY_NUM = 7;
+    enum Entity_position {HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
     std::vector<std::vector<char>> Dead_hero = {
         {' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' '},
         {' ', ' ', '-', '-', '|', '-', '-', ' ', ' '},
@@ -93,11 +92,11 @@ Monitor::Monitor(Player* current_player) {
     GameWindow m_background_display(2 * row / 3, col, 0, 0);
     GameWindow m_inventory_display(row / 3, col / 2, row * 2 / 3 + 1, 0);
     GameWindow m_map_display(row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
+    int block_dictance = col / ((ENTITY_NUM - 1) * 1 + ENTITY_NUM * 4 + 2);// blocks between heroes, blocks on hero, board blocks
+    int left_dictance = col % ((ENTITY_NUM - 1) * 1 + ENTITY_NUM * 4 + 2);
     for (int i = 0; i < ENTITY_NUM; i++) {
-        int distance_between = col / ((ENTITY_NUM - 1) + (ENTITY_NUM + 2) * 2);
-        //TODO: Find more suitable for screen ratio(or constant) for sprites
         m_entity_window.push_back(GameWindow(5 * m_background_display.m_y_size / 9,
-                                             distance_between * 2, m_background_display.m_y_size /3, (2 + 3 * i) * distance_between));
+                                             4 * block_dictance, m_background_display.m_y_size /3, block_dictance * (5 * i + 1) + left_dictance / 2));
     }
 }
 
@@ -111,18 +110,17 @@ Monitor::~Monitor() {
 //TODO: Change start postion of all sprites
 void Monitor::draw(Player* current_player) {
     //Heroes
-    int draw_position = static_cast<int>(Entity_position::HERO_3);
+    int draw_position = static_cast<int>(Entity_position::HERO_1);
+    
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
-        if (i->isAlive()) {
-            m_entity_window[draw_position].draw_sprite(1, 1, i->draw());
-        } else {
-            m_entity_window[draw_position].draw_sprite(1, 1, Dead_hero);      
+        if (i != nullptr) {
+            m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
         }
-        draw_position++;
+        draw_position--;
     }
 
     
-    m_map_display.draw_sprite(0, 0, current_player->getMap()->draw());
+    m_map_display.draw_sprite(0, 0, current_player->getMap()->draw(current_player->getPosition(), m_map_display.m_y_size, m_map_display.m_x_size));
     //TODO: After discussion add player.getMap().getCell(player.getPosition()).draw() using color or italic 
     //TODO: Add inventory list display and other related to interface stuff to draw after discussion 
 
