@@ -7,17 +7,14 @@
 #include <memory>
 #include <set>
 #include <vector>
-
-class Item;
-namespace changers {
-    class InventoryChanger;
-} // namespace changers
+#include "namespaces/items.h"
+#include "namespaces/changers.h"
 class Inventory {
-    std::multiset<std::shared_ptr<Item>> m_items;
-    void addItem(const std::shared_ptr<Item>&);
-    void removeItem(const std::shared_ptr<Item>&);
+    std::multiset<std::shared_ptr<items::Item>> m_items;
+    void addItem(const std::shared_ptr<items::Item>&);
+    void removeItem(const std::shared_ptr<items::Item>&);
     friend changers::InventoryChanger;
 public:
-    std::multiset<std::shared_ptr<Item>> getItems();
+    std::multiset<std::shared_ptr<items::Item>> getItems();
 };
 #endif //CPPDUNGEON_INVENTORY_H

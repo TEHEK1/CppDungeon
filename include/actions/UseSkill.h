@@ -7,12 +7,15 @@
 #include "actions/Action.h"
 #include <vector>
 #include <memory>
-class Entity;
+#include "namespaces/entity.h"
 class Skill;
-class UseSkill: public actions::Action{
-public:
-    // UseSkill(Entity* actor, Skill* skill, std::vector<Entity*> entity);
-    UseSkill(std::shared_ptr<Entity> actor, Skill* skill, std::vector<std::shared_ptr<Entity>> entities);
-    void act(Player*) override;
-};
+namespace actions {
+    class UseSkill : public Action {
+    public:
+        // UseSkill(Entity* actor, Skill* skill, std::vector<Entity*> entity);
+        UseSkill(std::shared_ptr<entity::Entity> actor, Skill *skill, std::vector<std::shared_ptr<entity::Entity>> entities);
+
+        void act(Player *) override;
+    }
+}
 #endif //CPPDUNGEON_USESKILL_H

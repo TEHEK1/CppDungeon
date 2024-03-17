@@ -16,9 +16,9 @@ int random(int low, int high)
 }
 
 void Hall::generateEvents() {
-    if(random(1,2) == 1) {//TODO: Change it to grabbing from Main fabric
-        m_events.push_back(std::shared_ptr<Event>(new EmptyCell));
+    /*if(random(1,2) == 1) {//TODO: Change it to grabbing from Main fabric
+        m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{
-        m_events.push_back(std::shared_ptr<Event>(new Chest));
-    }
+        m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
+    }*/
 }

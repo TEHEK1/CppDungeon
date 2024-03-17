@@ -7,9 +7,9 @@
 #include "events/Event.h"
 namespace events {
     class UsableEvent: public Event{
+    public:
         virtual void use(Player*) = 0;
     };
-
 } // namespace events
 
 #endif //CPPDUNGEON_USABLEEVENT_H
