@@ -11,7 +11,7 @@
 #include "monitor.h"
 #include "Squad.h"
 #include <iostream>
-
+#include <vector>
 #include <ncurses.h>
 //Refresh correct pos and size coordinates and add some cooments about resolution and fixed or not sprites 
 
@@ -19,6 +19,17 @@
 namespace {
     static const int ENTITY_NUM = 8;
     enum Entity_position { NPC_POSITION, HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
+    std::vector<std::vector<char>> Dead_hero = {
+        {'', '', '', '', '|', '', '', '', ''},
+        {'', '', '-', '-', '|', '-', '-', '', ''},
+        {'', '', '', '', '|', '', '', '', ''},
+        {'', '', '', '', '|', '', '', '', ''},
+        {'', '', '', '', '|', '', '', '', ''},
+        {'', '', '', '', '|', '', '', '', ''},
+        {'', '', '-', '-', '-', '-', '-', '', ''},
+        {'', '-', ''-, '-', '-', '-', '-', '-', ''},
+        {'', '-', '-', '-', '-', '-', '-', '-', '-'}
+    };
 }
 
 
@@ -32,8 +43,8 @@ Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, cons
 }
 
 Monitor::GameWindow::GameWindow()
-: m_y_size(y_size)
-, m_x_size(x_size)
+: m_y_size(0)
+, m_x_size(0)
 , m_current_window(nullptr) {}
 
 //TODO: add size checkers
@@ -99,22 +110,18 @@ Monitor::~Monitor() {
 
 //TODO: Change start postion of all sprites
 void Monitor::draw(Player* current_player) {
-    //Alive heroes
-    int start_alive_draw_pos = 1 + (3 - current_player->getSquad()->getEntities().size());
-    int current_alive = start_alive_draw_pos;
+    //Heroes
+    int draw_position = static_cast<int>Entity_position::HERO_3;
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
-        m_entity_window[current_alive].draw_sprite(0, 0, i->draw());
-        current_alive++;
+        if (i->isAlive) {
+            m_entity_window[draw_position].draw_sprite(1, 1, i->draw());
+        } else {
+            m_entity_window[draw_position].draw_sprite(1, 1, Dead_hero);      
+        }
+        draw_position++;
     }
 
-    //Dead(inside) heroes 
-    Entity_position cur_dead_hero = HERO_3;
-    while (cur_dead_hero < start_alive_draw_pos) {
-        //TODO: Add dead hero sprite
-        m_entity_window[cur_dead_hero].draw_text(0, 0, std::vector<char>(5, '*'));
-        cur_dead_hero++;
-    }
-
+    
     m_map_display.draw_sprite(0, 0, current_player->getMap()->draw());
     //TODO: After discussion add player.getMap().getCell(player.getPosition()).draw() using color or italic 
     //TODO: Add inventory list display and other related to interface stuff to draw after discussion 
