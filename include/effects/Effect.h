@@ -1,3 +1,4 @@
+
 //
 // Created by artem on 12.03.2024.
 //
@@ -16,7 +17,6 @@ namespace effects {
     class Effect{
     public:
         virtual ~Effect() = default;
-
     };
 }
 

@@ -1,9 +1,16 @@
-cmake_minimum_required(VERSION 3.27)
-project(CppDungeon)
+cmake_minimum_required(VERSION 3.24)
+project(ugabuga)
+
+set(CMAKE_CXX_STANDARD 11)
+
+add_subdirectory(tests/MapTest)
+
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 include_directories(include)
+
 
 add_executable(CppDungeon
         main.cpp
@@ -42,7 +49,6 @@ add_executable(CppDungeon
         src/actions/Use.cpp
         src/actions/DontUse.cpp
         src/player/Player.cpp
-        include/player/Squad.h
         include/effects/Effect.h
         src/effects/Effect.cpp
         include/effects/Buff.h
@@ -71,3 +77,4 @@ add_executable(CppDungeon
         include/effects/Heal.h
         src/effects/Heal.cpp
         src/entity/Entity.cpp)
+

@@ -10,14 +10,15 @@
 #include <string>
 class Monitor;
 namespace events{class Event;};
-class Entity;
+namespace entity {class Entity;};
 #include "eventfactory.h"
+
 class Main {
     size_t m_seed = 1;
     std::map<size_t, std::string> m_map;
     ObjectFactory<events::Event, size_t> m_eventFactory;
+    ObjectFactory<entity::Entity, size_t> m_entityFactory;
 public:
-    //void Init();
     Main();
     int my_rand(size_t);
 
@@ -25,6 +26,6 @@ public:
     std::size_t getSeed();
     Monitor* getGame();
     events::Event* getEvent();
-    Entity getEntity();
+    entity::Entity getEntity();
 };
 #endif //CPPDUNGEON_MAIN_H

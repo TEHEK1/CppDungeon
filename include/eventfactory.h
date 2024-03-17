@@ -19,7 +19,7 @@ protected:
 
 public:
     ObjectFactory() {}
-    virtual ~ObjectFactory();
+    virtual ~ObjectFactory() = default;
     FactoryMap getFactoryMap() {
         return m_factory;
     }

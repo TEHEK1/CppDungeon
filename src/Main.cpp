@@ -8,6 +8,9 @@
 #include "events/EmptyCell.h"
 #include "events/Chest.h"
 #include "events/Trap.h"
+#include "monitor/Monitor.h"
+#include "player/Player.h"
+#include "navigation/Map.h"
 //#include "events/EnemyEncounter.h"
 #include <random>
 
@@ -43,3 +46,10 @@ events::Event* Main::getEvent() {
     int id = my_rand(getSeed());
     return m_eventFactory.create(id);
 }
+
+//Monitor *Main::getGame() {
+//    Monitor monitor;
+//    Player player;
+//    Map map(m_seed);
+//    return &monitor;
+//}

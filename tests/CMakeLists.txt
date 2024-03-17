@@ -3,26 +3,22 @@ project(Test)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include_directories(../include)
+include_directories(../include ../src)
 
 add_executable(test
         main.cpp
-        ../src/effects/AutoAction.cpp
-        ../src/effects/Effect.cpp
-        ../src/effects/Buff.cpp
-        ../src/entity/Entity.cpp
-        ../src/changers/EffectChanger.cpp
-        ../src/changers/EntityChanger.cpp
-        EffectTest.cpp
-        EffectTest.h
-        ../src/effects/Buff.cpp
-        ../src/effects/PassiveBuff.cpp
-        ../src/effects/AutoAction.cpp
-        ../src/effects/ImmediateEffect.cpp
-        ../src/effects/ImmediateCharacteristicEffect.cpp
-        ../src/effects/Damege.cpp
-        ../src/effects/Heal.cpp
-        ../src/effects/PermanentEffect.cpp
-        ../src/effects/MarkedAsTurnable.cpp
-        ../src/effects/MarkedAsEndBattle.cpp
+        ../include/Main.h
+        ../src/Main.cpp
+        ../include/eventfactory.h
+        ../include/eventCreator.h
+        ../include/abstractEventCreator.h
+        ../include/events/Event.h
+        ../include/events/ChooseRoomEvent.h
+        ../include/events/Chest.h
+        ../include/events/EmptyCell.h
+        ../include/events/Trap.h
+        ../src/events/ChooseRoomEvent.cpp
+        ../src/events/Chest.cpp
+        ../src/events/EmptyCell.cpp
+        ../src/events/Trap.cpp
 )

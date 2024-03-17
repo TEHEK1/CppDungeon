@@ -21,10 +21,10 @@ std::vector<std::vector<char>> entity::Entity::draw(){
 
 int entity::Entity::get(int key) const {
     int result = 0;
-    if (m_characteristics.contains(key)){
+    if (m_characteristics.find(key)!=m_characteristics.end()){
         result = m_characteristics.at(key);
         for (const auto& effect : m_effects) {
-            auto permanentEffect = std::dynamic_pointer_cast<effects::PermanentEffect>(effect);
+            auto permanentEffect = dynamic_cast<effects::PermanentEffect*>(effect.get());
             if(permanentEffect != nullptr)
                 result += permanentEffect->getModifier()[key];
         }
