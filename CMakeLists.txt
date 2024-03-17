@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 project(ugabuga)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_C_STANDARD 11)
 
 add_subdirectory(tests/MapTest)
 
@@ -17,4 +17,5 @@ add_executable(CppDungeon
         src/changers/PositionChanger.cpp
         src/navigation/Cell.cpp
         src/events/Trap.cpp
-        src/events/Chest.cpp)
+        src/events/Chest.cpp
+)
