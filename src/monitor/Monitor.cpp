@@ -31,6 +31,10 @@ Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, cons
     wrefresh(m_current_window);
 }
 
+Monitor::GameWindow::GameWindow()
+: m_y_size(y_size)
+, m_x_size(x_size)
+, m_current_window(nullptr) {}
 
 //TODO: add size checkers
 //draw_sprite draws with only either text formating attribute or pair of colors (text, font) 
