@@ -7,6 +7,4 @@ tests/MapTest/build
 CMakeLists.txt
 main.cpp
 .clang-tidy
-.gitignore
 .github
-cmake-build-debug
