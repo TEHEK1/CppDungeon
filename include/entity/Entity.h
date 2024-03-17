@@ -30,7 +30,7 @@ namespace entity {
 
         explicit Entity(std::map<int, int>);
 
-        virtual void draw() final;
+        virtual std::vector<std::vector<char>> draw() final;
 
         virtual int get(int key) const final;
         virtual int getReal(int key) const final;
