@@ -30,7 +30,7 @@ namespace entity {
 
         explicit Entity(std::map<int, int>);
 
-        std::vector<std::vector<char>> draw();
+        virtual void draw() final;
 
         virtual int get(int key) const final;
         virtual int getReal(int key) const final;
@@ -49,6 +49,10 @@ namespace entity {
         virtual int dodged() const final;
 
         virtual int resisted(int effectHash) const final;
+    
+    protected:
+        std::vector<std::vector<char>> drawAlive();
+        std::vector<std::vector<char>> drawDead();
     };
 } // namespace entity
 #endif //UNTITLED_ENTITY_H

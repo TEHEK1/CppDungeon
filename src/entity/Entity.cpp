@@ -5,7 +5,12 @@
 #include "effects/PermanentEffect.h"
 #include <random>
 entity::Entity::Entity(std::map<int, int> characteristics):m_characteristics(characteristics){}
-std::vector<std::vector<char>> entity::Entity::draw(){
+
+void entity::Entity::draw(){
+    isAlive() ? drawAlive() : drawDead();
+}
+
+std::vector<std::vector<char>> entity::Entity::drawAlive(){
     return {
         {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '},
@@ -15,6 +20,20 @@ std::vector<std::vector<char>> entity::Entity::draw(){
         {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '}, 
         {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '}, 
         {' ', ' ', '1', ' ', ' ', '1', ' ', ' ', ' '}, 
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
+    };
+}
+
+std::vector<std::vector<char>> entity::Entity::drawDead(){
+    return {
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
+        {' ', ' ', ' ', ' ', ' ', ' ', '1', ' ', ' '}, 
+        {' ', ' ', ' ', ' ', ' ', ' ', '1', ' ', ' '}, 
+        {' ', ' ', '1', '1', '1', '1', '1', ' ', ' '}, 
+        {' ', ' ', '1', '1', '1', '1', '1', ' ', ' '}, 
         {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 }
