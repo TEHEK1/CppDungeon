@@ -2,9 +2,9 @@
 #include <algorithm>
 #include <random>
 #include "BattleField.h"
-#include "Skill.h"
-#include "Squad.h"
-#include "Entity.h"
+#include "skillDesigns/Skill.h"
+#include "player/Squad.h"
+#include "entity/Entity.h"
 
 std::vector<int> Skill::getAvaibleRank() {
     return m_avaibleRank;

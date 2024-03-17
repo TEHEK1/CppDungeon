@@ -1,5 +1,5 @@
-#include "RangeSkill.h"
-#include "Skill.h"
+#include "skillDesigns/RangeSkill.h"
+#include "skillDesigns/Skill.h"
 #include "BattleField.h"
 #include <vector>
 #include <memory>
@@ -10,7 +10,7 @@ RangeSkill::RangeSkill(int size): UniqueSizedSkill(size) {
 }
 
 std::string isDesignUsable(std::shared_ptr<BattleField> battleField, std::weak_ptr<Entity> actor, std::vector<std::weak_ptr<Entity>> objects) {
-    std::string parentRet = UniqueSizedSkill::isDesignUsable(battleField, actor, objects);
+    std::string parentRet = UniqueSizedSkill::isDesignUsable(this, battleField, actor, objects);
     if (!parentRet.empty()) {
         return parentRet;
     }
