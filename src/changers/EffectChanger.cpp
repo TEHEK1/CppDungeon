@@ -72,6 +72,7 @@ void changers::EffectChanger::addEffect(const std::shared_ptr<entity::Entity>& e
         turnEffect(entity, effect);
     }
     else if(entity != nullptr) {
+        if()
         entity->m_effects.insert(effect);
     }
 }
