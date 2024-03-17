@@ -5,8 +5,8 @@
 #ifndef CPPDUNGEON_BATTLEFIELD_H
 #define CPPDUNGEON_BATTLEFIELD_H
 #include "memory"
+#include "namespaces/entity.h"
 class Squad;
-class Entity;
 
 class BattleField {
 private:
@@ -15,10 +15,10 @@ private:
 
 public:
     BattleField(std::shared_ptr<Squad>& ally, std::shared_ptr<Squad>& enemy);
-    std::vector<std::shared_ptr<Entity>> getEntities() const;
-    std::shared_ptr<Squad> getSquad(std::shared_ptr<Entity>& target) const;
-    std::shared_ptr<Squad> getEnemySquad(std::shared_ptr<Entity>& target) const;
-    bool areAllies(std::shared_ptr<Entity> ent1, std::shared_ptr<Entity> ent2) const;
+    std::vector<std::shared_ptr<entity::Entity>> getEntities() const;
+    std::shared_ptr<Squad> getSquad(std::shared_ptr<entity::Entity>& target) const;
+    std::shared_ptr<Squad> getEnemySquad(std::shared_ptr<entity::Entity>& target) const;
+    bool areAllies(std::shared_ptr<entity::Entity> ent1, std::shared_ptr<entity::Entity> ent2) const;
 
     friend class BattleFieldChanger;
 };

@@ -9,7 +9,7 @@
 #include "navigation/Cell.h"
 #include "monitor/Monitor.h"
 #include "monitor.h"
-
+#include "Squad.h"
 #include <iostream>
 
 #include <ncurses.h>
@@ -107,9 +107,9 @@ Monitor::~Monitor() {
 //TODO: Change start postion of all sprites
 void Monitor::draw(Player* current_player) {
     //Alive heroes
-    int start_alive_draw_pos = 1 + (3 - current_player->getHeroes().size());
+    int start_alive_draw_pos = 1 + (3 - current_player->getSquad()->getEntities().size());
     int current_alive = start_alive_draw_pos;
-    for (const std::shared_ptr<Entity>& i : current_player->getHeroes()) {
+    for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
         m_entity_window[current_alive].draw_sprite(0, 0, i->draw());
     }
 

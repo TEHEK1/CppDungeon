@@ -6,6 +6,7 @@
 #define UNTITLED_MONITOR_H
 
 // Non-selfmade library for UI realisation
+#include <vector>
 #include <ncurses.h>
 class Player;
 //       x --->
