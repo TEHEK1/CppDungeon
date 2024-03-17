@@ -28,7 +28,7 @@ namespace entity {
     public:
         virtual ~Entity() = default;
 
-        explicit Entity(std::map<int, int>);
+        explicit Entity(std::string name, std::map<int, int>);
 
         virtual std::vector<std::vector<char>> draw() final;
 

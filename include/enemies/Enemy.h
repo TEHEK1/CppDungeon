@@ -9,6 +9,6 @@
 
 class Enemy:public entity::Entity{
     protected:
-    Enemy();
+    Enemy(std::string name, std::map<int, int> characteristics) : Entity(name, characteristics) {}
 };
 #endif //UNTITLED_ENEMY_H

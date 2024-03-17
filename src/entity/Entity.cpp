@@ -4,7 +4,7 @@
 #include "entity/Entity.h"
 #include "effects/PermanentEffect.h"
 #include <random>
-entity::Entity::Entity(std::map<int, int> characteristics):m_characteristics(characteristics){}
+entity::Entity::Entity(std::string name, std::map<int, int> characteristics):m_characteristics(characteristics){}
 
 std::vector<std::vector<char>> entity::Entity::draw(){
     return isAlive() ? drawAlive() : drawDead();
