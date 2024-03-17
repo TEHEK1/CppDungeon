@@ -104,6 +104,7 @@ void Monitor::draw(Player* current_player) {
     int current_alive = start_alive_draw_pos;
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
         m_entity_window[current_alive].draw_sprite(0, 0, i->draw());
+        current_alive++;
     }
 
     //Dead(inside) heroes 
@@ -111,6 +112,7 @@ void Monitor::draw(Player* current_player) {
     while (cur_dead_hero < start_alive_draw_pos) {
         //TODO: Add dead hero sprite
         m_entity_window[cur_dead_hero].draw_text(0, 0, std::vector<char>(5, '*'));
+        cur_dead_hero++;
     }
 
     m_map_display.draw_sprite(0, 0, current_player->getMap()->draw());
