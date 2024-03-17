@@ -11,10 +11,10 @@ enemies::BrigandRaider::BrigandRaider(){
     {static_cast<int>(Characteristic::marked), 0},
     {static_cast<int>(Characteristic::turnable), 0},
     {static_cast<int>(Characteristic::movable), 0},
-    {static_cast<int>(Characteristic::enemyType), 1}, // "1" it's type of Human;
+    {static_cast<int>(Characteristic::enemyType), static_cast<int>(EnemyType::Human)},
     {static_cast<int>(Characteristic::minDamage), 4},
     {static_cast<int>(Characteristic::maxDamage), 15},
-    {static_cast<int>(Characteristic::criticalDamageChance), 20},};
+    {static_cast<int>(Characteristic::criticalDamageChance), 20}};
     
     m_resistances = {{static_cast<int>(Resistances::Stun), 73},
     {static_cast<int>(Resistances::Blight), 68},

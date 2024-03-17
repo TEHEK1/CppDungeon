@@ -5,6 +5,8 @@
 #ifndef UNTITLED_ENEMY_H
 #define UNTITLED_ENEMY_H
 #include "entity/Entity.h"
+#include "EnemyType.h"
+
 class Enemy:public entity::Entity{
     protected:
     Enemy();
