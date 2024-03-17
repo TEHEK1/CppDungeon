@@ -16,7 +16,7 @@ namespace actions {
     public:
         explicit Use(const std::shared_ptr<events::UsableEvent>&);
         void act(Player *player) override;
-        std::shared_ptr<events::UsableEvent> UsableEvent();
+        std::shared_ptr<events::UsableEvent> getUsableEvent();
     private:
         std::shared_ptr<events::UsableEvent> m_usableEvent;
     };

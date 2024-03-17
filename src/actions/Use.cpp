@@ -6,7 +6,7 @@ namespace actions {
     void Use::act(Player *player) {
         m_usableEvent->use(player);
     }
-    std::shared_ptr<events::UsableEvent> Use::UsableEvent() {
+    std::shared_ptr<events::UsableEvent> Use::getUsableEvent() {
         return m_usableEvent;
     }
 }//namespace actions

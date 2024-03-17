@@ -12,7 +12,7 @@
 #include "monitor/Monitor.h"
 #include "actions/Use.h"
 #include "actions/DontUse.h"
-#include "player/Squad.h"
+#include "Squad.h"
 #include "effects/Damage.h"
 
 void events::Trap::turn(Player * player) {
@@ -25,7 +25,7 @@ void events::Trap::turn(Player * player) {
 }
 
 void events::Trap::dontUse(Player *player) {
-    static int random = generators::NumberGenerator::generate(0, 2);
+    static int random = generators::NumberGenerator::generate(m_range_dontUse_start, m_range_dontUse_finish);
     std::vector<std::shared_ptr<entity::Entity>> entities = player -> getSquad() -> getEntities();
     for(int i = 0; i < entities.size(); i++){
         addEffect(entities[i], std::make_shared<effects::Damage>(random));
@@ -37,7 +37,7 @@ void events::Trap::use(Player *player) {
     static bool once = true;
     if(once) {
         once = false;
-        static int random = generators::NumberGenerator::generate(0, 3);
+        static int random = generators::NumberGenerator::generate(m_range_use_start, m_range_use_finish);
         std::vector<std::shared_ptr<entity::Entity>> entities = player->getSquad()->getEntities();
         for (int i = 0; i < entities.size(); i++) {
             addEffect(entities[i], std::make_shared<effects::Damage>(random));

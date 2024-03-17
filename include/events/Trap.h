@@ -15,6 +15,10 @@ namespace events {
         void dontUse(Player *player);
         std::vector<std::vector<char>> draw() override;
     private:
+        int m_range_use_start = 0;
+        int m_range_use_finish = 3;
+        int m_range_dontUse_start = 0;
+        int m_range_dontUse_finish = 2;
         bool m_used = true;
 //    +-------+
 //    |+__-__+|
