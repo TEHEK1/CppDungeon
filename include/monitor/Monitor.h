@@ -20,7 +20,6 @@ class Player;
 //At this moment ncurses mode starts with initialistion of Monitor
 class Monitor{
 public:
-    void draw(Player*);//Ask draw functions realizations from Map, Entity and Event if needed
     Monitor() = delete;
     Monitor(Player* player);
     ~Monitor();
@@ -28,7 +27,6 @@ public:
 
     void draw(Player* player);//Ask draw functions realizations from Map, Entity and Event if needed
     void draw();
-    void keyEvent(char);
 
 
     void keyEvent(char key);
