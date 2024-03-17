@@ -725,7 +725,6 @@ Map::Map(int seed) {
         m_roomPositions[index].m_column = roomProperties[index].m_column;
         m_roomPositions[index].m_line   = roomProperties[index].m_line;
     }
-    //PrintWholeMap();
 
     // connecting rooms
     std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, -1));
