@@ -5,18 +5,18 @@
 #include "BattleField.h"
 #include "SquadChanger.h"
 
-void BattleFieldChanger::move(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity> entity, int index1) {
+void BattleFieldChanger::move(const std::shared_ptr<BattleField>& field, std::shared_ptr<entity::Entity> entity, int index1) {
     std::shared_ptr<Squad> const squad = field->getSquad(entity);
     if (squad == nullptr) { throw std::logic_error("entity is not on the field"); }
     SquadChanger::move(squad, entity, index1);
 }
-void BattleFieldChanger::relativeMove(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity> entity, int offset) {
+void BattleFieldChanger::relativeMove(const std::shared_ptr<BattleField>& field, std::shared_ptr<entity::Entity> entity, int offset) {
     std::shared_ptr<Squad> const squad = field->getSquad(entity);
     if (squad == nullptr) { throw std::logic_error("entity is not on the field"); }
     SquadChanger::relativeMove(squad, entity, offset);
 }
 
-void BattleFieldChanger::remove(const std::shared_ptr<BattleField>& field, std::shared_ptr<Entity>entity) {
+void BattleFieldChanger::remove(const std::shared_ptr<BattleField>& field, std::shared_ptr<entity::Entity>entity) {
     std::shared_ptr<Squad> const squad = field->getSquad(entity);
     if (squad == nullptr) { throw std::logic_error("entity is not on the field"); }
     SquadChanger::remove(squad, entity);

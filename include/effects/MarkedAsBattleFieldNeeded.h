@@ -7,8 +7,9 @@
 #include <memory>
 #include <functional>
 #include "changers/BattleFieldChanger.h"
+#include "changers/EffectChanger.h"
 #include "namespaces/entity.h"
-#include "events/BattleField.h"
+#include "BattleField.h"
 
 class MarkedAsBattleFieldNeeded: public BattleFieldChanger{
     friend changers::EffectChanger;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "include/BattleField.h"
 #include "include/BattleFIeldChanger.h"
-#include "include/player/Squad.h"
+#include "Squad.h"
 #include "entity/Entity.h"
 #include <random>
 class Entity1: public Entity{
