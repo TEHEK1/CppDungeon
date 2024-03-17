@@ -1,7 +1,7 @@
 //
 // Created by Арсений Бородулин on 10.03.2024.
 //
-#include "player/Squad.h"
+#include "Squad.h"
 
 Squad::Squad(std::vector<std::shared_ptr<Entity>> new_squad) : m_squad(std::move(new_squad)) {}
 Squad::Squad(std::vector<std::shared_ptr<Entity>> new_squad, int size) : Squad(std::move(new_squad)) {
