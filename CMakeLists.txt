@@ -1,17 +1,19 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.24)
 project(ugabuga)
 
 set(CMAKE_CXX_STANDARD 11)
 
+add_subdirectory(tests/MapTest)
+
 include_directories(include)
 
 add_executable(ugabuga
-        tests/main.cpp
+        tests/MapTest/main.cpp
         # src/Chest.cpp
         # src/EmptyCell.cpp
         # src/ChooseRoomEvent.cpp
         
         # src/Use.cpp
         # src/DontUse.cpp
-        src/Position.cpp
-        src/Map.cpp)
+        src/navigation/Position.cpp
+        src/navigation/Map.cpp)
