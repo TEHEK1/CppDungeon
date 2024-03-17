@@ -6,6 +6,6 @@
 #define UNTITLED_HERO_H
 #include "entity/Entity.h"
 
-class Hero:public Entity{
+class Hero:public entity::Entity{
 };
 #endif //UNTITLED_HERO_H

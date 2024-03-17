@@ -3,13 +3,12 @@
 //
 #include "Main.h"
 #include "events/Event.h"
-//#include "eventfactory.h"
 #include "events/Chest.h"
 #include "events/ChooseRoomEvent.h"
 #include "events/EmptyCell.h"
 #include "events/Chest.h"
 #include "events/Trap.h"
-#include "events/EnemyEncounter.h"
+//#include "events/EnemyEncounter.h"
 #include <random>
 
 int Main::my_rand(size_t seed) {
@@ -17,13 +16,20 @@ int Main::my_rand(size_t seed) {
     return (seed / 65536) % m_eventFactory.getFactoryMap().size();
 }
 
-void Main::Init() {
+Main::Main() {
     m_eventFactory.add<events::Chest>(0);
     m_eventFactory.add<events::ChooseRoomEvent>(1);
     m_eventFactory.add<events::EmptyCell>(2);
     m_eventFactory.add<events::Trap>(3);
-    m_eventFactory.add<events::EnemyEncounter>(4);
 }
+
+//void Main::Init() {
+//    m_eventFactory.add<events::Chest>(0);
+//    m_eventFactory.add<events::ChooseRoomEvent>(1);
+//    m_eventFactory.add<events::EmptyCell>(2);
+//    m_eventFactory.add<events::Trap>(3);
+//    //m_eventFactory.add<events::EnemyEncounter>(4);
+//}
 
 void Main::setSeed(std::size_t needSeed) {
     m_seed = needSeed;

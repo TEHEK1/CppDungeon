@@ -8,7 +8,7 @@
 #include "player/Player.h"
 
 
-void ChooseRoomEvent::turn(Player *player) {
+void events::ChooseRoomEvent::turn(Player *player) {
     player->getMonitor()->draw();
     player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<Event>(this));
     for (int coords : player->getMap()->getNextRooms()) {
@@ -19,7 +19,7 @@ void ChooseRoomEvent::turn(Player *player) {
     }
 }
 
-std::vector<std::vector<char>> ChooseRoomEvent::draw() {
+std::vector<std::vector<char>> events::ChooseRoomEvent::draw() {
     std::vector<std::vector<char>> sprite;
     return sprite;
 }
