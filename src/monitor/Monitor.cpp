@@ -2,12 +2,13 @@
 // Created by neb_orion on 09.03.2024.
 //
 
-#include "Player.h"
-#include "Map.h"
-#include "Entity.h"
-#include "Event.h"
-#include "Cell.h"
-#include "Monitor.h"
+#include "player/Player.h"
+#include "navigation/Map.h"
+#include "entity/Entity.h"
+#include "events/Event.h"
+#include "navigation/Cell.h"
+#include "monitor/Monitor.h"
+#include "monitor.h"
 
 #include <iostream>
 
