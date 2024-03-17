@@ -20,15 +20,15 @@ namespace {
     static const int ENTITY_NUM = 8;
     enum Entity_position { NPC_POSITION, HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
     std::vector<std::vector<char>> Dead_hero = {
-        {'', '', '', '', '|', '', '', '', ''},
-        {'', '', '-', '-', '|', '-', '-', '', ''},
-        {'', '', '', '', '|', '', '', '', ''},
-        {'', '', '', '', '|', '', '', '', ''},
-        {'', '', '', '', '|', '', '', '', ''},
-        {'', '', '', '', '|', '', '', '', ''},
-        {'', '', '-', '-', '-', '-', '-', '', ''},
-        {'', '-', ''-, '-', '-', '-', '-', '-', ''},
-        {'', '-', '-', '-', '-', '-', '-', '-', '-'}
+        {' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' '},
+        {' ', ' ', '-', '-', '|', '-', '-', ' ', ' '},
+        {' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' '},
+        {' ', ' ', '-', '-', '-', '-', '-', ' ', ' '},
+        {' ', '-', '-', '-', '-', '-', '-', '-', ' '},
+        {' ', '-', '-', '-', '-', '-', '-', '-', '-'}
     };
 }
 
@@ -111,9 +111,9 @@ Monitor::~Monitor() {
 //TODO: Change start postion of all sprites
 void Monitor::draw(Player* current_player) {
     //Heroes
-    int draw_position = static_cast<int>Entity_position::HERO_3;
+    int draw_position = static_cast<int>(Entity_position::HERO_3);
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
-        if (i->isAlive) {
+        if (i->isAlive()) {
             m_entity_window[draw_position].draw_sprite(1, 1, i->draw());
         } else {
             m_entity_window[draw_position].draw_sprite(1, 1, Dead_hero);      

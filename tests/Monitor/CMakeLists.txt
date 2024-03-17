@@ -24,5 +24,5 @@ add_executable(monitorTest
         ../../src/navigation/Room.cpp
         ../../src/navigation/Position.cpp
 )
-add_definitions (${NCURSES_CFLAGS_OTHER})
+add_definitions (${NCURSES_CXXFLAGS_OTHER})
 target_link_libraries (monitorTest ${NCURSES_LIBRARIES})
