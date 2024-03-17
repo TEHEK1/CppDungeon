@@ -39,6 +39,7 @@ private:
     class GameWindow{
     public:
         GameWindow();
+        GameWindow(const GameWindow& other);
         ~GameWindow() = default;
         GameWindow(const size_t& pos_y, const size_t& pos_x, const size_t& y_size, const size_t& x_size);
 
@@ -50,10 +51,13 @@ private:
                         const std::vector<char>& text, int attribute = A_NORMAL);
 
 
-        const size_t m_x_size;
-        const size_t m_y_size;
+        size_t get_x();
+        size_t get_y();
+        
     private:
         WINDOW* m_current_window;
+        size_t m_x_size;
+        size_t m_y_size;
     };
 
 

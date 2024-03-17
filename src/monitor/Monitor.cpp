@@ -72,7 +72,19 @@ void Monitor::GameWindow::draw_text(const size_t& pos_y, const size_t& pos_x,
     draw_sprite(pos_y, pos_x, std::vector<std::vector<char>> (1, text), attribute);
 }
 
+size_t Monitor::GameWindow::get_x() {
+    return m_x_size;
+}
 
+size_t Monitor::GameWindow::get_y() {
+    return m_y_size;
+}
+
+Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) { 
+    m_current_window = other.m_current_window;
+    m_x_size = other.m_x_size;
+    m_y_size = other.m_y_size;
+}
 // Starting ncurses mode with initialisation of Monitor
 //TODO: Apply this variant or move initscr() to main
 Monitor::Monitor(Player* current_player) {
@@ -81,7 +93,9 @@ Monitor::Monitor(Player* current_player) {
 
     int row, col;
     getmaxyx(stdscr, row, col);
+
     m_bounded_player = current_player;
+
     //        |--------------------|
     // 2 / 3  |  Battle            |
     //        |                    |
@@ -89,14 +103,16 @@ Monitor::Monitor(Player* current_player) {
     //        |----------| ------- |
     // 1 / 3  | Inventory|      Map|
     //        |          |         |
-    GameWindow m_background_display(2 * row / 3, col, 0, 0);
-    GameWindow m_inventory_display(row / 3, col / 2, row * 2 / 3 + 1, 0);
-    GameWindow m_map_display(row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
+    m_background_display = GameWindow (2 * row / 3, col, 0, 0);
+    m_inventory_display = GameWindow (row / 3, col / 2, row * 2 / 3 + 1, 0);
+    m_map_display = GameWindow (row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
+
     int block_dictance = col / ((ENTITY_NUM - 1) * 1 + ENTITY_NUM * 4 + 2);// blocks between heroes, blocks on hero, board blocks
     int left_dictance = col % ((ENTITY_NUM - 1) * 1 + ENTITY_NUM * 4 + 2);
+
     for (int i = 0; i < ENTITY_NUM; i++) {
-        m_entity_window.push_back(GameWindow(5 * m_background_display.m_y_size / 9,
-                                             4 * block_dictance, m_background_display.m_y_size /3, block_dictance * (5 * i + 1) + left_dictance / 2));
+        m_entity_window.push_back(GameWindow(5 * m_background_display.get_y() / 9,
+                                             4 * block_dictance, m_background_display.get_y() /3, block_dictance * (5 * i + 1) + left_dictance / 2));
     }
 }
 
@@ -120,7 +136,7 @@ void Monitor::draw(Player* current_player) {
     }
 
     
-    m_map_display.draw_sprite(0, 0, current_player->getMap()->draw(current_player->getPosition(), m_map_display.m_y_size, m_map_display.m_x_size));
+    m_map_display.draw_sprite(1, 1, current_player->getMap()->draw(current_player->getPosition(), m_map_display.get_y() - 2, m_map_display.get_x() - 2));
     //TODO: After discussion add player.getMap().getCell(player.getPosition()).draw() using color or italic 
     //TODO: Add inventory list display and other related to interface stuff to draw after discussion 
 

@@ -13,6 +13,7 @@ int main()
     getmaxyx(stdscr, row, col);
     start_color();
     refresh();
+    
     Map* map = new Map(12);
     Player* player = new Player(map);
     Monitor* monitor = new Monitor(player);
