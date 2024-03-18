@@ -50,7 +50,7 @@ namespace entity {
         virtual int resisted(int effectHash) const final;
     
     protected:
-        virtual std::vector<std::vector<char>> drawAlive();
+        virtual std::vector<std::vector<char>> drawAlive() = 0;
         virtual std::vector<std::vector<char>> drawDead();
     };
 } // namespace entity

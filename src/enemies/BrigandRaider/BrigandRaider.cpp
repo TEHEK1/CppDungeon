@@ -1,7 +1,7 @@
-#include "BrigandRaider.h"
-#include "EntityChanger.h"
+#include "enemies/BrigandRaider/BrigandRaider.h"
+#include "changers/EntityChanger.h"
 
-enemies::BrigandRaider::BrigandRaider():Enemy(
+enemies::BrigandRaider::BrigandRaider::BrigandRaider():Enemy(
     "BrigandRaider",
     {{static_cast<int>(Characteristic::accuracyModifier), 1}, 
     {static_cast<int>(Characteristic::dodge), 26},
@@ -22,7 +22,7 @@ enemies::BrigandRaider::BrigandRaider():Enemy(
     {static_cast<int>(Resistances::Debuff), 63},
     {static_cast<int>(Resistances::Move), 73}}){}
 
-std::vector<std::vector<char>> entity::Entity::drawAlive(){
+std::vector<std::vector<char>> enemies::BrigandRaider::BrigandRaider::drawAlive(){
     return {
         {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},

@@ -36,8 +36,6 @@ namespace skillDesigns {
             if (missed(actor) <= 0) {
                 unsafeUse(crited(actor), battleField, actor, objects);
             }
-        } else {
-
         }
         return tryUse;
     }
@@ -52,7 +50,7 @@ namespace skillDesigns {
     }
 
     int Skill::missed(std::shared_ptr<entity::Entity> actor) {
-        return actor->get(Characteristic::accuracyModifier) - generators::NumberGenerator::generate(0, 100);
+        return -actor->get(Characteristic::accuracyModifier) - m_accuracy + generators::NumberGenerator::generate(0, 100);
     }
 
     int Skill::dodged(std::shared_ptr<entity::Entity> actor) {
@@ -131,7 +129,7 @@ namespace skillDesigns {
         std::shared_ptr<effects::MarkedAsResistable> markedAsResistable =
                 std::shared_ptr<effects::MarkedAsResistable>{effect, dynamic_cast<effects::MarkedAsResistable *>(effect.get())};
         if (markedAsResistable == nullptr ||
-            resisted(object, markedAsResistable->resistanceHash(), crited) + (accuracyModifier - 100) < 0) {
+            resisted(object, markedAsResistable->resistanceHash(), crited) - (accuracyModifier - 100) < 0) {
             changers::EffectChanger::addEffect(object, effect, battleField);
         }
     }
