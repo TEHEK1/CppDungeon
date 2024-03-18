@@ -108,7 +108,7 @@ Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) {
 Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
 : GameWindow(y_size, x_size, pos_y, pos_x) {
     int num_of_col = 5;
-    int col_size = 7;
+    int col_size = 8;
     int block_size  = this->get_x() / (num_of_col * col_size + (num_of_col + 1));
     int number_of_blocks = this->get_x() / block_size;
     for (int i = 0; i < num_of_col; i++) {
@@ -288,7 +288,8 @@ void Monitor::draw(Player* current_player) {
 
 
 void Monitor::keyEvent(char key, Player* player) {
-    if (m_user_actions_display.find_action(key) != nullptr) {
+    if (m_user_actions_display.find_action(key) != nullptr && 
+    player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);
     }
 }
