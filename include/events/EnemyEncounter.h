@@ -18,7 +18,7 @@ namespace events {
     class EnemyEncounter : public Event, public SquadChanger, public changers::EffectChanger {
     public:
         EnemyEncounter();
-        void turn(Player* player, std::shared_ptr<events::Event> index);
+        void turn(Player* player) override;
         std::shared_ptr<Squad> getEnemies();
         std::vector<std::vector<char>> draw() override;
         std::shared_ptr<BattleField> getBattleField();

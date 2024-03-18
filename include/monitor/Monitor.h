@@ -6,7 +6,7 @@
 #define UNTITLED_MONITOR_H
 
 // Non-selfmade library for UI realisation
-#include <ncurses.h>
+// #include <ncurses.h>
 #include <vector>
 #include <memory>
 #include "BattleField.h"

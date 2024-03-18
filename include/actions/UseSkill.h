@@ -16,6 +16,6 @@ namespace actions {
         UseSkill(std::shared_ptr<entity::Entity> actor, Skill *skill, std::vector<std::shared_ptr<entity::Entity>> entities);
 
         void act(Player *) override;
-    }
-}
+    };
+};
 #endif //CPPDUNGEON_USESKILL_H

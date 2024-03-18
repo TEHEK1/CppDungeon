@@ -11,6 +11,7 @@
 #include "effects/MarkedAsTurnable.h"
 #include "effects/MarkedAsEntityNeeded.h"
 #include "effects/MarkedAsBattleFieldNeeded.h"
+#include <stdexcept>
 void changers::EffectChanger::turnEffects(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<BattleField>& battlefield) {
     if(entity == nullptr){
         return;

@@ -3,7 +3,7 @@
 #include "entity/Enemy.h"
 #include "entity/MarkedAsAutoTurn.h"
 #include "events/EnemyEncounter.h"
-#include "heroes/Hero.h"
+#include "entity/Hero.h"
 #include "enemies/BrigandRaider/BrigandRaider.h"
 #include "enemies/BrigandFusier/BrigandFusilier.h"
 #include "enemies/CultistAcolyte/CultistAcolyte.h"
@@ -41,7 +41,7 @@ namespace events {
         }
 
         m_enemies = std::shared_ptr<Squad>(new Squad(tmpEnemies, numberOfEnemies));
-        m_priority = std::queue<std::shared_ptr<entity::Entity>>();
+        m_priority = {};
     }
 
     std::shared_ptr<Squad> EnemyEncounter::getEnemies() {
@@ -56,25 +56,27 @@ namespace events {
         return to_ret;
     }
 
-    std::shared_ptr<BattleField> EnemyEncounter::getBattleField();
+    std::shared_ptr<BattleField> EnemyEncounter::getBattleField() {
+
+    }
 
     void EnemyEncounter::_enemyMove(Player* player, std::shared_ptr<entity::Entity> entity, int rank, std::shared_ptr<BattleField> battleField) {
         auto skills = entity->getSkills();
         std::vector<std::shared_ptr<skillDesigns::Skill>> availableSkills;
         for (auto i: skills) {
             if (std::find(i->getAvaibleRank().begin(), i->getAvaibleRank().end(), rank) != i->getAvaibleRank().end()) {
-                availableSkills.push_back();
+                availableSkills.push_back(i);
             }
         }
         int num = generators::NumberGenerator::generate(0, availableSkills.size() - 1);
         auto skillToUse = availableSkills[num];
-        int target = generators::NumberGenerator::generate(0, skillToUse->getAvaibleAllyTarget().size() + skillToUse->getAvaibleEnemyTarget().size() - 1)
+        int target = generators::NumberGenerator::generate(0, skillToUse->getAvaibleAllyTarget().size() + skillToUse->getAvaibleEnemyTarget().size() - 1);
         if (target < skillToUse->getAvaibleAllyTarget().size()) {
-            skillToUse->use(battleField, entity, skillToUse->getAvaibleAllyTarget()[target]);
+            skillToUse->use(battleField, entity, {player->getSquad()->getEntities()[skillToUse->getAvaibleAllyTarget()[target]]});
         }
         else {
             target -= skillToUse->getAvaibleAllyTarget().size();
-            skillToUse->use(battleField, entity, skillToUse->getAvaibleEnemyTarget()[target]);
+            skillToUse->use(battleField, entity, {battleField->getEnemySquad(entity)->getEntities()[skillToUse->getAvaibleEnemyTarget()[target]]});
         }
     }
 
@@ -87,7 +89,7 @@ namespace events {
         return false;
     }
 
-    void EnemyEncounter::turn(Player* player, std::shared_ptr<events::Event> index) {
+    void EnemyEncounter::turn(Player* player) {
         std::shared_ptr<BattleField> battleField = std::shared_ptr<BattleField>(new BattleField(player->getSquad(), std::make_shared<Squad>(m_enemies)));
         std::vector<std::shared_ptr<entity::Entity>> enemiesEntities = m_enemies->getEntities();
         if (m_priority.empty()) {
@@ -113,7 +115,7 @@ namespace events {
             for (auto i: enemiesEntities) {
                 endBattleTurnEffects(i);
             }
-            player->getMap()->getCell(player->getPosition())->freeMoves(player, index);
+            player->getMap()->getCell(player->getPosition())->freeMoves(player, std::make_shared<events::Event>(this));
             return;
         }
 
@@ -127,7 +129,7 @@ namespace events {
                 for (auto i: enemiesEntities) {
                     endBattleTurnEffects(i);
                 }
-                player->getMap()->getCell(player->getPosition())->freeMoves(player, index);
+                player->getMap()->getCell(player->getPosition())->freeMoves(player, std::make_shared<events::Event>(this));
                 return;
             }
             std::shared_ptr<entity::Entity> entity = m_priority.back();
@@ -140,19 +142,19 @@ namespace events {
                 continue;
             }
             if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
-                markedAsAutoTurn->autoTurn(battleField);
-                player->getMonitor()->draw();
+                markedAsAutoTurn->autoTurn(std::make_shared<Player>(player), battleField, entity, 1);
+                player->getMonitor()->draw(player);
                 continue;
             }
             if (battleField->areAllies(entity, enemiesEntities[0])) {
-                _enemyMove(player, entity, std::find(enemiesEntities.begin(), enemiesEntities.end(), entity) + 1, battleField);
-                player->getMonitor()->draw();
+                _enemyMove(player, entity, std::distance(enemiesEntities.begin(), std::find(enemiesEntities.begin(), enemiesEntities.end(), entity)) + 1, battleField);
+                player->getMonitor()->draw(player);
                 continue;
             }
             return;
         }
 
-        turn(player, index);
+        turn(player);
     }
 
 }
