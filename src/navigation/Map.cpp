@@ -12,6 +12,8 @@ constexpr int MINIMAL_ROOMS = 5;
 enum CellType {empty = 0, room = 1, hall = 2, new_hall = 3};
 enum RoomPosition {top = 0, right = 1, bottom = 2, left = 3, center = 4};
 
+
+
 struct MyDefinitionRoom {
     char side;
     char m_line;
@@ -32,6 +34,41 @@ Position Map::chooseNextRoom(Position startPos, Position endPos) {
         startPos.m_prevColumn = -1;
     }
     return startPos;
+}
+
+Map::direction Map::getDirecrion(Position startPos, Position endPos) {
+    if (m_contents[startPos.m_line][startPos.m_column] == CellType::room) {
+        int startRoomIndex = -1;
+        for (int i = 0; i < m_roomPositions.size(); i++) {
+            if (m_roomPositions[i].m_column == startPos.m_column && m_roomPositions[i].m_line  == startPos.m_line) {
+                startRoomIndex = i;
+                break;
+            }
+        }
+
+        int endRoomIndex = -1;
+        for (int i = 0; i < m_roomPositions.size(); i++) {
+            if (m_roomPositions[i].m_column == endPos.m_column && m_roomPositions[i].m_line  == endPos.m_line) {
+                endRoomIndex = i;
+                break;
+            }
+        }
+
+        for (int side = top; side <= left; side++) {
+            if (m_directions[startRoomIndex][side] == endRoomIndex) {
+                if (side == top) {
+                    return {Map::direction::up};
+                } else if (side == right) {
+                    return {Map::direction::right};
+                } else if (side == bottom) {
+                    return {Map::direction::down};
+                } else if (side == left) {
+                    return {Map::direction::left};
+                }
+            }
+        }
+    }
+    throw std::runtime_error("No direction");
 }
 
 Position Map::getStartPosition() {
@@ -725,7 +762,6 @@ Map::Map(int seed) {
         m_roomPositions[index].m_column = roomProperties[index].m_column;
         m_roomPositions[index].m_line   = roomProperties[index].m_line;
     }
-    //PrintWholeMap();
 
     // connecting rooms
     std::vector<std::vector<char>> occupiedSides(roomProperties.size(), std::vector<char>(4, -1));
