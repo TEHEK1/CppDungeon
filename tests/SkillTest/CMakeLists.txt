@@ -47,4 +47,5 @@ add_executable(skillTest
         ../../src/enemies/BrigandRaider/SliceAndDice.cpp
         ../../src/enemies/BrigandRaider/UppercutSlice.cpp
         ../../src/enemies/BrigandRaider/HarmlessPoke.cpp
+        ../../src/entity/Hero.cpp
 )
