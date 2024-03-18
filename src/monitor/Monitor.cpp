@@ -148,7 +148,9 @@ void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<act
     m_first_unbind = 'a';
     size_t cur_y = 0;
     size_t cur_column = 0;
-    m_columns[cur_column].clean();
+    for (auto& i : m_columns) {
+        i.clean();
+    }
     for (auto& i : available_actions) {
         if (cur_y >= m_columns[cur_column].get_y()) {
             cur_y = 0;
@@ -289,7 +291,7 @@ void Monitor::draw(Player* current_player) {
 
 
 
-void Monitor::keyEvent(char key, Player* player) {
+void Monitor::keyEvent(char key, Player* plapuyer) {
     if (m_user_actions_display.find_action(key) != nullptr && 
     player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);
