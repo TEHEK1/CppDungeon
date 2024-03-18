@@ -1,0 +1,29 @@
+//
+// Created by kait on 3/19/24.
+//
+#include "generators/SkillActionsGenerator.h"
+#include "BattleField.h"
+
+template<typename T>
+std::vector<T> slice(std::vector<T> const &v, int m, int n)
+{
+    auto first = v.cbegin() + m;
+    auto last = v.cbegin() + n + 1;
+
+    std::vector<T> vec(first, last);
+    return vec;
+}
+
+std::set<std::shared_ptr<actions::UseSkill>>
+generators::SkillActionsGenerator::generateAvailableUseSkills(std::shared_ptr<skillDesigns::RangeSkill> skill,
+                                                              std::shared_ptr<BattleField> battleField,
+                                                              std::shared_ptr<entity::Entity> actor) {
+
+    std::vector<std::shared_ptr<entity::Entity>> temp = battleField -> getEntities();
+    for(int i = 0; i < temp.size() - skill->getSize(); i++){
+        std::vector<std::shared_ptr<entity::Entity>> objects = slice(temp, i, i+skill->getSize());
+        if(not skill->isUsable(battleField, actor, objects).empty()){
+            actions::UseSkill(skill, battleField, actor, objects);
+        }
+    }
+}

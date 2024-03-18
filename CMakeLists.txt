@@ -18,5 +18,8 @@ add_executable(CppDungeon
         src/navigation/Cell.cpp
         src/events/Trap.cpp
         src/events/Chest.cpp
-        src/item/Item.cpp
+        include/actions/UseSkill.h
+        src/actions/UseSkill.cpp
+        include/generators/SkillActionsGenerator.h
+        src/generators/SkillActionsGenerator.cpp
 )

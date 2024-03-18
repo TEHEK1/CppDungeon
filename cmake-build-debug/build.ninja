@@ -119,12 +119,19 @@ build CMakeFiles/CppDungeon.dir/src/events/Chest.cpp.o: CXX_COMPILER__CppDungeon
   OBJECT_DIR = CMakeFiles/CppDungeon.dir
   OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/events
 
-build CMakeFiles/CppDungeon.dir/src/item/Item.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/item/Item.cpp || cmake_object_order_depends_target_CppDungeon
-  DEP_FILE = CMakeFiles/CppDungeon.dir/src/item/Item.cpp.o.d
+build CMakeFiles/CppDungeon.dir/src/actions/UseSkill.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/actions/UseSkill.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/actions/UseSkill.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
   INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
   OBJECT_DIR = CMakeFiles/CppDungeon.dir
-  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/item
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/actions
+
+build CMakeFiles/CppDungeon.dir/src/generators/SkillActionsGenerator.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/generators/SkillActionsGenerator.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/generators/SkillActionsGenerator.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
+  OBJECT_DIR = CMakeFiles/CppDungeon.dir
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/generators
 
 
 # =============================================================================
@@ -134,7 +141,7 @@ build CMakeFiles/CppDungeon.dir/src/item/Item.cpp.o: CXX_COMPILER__CppDungeon_un
 #############################################
 # Link the executable CppDungeon
 
-build CppDungeon: CXX_EXECUTABLE_LINKER__CppDungeon_Debug CMakeFiles/CppDungeon.dir/src/actions/Use.cpp.o CMakeFiles/CppDungeon.dir/src/actions/MoveRight.cpp.o CMakeFiles/CppDungeon.dir/src/actions/MoveLeft.cpp.o CMakeFiles/CppDungeon.dir/src/actions/DontUse.cpp.o CMakeFiles/CppDungeon.dir/src/actions/ChooseNextRoom.cpp.o CMakeFiles/CppDungeon.dir/src/player/Player.cpp.o CMakeFiles/CppDungeon.dir/src/changers/PositionChanger.cpp.o CMakeFiles/CppDungeon.dir/src/navigation/Cell.cpp.o CMakeFiles/CppDungeon.dir/src/events/Trap.cpp.o CMakeFiles/CppDungeon.dir/src/events/Chest.cpp.o CMakeFiles/CppDungeon.dir/src/item/Item.cpp.o
+build CppDungeon: CXX_EXECUTABLE_LINKER__CppDungeon_Debug CMakeFiles/CppDungeon.dir/src/actions/Use.cpp.o CMakeFiles/CppDungeon.dir/src/actions/MoveRight.cpp.o CMakeFiles/CppDungeon.dir/src/actions/MoveLeft.cpp.o CMakeFiles/CppDungeon.dir/src/actions/DontUse.cpp.o CMakeFiles/CppDungeon.dir/src/actions/ChooseNextRoom.cpp.o CMakeFiles/CppDungeon.dir/src/player/Player.cpp.o CMakeFiles/CppDungeon.dir/src/changers/PositionChanger.cpp.o CMakeFiles/CppDungeon.dir/src/navigation/Cell.cpp.o CMakeFiles/CppDungeon.dir/src/events/Trap.cpp.o CMakeFiles/CppDungeon.dir/src/events/Chest.cpp.o CMakeFiles/CppDungeon.dir/src/actions/UseSkill.cpp.o CMakeFiles/CppDungeon.dir/src/generators/SkillActionsGenerator.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/CppDungeon.dir
   POST_BUILD = :

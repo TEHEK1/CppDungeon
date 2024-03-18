@@ -4,6 +4,7 @@
 namespace skillDesigns {
     class RangeSkill : public Skill {
     public:
+        virtual int getSize() final;
         RangeSkill(int size, std::string name, std::vector<int> availableRank,
                    std::vector<int> availableAllyTarget = {},
                    std::vector<int> availableEnemyTarget = {}, int accuracy = 0, int criticalDamageChance = 0);
