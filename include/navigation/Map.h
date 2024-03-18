@@ -14,6 +14,8 @@ class Map final {
 public:
     explicit Map(int); // done
     Map(); // done
+    enum class direction{up, down, left, right};
+    direction getDirecrion(Position, Position);
     std::shared_ptr<Cell> getCell(Position); // done
     Position moveLeft(Position); // done
     Position moveRight(Position); // done
