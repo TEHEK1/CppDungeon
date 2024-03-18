@@ -19,7 +19,5 @@ add_executable(monitorTest
         ../../src/navigation/Hall.cpp
         ../../src/navigation/Room.cpp
         ../../src/navigation/Position.cpp
-        ../../src/enemies/BrigandFusilier/BrigandFusilier.cpp
-        ../../src/enemies/BrigandFusilier/RushedShot.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

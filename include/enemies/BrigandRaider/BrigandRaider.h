@@ -6,9 +6,13 @@
 #include "entity/Enemy.h"
 
 namespace enemies {
-    class BrigandRaider:public entity::Enemy{
-    public:
-        BrigandRaider();
-    };
-}
+    namespace BrigandRaider {
+        class BrigandRaider : public entity::Enemy {
+        public:
+            std::vector<std::vector<char>> drawAlive() override;
+
+            BrigandRaider();
+        };
+    } // namespace BrigandRaider
+} // namespace enemies
 #endif //BRIGANDRAIDER_H

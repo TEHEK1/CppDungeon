@@ -6,8 +6,13 @@
 #include "entity/Enemy.h"
 
 namespace enemies {
-    class CultistAcolyte:public entity::Enemy{
-        CultistAcolyte();
-    };
-}
+    namespace CultistAcolyte {
+        class CultistAcolyte : public entity::Enemy {
+        public:
+            std::vector<std::vector<char>> drawAlive() override;
+
+            CultistAcolyte();
+        };
+    } // namespace CultistAcolyte
+} // namespace enemies
 #endif //CULTISTACOLYTE_H
