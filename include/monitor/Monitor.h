@@ -22,6 +22,7 @@ class Monitor{
 public:
     Monitor() = delete;
     Monitor(Player* player);
+    Monitor(events::EnemyEncounter player);
     ~Monitor();
 
 
