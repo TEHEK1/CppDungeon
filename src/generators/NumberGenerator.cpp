@@ -13,7 +13,7 @@ int generators::NumberGenerator::generate() {
 }
 
 int generators::NumberGenerator::generate(int minNumber, int maxNumber) {
-    std::discrete_distribution<> distribution(minNumber, maxNumber);
+    std::uniform_int_distribution<> distribution(minNumber, maxNumber);
     static std::mt19937 generatorDevice = getGenerator();
     return distribution(generatorDevice);
 }

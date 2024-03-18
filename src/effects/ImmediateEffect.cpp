@@ -4,5 +4,5 @@
 #include "effects/ImmediateEffect.h"
 
 namespace effects {
-    ImmediateEffect::ImmediateEffect() : MarkedAsTurnable(0) {}
-}
+    ImmediateEffect::ImmediateEffect()= default;
+} // namespace effects

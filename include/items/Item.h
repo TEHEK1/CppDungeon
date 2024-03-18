@@ -6,7 +6,7 @@
 #define CPPDUNGEON_ITEM_H
 #include "skillDesigns/Skill.h"
 namespace items {
-    class Item : public Skill {
+    class Item : public skillDesigns::Skill {
     };
 }
 #endif //CPPDUNGEON_ITEM_H
