@@ -24,7 +24,7 @@ int main(){
 //    std::cout << objectPtr->get(long(Characteristic::HP)) << "\n";
 //    EffectTest::addEffect(objectPtr, std::shared_ptr<Effect>(new Heal(20)));
 //    for(int i = 0;i<10;i++) {
-//        std::cout << objectPtr->  get(long(Characteristic::HP)) << "\n";
+//        std::cout << objectPtr->get(long(Characteristic::HP)) << "\n";
 //        EffectTest::turnEffects(objectPtr);
 //    }
 }

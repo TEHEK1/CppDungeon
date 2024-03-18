@@ -55,7 +55,7 @@ int entity::Entity::get(int key) const {
         for (const auto& effect : m_effects) {
             auto permanentEffect = dynamic_cast<effects::PermanentEffect*>(effect.get());
             if(permanentEffect != nullptr)
-                result += permanentEffect->getModifier()[key];
+            result += permanentEffect->getModifier()[key];
         }
     }
     return result;
