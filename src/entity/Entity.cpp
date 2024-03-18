@@ -4,20 +4,49 @@
 #include "entity/Entity.h"
 #include "effects/PermanentEffect.h"
 #include <random>
-entity::Entity::Entity(std::map<int, int> characteristics):m_characteristics(characteristics){}
+
+entity::Entity::Entity(std::string name, std::map<int, int> characteristics, std::set<std::shared_ptr<skillDesigns::Skill>> skills):
+m_name(name), m_characteristics(characteristics), m_skills(skills){}
+
 std::vector<std::vector<char>> entity::Entity::draw(){
+    return isAlive() ? drawAlive() : drawDead();
+}
+
+std::vector<std::vector<char>> entity::Entity::drawDead(){
     return {
-        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-        {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '},
-        {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '},
-        {' ', '1', '1', '1', '1', '1', '1', ' ', ' '}, 
-        {' ', '1', ' ', '1', '1', ' ', '1', ' ', ' '}, 
-        {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '}, 
-        {' ', ' ', ' ', '1', '1', ' ', ' ', ' ', ' '}, 
-        {' ', ' ', '1', ' ', ' ', '1', ' ', ' ', ' '}, 
-        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},        
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', '#', '%', '#', '#', '.', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', '*', '#', '*', '#', '#', '#', '*', '+', '#', '.', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', '.', '#', '#', '#', '%', '%', '%', '#', '#', '#', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '%', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', '.', ' ', ':', '#', '%', '@', '=', ':', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', '.', '+', '#', '*', '#', '#', '%', '@', '@', '@', '@', '#', '=', '-', ' ', ' ', ' ', ' ', ' '},
+        {' ', '=', '=', '*', '*', '*', '#', '%', '#', '%', '%', '%', '%', '#', '*', '+', '-', '.', ' ', ' '}
     };
 }
+
+                    
+//            ..       
+//       .  #%##.      
+//       *#*###*+#.    
+//      .###%%%###     
+//         ##%#        
+//      . :#%@=:       
+//  .+#*##%@@@@#=-     
+//  ==***#%#%%%%#*+-.  
+
 
 int entity::Entity::get(int key) const {
     int result = 0;
@@ -36,11 +65,11 @@ int entity::Entity::get(Characteristic characteristic) const {
     return get(static_cast<int>(characteristic));
 }
 
-const std::set<std::shared_ptr<effects::Effect>>& entity::Entity::getEffects() const {
+std::set<std::shared_ptr<effects::Effect>> entity::Entity::getEffects() const {
     return m_effects;
 }
 
-const std::set<std::shared_ptr<Skill>>& entity::Entity::getSkills() const {
+std::set<std::shared_ptr<skillDesigns::Skill>> entity::Entity::getSkills() const {
     return m_skills;
 }
 
@@ -72,5 +101,5 @@ int entity::Entity::resisted(int effectHash) const {
 }
 
 int entity::Entity::getReal(int key) const {
-    return m_characteristics.contains(key) ? m_characteristics.at(key): 0;
+    return (m_characteristics.find(key)!=m_characteristics.end()) ? m_characteristics.at(key): 0;
 }

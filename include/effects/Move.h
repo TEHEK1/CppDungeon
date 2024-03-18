@@ -10,6 +10,8 @@ class BattleField;
 namespace effects {
     class Move: public ImmediateEffect, public MarkedAsBattleFieldNeeded {
         int m_offset;
+    protected:
+        std::function<int (const std::shared_ptr<entity::Entity>&, const std::shared_ptr<BattleField>&)> getTurnFunctionBattleField() override;
     public:
         Move(int offset);
     };

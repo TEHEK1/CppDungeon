@@ -4,15 +4,16 @@
 
 #ifndef CPPDUNGEON_FORCEMOVE_H
 #define CPPDUNGEON_FORCEMOVE_H
-#include "ImmediateEffect.h"
+#include "effects/ImmediateEffect.h"
+#include "effects/Move.h"
+#include "effects/MarkedAsResistable.h"
 class BattleField;
 namespace effects {
-    class ForceMove: public ImmediateEffect {
-        int m_offset;
-        std::weak_ptr<BattleField> m_battleField;
+    class ForceMove: public Move, public MarkedAsResistable {
     public:
-        ForceMove(std::weak_ptr<entity::Entity>, std::weak_ptr<BattleField>, int offset);
-        void turn();
+        ~ForceMove() override = default;
+        ForceMove(int offset);
+        int resistanceHash() override;
     };
 }
 #endif //CPPDUNGEON_FORCEMOVE_H

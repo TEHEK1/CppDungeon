@@ -7,7 +7,7 @@
 #include "effects/ImmediateEffect.h"
 #include "changers/EntityChanger.h"
 namespace effects {
-    class ImmediateCharacteristicEffect:public ImmediateEffect, public changers::EntityChanger{
+    class ImmediateCharacteristicEffect:public ImmediateEffect, public changers::EntityChanger, public MarkedAsEntityNeeded{
         std::map<int, int> m_turner;
     public:
         explicit ImmediateCharacteristicEffect(std::map<int ,int> turner);

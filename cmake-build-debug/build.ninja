@@ -214,6 +214,41 @@ build tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Room.cpp.o: CXX_COM
   OBJECT_DIR = tests/MapTest/CMakeFiles/test.dir
   OBJECT_FILE_DIR = tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation
 
+build tests/MapTest/CMakeFiles/test.dir/__/__/src/skillDesignes/Skill.cpp.o: CXX_COMPILER__test_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/skillDesignes/Skill.cpp || cmake_object_order_depends_target_test
+  DEP_FILE = tests/MapTest/CMakeFiles/test.dir/__/__/src/skillDesignes/Skill.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/tests/MapTest/../../include
+  OBJECT_DIR = tests/MapTest/CMakeFiles/test.dir
+  OBJECT_FILE_DIR = tests/MapTest/CMakeFiles/test.dir/__/__/src/skillDesignes
+
+build tests/MapTest/CMakeFiles/test.dir/__/__/src/skillDesignes/RangeSkill.cpp.o: CXX_COMPILER__test_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/skillDesignes/RangeSkill.cpp || cmake_object_order_depends_target_test
+  DEP_FILE = tests/MapTest/CMakeFiles/test.dir/__/__/src/skillDesignes/RangeSkill.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/tests/MapTest/../../include
+  OBJECT_DIR = tests/MapTest/CMakeFiles/test.dir
+  OBJECT_FILE_DIR = tests/MapTest/CMakeFiles/test.dir/__/__/src/skillDesignes
+
+build tests/MapTest/CMakeFiles/test.dir/__/__/src/enemies/BrigandFusilier/BlanketFire.cpp.o: CXX_COMPILER__test_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/enemies/BrigandFusilier/BlanketFire.cpp || cmake_object_order_depends_target_test
+  DEP_FILE = tests/MapTest/CMakeFiles/test.dir/__/__/src/enemies/BrigandFusilier/BlanketFire.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/tests/MapTest/../../include
+  OBJECT_DIR = tests/MapTest/CMakeFiles/test.dir
+  OBJECT_FILE_DIR = tests/MapTest/CMakeFiles/test.dir/__/__/src/enemies/BrigandFusilier
+
+build tests/MapTest/CMakeFiles/test.dir/__/__/src/enemies/BrigandRaider/Shank.cpp.o: CXX_COMPILER__test_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/enemies/BrigandRaider/Shank.cpp || cmake_object_order_depends_target_test
+  DEP_FILE = tests/MapTest/CMakeFiles/test.dir/__/__/src/enemies/BrigandRaider/Shank.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/tests/MapTest/../../include
+  OBJECT_DIR = tests/MapTest/CMakeFiles/test.dir
+  OBJECT_FILE_DIR = tests/MapTest/CMakeFiles/test.dir/__/__/src/enemies/BrigandRaider
+
+build tests/MapTest/CMakeFiles/test.dir/__/__/src/effects/Mark.cpp.o: CXX_COMPILER__test_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/effects/Mark.cpp || cmake_object_order_depends_target_test
+  DEP_FILE = tests/MapTest/CMakeFiles/test.dir/__/__/src/effects/Mark.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/tests/MapTest/../../include
+  OBJECT_DIR = tests/MapTest/CMakeFiles/test.dir
+  OBJECT_FILE_DIR = tests/MapTest/CMakeFiles/test.dir/__/__/src/effects
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target test
@@ -222,7 +257,7 @@ build tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Room.cpp.o: CXX_COM
 #############################################
 # Link the executable tests/MapTest/test
 
-build tests/MapTest/test: CXX_EXECUTABLE_LINKER__test_Debug tests/MapTest/CMakeFiles/test.dir/main.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Map.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Position.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Cell.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Hall.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Room.cpp.o
+build tests/MapTest/test: CXX_EXECUTABLE_LINKER__test_Debug tests/MapTest/CMakeFiles/test.dir/main.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Map.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Position.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Cell.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Hall.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/navigation/Room.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/skillDesignes/Skill.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/skillDesignes/RangeSkill.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/enemies/BrigandFusilier/BlanketFire.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/enemies/BrigandRaider/Shank.cpp.o tests/MapTest/CMakeFiles/test.dir/__/__/src/effects/Mark.cpp.o
   FLAGS = -g
   OBJECT_DIR = tests/MapTest/CMakeFiles/test.dir
   POST_BUILD = :
