@@ -13,7 +13,7 @@ void Monitor::draw(Player *player) {
     auto battleField = m_enemyEncounter->getBattleField();
     for(int height = 0;height<20;height++){
         for(auto i:battleField->getEntities()){
-            for(auto j:i){
+            for(auto& j:i->draw()[height]){
                 std::cout<<j;
             }
             std::cout<<"  ";

@@ -3,7 +3,7 @@
 #include "entity/Enemy.h"
 #include "entity/MarkedAsAutoTurn.h"
 #include "events/EnemyEncounter.h"
-#include "heroes/Hero.h"
+#include "entity/Hero.h"
 #include "enemies/BrigandRaider/BrigandRaider.h"
 #include "enemies/BrigandFusier/BrigandFusilier.h"
 #include "enemies/CultistAcolyte/CultistAcolyte.h"

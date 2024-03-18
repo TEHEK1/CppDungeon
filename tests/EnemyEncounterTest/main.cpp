@@ -14,7 +14,7 @@
 
 bool check(std::vector<std::shared_ptr<entity::Entity>> entities) {
     for (auto i: entities) {
-        if (i->isAlive()) {
+        if (i && i->isAlive()) {
             return true;
         }
     }

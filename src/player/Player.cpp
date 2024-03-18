@@ -33,7 +33,7 @@ Inventory Player::getInventory() {
     return m_inventory;
 }
 
-Map* Player::getMap() {
+std::shared_ptr<Map> Player::getMap() {
     return m_map;
 }
 

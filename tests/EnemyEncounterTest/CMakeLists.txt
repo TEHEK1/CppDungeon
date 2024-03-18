@@ -49,4 +49,12 @@ add_executable(EnemyEncounterTest
         ../../src/enemies/BrigandRaider/UppercutSlice.cpp
         ../../src/enemies/BrigandRaider/HarmlessPoke.cpp
         ../../src/entity/Hero.cpp
+        ../../src/navigation/Map.cpp
+        ../../src/navigation/Room.cpp
+        ../../src/navigation/Hall.cpp
+        ../../src/navigation/Position.cpp
+        ../../src/player/Player.cpp
+        ../../src/navigation/Cell.cpp
+        ../../src/monitor/Monitor.cpp
+        ../../src/entity/MarkedAsAutoTurn.cpp
 )

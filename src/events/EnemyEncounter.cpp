@@ -90,7 +90,7 @@ namespace events {
     }
 
     void EnemyEncounter::turn(Player* player) {
-        std::shared_ptr<BattleField> battleField = std::shared_ptr<BattleField>(new BattleField(player->getSquad(), std::make_shared<Squad>(m_enemies)));
+        std::shared_ptr<BattleField> battleField = std::shared_ptr<BattleField>(new BattleField(player->getSquad(), m_enemies));
         std::vector<std::shared_ptr<entity::Entity>> enemiesEntities = m_enemies->getEntities();
         if (m_priority.empty()) {
             std::vector<std::shared_ptr<entity::Entity>> priority = battleField->getEntities();
@@ -115,7 +115,7 @@ namespace events {
             for (auto i: enemiesEntities) {
                 endBattleTurnEffects(i);
             }
-            player->getMap()->getCell(player->getPosition())->freeMoves(player, std::make_shared<events::Event>(this));
+            player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
             return;
         }
 
@@ -129,7 +129,7 @@ namespace events {
                 for (auto i: enemiesEntities) {
                     endBattleTurnEffects(i);
                 }
-                player->getMap()->getCell(player->getPosition())->freeMoves(player, std::make_shared<events::Event>(this));
+                player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
                 return;
             }
             std::shared_ptr<entity::Entity> entity = m_priority.back();
@@ -142,7 +142,7 @@ namespace events {
                 continue;
             }
             if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
-                markedAsAutoTurn->autoTurn(std::make_shared<Player>(player), battleField, entity, 1);
+                markedAsAutoTurn->autoTurn(std::shared_ptr<Player>(player), battleField, entity, 1);
                 player->getMonitor()->draw(player);
                 continue;
             }
