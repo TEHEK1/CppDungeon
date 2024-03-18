@@ -9,6 +9,7 @@
 #include "changers/SquadChanger.h"
 #include "changers/EffectChanger.h"
 #include "Squad.h"
+#include "BattleField.h"
 #include <vector>
 class Enemy;
 class Player;
@@ -16,18 +17,11 @@ namespace events {
     class EnemyEncounter : public Event, public SquadChanger, public changers::EffectChanger {
     public:
         EnemyEncounter();
-
         void turn(Player* player, std::shared_ptr<events::Event> index);
-
         Squad getEnemies();
-
         std::vector<std::vector<char>> draw() override;
-
     private:
         void _enemyMove(Player *, std::shared_ptr<entity::Entity>);
-
-        int m_start_enemies;
-        int m_start_heroes;
         Squad m_enemies;
     };
 } // namespace events

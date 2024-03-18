@@ -25,8 +25,7 @@ namespace events {
 
         for (auto &i: tmpEnemies) {
             int num = generators::NumberGenerator::generate(0, 2);
-            switch (num)
-            {
+            switch (num) {
             case 0:
                 i = std::make_shared<enemies::BrigandRaider::BrigandRaider>();
                 break;
@@ -83,4 +82,4 @@ namespace events {
         });
     }
 
-}   
+}

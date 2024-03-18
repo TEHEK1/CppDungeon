@@ -4,7 +4,8 @@
 #include "SquadChanger.h"
 #include "Squad.h"
 #include <algorithm>
-#include <math>
+#include <stdexcept>
+#include <cmath>
 
 void SquadChanger::move(const std::shared_ptr<Squad>& squad, int index1, int index2) {
     if (index1 < 0 || index1 >= squad->m_squad.size()) { throw std::invalid_argument("index is out of range"); }
