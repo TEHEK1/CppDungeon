@@ -10,12 +10,13 @@ namespace Heroes {
         void AimedShot::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
                                     std::shared_ptr<entity::Entity> object) {
-            Skill::addEffect(object, generators::EffectGenerator::generateImmediateCharacteristicEffect<effects::Damage>
-            (crited, 7, 15), battleField, crited, 100);
-            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Bleed>
-            (crited, 3, 3), battleField, crited, 100);
-            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Mark>
-            (crited, 3), battleField, crited, 100);
+            int attackModifier = 0;
+            if (object->get(Characteristic::marked) > 0) {
+                attackModifier += 50;
+            }
+
+            Skill::addEffect(object, generators::EffectGenerator::generateHeroDamage<effects::Damage>
+            (crited, actor, attackModifier), battleField, crited, 100);
         }
 
         void AimedShot::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,

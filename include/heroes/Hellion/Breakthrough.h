@@ -1,10 +1,10 @@
-#include "skillDesigns/Skill.h"
+#include "skillDesigns/RangeSkill.h"
 
 namespace Heroes {
 
     namespace Hellion {
 
-        class Breakthrough: public skillDesigns::Skill {
+        class Breakthrough: public skillDesigns::RangeSkill {
             Breakthrough();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

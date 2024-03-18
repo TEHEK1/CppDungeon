@@ -10,12 +10,11 @@ namespace Heroes {
         void Command::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
                                     std::shared_ptr<entity::Entity> object) {
-            Skill::addEffect(object, generators::EffectGenerator::generateImmediateCharacteristicEffect<effects::Damage>
-            (crited, 7, 15), battleField, crited, 100);
-            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Bleed>
-            (crited, 3, 3), battleField, crited, 100);
-            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Mark>
-            (crited, 3), battleField, crited, 100);
+            Skill::addEffect(actor, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Buff>
+            (crited, 4, std::map<int, int>{{static_cast<int>(Characteristic::criticalDamageChance), 4},
+            {static_cast<int>(Characteristic::accuracyModifier), 5},
+            {static_cast<int>(Characteristic::minDamage), 5}, {static_cast<int>(Characteristic::maxDamage), 5}
+            }), battleField, crited, 100);
         }
 
         void Command::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,

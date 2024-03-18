@@ -1,10 +1,10 @@
-#include "skillDesigns/Skill.h"
+#include "skillDesigns/RangeSkill.h"
 
 namespace Heroes {
 
     namespace Hellion {
 
-        class AdrenalineRush: public skillDesigns::Skill {
+        class AdrenalineRush: public skillDesigns::RangeSkill {
             AdrenalineRush(); // use on herself
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

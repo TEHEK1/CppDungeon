@@ -2,7 +2,7 @@
 #include "generators/EffectGenerator.h"
 #include "effects/Damage.h"
 #include "effects/Mark.h"
-#include "effects/Bleed.h"
+#include "effects/ForceMove.h"
 namespace Heroes {
     namespace BountyHunter {
         UpperCut::UpperCut() : Skill("UpperCut", {1, 2}, {}, {1, 2}, 90, 0) {}
@@ -10,17 +10,17 @@ namespace Heroes {
         void UpperCut::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
                                     std::shared_ptr<entity::Entity> object) {
-            Skill::addEffect(object, generators::EffectGenerator::generateImmediateCharacteristicEffect<effects::Damage>
-            (crited, 7, 15), battleField, crited, 100);
-            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Bleed>
-            (crited, 3, 3), battleField, crited, 100);
-            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Mark>
-            (crited, 3), battleField, crited, 100);
+            Skill::addEffect(object, generators::EffectGenerator::generateHeroDamage<effects::Damage>
+            (crited, actor, -67), battleField, crited, 100);
+            Skill::addEffect(object, generators::EffectGenerator::generateUncritedEffect<effects::ForceMove>
+            (crited, 2), battleField, crited, 100);
+            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Debuff> // TODO smth with stun
+            (crited, 3, std::map<int, int>{{static_cast<int>(Characteristic::turnable), -1}}), battleField, crited, 100);
         }
 
         void UpperCut::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
         }
-    } // namespace BrigandFusilier
+    } // namespace BountyHunter
 } // namespace enemies

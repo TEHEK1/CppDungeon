@@ -1,10 +1,10 @@
-#include "skillDesigns/Skill.h"
+#include "skillDesigns/RangeSkill.h"
 
 namespace Heroes {
 
     namespace Hellion {
 
-        class BarbaricYAWP: public skillDesigns::Skill {
+        class BarbaricYAWP: public skillDesigns::RangeSkill {
             BarbaricYAWP();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
