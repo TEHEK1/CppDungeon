@@ -5,16 +5,17 @@
 #define CPPDUNGEON_SQUAD_H
 #include <memory>
 #include <vector>
-class Entity;
+#include "namespaces/entity.h"
 
 class Squad {
 private:
-    std::vector<std::shared_ptr<Entity>> m_squad;
+    std::vector<std::shared_ptr<entity::Entity>> m_squad;
 public:
-    explicit Squad(std::vector<std::shared_ptr<Entity>> new_squad);
-    Squad(std::vector<std::shared_ptr<Entity>> new_squad, int size);
+    explicit Squad(std::vector<std::shared_ptr<entity::Entity>> new_squad);
+    Squad(std::vector<std::shared_ptr<entity::Entity>> new_squad, int size);
     std::vector<std::shared_ptr<entity::Entity>> getEntities() const;
-    std::shared_ptr<Entity> getEntity(int index) const;
+    std::shared_ptr<entity::Entity> getEntity(int index) const;
+    int getIndex(const std::shared_ptr<entity::Entity>& entity) const;
     friend class SquadChanger;
 };
 #endif //CPPDUNGEON_SQUAD_H
