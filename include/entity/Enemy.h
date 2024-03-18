@@ -6,10 +6,11 @@
 #define UNTITLED_ENEMY_H
 #include "entity/Entity.h"
 #include "EnemyType.h"
+#include "namespaces/skillDesigns.h"
 namespace entity {
     class Enemy : public Entity {
-    protected:
-        Enemy(std::string name, std::map<int, int> characteristics) : Entity(name, characteristics) {}
+    public:
+        Enemy(std::string name, std::map<int, int> characteristics, std::set<std::shared_ptr<skillDesigns::Skill>> skills);
     };
 } // namespace entity
 #endif //UNTITLED_ENEMY_H

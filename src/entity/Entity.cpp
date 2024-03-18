@@ -5,7 +5,8 @@
 #include "effects/PermanentEffect.h"
 #include <random>
 
-entity::Entity::Entity(std::string name, std::map<int, int> characteristics):m_name(name), m_characteristics(characteristics){}
+entity::Entity::Entity(std::string name, std::map<int, int> characteristics, std::set<std::shared_ptr<skillDesigns::Skill>> skills):
+m_name(name), m_characteristics(characteristics), m_skills(skills){}
 
 std::vector<std::vector<char>> entity::Entity::draw(){
     return isAlive() ? drawAlive() : drawDead();
@@ -68,7 +69,7 @@ std::set<std::shared_ptr<effects::Effect>> entity::Entity::getEffects() const {
     return m_effects;
 }
 
-std::set<std::shared_ptr<Skill>> entity::Entity::getSkills() const {
+std::set<std::shared_ptr<skillDesigns::Skill>> entity::Entity::getSkills() const {
     return m_skills;
 }
 

@@ -1,7 +1,7 @@
 #include "enemies/BrigandFusier/BrigandFusilier.h"
 #include "changers/EntityChanger.h"
-
-enemies::BrigandFusilier::BrigandFusilier::BrigandFusilier():Enemy("BrigandFusilier",
+enemies::BrigandFusilier::BrigandFusilier::BrigandFusilier():
+    entity::Enemy("BrigandFusilier",
     {{static_cast<int>(Characteristic::accuracyModifier), 1}, 
     {static_cast<int>(Characteristic::dodge), 8},
     {static_cast<int>(Characteristic::defence), 0},
@@ -19,7 +19,10 @@ enemies::BrigandFusilier::BrigandFusilier::BrigandFusilier():Enemy("BrigandFusil
     {static_cast<int>(Resistances::Blight), 20},
     {static_cast<int>(Resistances::Bleed), 20},
     {static_cast<int>(Resistances::Debuff), 15},
-    {static_cast<int>(Resistances::Move), 25}}){}
+    {static_cast<int>(Resistances::Move), 25}},
+
+    {std::make_shared<BlanketFire>(),
+     std::make_shared<RushedShot>()}){}
 
 
 std::vector<std::vector<char>> enemies::BrigandFusilier::BrigandFusilier::drawAlive(){
