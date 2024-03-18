@@ -21,4 +21,5 @@ add_executable(test
         ../src/events/Chest.cpp
         ../src/events/EmptyCell.cpp
         ../src/events/Trap.cpp
+        ../src/player/Player.cpp
 )
