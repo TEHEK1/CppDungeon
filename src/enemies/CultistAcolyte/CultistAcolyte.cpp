@@ -1,8 +1,8 @@
 #include "enemies/CultistAcolyte/CultistAcolyte.h"
 #include "changers/EntityChanger.h"
 
-enemies::CultistAcolyte::CultistAcolyte::CultistAcolyte():Enemy(
-    "CultistAcolyte",
+enemies::CultistAcolyte::CultistAcolyte::CultistAcolyte():
+    Enemy("CultistAcolyte",
     {{static_cast<int>(Characteristic::accuracyModifier), 1}, 
     {static_cast<int>(Characteristic::dodge), 13},
     {static_cast<int>(Characteristic::defence), 0},
@@ -20,7 +20,11 @@ enemies::CultistAcolyte::CultistAcolyte::CultistAcolyte():Enemy(
     {static_cast<int>(Resistances::Blight), 20},
     {static_cast<int>(Resistances::Bleed), 20},
     {static_cast<int>(Resistances::Debuff), 40},
-    {static_cast<int>(Resistances::Move), 10}}){}
+    {static_cast<int>(Resistances::Move), 10}},
+
+    {std::make_shared<StressfulIncantation>(),
+     std::make_shared<EldritchPush>(),
+     std::make_shared<EldritchPull>()}){}
 
 std::vector<std::vector<char>> enemies::CultistAcolyte::CultistAcolyte::drawAlive(){
     return {

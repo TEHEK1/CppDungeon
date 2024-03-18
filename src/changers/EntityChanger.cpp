@@ -30,10 +30,10 @@ void changers::EntityChanger::set(std::shared_ptr<entity::Entity> entity, int ch
     set(entity, static_cast<Characteristic>(characteristic), value);
 }
 
-void changers::EntityChanger::addSkill(std::shared_ptr<entity::Entity> entity, std::shared_ptr<Skill> skill) {
+void changers::EntityChanger::addSkill(std::shared_ptr<entity::Entity> entity, std::shared_ptr<skillDesigns::Skill> skill) {
     entity->m_skills.insert(skill);
 }
 
-void changers::EntityChanger::removeSkill(std::shared_ptr<entity::Entity> entity, std::shared_ptr<Skill> skill) {
+void changers::EntityChanger::removeSkill(std::shared_ptr<entity::Entity> entity, std::shared_ptr<skillDesigns::Skill> skill) {
     entity->m_skills.erase(skill);
 }

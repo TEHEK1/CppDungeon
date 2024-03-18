@@ -10,7 +10,7 @@ namespace enemies {
         void Bite::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                    std::shared_ptr<entity::Entity> actor,
                                    std::shared_ptr<entity::Entity> object) {
-            int damageModifier = ((object->get(Characteristic::marked)>0)*100 + 100) / 100;
+            int damageModifier = (static_cast<int>(object->get(Characteristic::marked)>0)*100 + 100) / 100;
             Skill::addEffect(object, generators::EffectGenerator::generateImmediateCharacteristicEffect<effects::Damage>
                     (crited, 1*damageModifier, 3*damageModifier), battleField, crited, 100);
             Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Blight>

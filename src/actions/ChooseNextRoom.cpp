@@ -6,8 +6,16 @@
 #include "player/Player.h"
 
 namespace actions{
-    ChooseNextRoom::ChooseNextRoom(char room):m_room(room) {}
+    ChooseNextRoom::ChooseNextRoom(Position room):m_room(room) {}
     void ChooseNextRoom::act(Player * player) {
         setPosition(player, player -> getMap() -> chooseNextRoom(player ->getPosition(), m_room));
+    }
+
+    Position ChooseNextRoom::getPostion() {
+        return m_room;
+    }
+
+    std::string ChooseNextRoom::getName() {
+        return "ChooseNextRoom" + std::to_string(m_room.getLine()) + " " +  std::to_string(m_room.getColumn());
     }
 } // namespace actions

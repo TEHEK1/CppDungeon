@@ -13,6 +13,7 @@ namespace actions {
     public:
         explicit DontUse(const std::shared_ptr<events::Trap>&);
         void act(Player *player) override;
+        std::string getName() override;
         std::shared_ptr<events::Trap> getTrap() const;
     private:
         std::shared_ptr<events::Trap> m_trap;

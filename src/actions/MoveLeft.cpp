@@ -16,4 +16,8 @@ namespace actions {
         }
         returnToDefault(player);
     }
+
+    std::string MoveLeft::getName() {
+        return "Move Player left";
+    }
 }//namespace actions

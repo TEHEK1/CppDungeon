@@ -1,3 +1,3 @@
 #include "entity/Enemy.h"
 
-Enemy::Enemy(std::string name, std::map<int, int> characteristics) : Entity(name, characteristics) {}
+entity::Enemy::Enemy(std::string name, std::map<int, int> characteristics, std::set<std::shared_ptr<skillDesigns::Skill>> skills) : Entity(name, characteristics, skills) {}
