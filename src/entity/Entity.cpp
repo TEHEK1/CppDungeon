@@ -4,7 +4,7 @@
 #include "entity/Entity.h"
 #include "effects/PermanentEffect.h"
 #include <random>
-entity::Entity::Entity(std::map<int, int> characteristics):m_characteristics(characteristics){}
+entity::Entity::Entity(std::string name, std::map<int, int> characteristics):m_name(name), m_characteristics(characteristics){}
 std::vector<std::vector<char>> entity::Entity::draw(){
     return {
         {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -72,5 +72,5 @@ int entity::Entity::resisted(int effectHash) const {
 }
 
 int entity::Entity::getReal(int key) const {
-    return m_characteristics.contains(key) ? m_characteristics.at(key): 0;
+    return (m_characteristics.find(key)!=m_characteristics.end()) ? m_characteristics.at(key): 0;
 }
