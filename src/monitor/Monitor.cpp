@@ -156,7 +156,7 @@ void Monitor::InterfaceColumnWindow::get_binds() {
 }
 
 
-Monitor::Monitor(Player* current_player) {
+Monitor::Monitor() {
     int row, col;
     getmaxyx(stdscr, row, col);
     
@@ -166,7 +166,6 @@ Monitor::Monitor(Player* current_player) {
     init_pair(4, COLOR_GREEN, COLOR_GREEN);
     init_pair(5, COLOR_RED, COLOR_BLACK);
     
-    m_bounded_player = current_player;
 
     //        |--------------------|
     // 2 / 3  |  Battle            |
@@ -260,6 +259,8 @@ void Monitor::draw(Player* current_player) {
             m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4); 
         }
     }
+
+    m_user_actions_display.draw_interface(current_player->getActions());
 
 
 
