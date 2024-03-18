@@ -7,14 +7,15 @@
 #include <memory>
 #include "namespaces/effects.h"
 #include "namespaces/entity.h"
+class BattleField;
 namespace changers {
     class EffectChanger {
-        static int turnEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
-        static int endBattleTurnEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
+        static int turnEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect, const std::shared_ptr<BattleField>& battlefield = nullptr);
+        static int endBattleTurnEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect, const std::shared_ptr<BattleField>& battlefield = nullptr);
     protected:
-        static void turnEffects(const std::shared_ptr<entity::Entity>& entity);
-        static void endBattleTurnEffects(const std::shared_ptr<entity::Entity>& entity);
-        static void addEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
+        static void turnEffects(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<BattleField>& battlefield = nullptr);
+        static void endBattleTurnEffects(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<BattleField>& battlefield = nullptr);
+        static void addEffect(const std::shared_ptr<entity::Entity>& entity, std::shared_ptr<effects::Effect> effect, const std::shared_ptr<BattleField>& battlefield = nullptr);
         static void removeEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
     };
 } // namespace changers

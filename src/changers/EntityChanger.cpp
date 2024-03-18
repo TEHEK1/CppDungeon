@@ -21,7 +21,7 @@ void changers::EntityChanger::set(std::shared_ptr<entity::Entity> entity, Charac
         case Characteristic::HP:
 
             int maxHP = entity->get(Characteristic::maxHP);
-            entity->m_characteristics[static_cast<int>(characteristic)] = std::min(maxHP, std::max(0, value));
+            entity->m_characteristics[static_cast<int>(characteristic)] = std::min(maxHP, value);
             break;
     }
 }
