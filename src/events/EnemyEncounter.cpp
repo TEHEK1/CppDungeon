@@ -38,7 +38,7 @@ namespace events {
             }
         }
 
-        m_enemies = Squad(tmpEnemies);
+        m_enemies(Squad(tmpEnemies));
     }
 
     Squad EnemyEncounter::getEnemies() {
