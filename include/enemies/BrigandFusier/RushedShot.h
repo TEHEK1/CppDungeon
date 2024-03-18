@@ -1,11 +1,15 @@
-#ifndef CPPDUNGEON_BLANKETFIRE_H
-#define CPPDUNGEON_BLANKETFIRE_H
+//
+// Created by Амир Кашапов on 18.03.2024.
+//
+
+#ifndef UGABUGA_RUSHEDSHOT_H
+#define UGABUGA_RUSHEDSHOT_H
 #include "skillDesigns/RangeSkill.h"
 namespace enemies {
     namespace BrigandFusilier {
-        class BlanketFire : public skillDesigns::RangeSkill {
+        class RushedShot : public skillDesigns::RangeSkill {
         public:
-            BlanketFire();
+            RushedShot();
 
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor, std::shared_ptr<entity::Entity> object) override;
@@ -14,4 +18,4 @@ namespace enemies {
         };
     } // namespace BrigandFusilier
 } // namespace enemies
-#endif //CPPDUNGEON_BLANKETFIRE_H
+#endif //UGABUGA_RUSHEDSHOT_H

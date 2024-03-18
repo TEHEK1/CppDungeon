@@ -12,4 +12,10 @@ add_executable(test
         ../../src/navigation/Cell.cpp
         ../../src/navigation/Hall.cpp
         ../../src/navigation/Room.cpp
+        ../../src/skillDesignes/Skill.cpp
+        ../../include/skillDesigns/RangeSkill.h
+        ../../src/skillDesignes/RangeSkill.cpp
+        ../../src/enemies/BrigandFusilier/BlanketFire.cpp
+        ../../src/enemies/BrigandRaider/Shank.cpp
+        ../../src/effects/Mark.cpp
 )
