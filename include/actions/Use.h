@@ -20,6 +20,5 @@ namespace actions {
     private:
         std::shared_ptr<events::UsableEvent> m_usableEvent;
     };
-
-#endif //CPPDUNGEON_USE_H
 }//namespace actions
+#endif //CPPDUNGEON_USE_H

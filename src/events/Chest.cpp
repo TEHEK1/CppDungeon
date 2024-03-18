@@ -7,13 +7,13 @@
 #include "actions/Use.h"
 #include "navigation/Cell.h"
 #include "navigation/Map.h"
-#include "items/Item.h"
+//#include "items/Item.h"
 #include <memory>
 #include "monitor/Monitor.h"
 
 bool events::Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
     actions::Use* use = dynamic_cast<actions::Use*>((*actionIterator).get());
-    return static_cast<bool>(use && (use->getChest()).get() == this);
+    return static_cast<bool>(use && (use->getUsableEvent()).get() == this);
 }
 
 void events::Chest::turn(Player *player) {
@@ -26,8 +26,8 @@ void events::Chest::turn(Player *player) {
 }
 
 void events::Chest::use(Player *player) {
-    std::shared_ptr<items::Item> item = std::make_shared<items::Item>();//TODO: Change it to grabbing from Main fabric
-    addItem(player, item);
+    /*std::shared_ptr<items::Item> item = std::make_shared<items::Item>();//TODO: Change it to grabbing from Main fabric
+    addItem(player, item);*/
     removeAction(player, [this](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return comp(actionIterator);});
     m_used = true;
 }

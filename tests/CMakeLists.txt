@@ -4,7 +4,9 @@ project(Test)
 set(CMAKE_CXX_STANDARD 20)
 
 include_directories(../include ../src)
-
+find_package(PkgConfig REQUIRED)
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
 add_executable(test
         main.cpp
         ../include/Main.h
@@ -22,4 +24,25 @@ add_executable(test
         ../src/events/EmptyCell.cpp
         ../src/events/Trap.cpp
         ../src/player/Player.cpp
+        ../src/changers/ActionsChanger.cpp
+        ../src/generators/NumberGenerator.cpp
+        ../src/navigation/Map.cpp
+        ../src/Squad.cpp
+        ../src/navigation/Room.cpp
+        ../src/navigation/Hall.cpp
+        ../src/navigation/Position.cpp
+        ../src/effects/Damege.cpp
+        ../src/effects/ImmediateCharacteristicEffect.cpp
+        ../src/changers/EntityChanger.cpp
+        ../src/entity/Entity.cpp
+        ../src/actions/Use.cpp
+        ../src/actions/DontUse.cpp
+        ../src/effects/ImmediateEffect.cpp
+        ../src/changers/EffectChanger.cpp
+        ../src/effects/MarkedAsEndBattle.cpp
+        ../src/effects/MarkedAsTurnable.cpp
+        ../src/monitor/Monitor.cpp
+        ../src/navigation/Cell.cpp
+        ../src/effects/PermanentEffect.cpp
 )
+target_link_libraries(test ${CURSES_LIBRARIES})
