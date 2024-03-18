@@ -50,9 +50,9 @@ private:
 
             //Just placing sprite or text without clearing all previous text
             void draw_sprite(const size_t& pos_y, const size_t& pos_x,
-                            const std::vector<std::vector<char>>& sprite, int attribute = A_NORMAL);
+                            const std::vector<std::vector<char>>& sprite, bool skip_spaces = false, int attribute = A_NORMAL);
             void draw_text(const size_t& pos_y, const size_t& pos_x,
-                            const std::vector<char>& text, int attribute = A_NORMAL) ;
+                            const std::vector<char>& text, bool skip_spaces = false, int attribute = A_NORMAL) ;
 
             void clear_atr(size_t row = 0, size_t col = 0, int num = -1);
             size_t get_x() const;

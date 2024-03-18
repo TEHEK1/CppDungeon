@@ -18,6 +18,10 @@
 namespace {
     static const int ENTITY_NUM = 7;
     enum Entity_position {HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
+    
+    enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
+    CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), INTERFACE = COLOR_PAIR(5)};
+    enum Map_symbols : char {CELL = '"', ROOM = '0'};
 }
 
 
@@ -52,7 +56,7 @@ void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
 //TODO: add size checkers
 //draw_sprite draws with only either text formating attribute or pair of colors (text, font) 
 void Monitor::GameWindow::draw_sprite(const size_t& pos_y, const size_t& pos_x,
-                        const std::vector<std::vector<char>>& sprite, int attribute) {
+                        const std::vector<std::vector<char>>& sprite, bool skip_spaces, int attribute) {
     wattron(m_current_window, attribute);
     size_t current_y = pos_y;
     size_t current_x = pos_x;
@@ -60,7 +64,12 @@ void Monitor::GameWindow::draw_sprite(const size_t& pos_y, const size_t& pos_x,
         //Ncurses can only draw char or const char*,  so need to write by symbol
         wmove(m_current_window, current_y, current_x);
         for (char symbol : current_string) {
-            waddch(m_current_window, symbol);
+            if (symbol == ' ' && skip_spaces) {
+                wmove(m_current_window, current_y, current_x + 1);
+            } else {
+                waddch(m_current_window, symbol);
+            }
+            current_x++;
         }
         current_y++;
         current_x = pos_x;
@@ -71,8 +80,8 @@ void Monitor::GameWindow::draw_sprite(const size_t& pos_y, const size_t& pos_x,
 
 
 void Monitor::GameWindow::draw_text(const size_t& pos_y, const size_t& pos_x,
-                        const std::vector<char>& text, int attribute) {
-    draw_sprite(pos_y, pos_x, std::vector<std::vector<char>> (1, text), attribute);
+                        const std::vector<char>& text, bool skip_spaces, int attribute) {
+    draw_sprite(pos_y, pos_x, std::vector<std::vector<char>> (1, text), skip_spaces, attribute);
 }
 
 size_t Monitor::GameWindow::get_x() const{
@@ -93,7 +102,13 @@ Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) {
 Monitor::Monitor(Player* current_player) {
     int row, col;
     getmaxyx(stdscr, row, col);
-
+    
+    init_pair(1, COLOR_BLACK, COLOR_WHITE);
+    init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
+    init_pair(3, COLOR_BLACK, COLOR_CYAN);
+    init_pair(4, COLOR_GREEN, COLOR_GREEN);
+    init_pair(5, COLOR_GREEN, COLOR_GREEN);
+    
     m_bounded_player = current_player;
 
     //        |--------------------|
@@ -145,27 +160,46 @@ void Monitor::draw(Player* current_player) {
         }
         draw_position--;
     }
-    auto tmp = current_player->getMap()->draw(current_player->getPosition(), m_map_display.get_y() - 2, m_map_display.get_x() - 2);
-    for (auto& i : tmp) {
-        for (auto& j : i) {
-            if (j == 0) {
-                j = ' ';
+    std::vector<std::vector<char>> drawing_map = current_player->getMap()->draw(current_player->getPosition(),
+                                                                                m_map_display.get_y() - 2, 
+                                                                                m_map_display.get_x() - 2);
+    
+    for (auto& row : drawing_map) {
+        for (auto& symbol : row) {
+            if (symbol != 1) {
+                symbol = ' ';
             } else {
-                j += '0';
+                symbol = Map_symbols::ROOM;
             }
         }
     }
-    m_map_display.draw_sprite(1, 1, tmp);
-    init_pair(1, COLOR_CYAN, COLOR_RED);
+    m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::ROOM_COLOR);
+    drawing_map = current_player->getMap()->draw(current_player->getPosition(),
+                                                                                m_map_display.get_y() - 2, 
+                                                                                m_map_display.get_x() - 2);
+    
+    for (auto& row : drawing_map) {
+        for (auto& symbol : row) {
+            if (symbol != 2) {
+                symbol = ' ';
+            } else {
+                symbol = Map_symbols::CELL;
+            }
+        }
+    }
+    m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::CELL_COLOR);
     int center_x = current_player->getPosition().getColumn();
     int center_y = current_player->getPosition().getLine();
     abs_coordinates_to_relative(center_y, center_x, m_map_display, current_player->getPosition());
-    m_map_display.set_atr(center_y, center_x, 1, 0, 1);
+    m_map_display.set_atr(center_y, center_x, 1, A_ITALIC, 3);
+
     for (Position i : current_player->getMap()->getNextRooms(current_player->getPosition())) {
         int cur_x = i.getColumn();
         int cur_y = i.getLine();
         abs_coordinates_to_relative(cur_y, cur_x, m_map_display, current_player->getPosition());
-        m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, A_NORMAL);
+        if (cur_x != 0 && cur_x != m_map_display.get_x() && cur_y != 0 && cur_y != m_map_display.get_y()) {
+            m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4); 
+        }
     }
 
     //TODO: After discussion add player.getMap().getCell(player.getPosition()).draw() using color or italic 
