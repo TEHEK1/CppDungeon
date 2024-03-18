@@ -9,6 +9,8 @@
 #include "navigation/Cell.h"
 #include "monitor/Monitor.h"
 #include "actions/ChooseNextRoom.h"
+#include "actions/MoveLeft.h"
+#include "actions/MoveRight.h"
 #include "Squad.h"
 #include <iostream>
 #include <vector>
@@ -280,7 +282,7 @@ void Monitor::keyEvent() {
     keyEvent(pressed_key);
 }
 
-void Monitor::addKeyChooseNextRooms(Player* player){
+void Monitor::addKeysNavigation(Player* player){
     if(player == nullptr){
         throw std::logic_error("Player undefined");
     }
@@ -288,14 +290,24 @@ void Monitor::addKeyChooseNextRooms(Player* player){
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
             switch (player->getMap()->getDirecrion(player->getPosition(), chooseNextRoom->getPostion())) {
                 case Map::direction::up:
+                    m_user_actions_display.m_key_binds['\38'] = chooseNextRoom;
                     break;
                 case Map::direction::down:
+                    m_user_actions_display.m_key_binds['\40'] = chooseNextRoom;
                     break;
                 case Map::direction::left:
+                    m_user_actions_display.m_key_binds['\37'] = chooseNextRoom;
                     break;
                 case Map::direction::right:
+                    m_user_actions_display.m_key_binds['\39'] = chooseNextRoom;
                     break;
             }
+        }
+        else if(auto moveLeft = std::dynamic_pointer_cast<actions::MoveLeft>(action)){
+            m_user_actions_display.m_key_binds['a'] = moveLeft;
+        }
+        else if(auto moveRight = std::dynamic_pointer_cast<actions::MoveRight>(action)){
+            m_user_actions_display.m_key_binds['d'] = moveRight;
         }
     }
 }

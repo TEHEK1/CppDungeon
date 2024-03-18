@@ -20,12 +20,13 @@ int main()
 
     player->setMonitor(monitor);
     map->getCell(map->getStartPosition());
-    monitor->draw(player);
-    //Some test code
 
+    while(1) {
+        monitor->draw(player);
+        monitor->keyEvent(getch());
+    }
 
-    getch();
     endwin();
-    delete player;
+    delete player, map, monitor;
 	return 0;
 }

@@ -36,7 +36,7 @@ public:
 
 private:
 
-    void addKeyChooseNextRooms(Player* player);
+    void addKeysNavigation(Player* player);
 
     // Don't want to give access to GameWindow and its childs in other files, it's only for Monitor usage
     class GameWindow {
@@ -70,7 +70,7 @@ private:
             InterfaceColumnWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x);
             InterfaceColumnWindow(const InterfaceColumnWindow& other);
             ~InterfaceColumnWindow() = default;
-
+            friend Monitor;
             char find_action(std::shared_ptr<actions::Action> action);
             void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive = true);
             void get_binds();
