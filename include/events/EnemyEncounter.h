@@ -11,6 +11,7 @@
 #include "Squad.h"
 #include "BattleField.h"
 #include <vector>
+#include <queue>
 class Enemy;
 class Player;
 namespace events {
@@ -22,7 +23,9 @@ namespace events {
         std::vector<std::vector<char>> draw() override;
     private:
         void _enemyMove(Player *, std::shared_ptr<entity::Entity>);
+        bool _checkAlive(std::vector<std::shared_ptr<entity::Entity>>);
         Squad m_enemies;
+        std::queue<std::shared_ptr<entity::Entity>> m_priority;
     };
 } // namespace events
 #endif //UNTITLED_ENEMYENCOUNTER_H
