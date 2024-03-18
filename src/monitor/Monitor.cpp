@@ -20,7 +20,7 @@ namespace {
     enum Entity_position {HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
     
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
-    CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), INTERFACE = COLOR_PAIR(5)};
+    CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), INTERFACE_COLOR = COLOR_PAIR(5)};
     enum Map_symbols : char {CELL = '"', ROOM = '0'};
 }
 
@@ -80,8 +80,8 @@ void Monitor::GameWindow::draw_sprite(const size_t& pos_y, const size_t& pos_x,
 
 
 void Monitor::GameWindow::draw_text(const size_t& pos_y, const size_t& pos_x,
-                        const std::vector<char>& text, bool skip_spaces, int attribute) {
-    draw_sprite(pos_y, pos_x, std::vector<std::vector<char>> (1, text), skip_spaces, attribute);
+                        const std::string& text, bool skip_spaces, int attribute) {
+    draw_sprite(pos_y, pos_x, {1, std::vector<char>(text.begin(), text.end())}, skip_spaces, attribute);
 }
 
 size_t Monitor::GameWindow::get_x() const{
@@ -98,6 +98,62 @@ Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) {
     m_y_size = other.m_y_size;
 }
 
+Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
+: GameWindow(y_size, x_size, pos_y, pos_x) {
+    int num_of_col = 4;
+    int block_size  = this->get_x() / (num_of_col * 2 + 6 * 1);
+    int number_of_blocks = this->get_x() / block_size;
+    for (int i = 0; i < num_of_col; i++) {
+        m_columns.push_back(GameWindow(this->get_y(), 2 * block_size, pos_y, pos_x + block_size * (1 + 3 * i)));
+    }
+    this->get_binds();
+}
+
+Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const InterfaceColumnWindow& other) {
+    
+    m_columns = other.m_columns;
+    m_current_window = other.m_current_window;
+    m_key_binds = other.m_key_binds;
+    m_x_size = other.m_x_size;
+    m_y_size = other.m_y_size;
+    m_first_unbind = other.m_first_unbind;
+};
+
+char Monitor::InterfaceColumnWindow::find_action(std::shared_ptr<actions::Action> action) {
+    for (auto i : m_key_binds) {
+        if (i.second == action) {
+            return i.first;
+        }
+    }
+    return 0;
+}
+
+//TODO: Add rebase or listing if the actions have a too much space
+void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
+    size_t cur_y = 0;
+    size_t cur_column = 0;
+    for (auto i : available_actions) {
+        if (cur_y >= m_columns[cur_column].get_y()) {
+            cur_y = 0;
+            cur_column++;
+        }
+        if (adaptive && this->find_action(i) == 0) {
+            m_key_binds[m_first_unbind] = i;
+            m_first_unbind++;
+        }
+        m_columns[cur_column].draw_text(cur_y, 0, std::string(1, this->find_action(i)) + " : " + i->getName(), false, INTERFACE_COLOR);
+        cur_y += 2;
+    }
+};
+
+Monitor::InterfaceColumnWindow::InterfaceColumnWindow()
+:m_columns({})
+, m_key_binds({}) {}
+
+void Monitor::InterfaceColumnWindow::get_binds() {
+    // 
+}
+
 
 Monitor::Monitor(Player* current_player) {
     int row, col;
@@ -107,7 +163,7 @@ Monitor::Monitor(Player* current_player) {
     init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
     init_pair(3, COLOR_BLACK, COLOR_CYAN);
     init_pair(4, COLOR_GREEN, COLOR_GREEN);
-    init_pair(5, COLOR_GREEN, COLOR_GREEN);
+    init_pair(5, COLOR_RED, COLOR_BLACK);
     
     m_bounded_player = current_player;
 
@@ -121,7 +177,7 @@ Monitor::Monitor(Player* current_player) {
     m_background_display = GameWindow ( 2 * row / 3, col, 0, 0);
     m_inventory_display = GameWindow (8 * row / 9, col / 2, 7 * row / 9 + 1, 0);
     m_map_display = GameWindow (row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
-    m_user_actions_display = GameWindow (row / 9, col / 2, 2 * row / 3 + 1, 0);
+    m_user_actions_display = InterfaceColumnWindow(row / 9, col / 2, 2 * row / 3 + 1, 0);
     //Calculating x_distance and size
     const int heroes_blocks = 4;
     const int edge_blocks = 1;
@@ -202,8 +258,9 @@ void Monitor::draw(Player* current_player) {
         }
     }
 
-    //TODO: After discussion add player.getMap().getCell(player.getPosition()).draw() using color or italic 
-    //TODO: Add inventory list display and other related to interface stuff to draw after discussion 
+
+
+    //TODO: Add interface and inventory list display and other related to interface stuff to draw after discussion 
 
 }
 
