@@ -18,4 +18,5 @@ add_executable(CppDungeon
         src/navigation/Cell.cpp
         src/events/Trap.cpp
         src/events/Chest.cpp
+        src/item/Item.cpp
 )

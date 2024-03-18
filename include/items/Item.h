@@ -4,9 +4,14 @@
 
 #ifndef CPPDUNGEON_ITEM_H
 #define CPPDUNGEON_ITEM_H
-#include "skillDesigns/Skill.h"
+#include "skillDesigns/RangeSkill.h"
 namespace items {
-    class Item : public skillDesigns::Skill {
+    class Item : public skillDesigns::RangeSkill {
+    public:
+        std::vector<std::vector<char>> draw();
+        Item(int size, std::string name, std::vector<int> availableRank,
+                   std::vector<int> availableAllyTarget = {},
+                   std::vector<int> availableEnemyTarget = {}, int accuracy = 0, int criticalDamageChance = 0);
     };
 }
 #endif //CPPDUNGEON_ITEM_H
