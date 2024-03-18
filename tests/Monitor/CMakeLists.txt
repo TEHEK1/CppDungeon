@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.24)
 project(MonitorTest)
 
 set(CMAKE_CXX_STANDARD 20)
-
+find_package(PkgConfig REQUIRED)
 find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 include_directories(../../include)
