@@ -14,7 +14,7 @@ namespace effects {
     class MarkedAsEndBattleBattleFieldNeeded: public BattleFieldChanger {
         friend changers::EffectChanger;
     protected:
-        virtual std::function<int(const std::shared_ptr<entity::Entity> &)> getEndBattleTurnFunctionBattleField() = 0;
+        virtual std::function<int(const std::shared_ptr<entity::Entity> &, const std::shared_ptr<BattleField>&)> getEndBattleTurnFunctionBattleField() = 0;
     };
 } // namespace effects
 #endif //TEST_MARKASENDBATTLEBATTLEFIELDNEEDED_H
