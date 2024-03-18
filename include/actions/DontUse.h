@@ -11,7 +11,7 @@
 namespace actions {
     class DontUse : public Action {
     public:
-        explicit DontUse(const std::shared_ptr<events::Trap>&);
+        explicit DontUse(const std::shared_ptr<events::Trap>& trap);
         void act(Player *player) override;
         std::string getName() override;
         std::shared_ptr<events::Trap> getTrap() const;

@@ -4,7 +4,11 @@
 #include "player/Player.h"
 #include "navigation/Map.h"
 #include "changers/PositionChanger.h"
+#include "actions/MoveRight.h"
 #include "actions/MoveLeft.h"
+#include "actions/Use.h"
+#include "actions/DontUse.h"
+#include "actions/ChooseNextRoom.h"
 class PositionChangerAdapter: public changers::PositionChanger{
 public:
     using changers::PositionChanger::setPosition;
@@ -23,8 +27,22 @@ int main()
     auto map = std::make_shared<Map>(12);
     auto monitor = std::make_shared<Monitor>();
     Player* player = new Player(map, monitor);
-    auto moveLeft = actions::MoveLeft();
-    moveLeft.act(player);
+
+    for(auto action:player->getActions()){
+        if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
+            chooseNextRoom->act(player);
+        }
+    }
+    auto moveRight = actions::MoveRight();
+    moveRight.act(player);
+    for(auto action:player->getActions()){
+        if(auto dontUse = std::dynamic_pointer_cast<actions::Use>(action)){
+            dontUse->act(player);
+        }
+    }
+    moveRight.act(player);
+
+
     while(1) {
         monitor->draw(player);
         monitor->keyEvent(getch(), player);

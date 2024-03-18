@@ -37,5 +37,6 @@ add_executable(monitorTest
         ../../src/effects/MarkedAsTurnable.cpp
         ../../src/changers/EntityChanger.cpp
         ../../src/effects/MarkedAsEndBattle.cpp
+        ../../src/events/EmptyCell.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

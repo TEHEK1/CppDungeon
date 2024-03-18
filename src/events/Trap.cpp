@@ -15,13 +15,18 @@
 #include "Squad.h"
 #include "effects/Damage.h"
 
+bool events::Trap::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
+    auto use = std::dynamic_pointer_cast<actions::Use>((*actionIterator));
+    return static_cast<bool>(use && (use->getUsableEvent()).get() == this);
+}
+
 void events::Trap::turn(Player * player) {
     player -> getMonitor() -> draw(player);
-    std::shared_ptr<events::UsableEvent> ptr_Use(this);
     if(m_used) {
-        addAction(player, std::shared_ptr<actions::Use>(new actions::Use(ptr_Use)));
+        addAction(player, std::make_shared<actions::Use>(Trap::shared_from_this()));
     }
-    addAction(player, std::shared_ptr<actions::DontUse>(new actions::DontUse(std::shared_ptr<Trap>(this))));
+
+    addAction(player, std::make_shared<actions::DontUse>(shared_from_this()));
 }
 
 void events::Trap::dontUse(Player *player) {
@@ -30,7 +35,7 @@ void events::Trap::dontUse(Player *player) {
     for(int i = 0; i < entities.size(); i++){
         addEffect(entities[i], std::make_shared<effects::Damage>(random));
     }
-    player -> getMap() -> getCell(player->getPosition())->freeMoves(player, (this));
+    player -> getMap() -> getCell(player->getPosition())->freeMoves(player, this);
 }
 
 void events::Trap::use(Player *player) {
@@ -42,6 +47,7 @@ void events::Trap::use(Player *player) {
         for (int i = 0; i < entities.size(); i++) {
             addEffect(entities[i], std::make_shared<effects::Damage>(random));
         }
+        removeAction(player, [this](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return comp(actionIterator);});
 //    |      __0__      |
 //    |     /     \     |
 //    |    / 0 0 0 \    |
