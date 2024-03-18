@@ -56,6 +56,8 @@ namespace events {
         return to_ret;
     }
 
+    std::shared_ptr<BattleField> EnemyEncounter::getBattleField();
+
     void EnemyEncounter::_enemyMove(Player* player, std::shared_ptr<entity::Entity> entity, int rank, std::shared_ptr<BattleField> battleField) {
         auto skills = entity->getSkills();
         std::vector<std::shared_ptr<skillDesigns::Skill>> availableSkills;

@@ -94,3 +94,17 @@ void changers::EffectChanger::removeEffect(const std::shared_ptr<entity::Entity>
         entity->m_effects.erase(effect);
     }
 }
+
+void changers::EffectChanger::removeEffect(const std::shared_ptr<entity::Entity>& entity, std::function<bool(
+        std::set<std::shared_ptr<effects::Effect>>::iterator)> actionIterator) {
+    auto& actions = entity->m_effects;
+    for (auto actionsIterator = actions.begin(); actionsIterator != actions.end();)
+    {
+        if (actionIterator(actionsIterator)){
+            actionsIterator = actions.erase(actionsIterator);
+        }
+        else {
+            ++actionsIterator;
+        }
+    }
+}

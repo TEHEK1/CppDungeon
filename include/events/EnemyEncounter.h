@@ -21,6 +21,7 @@ namespace events {
         void turn(Player* player, std::shared_ptr<events::Event> index);
         std::shared_ptr<Squad> getEnemies();
         std::vector<std::vector<char>> draw() override;
+        std::shared_ptr<BattleField> getBattleField();
     private:
         void _enemyMove(Player *, std::shared_ptr<entity::Entity>, int rank, std::shared_ptr<BattleField> battleField);
         bool _checkAlive(std::vector<std::shared_ptr<entity::Entity>>);
