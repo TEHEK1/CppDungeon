@@ -144,6 +144,8 @@ char Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Acti
  }
 //TODO: Add rebase or listing if the actions have a too much space
 void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
+    m_key_binds = {};
+    m_first_unbind = 'a';
     size_t cur_y = 0;
     size_t cur_column = 0;
     m_columns[cur_column].clean();

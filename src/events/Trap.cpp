@@ -16,8 +16,8 @@
 #include "effects/Damage.h"
 
 void events::Trap::turn(Player * player) {
-    player -> getMonitor() -> draw();
-    std::shared_ptr<events::UsableEvent> ptr_Use(dynamic_cast<events::UsableEvent*>(this));
+    player -> getMonitor() -> draw(player);
+    std::shared_ptr<events::UsableEvent> ptr_Use(this);
     if(m_used) {
         addAction(player, std::shared_ptr<actions::Use>(new actions::Use(ptr_Use)));
     }
@@ -30,7 +30,7 @@ void events::Trap::dontUse(Player *player) {
     for(int i = 0; i < entities.size(); i++){
         addEffect(entities[i], std::make_shared<effects::Damage>(random));
     }
-    player -> getMap() -> getCell(player->getPosition())->freeMoves(player, std::shared_ptr<events::Event>(this));
+    player -> getMap() -> getCell(player->getPosition())->freeMoves(player, (this));
 }
 
 void events::Trap::use(Player *player) {
@@ -66,7 +66,7 @@ void events::Trap::use(Player *player) {
         m_drawing[10] = {'|',' ',' ',' ','|',' ',' ',' ',' ','x',' ',' ',' ',' ','|',' ',' ',' ','|',' '};
         m_drawing[11] = {'|',' ',' ',' ','|',' ',' ',' ','x',' ','x',' ',' ',' ','|',' ',' ',' ','|',' '};
         m_drawing[12] = {'|',' ',' ',' ','|',' ',' ','x',' ',' ',' ','x',' ',' ','|',' ',' ',' ','|',' '};
-        player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<events::Event>(this));
+        player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
         m_used = false;
     }
 }

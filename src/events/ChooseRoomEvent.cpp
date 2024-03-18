@@ -10,10 +10,9 @@
 
 void events::ChooseRoomEvent::turn(Player *player) {
     player->getMonitor()->draw(player);
-    player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<Event>(this));
+    player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
     for (Position coords : player->getMap()->getNextRooms(player->getPosition())) {
         this->addAction(player, std::move(std::make_shared<actions::ChooseNextRoom>(coords)));
-
     }
 }
 

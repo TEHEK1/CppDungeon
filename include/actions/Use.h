@@ -7,10 +7,7 @@
 #include <memory>
 #include "actions/Action.h"
 #include "events/UsableEvent.h"
-class Chest;
-namespace events {
-    class UsableEvent;
-} // namespace events
+#include "namespaces/events.h"
 namespace actions {
     class Use : public Action {
     public:
@@ -21,6 +18,5 @@ namespace actions {
     private:
         std::shared_ptr<events::UsableEvent> m_usableEvent;
     };
-
-#endif //CPPDUNGEON_USE_H
 }//namespace actions
+#endif //CPPDUNGEON_USE_H

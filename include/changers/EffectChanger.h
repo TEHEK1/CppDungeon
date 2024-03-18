@@ -7,7 +7,7 @@
 #include <memory>
 #include "namespaces/effects.h"
 #include "namespaces/entity.h"
-class BattleField;
+#include "namespaces/battlefield.h"
 namespace changers {
     class EffectChanger {
         static int turnEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect, const std::shared_ptr<BattleField>& battlefield = nullptr);

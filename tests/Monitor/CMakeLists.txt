@@ -26,5 +26,16 @@ add_executable(monitorTest
         ../../src/changers/PositionChanger.cpp
         ../../src/actions/MoveLeft.cpp
         ../../src/actions/MoveRight.cpp
+        ../../src/events/Chest.cpp
+        ../../src/actions/Use.cpp
+        ../../src/actions/DontUse.cpp
+        ../../src/events/Trap.cpp
+        ../../src/changers/EffectChanger.cpp
+        ../../src/effects/Damege.cpp
+        ../../src/effects/ImmediateCharacteristicEffect.cpp
+        ../../src/effects/ImmediateEffect.cpp
+        ../../src/effects/MarkedAsTurnable.cpp
+        ../../src/changers/EntityChanger.cpp
+        ../../src/effects/MarkedAsEndBattle.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})
