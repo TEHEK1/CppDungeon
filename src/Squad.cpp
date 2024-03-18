@@ -13,7 +13,7 @@ std::vector<std::shared_ptr<entity::Entity>> Squad::getEntities() const {
     return m_squad;
 }
 std::shared_ptr<entity::Entity> Squad::getEntity(int index) const {
-    if (index < 0 || index >= m_squad.size()) { throw std::invalid_argument("index is out of range"); }
+    if (index < 0 || index >= m_squad.size()) { return nullptr;}
     return m_squad[index];
 }
 
