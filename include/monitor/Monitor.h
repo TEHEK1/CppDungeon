@@ -31,12 +31,12 @@ public:
     void draw(Player* player);//Ask draw functions realizations from Map, Entity and Event if needed
 
 
-    void keyEvent(char key);
-    void keyEvent();
+    void keyEvent(char key, Player* player);
+    void keyEvent(Player* player);
 
 private:
 
-    void addKeyChooseNextRooms(Player* player);
+    void addKeysNavigation(Player* player);
 
     // Don't want to give access to GameWindow and its childs in other files, it's only for Monitor usage
     class GameWindow {
@@ -45,7 +45,7 @@ private:
             GameWindow(const GameWindow& other);
             ~GameWindow() = default;
             GameWindow(const size_t& pos_y, const size_t& pos_x, const size_t& y_size, const size_t& x_size);
-
+            void clean();
 
             //Just placing sprite or text without clearing all previous text
             void draw_sprite(const size_t& pos_y, const size_t& pos_x,
@@ -70,8 +70,9 @@ private:
             InterfaceColumnWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x);
             InterfaceColumnWindow(const InterfaceColumnWindow& other);
             ~InterfaceColumnWindow() = default;
-
-            char find_action(std::shared_ptr<actions::Action> action);
+            friend Monitor;
+            char find_bind_key(std::shared_ptr<actions::Action> action);
+            std::shared_ptr<actions::Action> find_action(char key);
             void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive = true);
             void get_binds();
         private:

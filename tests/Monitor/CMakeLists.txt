@@ -24,5 +24,7 @@ add_executable(monitorTest
         ../../src/actions/ChooseNextRoom.cpp
         ../../src/changers/ActionsChanger.cpp
         ../../src/changers/PositionChanger.cpp
+        ../../src/actions/MoveLeft.cpp
+        ../../src/actions/MoveRight.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

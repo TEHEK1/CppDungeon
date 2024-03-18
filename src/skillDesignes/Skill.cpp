@@ -128,8 +128,8 @@ namespace skillDesigns {
                           int accuracyModifier) {
         std::shared_ptr<effects::MarkedAsResistable> markedAsResistable =
                 std::shared_ptr<effects::MarkedAsResistable>{effect, dynamic_cast<effects::MarkedAsResistable *>(effect.get())};
-        if (markedAsResistable == nullptr ||
-            resisted(object, markedAsResistable->resistanceHash(), crited) - (accuracyModifier - 100) < 0) {
+        if (object!= nullptr && (markedAsResistable == nullptr ||
+            resisted(object, markedAsResistable->resistanceHash(), crited) - (accuracyModifier - 100) < 0)) {
             changers::EffectChanger::addEffect(object, effect, battleField);
         }
     }

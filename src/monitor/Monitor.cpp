@@ -9,6 +9,8 @@
 #include "navigation/Cell.h"
 #include "monitor/Monitor.h"
 #include "actions/ChooseNextRoom.h"
+#include "actions/MoveLeft.h"
+#include "actions/MoveRight.h"
 #include "Squad.h"
 #include <iostream>
 #include <vector>
@@ -53,6 +55,10 @@ void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
     } else {
         this->set_atr(row, col, num);
     }
+}
+
+void Monitor::GameWindow::clean() {
+    wclear(m_current_window);
 }
 //TODO: add size checkers
 //draw_sprite draws with only either text formating attribute or pair of colors (text, font) 
@@ -140,10 +146,12 @@ char Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Acti
 void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
     size_t cur_y = 0;
     size_t cur_column = 0;
+    m_columns[cur_column].clean();
     for (auto& i : available_actions) {
         if (cur_y >= m_columns[cur_column].get_y()) {
             cur_y = 0;
             cur_column++;
+            m_columns[cur_column].clean();
         }
         if (adaptive && this->find_bind_key(i) == 0) {
             m_key_binds[m_first_unbind] = i;
@@ -220,6 +228,7 @@ void Monitor::draw(Player* current_player) {
         throw std::logic_error("Squad is not initialized");
     }
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
+        m_entity_window[draw_position].clean();
         if (i != nullptr) {
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
         }
@@ -238,6 +247,7 @@ void Monitor::draw(Player* current_player) {
             }
         }
     }
+    m_map_display.clean();
     m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::ROOM_COLOR);
     drawing_map = current_player->getMap()->draw(current_player->getPosition(),
                                                                                 m_map_display.get_y() - 2, 
@@ -277,19 +287,20 @@ void Monitor::draw(Player* current_player) {
 
 
 
-void Monitor::keyEvent(Player* player, char key) {
+void Monitor::keyEvent(char key, Player* player) {
     if (m_user_actions_display.find_action(key) != nullptr) {
         m_user_actions_display.find_action(key)->act(player);
     }
 }
 
 
+
 void Monitor::keyEvent(Player* player) {
     char pressed_key = getch();
-    keyEvent(player, pressed_key);
+    keyEvent(pressed_key, player);
 }
 
-void Monitor::addKeyChooseNextRooms(Player* player){
+void Monitor::addKeysNavigation(Player* player){
     if(player == nullptr){
         throw std::logic_error("Player undefined");
     }
@@ -297,14 +308,24 @@ void Monitor::addKeyChooseNextRooms(Player* player){
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
             switch (player->getMap()->getDirecrion(player->getPosition(), chooseNextRoom->getPostion())) {
                 case Map::direction::up:
+                    m_user_actions_display.m_key_binds['\38'] = chooseNextRoom;
                     break;
                 case Map::direction::down:
+                    m_user_actions_display.m_key_binds['\40'] = chooseNextRoom;
                     break;
                 case Map::direction::left:
+                    m_user_actions_display.m_key_binds['\37'] = chooseNextRoom;
                     break;
                 case Map::direction::right:
+                    m_user_actions_display.m_key_binds['\39'] = chooseNextRoom;
                     break;
             }
+        }
+        else if(auto moveLeft = std::dynamic_pointer_cast<actions::MoveLeft>(action)){
+            m_user_actions_display.m_key_binds['a'] = moveLeft;
+        }
+        else if(auto moveRight = std::dynamic_pointer_cast<actions::MoveRight>(action)){
+            m_user_actions_display.m_key_binds['d'] = moveRight;
         }
     }
 }

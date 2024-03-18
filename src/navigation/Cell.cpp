@@ -7,10 +7,10 @@
 
 void Cell::freeMoves(Player * player, const std::shared_ptr<events::Event>& event) {
     m_endedEvents.insert(event);
-    /*if (m_endedEvents.size() == getEvents().size()) {//TODO:Make ActionController
+    if (m_endedEvents.size() == getEvents().size()) {
         addAction(player, std::shared_ptr<actions::Action>(new actions::MoveLeft));
         addAction(player, std::shared_ptr<actions::Action>(new actions::MoveRight));
-    }*/
+    }
 }
 
 char Cell::getLevel() {
