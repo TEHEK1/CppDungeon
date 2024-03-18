@@ -1,5 +1,5 @@
-#include "BrigandRaider.h"
-#include "EntityChanger.h"
+#include "enemies/BrigandRaider/BrigandRaider.h"
+#include "changers/EntityChanger.h"
 
 enemies::BrigandRaider::BrigandRaider():Enemy(
     "BrigandRaider",

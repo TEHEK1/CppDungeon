@@ -3,11 +3,10 @@
 //
 #ifndef UNTITLED_BRIGANDRAIDER_H
 #define UNTITLED_BRIGANDRAIDER_H
-#include "Enemy.h"
-
+#include "entity/Enemy.h"
 
 namespace enemies {
-    class BrigandRaider:public Enemy{
+    class BrigandRaider:public entity::Enemy{
     public:
         BrigandRaider();
     };

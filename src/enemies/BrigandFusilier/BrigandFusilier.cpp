@@ -1,5 +1,5 @@
-#include "BrigandFusilier.h"
-#include "EntityChanger.h"
+#include "enemies/BrigandFusier/BrigandFusilier.h"
+#include "changers/EntityChanger.h"
 
 enemies::BrigandFusilier::BrigandFusilier():Enemy("BrigandFusilier",
     {{static_cast<int>(Characteristic::accuracyModifier), 1}, 

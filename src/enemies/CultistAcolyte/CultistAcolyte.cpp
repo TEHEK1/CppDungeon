@@ -1,5 +1,5 @@
-#include "CultistAcolyte.h"
-#include "EntityChanger.h"
+#include "enemies/CultistAcolyte/CultistAcolyte.h"
+#include "changers/EntityChanger.h"
 
 enemies::CultistAcolyte::CultistAcolyte():Enemy(
     "CultistAcolyte",

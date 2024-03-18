@@ -1,3 +1,3 @@
-#include "enemies/Enemy.h"
+#include "entity/Enemy.h"
 
 Enemy::Enemy(std::string name, std::map<int, int> characteristics) : Entity(name, characteristics) {}

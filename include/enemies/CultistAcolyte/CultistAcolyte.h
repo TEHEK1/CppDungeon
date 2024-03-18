@@ -3,10 +3,10 @@
 //
 #ifndef UNTITLED_CULTISTACOLYTE_H
 #define UNTITLED_CULTISTACOLYTE_H
-#include "Enemy.h"
+#include "entity/Enemy.h"
 
 namespace enemies {
-    class CultistAcolyte:public Enemy{
+    class CultistAcolyte:public entity::Enemy{
         CultistAcolyte();
     };
 }

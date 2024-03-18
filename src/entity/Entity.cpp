@@ -64,11 +64,11 @@ int entity::Entity::get(Characteristic characteristic) const {
     return get(static_cast<int>(characteristic));
 }
 
-const std::set<std::shared_ptr<effects::Effect>>& entity::Entity::getEffects() const {
+std::set<std::shared_ptr<effects::Effect>> entity::Entity::getEffects() const {
     return m_effects;
 }
 
-const std::set<std::shared_ptr<Skill>>& entity::Entity::getSkills() const {
+std::set<std::shared_ptr<Skill>> entity::Entity::getSkills() const {
     return m_skills;
 }
 

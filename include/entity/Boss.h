@@ -4,7 +4,9 @@
 
 #ifndef CPPDUNGEON_BOSS_H
 #define CPPDUNGEON_BOSS_H
-#include "enemies/Enemy.h"
-class Boss:public Enemy{
-};
+#include "entity/Enemy.h"
+namespace entity {
+    class Boss : public Enemy {
+    };
+} // namespace entity
 #endif //CPPDUNGEON_BOSS_H
