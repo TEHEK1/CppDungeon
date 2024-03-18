@@ -101,11 +101,12 @@ Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) {
 
 Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
 : GameWindow(y_size, x_size, pos_y, pos_x) {
-    int num_of_col = 4;
-    int block_size  = this->get_x() / (num_of_col * 2 + 6 * 1);
+    int num_of_col = 5;
+    int col_size = 7;
+    int block_size  = this->get_x() / (num_of_col * col_size + (num_of_col + 1));
     int number_of_blocks = this->get_x() / block_size;
     for (int i = 0; i < num_of_col; i++) {
-        m_columns.push_back(GameWindow(this->get_y(), 2 * block_size, pos_y, pos_x + block_size * (1 + 3 * i)));
+        m_columns.push_back(GameWindow(this->get_y(), col_size * block_size, pos_y, pos_x + block_size * (1 + (col_size + 1) * i)));
     }
     this->get_binds();
 }
@@ -120,8 +121,8 @@ Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const InterfaceColumnWindo
     m_first_unbind = other.m_first_unbind;
 };
 
-char Monitor::InterfaceColumnWindow::find_action(std::shared_ptr<actions::Action> action) {
-    for (auto i : m_key_binds) {
+char Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Action> action) {
+    for (auto& i : m_key_binds) {
         if (i.second == action) {
             return i.first;
         }
@@ -129,20 +130,26 @@ char Monitor::InterfaceColumnWindow::find_action(std::shared_ptr<actions::Action
     return 0;
 }
 
+ std::shared_ptr<actions::Action> Monitor::InterfaceColumnWindow::find_action(char key) {
+    if (m_key_binds.find(key) == m_key_binds.end()) {
+        return nullptr;
+    }
+    return m_key_binds[key];
+ }
 //TODO: Add rebase or listing if the actions have a too much space
 void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
     size_t cur_y = 0;
     size_t cur_column = 0;
-    for (auto i : available_actions) {
+    for (auto& i : available_actions) {
         if (cur_y >= m_columns[cur_column].get_y()) {
             cur_y = 0;
             cur_column++;
         }
-        if (adaptive && this->find_action(i) == 0) {
+        if (adaptive && this->find_bind_key(i) == 0) {
             m_key_binds[m_first_unbind] = i;
             m_first_unbind++;
         }
-        m_columns[cur_column].draw_text(cur_y, 0, std::string(1, this->find_action(i)) + " : " + i->getName(), false, INTERFACE_COLOR);
+        m_columns[cur_column].draw_text(cur_y, 0, std::string(1, this->find_bind_key(i)) + " : " + i->getName(), false, INTERFACE_COLOR);
         cur_y += 2;
     }
 };
@@ -270,14 +277,16 @@ void Monitor::draw(Player* current_player) {
 
 
 
-void Monitor::keyEvent(char key) {
-    
+void Monitor::keyEvent(Player* player, char key) {
+    if (m_user_actions_display.find_action(key) != nullptr) {
+        m_user_actions_display.find_action(key)->act(player);
+    }
 }
 
 
-void Monitor::keyEvent() {
+void Monitor::keyEvent(Player* player) {
     char pressed_key = getch();
-    keyEvent(pressed_key);
+    keyEvent(player, pressed_key);
 }
 
 void Monitor::addKeyChooseNextRooms(Player* player){
