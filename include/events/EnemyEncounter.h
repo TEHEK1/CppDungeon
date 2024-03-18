@@ -6,16 +6,18 @@
 #define UNTITLED_ENEMYENCOUNTER_H
 #include "entity/Entity.h"
 #include "events/Event.h"
+#include "changers/SquadChanger.h"
+#include "changers/EffectChanger.h"
 #include "Squad.h"
 #include <vector>
 class Enemy;
 class Player;
 namespace events {
-    class EnemyEncounter : public Event {
+    class EnemyEncounter : public Event, public SquadChanger, public changers::EffectChanger {
     public:
         EnemyEncounter();
 
-        void turn(std::shared_ptr<Player> player, int index);
+        void turn(Player* player, std::shared_ptr<events::Event> index);
 
         Squad getEnemies();
 

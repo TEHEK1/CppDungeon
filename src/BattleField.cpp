@@ -5,6 +5,8 @@
 #include "BattleField.h"
 #include "Squad.h"
 #include <memory>
+#include <stdexcept>
+#include <algorithm>
 #include <vector>
 
 
