@@ -11,6 +11,7 @@
 #include "skillDesigns/Skill.h"
 #include "entity/Characteristic.h"
 #include "effects/Effect.h"
+#include "Resistances.h"
 
 class Skill;
 #include "namespaces/changers.h"
@@ -28,15 +29,15 @@ namespace entity {
 
         explicit Entity(std::string name, std::map<int, int>);
 
-        std::vector<std::vector<char>> draw();
+        virtual std::vector<std::vector<char>> draw() final;
 
         virtual int get(int key) const final;
         virtual int getReal(int key) const final;
         virtual int get(Characteristic characteristic) const;
 
-        const std::set<std::shared_ptr<effects::Effect>> &getEffects() const;
+        virtual std::set<std::shared_ptr<effects::Effect>> getEffects() const final;
 
-        const std::set<std::shared_ptr<Skill>> &getSkills() const;
+        virtual std::set<std::shared_ptr<Skill>> getSkills() const final;
 
         virtual std::string getName() const;
 
@@ -47,6 +48,10 @@ namespace entity {
         virtual int dodged() const final;
 
         virtual int resisted(int effectHash) const final;
+    
+    protected:
+        virtual std::vector<std::vector<char>> drawAlive();
+        virtual std::vector<std::vector<char>> drawDead();
     };
 } // namespace entity
 #endif //UNTITLED_ENTITY_H
