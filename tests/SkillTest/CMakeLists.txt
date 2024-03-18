@@ -36,4 +36,15 @@ add_executable(skillTest
         ../../src/effects/Blight.cpp
         ../../src/effects/AutoAction.cpp
         ../../src/effects/Bleed.cpp
+        ../../src/enemies/BrigandFusilier/BrigandFusilier.cpp
+        ../../src/enemies/BrigandFusilier/RushedShot.cpp
+        ../../src/entity/Enemy.cpp
+        ../../src/enemies/CultistAcolyte/CultistAcolyte.cpp
+        ../../src/enemies/CultistAcolyte/EldritchPull.cpp
+        ../../src/enemies/BrigandFusilier/BlanketFire.cpp
+        ../../src/enemies/BrigandRaider/BrigandRaider.cpp
+        ../../src/enemies/BrigandRaider/Shank.cpp
+        ../../src/enemies/BrigandRaider/SliceAndDice.cpp
+        ../../src/enemies/BrigandRaider/UppercutSlice.cpp
+        ../../src/enemies/BrigandRaider/HarmlessPoke.cpp
 )

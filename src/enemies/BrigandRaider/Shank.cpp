@@ -14,7 +14,7 @@ namespace enemies {
             (crited, 7, 15), battleField, crited, 100);
             Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Bleed>
             (crited, 3, 3), battleField, crited, 140);
-            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Marked>
+            Skill::addEffect(object, generators::EffectGenerator::generateNumberOfTurnsEffect<effects::Mark>
             (crited, 3), battleField, crited, 100);
         }
 

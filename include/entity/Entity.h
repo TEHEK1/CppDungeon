@@ -13,12 +13,12 @@
 #include "effects/Effect.h"
 #include "Resistances.h"
 
-class Skill;
 #include "namespaces/changers.h"
+#include "namespaces/skillDesigns.h"
 namespace entity {
     class Entity {
     protected:
-        std::set<std::shared_ptr<Skill>> m_skills;
+        std::set<std::shared_ptr<skillDesigns::Skill>> m_skills;
         std::map<int, int> m_characteristics;
         std::set<std::shared_ptr<effects::Effect>> m_effects;
         std::string m_name;
@@ -27,7 +27,7 @@ namespace entity {
     public:
         virtual ~Entity() = default;
 
-        explicit Entity(std::string name, std::map<int, int>);
+        explicit Entity(std::string name, std::map<int, int>, std::set<std::shared_ptr<skillDesigns::Skill>> skills);
 
         virtual std::vector<std::vector<char>> draw() final;
 
@@ -37,7 +37,7 @@ namespace entity {
 
         virtual std::set<std::shared_ptr<effects::Effect>> getEffects() const final;
 
-        virtual std::set<std::shared_ptr<Skill>> getSkills() const final;
+        virtual std::set<std::shared_ptr<skillDesigns::Skill>> getSkills() const final;
 
         virtual std::string getName() const;
 
