@@ -19,12 +19,12 @@ namespace events {
     public:
         EnemyEncounter();
         void turn(Player* player, std::shared_ptr<events::Event> index);
-        Squad getEnemies();
+        std::shared_ptr<Squad> getEnemies();
         std::vector<std::vector<char>> draw() override;
     private:
-        void _enemyMove(Player *, std::shared_ptr<entity::Entity>);
+        void _enemyMove(Player *, std::shared_ptr<entity::Entity>, int rank, std::shared_ptr<BattleField> battleField);
         bool _checkAlive(std::vector<std::shared_ptr<entity::Entity>>);
-        Squad m_enemies;
+        std::shared_ptr<Squad> m_enemies;
         std::queue<std::shared_ptr<entity::Entity>> m_priority;
     };
 } // namespace events
