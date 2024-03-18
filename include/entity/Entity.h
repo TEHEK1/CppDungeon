@@ -35,9 +35,9 @@ namespace entity {
         virtual int getReal(int key) const final;
         virtual int get(Characteristic characteristic) const;
 
-        const std::set<std::shared_ptr<effects::Effect>> &getEffects() const;
+        virtual std::set<std::shared_ptr<effects::Effect>> getEffects() const final;
 
-        const std::set<std::shared_ptr<Skill>> &getSkills() const;
+        virtual std::set<std::shared_ptr<Skill>> getSkills() const final;
 
         virtual std::string getName() const;
 
@@ -50,8 +50,8 @@ namespace entity {
         virtual int resisted(int effectHash) const final;
     
     protected:
-        std::vector<std::vector<char>> drawAlive();
-        std::vector<std::vector<char>> drawDead();
+        virtual std::vector<std::vector<char>> drawAlive();
+        virtual std::vector<std::vector<char>> drawDead();
     };
 } // namespace entity
 #endif //UNTITLED_ENTITY_H
