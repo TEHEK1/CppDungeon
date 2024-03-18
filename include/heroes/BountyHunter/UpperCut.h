@@ -1,18 +1,20 @@
-#include "skillDesigns/RangeSkill.h"
+#include "skillDesigns/Skill.h"
 
-namespace enemies {
-    namespace BrigandRaider {
-        class HarmlessPoke : public skillDesigns::RangeSkill {
-        public:
-            HarmlessPoke();
+namespace Heroes {
 
+    namespace BountyHunter {
+
+        class UpperCut: public skillDesigns::Skill {
+            UpperCut();
+            
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,
                                  std::shared_ptr<entity::Entity> object) override;
 
             void unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                std::shared_ptr<entity::Entity> object) override;
-                               
         };
-    } // namespace BrigandFusilier
-} // namespace enemies
+
+    } // namespace BountyHunter
+
+} // namespace Heroes
