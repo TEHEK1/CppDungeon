@@ -45,7 +45,7 @@ private:
             GameWindow(const GameWindow& other);
             ~GameWindow() = default;
             GameWindow(const size_t& pos_y, const size_t& pos_x, const size_t& y_size, const size_t& x_size);
-
+            void clean();
 
             //Just placing sprite or text without clearing all previous text
             void draw_sprite(const size_t& pos_y, const size_t& pos_x,
@@ -71,7 +71,8 @@ private:
             InterfaceColumnWindow(const InterfaceColumnWindow& other);
             ~InterfaceColumnWindow() = default;
             friend Monitor;
-            char find_action(std::shared_ptr<actions::Action> action);
+            char find_bind_key(std::shared_ptr<actions::Action> action);
+            std::shared_ptr<actions::Action> find_action(char key);
             void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive = true);
             void get_binds();
         private:
