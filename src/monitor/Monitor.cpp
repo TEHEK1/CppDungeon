@@ -8,6 +8,7 @@
 #include "events/Event.h"
 #include "navigation/Cell.h"
 #include "monitor/Monitor.h"
+#include "actions/ChooseNextRoom.h"
 #include "Squad.h"
 #include <iostream>
 #include <vector>
@@ -90,11 +91,9 @@ Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) {
 }
 
 
-Monitor::Monitor(Player* current_player) {
+Monitor::Monitor() {
     int row, col;
     getmaxyx(stdscr, row, col);
-
-    m_bounded_player = current_player;
 
     //        |--------------------|
     // 2 / 3  |  Battle            |
@@ -138,7 +137,9 @@ void Monitor::abs_coordinates_to_relative(int& row, int& col, const GameWindow& 
 void Monitor::draw(Player* current_player) {
     //Heroes
     int draw_position = static_cast<int>(Entity_position::HERO_1);
-    
+    if(current_player->getSquad() == nullptr){
+        throw std::logic_error("Squad is not initialized");
+    }
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
         if (i != nullptr) {
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
@@ -174,10 +175,6 @@ void Monitor::draw(Player* current_player) {
 }
 
 
-void Monitor::draw() {
-    draw(m_bounded_player);
-}
-
 
 void Monitor::keyEvent(char key) {
     
@@ -187,4 +184,24 @@ void Monitor::keyEvent(char key) {
 void Monitor::keyEvent() {
     char pressed_key = getch();
     keyEvent(pressed_key);
+}
+
+void Monitor::addKeyChooseNextRooms(Player* player){
+    if(player == nullptr){
+        throw std::logic_error("Player undefined");
+    }
+    for(auto& action:player->getActions()){
+        if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
+            switch (player->getMap()->getDirecrion(player->getPosition(), chooseNextRoom->getPostion())) {
+                case Map::direction::up:
+                    break;
+                case Map::direction::down:
+                    break;
+                case Map::direction::left:
+                    break;
+                case Map::direction::right:
+                    break;
+            }
+        }
+    }
 }

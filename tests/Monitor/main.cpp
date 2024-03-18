@@ -15,11 +15,12 @@ int main()
     refresh();
     
     Map* map = new Map(12);
-    Player* player = new Player(map);
-    Monitor* monitor = new Monitor(player);
-    player->setMonitor(monitor);
+    Monitor* monitor = new Monitor();
+    Player* player = new Player(map, monitor);
 
-    monitor->draw();
+    player->setMonitor(monitor);
+    map->getCell(map->getStartPosition());
+    monitor->draw(player);
     //Some test code
 
 

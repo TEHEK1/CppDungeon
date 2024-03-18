@@ -14,4 +14,8 @@ namespace actions {
     std::shared_ptr<events::Trap> DontUse::getTrap() const {
         return m_trap;
     }
+
+    std::string DontUse::getName() {
+        return "Dont Use Trap(Known damage)";
+    }
 }//namespace actions

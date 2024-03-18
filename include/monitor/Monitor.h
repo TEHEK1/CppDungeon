@@ -24,13 +24,11 @@ class Player;
 //At this moment ncurses mode starts with initialistion of Monitor
 class Monitor{
 public:
-    Monitor() = delete;
-    Monitor(Player* player);
+    Monitor();
     ~Monitor() = default;
 
 
     void draw(Player* player);//Ask draw functions realizations from Map, Entity and Event if needed
-    void draw();
 
 
     void keyEvent(char key);
@@ -38,6 +36,7 @@ public:
 
 private:
 
+    void addKeyChooseNextRooms(Player* player);
 
     // Don't want to give access to GameWindow and its childs in other files, it's only for Monitor usage
     class GameWindow {
@@ -70,7 +69,6 @@ private:
             void draw_interface();
             void get_binds();
         private:
-            Player* m_bounded_player;
             std::vector<std::vector<GameWindow>> m_columns;
             const size_t m_max_string_len = 10;
             std::map<char, std::shared_ptr<actions::Action>> m_key_binds;
@@ -81,7 +79,6 @@ private:
     
 
 
-    Player* m_bounded_player;
     GameWindow m_inventory_display;
     GameWindow m_user_actions_display;
     GameWindow m_map_display;

@@ -14,7 +14,7 @@ namespace actions {
     public:
         // UseSkill(Entity* actor, Skill* skill, std::vector<Entity*> entity);
         UseSkill(std::shared_ptr<entity::Entity> actor, Skill *skill, std::vector<std::shared_ptr<entity::Entity>> entities);
-
+        std::string getName() override;
         void act(Player *) override;
     }
 }

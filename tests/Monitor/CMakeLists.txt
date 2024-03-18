@@ -19,5 +19,10 @@ add_executable(monitorTest
         ../../src/navigation/Hall.cpp
         ../../src/navigation/Room.cpp
         ../../src/navigation/Position.cpp
+        ../../src/generators/NumberGenerator.cpp
+        ../../src/events/ChooseRoomEvent.cpp
+        ../../src/actions/ChooseNextRoom.cpp
+        ../../src/changers/ActionsChanger.cpp
+        ../../src/changers/PositionChanger.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

@@ -15,6 +15,7 @@ namespace actions {
         UseItem(Player *player, items::Item *item, std::vector<std::shared_ptr<entity::Entity>> entities);
 
         void act(Player *) override;
+        std::string getName() override;
     };
 } // namespace actions
 #endif //CPPDUNGEON_USEITEM_H

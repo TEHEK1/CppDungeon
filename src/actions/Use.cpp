@@ -9,4 +9,7 @@ namespace actions {
     std::shared_ptr<events::UsableEvent> Use::getUsableEvent() {
         return m_usableEvent;
     }
+    std::string Use::getName() {
+        return "Interact with Chest or Trap";
+    }
 }//namespace actions

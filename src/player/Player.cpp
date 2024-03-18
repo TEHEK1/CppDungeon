@@ -11,8 +11,18 @@
 #include "Squad.h"
 #include <memory>
 
-Player::Player(Map *map):m_map(map), m_position(map->getStartPosition()) {
-    m_squad = std::make_shared<Squad>(std::vector<std::shared_ptr<entity::Entity>>(2));
+Player::Player(Map *map, Monitor *monitor) : m_map(map), m_monitor(monitor) {
+    m_position = map->getStartPosition();
+    m_squad = std::make_shared<Squad>(std::vector<std::shared_ptr<entity::Entity>>(3));
+    if(map->getCell(m_position) == nullptr){
+        throw std::logic_error("No such Cell");
+    }
+    map->getCell(m_position)->generateEvents();
+    for(auto& event:map->getCell(m_position)->getEvents()){
+        if(event!= nullptr) {
+            event->turn(this);
+        }
+    }
 }
 
 Monitor* Player::getMonitor() {
