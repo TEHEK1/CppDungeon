@@ -6,7 +6,7 @@
 #define UNTITLED_MONITOR_H
 
 // Non-selfmade library for UI realisation
-#include <ncurses.h>
+//#include <ncurses.h>
 #include <vector>
 class Player;
 //       x --->
@@ -45,17 +45,17 @@ private:
 
 
         //Just placing sprite or text without clearing all previous text
-        void draw_sprite(const size_t& pos_y, const size_t& pos_x,
-                        const std::vector<std::vector<char>>& sprite, int attribute = A_NORMAL);
-        void draw_text(const size_t& pos_y, const size_t& pos_x,
-                        const std::vector<char>& text, int attribute = A_NORMAL);
+//        void draw_sprite(const size_t& pos_y, const size_t& pos_x,
+//                        const std::vector<std::vector<char>>& sprite, int attribute = A_NORMAL);
+//        void draw_text(const size_t& pos_y, const size_t& pos_x,
+//                        const std::vector<char>& text, int attribute = A_NORMAL);
 
 
         size_t get_x();
         size_t get_y();
-        
+
     private:
-        WINDOW* m_current_window;
+        //WINDOW* m_current_window;
         size_t m_x_size;
         size_t m_y_size;
     };

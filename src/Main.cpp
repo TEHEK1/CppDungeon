@@ -14,7 +14,7 @@
 //#include "events/EnemyEncounter.h"
 #include <random>
 
-int Main::my_rand(size_t seed) {
+int Main::my_rand(size_t seed) { //TODO change on norm random function
     seed = seed * 1103515245 + 12345;
     return (seed / 65536) % m_eventFactory.getFactoryMap().size();
 }
