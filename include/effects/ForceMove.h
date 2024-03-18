@@ -11,6 +11,7 @@ class BattleField;
 namespace effects {
     class ForceMove: public Move, public MarkedAsResistable {
     public:
+        ~ForceMove() override = default;
         ForceMove(int offset);
         int resistanceHash() override;
     };

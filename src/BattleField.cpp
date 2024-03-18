@@ -9,8 +9,8 @@
 
 
 BattleField::BattleField(
-    std::shared_ptr<Squad>& ally,
-    std::shared_ptr<Squad>& enemy
+    std::shared_ptr<Squad> ally,
+    std::shared_ptr<Squad> enemy
 ) : m_ally(ally), m_enemy(enemy) {}
 
 std::vector<std::shared_ptr<entity::Entity>> BattleField::getEntities() const {
@@ -22,7 +22,7 @@ std::vector<std::shared_ptr<entity::Entity>> BattleField::getEntities() const {
     return allies;
 }
 
-std::shared_ptr<Squad> BattleField::getSquad(std::shared_ptr<entity::Entity>& target) const {
+std::shared_ptr<Squad> BattleField::getSquad(const std::shared_ptr<entity::Entity>& target) const {
     std::shared_ptr<Squad> ans = nullptr;
     for (const auto& entity : m_ally->getEntities()) {
         if (entity == target) {
@@ -41,13 +41,13 @@ std::shared_ptr<Squad> BattleField::getSquad(std::shared_ptr<entity::Entity>& ta
     return ans;
 }
 
-std::shared_ptr<Squad> BattleField::getEnemySquad(std::shared_ptr<entity::Entity>& target) const {
+std::shared_ptr<Squad> BattleField::getEnemySquad(const std::shared_ptr<entity::Entity>& target) const {
     std::shared_ptr<Squad> const allySquad = getSquad(target);
     if (allySquad == m_ally) { return m_enemy;}
     else { return m_ally;}
 }
 
-bool BattleField::areAllies(std::shared_ptr<entity::Entity> ent1, std::shared_ptr<entity::Entity> ent2) const {
+bool BattleField::areAllies(const std::shared_ptr<entity::Entity>& ent1, const std::shared_ptr<entity::Entity>& ent2) const {
     std::shared_ptr<Squad> const ent1_squad = getSquad(ent1);
     std::shared_ptr<Squad> const ent2_squad = getSquad(ent2);
     if (ent1 == nullptr || ent2 == nullptr) { throw std::logic_error("one of entities is not in the m_squad"); }

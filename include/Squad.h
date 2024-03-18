@@ -15,6 +15,7 @@ public:
     Squad(std::vector<std::shared_ptr<entity::Entity>> new_squad, int size);
     std::vector<std::shared_ptr<entity::Entity>> getEntities() const;
     std::shared_ptr<entity::Entity> getEntity(int index) const;
+    int getIndex(const std::shared_ptr<entity::Entity>& entity) const;
     friend class SquadChanger;
 };
 #endif //CPPDUNGEON_SQUAD_H

@@ -6,7 +6,7 @@
 #define CPPDUNGEON_IMMEDIATEEFFECT_H
 #include "effects/AutoAction.h"
 namespace effects {
-    class ImmediateEffect:public Effect, public MarkedAsTurnable, public MarkedAsEntityNeeded {
+    class ImmediateEffect:public Effect {
     public:
         ~ImmediateEffect() override = default;
         ImmediateEffect();

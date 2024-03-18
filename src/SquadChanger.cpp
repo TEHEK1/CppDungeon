@@ -19,7 +19,7 @@ void SquadChanger::move(const std::shared_ptr<Squad>& squad, int index1, int ind
     squad->m_squad[index1] = nullptr;
     for(;squad->getEntity(closestNullptr) != nullptr; closestNullptr-=direction){
     };
-    for(closestNullptr;closestNullptr!=index2;closestNullptr+=direction){
+    for(;closestNullptr!=index2;closestNullptr+=direction){
         squad->m_squad[closestNullptr] = squad->m_squad[closestNullptr + direction];
         squad->m_squad[closestNullptr + direction] = nullptr;
     }

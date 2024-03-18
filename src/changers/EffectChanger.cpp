@@ -11,14 +11,14 @@
 #include "effects/MarkedAsTurnable.h"
 #include "effects/MarkedAsEntityNeeded.h"
 #include "effects/MarkedAsBattleFieldNeeded.h"
-void changers::EffectChanger::turnEffects(const std::shared_ptr<entity::Entity>& entity) {
+void changers::EffectChanger::turnEffects(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<BattleField>& battlefield) {
     if(entity == nullptr){
         return;
     }
     auto& effects = entity->m_effects;
     for (auto effectIterator = effects.begin(); effectIterator != effects.end();)
     {
-        if (turnEffect(entity, *effectIterator) < 0){
+        if (turnEffect(entity, *effectIterator, battlefield) < 0){
             effectIterator = effects.erase(effectIterator);
         }
         else {
@@ -27,14 +27,14 @@ void changers::EffectChanger::turnEffects(const std::shared_ptr<entity::Entity>&
     }
 }
 
-void changers::EffectChanger::endBattleTurnEffects(const std::shared_ptr<entity::Entity>& entity) {
+void changers::EffectChanger::endBattleTurnEffects(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<BattleField>& battlefield) {
     if(entity == nullptr){
         return;
     }
     auto& effects = entity->m_effects;
     for (auto effectIterator = effects.begin(); effectIterator != effects.end();)
     {
-        if (endBattleTurnEffect(entity, *effectIterator) < 0){
+        if (endBattleTurnEffect(entity, *effectIterator, battlefield) < 0){
             effectIterator = effects.erase(effectIterator);
         }
         else {
@@ -43,8 +43,14 @@ void changers::EffectChanger::endBattleTurnEffects(const std::shared_ptr<entity:
     }
 }
 int changers::EffectChanger::turnEffect(const std::shared_ptr<entity::Entity>& entity,
-                                         const std::shared_ptr<effects::Effect>& effect) {
-    if (entity!= nullptr && dynamic_cast<effects::MarkedAsEntityNeeded*>(effect.get()) != nullptr) {
+                                        const std::shared_ptr<effects::Effect>& effect, const std::shared_ptr<BattleField>& battlefield) {
+    if (entity!= nullptr && dynamic_cast<effects::MarkedAsBattleFieldNeeded*>(effect.get()) != nullptr) {
+        if(battlefield == nullptr) {
+            throw std::logic_error("Effect requires battleField, but not provided");
+        }
+        return dynamic_cast<effects::MarkedAsBattleFieldNeeded*>(effect.get())->getTurnFunctionBattleField()(entity, battlefield);
+    }
+    else if (entity!= nullptr && dynamic_cast<effects::MarkedAsEntityNeeded*>(effect.get()) != nullptr) {
         return dynamic_cast<effects::MarkedAsEntityNeeded*>(effect.get())->getTurnFunctionEntity()(entity);
     }
     else if (entity!= nullptr && dynamic_cast<effects::MarkedAsTurnable*>(effect.get()) != nullptr) {
@@ -55,8 +61,14 @@ int changers::EffectChanger::turnEffect(const std::shared_ptr<entity::Entity>& e
     }
 }
 int changers::EffectChanger::endBattleTurnEffect(const std::shared_ptr<entity::Entity>& entity,
-                                                  const std::shared_ptr<effects::Effect>& effect) {
-    if (entity!= nullptr && dynamic_cast<effects::MarkedAsEndBattleEntityNeeded*>(effect.get()) != nullptr) {
+                                                  const std::shared_ptr<effects::Effect>& effect, const std::shared_ptr<BattleField>& battlefield) {
+    if (entity!= nullptr && dynamic_cast<effects::MarkedAsEndBattleBattleFieldNeeded*>(effect.get()) != nullptr) {
+        if(battlefield == nullptr) {
+            throw std::logic_error("Effect requires battleField, but not provided");
+        }
+        return dynamic_cast<effects::MarkedAsEndBattleBattleFieldNeeded*>(effect.get())->getEndBattleTurnFunctionBattleField()(entity, battlefield);
+    }
+    else if (entity!= nullptr && dynamic_cast<effects::MarkedAsEndBattleEntityNeeded*>(effect.get()) != nullptr) {
         return dynamic_cast<effects::MarkedAsEndBattleEntityNeeded*>(effect.get())->getEndBattleTurnFunctionEntity()(entity);
     }
     else if (entity!= nullptr && dynamic_cast<effects::MarkedAsEndBattle*>(effect.get()) != nullptr) {
@@ -67,12 +79,11 @@ int changers::EffectChanger::endBattleTurnEffect(const std::shared_ptr<entity::E
     }
 }
 void changers::EffectChanger::addEffect(const std::shared_ptr<entity::Entity>& entity,
-                                        const std::shared_ptr<effects::Effect>& effect) {
+                                        std::shared_ptr<effects::Effect> effect, const std::shared_ptr<BattleField>& battlefield) {
     if (entity != nullptr && dynamic_cast<effects::ImmediateEffect*>(effect.get()) != nullptr) {
-        turnEffect(entity, effect);
+        turnEffect(entity, effect, battlefield);
     }
     else if(entity != nullptr) {
-        if()
         entity->m_effects.insert(effect);
     }
 }
