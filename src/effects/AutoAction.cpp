@@ -23,7 +23,8 @@ namespace effects {
             for(auto &characteristic:turner){
                 set(object, characteristic.first, object->getReal(characteristic.first) + characteristic.second);
             }
-            return turn();};
+            return turn();
+        };
     }
 
 } // namespace effects

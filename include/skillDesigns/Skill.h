@@ -17,8 +17,10 @@ namespace skillDesigns {
     public:
         virtual ~Skill() = default;
 
-        Skill(std::string name, std::vector<int> availableRank, std::vector<int> availableAllyTarget = {},
-              std::vector<int> availableEnemyTarget = {}, int accuracy = 0, int criticalDamageChance = 0);
+        Skill(std::string name, std::vector<int> availableRank,
+        std::vector<int> availableAllyTarget = {},
+        std::vector<int> availableEnemyTarget = {},
+        int accuracy = 0, int criticalDamageChance = 0);
 
         virtual std::vector<int> getAvaibleRank();
 
