@@ -108,7 +108,7 @@ Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) {
 Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
 : GameWindow(y_size, x_size, pos_y, pos_x) {
     int num_of_col = 5;
-    int col_size = 7;
+    int col_size = 8;
     int block_size  = this->get_x() / (num_of_col * col_size + (num_of_col + 1));
     int number_of_blocks = this->get_x() / block_size;
     for (int i = 0; i < num_of_col; i++) {
@@ -148,7 +148,9 @@ void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<act
     m_first_unbind = 'a';
     size_t cur_y = 0;
     size_t cur_column = 0;
-    m_columns[cur_column].clean();
+    for (auto& i : m_columns) {
+        i.clean();
+    }
     for (auto& i : available_actions) {
         if (cur_y >= m_columns[cur_column].get_y()) {
             cur_y = 0;
@@ -289,9 +291,10 @@ void Monitor::draw(Player* current_player) {
 
 
 
-void Monitor::keyEvent(char key, Player* player) {
-    if(auto action = m_user_actions_display.m_key_binds[key]) {
-        action->act(player);
+void Monitor::keyEvent(char key, Player* plapuyer) {
+    if (m_user_actions_display.find_action(key) != nullptr && 
+    player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
+        m_user_actions_display.find_action(key)->act(player);
     }
 }
 
