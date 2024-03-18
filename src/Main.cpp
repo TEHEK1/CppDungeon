@@ -11,12 +11,20 @@
 #include "monitor/Monitor.h"
 #include "player/Player.h"
 #include "navigation/Map.h"
+#include "entity/Entity.h"
+#include "entity/Enemy.h"
+#include "enemies/BrigandFusier/BrigandFusilier.h"
+#include "enemies/BrigandRaider/BrigandRaider.h"
+#include "enemies/CultistAcolyte/CultistAcolyte.h"
 //#include "events/EnemyEncounter.h"
 #include <random>
-
-int Main::my_rand(size_t seed) { //TODO change on norm random function
+int Main::my_rand_event(size_t seed) { //TODO change on norm random function
     seed = seed * 1103515245 + 12345;
     return (seed / 65536) % m_eventFactory.getFactoryMap().size();
+}
+int Main::my_rand_entity(size_t seed) { //TODO change on norm random function
+    seed = seed * 1103515245 + 12345;
+    return (seed / 65536) % m_entityFactory.getFactoryMap().size();
 }
 
 Main::Main() {
@@ -24,6 +32,10 @@ Main::Main() {
     m_eventFactory.add<events::ChooseRoomEvent>(1);
     m_eventFactory.add<events::EmptyCell>(2);
     m_eventFactory.add<events::Trap>(3);
+    m_entityFactory.add<enemies::BrigandFusilier::BrigandFusilier>(0);
+    m_entityFactory.add<enemies::BrigandRaider::BrigandRaider>(1);
+    m_entityFactory.add<enemies::CultistAcolyte::CultistAcolyte>(2);
+    m_entityFactory.add<enemies::BrigandFusilier::BrigandFusilier>(3);
 }
 
 //void Main::Init() {
@@ -43,8 +55,13 @@ size_t Main::getSeed() {
 }
 
 events::Event* Main::getEvent() {
-    int id = my_rand(getSeed());
+    int id = my_rand_event(getSeed());
     return m_eventFactory.create(id);
+}
+
+entity::Entity* Main::getEntity() {
+    int id = my_rand_entity(getSeed());
+    return m_entityFactory.create(id);
 }
 
 //Monitor *Main::getGame() {

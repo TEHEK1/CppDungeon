@@ -20,12 +20,13 @@ class Main {
     ObjectFactory<entity::Entity, size_t> m_entityFactory;
 public:
     Main();
-    int my_rand(size_t);
 
+    int my_rand_event(size_t);
+    int my_rand_entity(size_t);
     void setSeed(std::size_t);
     std::size_t getSeed();
     Monitor* getGame();
     events::Event* getEvent();
-    entity::Entity getEntity();
+    entity::Entity* getEntity();
 };
 #endif //CPPDUNGEON_MAIN_H
