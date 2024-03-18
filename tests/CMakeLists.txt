@@ -4,9 +4,6 @@ project(Test)
 set(CMAKE_CXX_STANDARD 20)
 
 include_directories(../include ../src)
-find_package(PkgConfig REQUIRED)
-find_package(Curses REQUIRED)
-include_directories(${CURSES_INCLUDE_DIR})
 add_executable(test
         main.cpp
         ../include/Main.h
@@ -45,4 +42,3 @@ add_executable(test
         ../src/navigation/Cell.cpp
         ../src/effects/PermanentEffect.cpp
 )
-target_link_libraries(test ${CURSES_LIBRARIES})

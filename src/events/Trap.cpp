@@ -15,25 +15,25 @@
 #include "Squad.h"
 #include "effects/Damage.h"
 
-//void events::Trap::turn(Player * player) {
+void events::Trap::turn(Player * player) {
 //    player -> getMonitor() -> draw();
 //    std::shared_ptr<events::UsableEvent> ptr_Use(dynamic_cast<events::UsableEvent*>(this));
 //    if(m_used) {
 //        addAction(player, std::shared_ptr<actions::Use>(new actions::Use(ptr_Use)));
 //    }
 //    addAction(player, std::shared_ptr<actions::DontUse>(new actions::DontUse(std::shared_ptr<Trap>(this))));
-//}
+}
 
-//void events::Trap::dontUse(Player *player) {
+void events::Trap::dontUse(Player *player) {
 //    static int random = generators::NumberGenerator::generate(m_range_dontUse_start, m_range_dontUse_finish);
 //    std::vector<std::shared_ptr<entity::Entity>> entities = player -> getSquad() -> getEntities();
 //    for(int i = 0; i < entities.size(); i++){
 //        addEffect(entities[i], std::make_shared<effects::Damage>(random));
 //    }
 //    player -> getMap() -> getCell(player->getPosition())->freeMoves(player, std::shared_ptr<events::Event>(this));
-//}
+}
 
-//void events::Trap::use(Player *player) {
+void events::Trap::use(Player *player) {
 //    static bool once = true;
 //    if(once) {
 //        once = false;
@@ -41,7 +41,7 @@
 //        std::vector<std::shared_ptr<entity::Entity>> entities = player->getSquad()->getEntities();
 //        for (int i = 0; i < entities.size(); i++) {
 //            addEffect(entities[i], std::make_shared<effects::Damage>(random));
-//        }
+        }
 ////    |      __0__      |
 ////    |     /     \     |
 ////    |    / 0 0 0 \    |

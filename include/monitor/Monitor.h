@@ -4,7 +4,11 @@
 
 #ifndef UNTITLED_MONITOR_H
 #define UNTITLED_MONITOR_H
-
+class Monitor{
+public:
+    void draw(){};
+};
+/*
 // Non-selfmade library for UI realisation
 //#include <ncurses.h>
 #include <vector>
@@ -67,4 +71,5 @@ private:
     std::vector<GameWindow> m_entity_window;
     GameWindow m_background_display;
 };
+*/
 #endif //UNTITLED_MONITOR_H
