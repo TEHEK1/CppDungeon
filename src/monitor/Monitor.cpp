@@ -272,14 +272,14 @@ void Monitor::draw(Player* current_player) {
 
 
 
-void Monitor::keyEvent(char key) {
-    
+void Monitor::keyEvent(char key, Player* player) {
+    m_user_actions_display.m_key_binds[key]->act(player);
 }
 
 
-void Monitor::keyEvent() {
+void Monitor::keyEvent(Player* player) {
     char pressed_key = getch();
-    keyEvent(pressed_key);
+    keyEvent(pressed_key, player);
 }
 
 void Monitor::addKeysNavigation(Player* player){

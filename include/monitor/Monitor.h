@@ -31,8 +31,8 @@ public:
     void draw(Player* player);//Ask draw functions realizations from Map, Entity and Event if needed
 
 
-    void keyEvent(char key);
-    void keyEvent();
+    void keyEvent(char key, Player* player);
+    void keyEvent(Player* player);
 
 private:
 

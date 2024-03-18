@@ -23,7 +23,7 @@ int main()
 
     while(1) {
         monitor->draw(player);
-        monitor->keyEvent(getch());
+        monitor->keyEvent(getch(), player);
     }
 
     endwin();
