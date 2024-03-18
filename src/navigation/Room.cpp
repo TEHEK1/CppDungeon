@@ -10,6 +10,11 @@
 
 
 void Room::generateEvents(){
+    static bool used = false;
+    if(used){
+        return;
+    }
+    used = true;
     /*if(generators::NumberGenerator::generate(0, 1) == 1) {
         m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{
@@ -20,5 +25,6 @@ void Room::generateEvents(){
     }else{
         m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
     }*/
+
     m_events.push_back(std::make_shared<events::ChooseRoomEvent>());
 }

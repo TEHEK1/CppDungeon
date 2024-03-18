@@ -3,6 +3,12 @@
 #include "monitor/Monitor.h"
 #include "player/Player.h"
 #include "navigation/Map.h"
+#include "changers/PositionChanger.h"
+#include "actions/MoveLeft.h"
+class PositionChangerAdapter: public changers::PositionChanger{
+public:
+    using changers::PositionChanger::setPosition;
+};
 int main()
 {	
     raw();
@@ -14,13 +20,11 @@ int main()
     start_color();
     refresh();
     
-    Map* map = new Map(12);
-    Monitor* monitor = new Monitor();
+    auto map = std::make_shared<Map>(12);
+    auto monitor = std::make_shared<Monitor>();
     Player* player = new Player(map, monitor);
-
-    player->setMonitor(monitor);
-    map->getCell(map->getStartPosition());
-
+    auto moveLeft = actions::MoveLeft();
+    moveLeft.act(player);
     while(1) {
         monitor->draw(player);
         monitor->keyEvent(getch(), player);

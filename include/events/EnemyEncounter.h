@@ -7,7 +7,7 @@
 #include "entity/Entity.h"
 #include "events/Event.h"
 #include <vector>
-class Enemy;
+#include "namespaces/entity.h"
 class Player;
 namespace events {
     class EnemyEncounter : public Event {

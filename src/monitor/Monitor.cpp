@@ -133,6 +133,8 @@ char Monitor::InterfaceColumnWindow::find_action(std::shared_ptr<actions::Action
 
 //TODO: Add rebase or listing if the actions have a too much space
 void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
+    m_key_binds = {};
+    m_first_unbind = 'a';
     size_t cur_y = 0;
     size_t cur_column = 0;
     for (auto i : available_actions) {
@@ -273,7 +275,9 @@ void Monitor::draw(Player* current_player) {
 
 
 void Monitor::keyEvent(char key, Player* player) {
-    m_user_actions_display.m_key_binds[key]->act(player);
+    if(auto action = m_user_actions_display.m_key_binds[key]) {
+        action->act(player);
+    }
 }
 
 

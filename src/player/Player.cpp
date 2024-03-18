@@ -11,7 +11,7 @@
 #include "Squad.h"
 #include <memory>
 
-Player::Player(Map *map, Monitor *monitor) : m_map(map), m_monitor(monitor) {
+Player::Player(std::shared_ptr<Map> map, std::shared_ptr<Monitor> monitor) : m_map(map), m_monitor(monitor) {
     m_position = map->getStartPosition();
     m_squad = std::make_shared<Squad>(std::vector<std::shared_ptr<entity::Entity>>(3));
     if(map->getCell(m_position) == nullptr){
@@ -25,11 +25,8 @@ Player::Player(Map *map, Monitor *monitor) : m_map(map), m_monitor(monitor) {
     }
 }
 
-Monitor* Player::getMonitor() {
+std::shared_ptr<Monitor> Player::getMonitor() {
     return m_monitor;
-}
-void Player::setMonitor(Monitor *monitor) {
-    m_monitor = monitor;
 }
 Position Player::getPosition() {
     return m_position;
@@ -43,7 +40,7 @@ Inventory Player::getInventory() {
     return m_inventory;
 }
 
-Map* Player::getMap() {
+std::shared_ptr<Map> Player::getMap() {
     return m_map;
 }
 

@@ -6,7 +6,7 @@
 #define CPPDUNGEON_BATTLEFIELD_H
 #include "memory"
 #include "namespaces/entity.h"
-class Squad;
+#include "namespaces/battlefield.h"
 
 class BattleField {
 private:

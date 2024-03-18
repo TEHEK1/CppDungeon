@@ -8,14 +8,14 @@
 #include <vector>
 #include <memory>
 #include "namespaces/entity.h"
-class Skill;
+#include "namespaces/skillDesigns.h"
 namespace actions {
     class UseSkill : public Action {
     public:
         // UseSkill(Entity* actor, Skill* skill, std::vector<Entity*> entity);
-        UseSkill(std::shared_ptr<entity::Entity> actor, Skill *skill, std::vector<std::shared_ptr<entity::Entity>> entities);
+        UseSkill(std::shared_ptr<entity::Entity> actor, skillDesigns::Skill *skill, std::vector<std::shared_ptr<entity::Entity>> entities);
         std::string getName() override;
         void act(Player *) override;
-    }
+    };
 }
 #endif //CPPDUNGEON_USESKILL_H

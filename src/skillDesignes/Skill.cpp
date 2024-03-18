@@ -126,8 +126,7 @@ namespace skillDesigns {
 
     void Skill::addEffect(std::shared_ptr<entity::Entity> object, std::shared_ptr<effects::Effect> effect, std::shared_ptr<BattleField> battleField, int crited,
                           int accuracyModifier) {
-        std::shared_ptr<effects::MarkedAsResistable> markedAsResistable =
-                std::shared_ptr<effects::MarkedAsResistable>{effect, dynamic_cast<effects::MarkedAsResistable *>(effect.get())};
+        std::shared_ptr<effects::MarkedAsResistable> markedAsResistable = std::dynamic_pointer_cast<effects::MarkedAsResistable>(effect);
         if (object!= nullptr && (markedAsResistable == nullptr ||
             resisted(object, markedAsResistable->resistanceHash(), crited) - (accuracyModifier - 100) < 0)) {
             changers::EffectChanger::addEffect(object, effect, battleField);

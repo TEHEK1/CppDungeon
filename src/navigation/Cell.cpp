@@ -5,11 +5,11 @@
 #include "actions/MoveLeft.h"
 #include "actions/MoveRight.h"
 
-void Cell::freeMoves(Player * player, const std::shared_ptr<events::Event>& event) {
+void Cell::freeMoves(Player * player, events::Event* event) {
     m_endedEvents.insert(event);
     if (m_endedEvents.size() == getEvents().size()) {
-        addAction(player, std::shared_ptr<actions::Action>(new actions::MoveLeft));
-        addAction(player, std::shared_ptr<actions::Action>(new actions::MoveRight));
+        addAction(player, std::make_shared<actions::MoveLeft>());
+        addAction(player, std::make_shared<actions::MoveRight>());
     }
 }
 
