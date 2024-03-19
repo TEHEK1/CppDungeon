@@ -4,9 +4,9 @@
 
 #ifndef CPPDUNGEON_ITEM_H
 #define CPPDUNGEON_ITEM_H
-#include "skillDesigns/Skill.h"
+#include "skillDesigns/RangeSkill.h"
 namespace items {
-    class Item : public skillDesigns::Skill {
+    class Item : public skillDesigns::RangeSkill {
     };
 }
 #endif //CPPDUNGEON_ITEM_H
