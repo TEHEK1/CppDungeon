@@ -3,7 +3,7 @@
 #include "effects/Damage.h"
 #include "effects/Mark.h"
 #include "effects/Bleed.h"
-#include "EnemyType.h"
+#include "entity/EnemyType.h"
 
 namespace Heroes {
     namespace BountyHunter {

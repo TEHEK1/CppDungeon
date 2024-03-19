@@ -31,6 +31,7 @@ add_executable(skillTest
         ../../src/effects/Mark.cpp
         ../../src/effects/Stun.cpp
         ../../src/effects/Debuff.cpp
+        ../../src/effects/Heal.cpp
         ../../src/effects/Buff.cpp
         ../../src/enemies/Webber/Bite.cpp
         ../../src/effects/Blight.cpp
@@ -48,5 +49,36 @@ add_executable(skillTest
         ../../src/enemies/BrigandRaider/UppercutSlice.cpp
         ../../src/enemies/BrigandRaider/HarmlessPoke.cpp
         ../../src/entity/Hero.cpp
-        ../../src/monitor/Monitor.cpp
+        ../../src/heroes/BountyHunter/BountyHunter.cpp
+        ../../src/heroes/BountyHunter/Caltrops.cpp
+        ../../src/heroes/BountyHunter/CollectBounty.cpp
+        ../../src/heroes/BountyHunter/ComeHither.cpp
+        ../../src/heroes/BountyHunter/FinishHim.cpp
+        ../../src/heroes/BountyHunter/FlashBang.cpp
+        ../../src/heroes/BountyHunter/MarkForDeath.cpp
+        ../../src/heroes/BountyHunter/UpperCut.cpp
+        ../../src/heroes/Hellion/Hellion.cpp
+        ../../src/heroes/Hellion/AdrenalineRush.cpp
+        ../../src/heroes/Hellion/BarbaricYAWP.cpp
+        ../../src/heroes/Hellion/BleedOut.cpp
+        ../../src/heroes/Hellion/Breakthrough.cpp
+        ../../src/heroes/Hellion/IfItBleeds.cpp
+        ../../src/heroes/Hellion/IronSwan.cpp
+        ../../src/heroes/Hellion/WickedHack.cpp
+        ../../src/heroes/ManAtArms/ManAtArms.cpp
+        ../../src/heroes/ManAtArms/Bellow.cpp
+        ../../src/heroes/ManAtArms/Bolster.cpp
+        ../../src/heroes/ManAtArms/Command.cpp
+        ../../src/heroes/ManAtArms/Crush.cpp
+        ../../src/heroes/ManAtArms/Defender.cpp
+        ../../src/heroes/ManAtArms/Rampart.cpp
+        ../../src/heroes/ManAtArms/Retribution.cpp
+        ../../src/heroes/Musketeer/Musketeer.cpp
+        ../../src/heroes/Musketeer/AimedShot.cpp
+        ../../src/heroes/Musketeer/Buckshot.cpp
+        ../../src/heroes/Musketeer/CallTheShot.cpp
+        ../../src/heroes/Musketeer/PatchUp.cpp
+        ../../src/heroes/Musketeer/Sidearm.cpp
+        ../../src/heroes/Musketeer/SkeetShot.cpp
+        ../../src/heroes/Musketeer/Smokescreen.cpp
 )

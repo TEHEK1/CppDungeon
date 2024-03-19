@@ -6,6 +6,7 @@
 #define CPPDUNGEON_BATTLEFIELDCHANGER_H
 #include <memory>
 #include "namespaces/entity.h"
+#include <stdexcept>
 class BattleField;
 
 class BattleFieldChanger {
