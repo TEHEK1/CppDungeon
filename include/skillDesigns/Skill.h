@@ -36,6 +36,8 @@ namespace skillDesigns {
 
         virtual std::string getName() final;
 
+        std::string draw();
+
     protected:
         virtual void
         unsafeUse(int crited, std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> actor,

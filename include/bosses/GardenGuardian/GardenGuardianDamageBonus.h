@@ -1,21 +1,23 @@
 #include "skillDesigns/RangeSkill.h"
+#include "skillDesigns/Skill.h"
 
-namespace Heroes {
+namespace Bosses {
 
-    namespace BountyHunter {
+    namespace BloodFount {
 
-        class FlashBang: public skillDesigns::RangeSkill {
+        class GardenGuardianDamageBonus : public skillDesigns::RangeSkill {
         public:
-            FlashBang();
-     
+            GardenGuardianDamageBonus();
+
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,
                                  std::shared_ptr<entity::Entity> object) override;
 
             void unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                std::shared_ptr<entity::Entity> object) override;
+
         };
 
-    } // namespace BountyHunter
+    } // namespace BloodFount
 
-} // namespace Heroes
+} // namespace Boss
