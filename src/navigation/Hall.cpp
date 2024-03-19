@@ -13,7 +13,7 @@ void Hall::generateEvents() {
         return;
     }
     m_used = true;
-    m_events.push_back(std::shared_ptr<events::Event>(new events::Trap));
+    m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
     /*if(random(1,2) == 1) {//TODO: Change it to grabbing from Main fabric
         m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{

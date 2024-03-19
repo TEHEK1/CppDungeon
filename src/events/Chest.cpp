@@ -8,6 +8,8 @@
 #include "navigation/Cell.h"
 #include "navigation/Map.h"
 #include "items/Item.h"
+#include <string>
+#include <vector>
 #include <memory>
 #include "monitor/Monitor.h"
 
@@ -33,14 +35,44 @@ void events::Chest::use(Player *player) {
 }
 
 std::vector<std::vector<char>> events::Chest::draw() {
-//     -------
-//    |___-___|
-//    |__|_|__|
-//    |___-___|
-//     -------
-    return {{' ', '-', '-', '-', '-', '-', '-', '-', ' ' },
-            {'|', '_', '_', '_', '-', '_', '_', '_', '|' },
-            {'|', '_', '_', '|', '-', '|', '_', '_', '|' },
-            {'|', '_', '_', '_', '-', '_', '_', '_', '|' },
-            {' ', '-', '-', '-', '-', '-', '-', '-', ' ' }};
+    if(!m_used){
+        std::vector<std::string> strings =
+                {"                   ",
+                 "                   ",
+                 "                   ",
+                 "                   ",
+                 "    -=++++++++++-: ",
+                 "   .-***********+- ",
+                 "   -+************=:",
+                 ".-++===-===--===++:",
+                 ".==*###*+*+####++=.",
+                 "   =+##########*=- ",
+                 "   -=+++====++++=. "};
+        std::vector<std::vector<char>> toReturn;
+        for(auto str:strings){
+            toReturn.push_back(std::vector<char>());
+            std::copy(str.begin(), str.end(), std::back_inserter(toReturn.back()));
+        }
+        return toReturn;
+    }
+    else{
+        std::vector<std::string> strings =
+                {"                   ",
+                "      ....  .....  ",
+                "     -#%########+  ",
+                "     -#%#######*=. ",
+                "     =%%#######*+: ",
+                "    .#*++++++++**= ",
+                "   +#%%%%%%%%%%%+: ",
+                ":=+*************+-.",
+                ".==*###*+*+####++=.",
+                "   =+##########*=- ",
+                "   -=+++====++++=. "};
+        std::vector<std::vector<char>> toReturn;
+        for(auto str:strings){
+            toReturn.push_back(std::vector<char>());
+            std::copy(str.begin(), str.end(), std::back_inserter(toReturn.back()));
+        }
+        return toReturn;
+    }
 }

@@ -38,5 +38,23 @@ add_executable(monitorTest
         ../../src/changers/EntityChanger.cpp
         ../../src/effects/MarkedAsEndBattle.cpp
         ../../src/events/EmptyCell.cpp
+        ../../src/enemies/BrigandRaider/BrigandRaider.cpp
+        ../../src/enemies/BrigandRaider/HarmlessPoke.cpp
+        ../../src/enemies/BrigandRaider/Shank.cpp
+        ../../src/enemies/BrigandRaider/SliceAndDice.cpp
+        ../../src/enemies/BrigandRaider/UppercutSlice.cpp
+        ../../src/skillDesignes/RangeSkill.cpp
+        ../../src/skillDesignes/Skill.cpp
+        ../../src/BattleField.cpp
+        ../../src/entity/Enemy.cpp
+        ../../src/effects/Mark.cpp
+        ../../src/effects/Buff.cpp
+        ../../src/effects/Debuff.cpp
+        ../../src/effects/Move.cpp
+        ../../src/effects/ForceMove.cpp
+        ../../src/effects/Bleed.cpp
+        ../../src/effects/AutoAction.cpp
+        ../../src/BattleFieldChanger.cpp
+        ../../src/SquadChanger.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

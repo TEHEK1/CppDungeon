@@ -26,7 +26,7 @@ class Player{
     std::shared_ptr<Monitor> m_monitor;
     std::shared_ptr<Map> m_map;
 public:
-    explicit Player(std::shared_ptr<Map> map, std::shared_ptr<Monitor> monitor);
+    explicit Player(std::shared_ptr<Map> map, std::shared_ptr<Monitor> monitor, std::shared_ptr<Squad> squad);
     std::shared_ptr<Monitor> getMonitor();
     Position getPosition();
     std::shared_ptr<Squad> getSquad();

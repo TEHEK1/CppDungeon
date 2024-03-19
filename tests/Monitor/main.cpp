@@ -9,6 +9,9 @@
 #include "actions/Use.h"
 #include "actions/DontUse.h"
 #include "actions/ChooseNextRoom.h"
+#include "enemies/BrigandFusier/BrigandFusilier.h"
+#include "enemies/BrigandRaider/BrigandRaider.h"
+#include "Squad.h"
 class PositionChangerAdapter: public changers::PositionChanger{
 public:
     using changers::PositionChanger::setPosition;
@@ -26,7 +29,12 @@ int main()
     
     auto map = std::make_shared<Map>(12);
     auto monitor = std::make_shared<Monitor>();
-    Player* player = new Player(map, monitor);
+    std::vector<std::shared_ptr<entity::Entity>> allies;
+    allies.reserve(4);
+    for(int i = 0;i<4;i++){
+        allies.push_back(std::make_shared<enemies::BrigandRaider::BrigandRaider>());
+    }
+    Player* player = new Player(map, monitor, std::make_shared<Squad>(allies));
 
     /*for(auto action:player->getActions()){
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
