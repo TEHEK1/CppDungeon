@@ -119,12 +119,61 @@ build CMakeFiles/CppDungeon.dir/src/events/Chest.cpp.o: CXX_COMPILER__CppDungeon
   OBJECT_DIR = CMakeFiles/CppDungeon.dir
   OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/events
 
-build CMakeFiles/CppDungeon.dir/src/item/Item.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/item/Item.cpp || cmake_object_order_depends_target_CppDungeon
-  DEP_FILE = CMakeFiles/CppDungeon.dir/src/item/Item.cpp.o.d
+build CMakeFiles/CppDungeon.dir/src/Item/Item.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/Item/Item.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/Item/Item.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
   INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
   OBJECT_DIR = CMakeFiles/CppDungeon.dir
-  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/item
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/Item
+
+build CMakeFiles/CppDungeon.dir/src/Item/LickWounds.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/Item/LickWounds.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/Item/LickWounds.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
+  OBJECT_DIR = CMakeFiles/CppDungeon.dir
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/Item
+
+build CMakeFiles/CppDungeon.dir/src/Item/FortifyingGarlic.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/Item/FortifyingGarlic.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/Item/FortifyingGarlic.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
+  OBJECT_DIR = CMakeFiles/CppDungeon.dir
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/Item
+
+build CMakeFiles/CppDungeon.dir/src/Item/FortifyingGarlicEffect.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/Item/FortifyingGarlicEffect.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/Item/FortifyingGarlicEffect.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
+  OBJECT_DIR = CMakeFiles/CppDungeon.dir
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/Item
+
+build CMakeFiles/CppDungeon.dir/src/Item/BloodiedNeckerchief.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/Item/BloodiedNeckerchief.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/Item/BloodiedNeckerchief.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
+  OBJECT_DIR = CMakeFiles/CppDungeon.dir
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/Item
+
+build CMakeFiles/CppDungeon.dir/src/Item/BloodiedNeckerchiefEffect.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/Item/BloodiedNeckerchiefEffect.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/Item/BloodiedNeckerchiefEffect.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
+  OBJECT_DIR = CMakeFiles/CppDungeon.dir
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/Item
+
+build CMakeFiles/CppDungeon.dir/src/Item/Absinthe.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/Item/Absinthe.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/Item/Absinthe.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
+  OBJECT_DIR = CMakeFiles/CppDungeon.dir
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/Item
+
+build CMakeFiles/CppDungeon.dir/src/Item/AbsintheEffect.cpp.o: CXX_COMPILER__CppDungeon_unscanned_Debug /home/kait/CLionProjects/project_2/CppDungeon/src/Item/AbsintheEffect.cpp || cmake_object_order_depends_target_CppDungeon
+  DEP_FILE = CMakeFiles/CppDungeon.dir/src/Item/AbsintheEffect.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -I/home/kait/CLionProjects/project_2/CppDungeon/include
+  OBJECT_DIR = CMakeFiles/CppDungeon.dir
+  OBJECT_FILE_DIR = CMakeFiles/CppDungeon.dir/src/Item
 
 
 # =============================================================================
@@ -134,7 +183,7 @@ build CMakeFiles/CppDungeon.dir/src/item/Item.cpp.o: CXX_COMPILER__CppDungeon_un
 #############################################
 # Link the executable CppDungeon
 
-build CppDungeon: CXX_EXECUTABLE_LINKER__CppDungeon_Debug CMakeFiles/CppDungeon.dir/src/actions/Use.cpp.o CMakeFiles/CppDungeon.dir/src/actions/MoveRight.cpp.o CMakeFiles/CppDungeon.dir/src/actions/MoveLeft.cpp.o CMakeFiles/CppDungeon.dir/src/actions/DontUse.cpp.o CMakeFiles/CppDungeon.dir/src/actions/ChooseNextRoom.cpp.o CMakeFiles/CppDungeon.dir/src/player/Player.cpp.o CMakeFiles/CppDungeon.dir/src/changers/PositionChanger.cpp.o CMakeFiles/CppDungeon.dir/src/navigation/Cell.cpp.o CMakeFiles/CppDungeon.dir/src/events/Trap.cpp.o CMakeFiles/CppDungeon.dir/src/events/Chest.cpp.o CMakeFiles/CppDungeon.dir/src/item/Item.cpp.o
+build CppDungeon: CXX_EXECUTABLE_LINKER__CppDungeon_Debug CMakeFiles/CppDungeon.dir/src/actions/Use.cpp.o CMakeFiles/CppDungeon.dir/src/actions/MoveRight.cpp.o CMakeFiles/CppDungeon.dir/src/actions/MoveLeft.cpp.o CMakeFiles/CppDungeon.dir/src/actions/DontUse.cpp.o CMakeFiles/CppDungeon.dir/src/actions/ChooseNextRoom.cpp.o CMakeFiles/CppDungeon.dir/src/player/Player.cpp.o CMakeFiles/CppDungeon.dir/src/changers/PositionChanger.cpp.o CMakeFiles/CppDungeon.dir/src/navigation/Cell.cpp.o CMakeFiles/CppDungeon.dir/src/events/Trap.cpp.o CMakeFiles/CppDungeon.dir/src/events/Chest.cpp.o CMakeFiles/CppDungeon.dir/src/Item/Item.cpp.o CMakeFiles/CppDungeon.dir/src/Item/LickWounds.cpp.o CMakeFiles/CppDungeon.dir/src/Item/FortifyingGarlic.cpp.o CMakeFiles/CppDungeon.dir/src/Item/FortifyingGarlicEffect.cpp.o CMakeFiles/CppDungeon.dir/src/Item/BloodiedNeckerchief.cpp.o CMakeFiles/CppDungeon.dir/src/Item/BloodiedNeckerchiefEffect.cpp.o CMakeFiles/CppDungeon.dir/src/Item/Absinthe.cpp.o CMakeFiles/CppDungeon.dir/src/Item/AbsintheEffect.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/CppDungeon.dir
   POST_BUILD = :
