@@ -179,16 +179,16 @@ void Monitor::InterfaceColumnWindow::get_binds(Player* player) {
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
             switch (player->getMap()->getDirecrion(player->getPosition(), chooseNextRoom->getPostion())) {
                 case Map::direction::up:
-                    m_key_binds['p'] = chooseNextRoom;
+                    m_key_binds['i'] = chooseNextRoom;
                     break;
                 case Map::direction::down:
-                    m_key_binds[';'] = chooseNextRoom;
+                    m_key_binds['k'] = chooseNextRoom;
                     break;
                 case Map::direction::left:
-                    m_key_binds['l'] = chooseNextRoom;
+                    m_key_binds['j'] = chooseNextRoom;
                     break;
                 case Map::direction::right:
-                    m_key_binds['\''] = chooseNextRoom;
+                    m_key_binds['l'] = chooseNextRoom;
                     break;
             }
         }
@@ -308,12 +308,17 @@ void Monitor::draw(Player* current_player) {
             m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4); 
         }
     }
-
+    //Current room drawing would be here
+    //current_player->getMap()->getNextRoom
     
     m_user_actions_display.m_key_binds = {};
     m_user_actions_display.get_binds(current_player);
     m_user_actions_display.draw_interface(current_player->getActions());
-    //TODO: Add inventory list display and other related to interface stuff to draw after discussion 
+
+    //Useable chest drawing 
+
+
+    //inventory 
     /*int cur_y = 0;
     int cur_column = 0;
     for (auto item : current_player->getInventory().getItems()) {
