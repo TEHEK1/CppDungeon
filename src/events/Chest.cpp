@@ -17,6 +17,7 @@ bool events::Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator ac
 }
 
 void events::Chest::turn(Player *player) {
+    player->getMap()->getCell(player->getPosition())->freeMoves(player);
     player->getMonitor()->draw(player);
     if (!m_used) {
         addUniqueAction(player, std::make_shared<actions::Use>(shared_from_this()));

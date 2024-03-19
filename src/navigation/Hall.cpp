@@ -9,7 +9,6 @@
 #include <random>
 
 void Hall::generateEvents() {
-
     if(m_used){
         return;
     }

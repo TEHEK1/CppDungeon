@@ -13,6 +13,13 @@ void Cell::freeMoves(Player * player, events::Event* event) {
     }
 }
 
+void Cell::freeMoves(Player * player) {
+    if (m_endedEvents.size() == getEvents().size()) {
+        addUniqueAction(player, std::make_shared<actions::MoveLeft>());
+        addUniqueAction(player, std::make_shared<actions::MoveRight>());
+    }
+}
+
 char Cell::getLevel() {
     char a = '5';
     return a;

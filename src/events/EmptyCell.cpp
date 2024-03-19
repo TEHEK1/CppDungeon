@@ -7,6 +7,7 @@
 #include "player/Player.h"
 
 void events::EmptyCell::turn(Player* player) {
+    player->getMap()->getCell(player->getPosition())->freeMoves(player);
     player->getMonitor()->draw(player);
     player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
 }
