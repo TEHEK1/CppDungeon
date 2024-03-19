@@ -261,8 +261,10 @@ void Monitor::draw(Player* current_player) {
     if(current_player->getSquad() == nullptr){
         throw std::logic_error("Squad is not initialized");
     }
+    for (auto& i : m_entity_window) {
+        i.clean();
+    }
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
-        m_entity_window[draw_position].clean();
         if (i != nullptr) {
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
         }
@@ -310,7 +312,6 @@ void Monitor::draw(Player* current_player) {
             m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4); 
         }
     }
-    //Current room drawing would be here
     Position next = current_player->getMap()->getNextRoom(current_player->getPosition());
     if (!(next == current_player->getPosition())) {
         int next_x = next.getColumn();
@@ -360,4 +361,3 @@ void Monitor::keyEvent(Player* player) {
     char pressed_key = getch();
     keyEvent(pressed_key, player);
 }
-

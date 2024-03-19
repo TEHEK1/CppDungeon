@@ -6,7 +6,7 @@
 #include "Squad.h"
 #include <memory>
 #include <vector>
-
+#include <algorithm>
 
 BattleField::BattleField(
     std::shared_ptr<Squad> ally,

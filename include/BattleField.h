@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include "namespaces/battlefield.h"
+#include <vector>
 
 class BattleField {
 private:
