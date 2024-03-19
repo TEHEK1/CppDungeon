@@ -18,12 +18,13 @@ std::set<std::shared_ptr<actions::UseSkill>>
 generators::SkillActionsGenerator::generateAvailableUseSkills(std::shared_ptr<skillDesigns::RangeSkill> skill,
                                                               std::shared_ptr<BattleField> battleField,
                                                               std::shared_ptr<entity::Entity> actor) {
-
+    std::set<std::shared_ptr<actions::UseSkill>> answer;
     std::vector<std::shared_ptr<entity::Entity>> temp = battleField -> getEntities();
     for(int i = 0; i < temp.size() - skill->getSize(); i++){
         std::vector<std::shared_ptr<entity::Entity>> objects = slice(temp, i, i+skill->getSize());
-        if(not skill->isUsable(battleField, actor, objects).empty()){
-            actions::UseSkill(skill, battleField, actor, objects);
+        if(skill->isUsable(battleField, actor, objects).empty()){
+            answer.insert(std::make_shared<actions::UseSkill>(skill, battleField, actor, objects));
         }
     }
+    return answer;
 }
