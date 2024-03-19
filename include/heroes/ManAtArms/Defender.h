@@ -7,7 +7,6 @@ namespace Heroes {
         class Defender: public skillDesigns::Skill {
         public:
             Defender(); 
-            
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,
                                  std::shared_ptr<entity::Entity> object) override;

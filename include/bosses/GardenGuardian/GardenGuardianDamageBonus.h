@@ -6,6 +6,7 @@ namespace Bosses {
     namespace BloodFount {
 
         class GardenGuardianDamageBonus : public skillDesigns::RangeSkill {
+        public:
             GardenGuardianDamageBonus();
 
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

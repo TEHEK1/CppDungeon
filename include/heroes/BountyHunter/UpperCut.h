@@ -7,7 +7,7 @@ namespace Heroes {
         class UpperCut: public skillDesigns::Skill {
         public:
             UpperCut();
-            
+       
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,
                                  std::shared_ptr<entity::Entity> object) override;

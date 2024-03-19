@@ -7,7 +7,7 @@ namespace Heroes {
         class MarkForDeath: public skillDesigns::RangeSkill {
         public:
             MarkForDeath();
-            
+    
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,
                                  std::shared_ptr<entity::Entity> object) override;
