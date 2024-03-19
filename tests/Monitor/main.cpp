@@ -37,29 +37,29 @@ int main()
     }
     auto alliesSquad = std::make_shared<Squad>(allies);
     auto enemiesSquad = alliesSquad;
-    Player* player = new Player(map, monitor, enemiesSquad);
+    auto player = std::make_shared<Player>(map, monitor, enemiesSquad);
 
-    /*for(auto action:player->getActions()){
+    for(auto action:player->getActions()){
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
-            chooseNextRoom->act(player);
+            chooseNextRoom->act(player.get());
         }
     }
     auto moveRight = actions::MoveRight();
-    moveRight.act(player);
+    moveRight.act(player.get());
     for(auto action:player->getActions()){
         if(auto dontUse = std::dynamic_pointer_cast<actions::Use>(action)){
-            dontUse->act(player);
+            dontUse->act(player.get());
         }
     }
-    moveRight.act(player);
-*/
+    moveRight.act(player.get());
 
-    while(1) {
-        monitor->draw(player);
-        monitor->keyEvent(getch(), player);
+    while (1) {
+        monitor->draw(player.get());
+        char key = getch();
+        if(key == 'q'){
+            break;
+        }
+        monitor->keyEvent(key, player.get());
     }
-
-    endwin();
-    delete player, map, monitor;
 	return 0;
 }

@@ -64,5 +64,6 @@ add_executable(monitorTest
         ../../src/heroes/BountyHunter/Caltrops.cpp
         ../../src/heroes/BountyHunter/ComeHither.cpp
         ../../src/heroes/BountyHunter/UpperCut.cpp
+        ../../src/entity/Hero.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})
