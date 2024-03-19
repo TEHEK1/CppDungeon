@@ -1,21 +1,21 @@
 #include "skillDesigns/RangeSkill.h"
 
-namespace Heroes {
+namespace Bosses {
 
-    namespace Hellion {
+    namespace GardenGuardian {
 
-        class AdrenalineRush: public skillDesigns::RangeSkill {
-        public:
-            AdrenalineRush();
-            
+        class AnnihilatingGlare : public skillDesigns::RangeSkill {
+            AnnihilatingGlare();
+
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,
                                  std::shared_ptr<entity::Entity> object) override;
 
             void unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                std::shared_ptr<entity::Entity> object) override;
+
         };
 
-    } // namespace Hellion
+    } // namespace GardenGuardian
 
-} // namespace Heroes
+} // namespace Boss

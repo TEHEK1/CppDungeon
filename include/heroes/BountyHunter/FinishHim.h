@@ -5,6 +5,7 @@ namespace Heroes {
     namespace BountyHunter {
 
         class FinishHim: public skillDesigns::Skill {
+        public:
             FinishHim();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

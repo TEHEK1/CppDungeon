@@ -5,6 +5,7 @@ namespace Heroes {
     namespace BountyHunter {
 
         class MarkForDeath: public skillDesigns::RangeSkill {
+        public:
             MarkForDeath();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

@@ -5,6 +5,7 @@ namespace Heroes {
     namespace ManAtArms {
 
         class Bolster: public skillDesigns::RangeSkill {
+        public:
             Bolster(); // buffs all allies 
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

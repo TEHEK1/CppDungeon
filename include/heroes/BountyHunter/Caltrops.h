@@ -5,6 +5,7 @@ namespace Heroes {
     namespace BountyHunter {
 
         class Caltrops: public skillDesigns::RangeSkill {
+        public:
             Caltrops();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
