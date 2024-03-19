@@ -5,5 +5,3 @@ tests/
 cmake-build-debug/
 CMakeLists.txt
 main.cpp
-.clang-tidy
-.github
