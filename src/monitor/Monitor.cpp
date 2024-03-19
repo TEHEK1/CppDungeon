@@ -133,7 +133,7 @@ Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const InterfaceColumnWindo
 
 int Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Action> action) {
     for (auto& i : m_key_binds) {
-        if (i.second == action) {
+        if (i.second.getAction() == action) {
             return i.first;
         }
     }
@@ -144,7 +144,7 @@ int Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Actio
     if (m_key_binds.find(key) == m_key_binds.end()) {
         return nullptr;
     }
-    return m_key_binds[key];
+    return m_key_binds[key].getAction();
  }
 //TODO: Add rebase or listing if the actions have a too much space
 void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
@@ -181,28 +181,27 @@ void Monitor::InterfaceColumnWindow::get_binds(Player* player) {
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
             switch (player->getMap()->getDirecrion(player->getPosition(), chooseNextRoom->getPostion())) {
                 case Map::direction::up:
-                    m_key_binds['i'] = chooseNextRoom;
+                    m_key_binds['i'] = Bind(chooseNextRoom);
                     break;
                 case Map::direction::down:
-                    m_key_binds['k'] = chooseNextRoom;
+                    m_key_binds['k'] = Bind(chooseNextRoom);
                     break;
                 case Map::direction::left:
-                    m_key_binds['j'] = chooseNextRoom;
+                    m_key_binds['j'] = Bind(chooseNextRoom);
                     break;
                 case Map::direction::right:
-                    m_key_binds['l'] = chooseNextRoom;
+                    m_key_binds['l'] = Bind(chooseNextRoom);
                     break;
             }
         }
         else if(auto moveLeft = std::dynamic_pointer_cast<actions::MoveLeft>(action)){
-            m_key_binds['a'] = moveLeft;
+            m_key_binds['a'] = Bind(moveLeft);
         }
         else if(auto moveRight = std::dynamic_pointer_cast<actions::MoveRight>(action)){
-            m_key_binds['d'] = moveRight;
+            m_key_binds['d'] = Bind(moveRight);
         }
     }
 }
-
 
 Monitor::Monitor() {
     int row, col;
@@ -363,4 +362,20 @@ void Monitor::keyEvent(int key, Player* player) {
 void Monitor::keyEvent(Player* player) {
     char pressed_key = getch();
     keyEvent(pressed_key, player);
+}
+
+Monitor::InterfaceColumnWindow::Bind::Bind(const std::shared_ptr<actions::Action>& action):m_action(action) {
+    m_function = [&action](Player* player){action->act(player);};
+}
+
+Monitor::InterfaceColumnWindow::Bind::Bind():m_action(nullptr) {
+    m_function = [](Player*){};
+}
+
+std::shared_ptr<actions::Action> Monitor::InterfaceColumnWindow::Bind::getAction() {
+    return m_action;
+}
+
+std::function<void(Player *)> Monitor::InterfaceColumnWindow::Bind::getFunction() {
+    return m_function;
 }

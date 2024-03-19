@@ -31,15 +31,15 @@ int main()
     auto map = std::make_shared<Map>(12);
     auto monitor = std::make_shared<Monitor>();
     std::vector<std::shared_ptr<entity::Entity>> allies;
-    allies.reserve(4);
-    for(int i = 0;i<4;i++){
+    allies.reserve(3);
+    for(int i = 0;i<3;i++){
         allies.push_back(std::make_shared<Heroes::BountyHunter::BountyHunter>());
     }
     auto alliesSquad = std::make_shared<Squad>(allies);
     auto enemiesSquad = alliesSquad;
     auto player = std::make_shared<Player>(map, monitor, enemiesSquad);
 
-    for(auto action:player->getActions()){
+    for(const auto& action:player->getActions()){
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
             chooseNextRoom->act(player.get());
         }
@@ -61,6 +61,6 @@ int main()
         }
         monitor->keyEvent(key, player.get());
     }
-    endwin()
+    endwin();
 	return 0;
 }
