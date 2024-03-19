@@ -83,8 +83,8 @@ private:
     static void abs_coordinates_to_relative(int& row, int& col, const GameWindow& cur_window, Position center);
 
     
-
-
+    static std::string get_entity_characteristics(std::shared_ptr<entity::Entity> person);
+    bool draw_Characteristis = false;
     std::vector<GameWindow> m_inventory_display;
     InterfaceColumnWindow m_user_actions_display;
     GameWindow m_map_display;

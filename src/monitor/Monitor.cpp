@@ -16,12 +16,13 @@
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
+#include <string>
 //Refresh correct pos and size coordinates and add some cooments about resolution and fixed or not sprites 
 
 
 namespace {
     static const int ENTITY_NUM = 8;
-    enum Entity_position {HERO_4, HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
+    enum Entity_position {HERO_4, HERO_3, HERO_2, HERO_1, ENEMY_1, ENEMY_2, ENEMY_3};
     
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
     CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
@@ -252,18 +253,40 @@ void Monitor::abs_coordinates_to_relative(int& row, int& col, const GameWindow& 
     row = row_realtive_center - row_difference;
     col = col_realtive_center - col_difference;
 }
-
+std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> person) {
+    std::string full_content = person->getName() + std::string(":");
+    //To much time(yeah) to do this cleaner
+    /*
+        accuracyModifier = trick::hash("accuracyModifier"),
+        dodge = trick::hash("dodge"),
+        defence = trick::hash("defence"),
+        speed = trick::hash("speed"),
+        HP = trick::hash("HP"),
+        maxHP = trick::hash("maxHP"),
+        marked = trick::hash("marked"),
+        criticalDamageChance = trick::hash("criticalDamageChance")
+        */
+    full_content += std::string("  accuracyModifier: ") + std::to_string(person->get(Characteristic::accuracyModifier));
+    full_content += std::string("  dodge: ") + std::to_string(person->get(Characteristic::dodge));
+    full_content += std::string("  defence: ") + std::to_string(person->get(Characteristic::defence));
+    full_content += std::string("  speed: ") + std::to_string(person->get(Characteristic::speed));
+    full_content += std::string("  HP: ") + std::to_string(person->get(Characteristic::HP));
+    full_content += std::string("  maxHP: ") + std::to_string(person->get(Characteristic::maxHP));
+    full_content += std::string("  marked: ") + std::to_string(person->get(Characteristic::marked));
+    full_content += std::string("  critChance: ") + std::to_string(person->get(Characteristic::criticalDamageChance));
+    return full_content;
+}
 
 //TODO: Change start postion of all sprites
 void Monitor::draw(Player* current_player) {
     //Heroes
-    int draw_position = static_cast<int>(Entity_position::HERO_1);
     if(current_player->getSquad() == nullptr){
         throw std::logic_error("Squad is not initialized");
     }
     for (auto& i : m_entity_window) {
         i.clean();
     }
+    int draw_position = static_cast<int>(Entity_position::HERO_1);
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
         if (i != nullptr) {
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
@@ -284,42 +307,55 @@ void Monitor::draw(Player* current_player) {
         }
     }
     m_map_display.clean();
-    m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::ROOM_COLOR);
-    drawing_map = current_player->getMap()->draw(current_player->getPosition(),
-                                                                                m_map_display.get_y() - 2, 
-                                                                                m_map_display.get_x() - 2);
-    
-    for (auto& row : drawing_map) {
-        for (auto& symbol : row) {
-            if (symbol != 2) {
-                symbol = ' ';
-            } else {
-                symbol = Map_symbols::CELL;
+    if (draw_Characteristis) {
+        
+        int cur_y = 0;
+
+        //TODO: Make smth with enemies
+        for (auto& i : current_player->getSquad()->getEntities()) {
+            if (i != nullptr) {
+                m_map_display.draw_text(cur_y, 0, get_entity_characteristics(i));
+            }
+            draw_position--;
+        }
+    } else {
+        m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::ROOM_COLOR);
+        drawing_map = current_player->getMap()->draw(current_player->getPosition(),
+                                                                                    m_map_display.get_y() - 2, 
+                                                                                    m_map_display.get_x() - 2);
+
+        for (auto& row : drawing_map) {
+            for (auto& symbol : row) {
+                if (symbol != 2) {
+                    symbol = ' ';
+                } else {
+                    symbol = Map_symbols::CELL;
+                }
             }
         }
-    }
-    m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::CELL_COLOR);
-    int center_x = current_player->getPosition().getColumn();
-    int center_y = current_player->getPosition().getLine();
-    abs_coordinates_to_relative(center_y, center_x, m_map_display, current_player->getPosition());
-    m_map_display.set_atr(center_y, center_x, 1, A_ITALIC, 3);
+        m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::CELL_COLOR);
+        int center_x = current_player->getPosition().getColumn();
+        int center_y = current_player->getPosition().getLine();
+        abs_coordinates_to_relative(center_y, center_x, m_map_display, current_player->getPosition());
+        m_map_display.set_atr(center_y, center_x, 1, A_ITALIC, 3);
 
-    for (Position i : current_player->getMap()->getNextRooms(current_player->getPosition())) {
-        int cur_x = i.getColumn();
-        int cur_y = i.getLine();
-        abs_coordinates_to_relative(cur_y, cur_x, m_map_display, current_player->getPosition());
-        if (cur_x > 0 && cur_x < m_map_display.get_x() - 1 && cur_y > 0 && cur_y < m_map_display.get_y() - 1) {
-            m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4); 
+        for (Position i : current_player->getMap()->getNextRooms(current_player->getPosition())) {
+            int cur_x = i.getColumn();
+            int cur_y = i.getLine();
+            abs_coordinates_to_relative(cur_y, cur_x, m_map_display, current_player->getPosition());
+            if (cur_x > 0 && cur_x < m_map_display.get_x() - 1 && cur_y > 0 && cur_y < m_map_display.get_y() - 1) {
+                m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4); 
+            }
         }
-    }
-    Position next = current_player->getMap()->getNextRoom(current_player->getPosition());
-    if (!(next == current_player->getPosition())) {
-        int next_x = next.getColumn();
-        int next_y = next.getLine();
-        abs_coordinates_to_relative(next_y, next_x, m_map_display, current_player->getPosition());
-        if (next_x > 0 && next_x < m_map_display.get_x() - 1 && next_y > 0 && next_y < m_map_display.get_y() - 1) {
-            m_map_display.draw_text(next_y, next_x, std::string(1, Map_symbols::TARGET_ROOM), false, TARGETED_ROOM_COLOR);
-            
+        Position next = current_player->getMap()->getNextRoom(current_player->getPosition());
+        if (!(next == current_player->getPosition())) {
+            int next_x = next.getColumn();
+            int next_y = next.getLine();
+            abs_coordinates_to_relative(next_y, next_x, m_map_display, current_player->getPosition());
+            if (next_x > 0 && next_x < m_map_display.get_x() - 1 && next_y > 0 && next_y < m_map_display.get_y() - 1) {
+                m_map_display.draw_text(next_y, next_x, std::string(1, Map_symbols::TARGET_ROOM), false, TARGETED_ROOM_COLOR);
+
+            }
         }
     }
     
@@ -330,7 +366,7 @@ void Monitor::draw(Player* current_player) {
     
     for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
         if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
-            m_entity_window[Entity_position::CHEST].draw_sprite(0, 0, usableEvent->draw()); 
+            m_entity_window[Entity_position::ENEMY_1].draw_sprite(0, 0, usableEvent->draw()); 
         }
     }
 
@@ -352,7 +388,9 @@ void Monitor::draw(Player* current_player) {
 
 
 void Monitor::keyEvent(int key, Player* player) {
-    if (m_user_actions_display.find_action(key) != nullptr && 
+    if (key == 'c') {
+        draw_Characteristis ^= true;
+    }  else if (m_user_actions_display.find_action(key) != nullptr && 
     player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);
     }
