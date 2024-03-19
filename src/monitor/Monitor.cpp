@@ -269,8 +269,6 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
     full_content += std::string("  dodge: ") + std::to_string(person->get(Characteristic::dodge));
     full_content += std::string("  defence: ") + std::to_string(person->get(Characteristic::defence));
     full_content += std::string("  speed: ") + std::to_string(person->get(Characteristic::speed));
-    full_content += std::string("  HP: ") + std::to_string(person->get(Characteristic::HP));
-    full_content += std::string("  maxHP: ") + std::to_string(person->get(Characteristic::maxHP));
     full_content += std::string("  marked: ") + std::to_string(person->get(Characteristic::marked));
     full_content += std::string("  critChance: ") + std::to_string(person->get(Characteristic::criticalDamageChance));
     return full_content;
@@ -289,6 +287,10 @@ void Monitor::draw(Player* current_player) {
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
         if (i != nullptr) {
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
+            m_entity_window[draw_position].draw_text(i->draw().size() + 2, 0, i->getName());
+            m_entity_window[draw_position].draw_text(i->draw().size() + 3, 0, std::string("Hp: ") + 
+                                                    std::to_string(i->get(Characteristic::HP)) + std::string("/") +
+                                                    std::to_string(i->get(Characteristic::maxHP)));
         }
         draw_position--;
     }
