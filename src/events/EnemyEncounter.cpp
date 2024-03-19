@@ -73,11 +73,11 @@ namespace events {
         auto skillToUse = availableSkills[num];
         int target = generators::NumberGenerator::generate(0, skillToUse->getAvaibleAllyTarget().size() + skillToUse->getAvaibleEnemyTarget().size() - 1);
         if (target < skillToUse->getAvaibleAllyTarget().size()) {
-            skillToUse->use(battleField, entity, {player->getSquad()->getEntities()[skillToUse->getAvaibleAllyTarget()[target]]});
+            skillToUse->use(battleField, entity, {player->getSquad()->getEntities().at(skillToUse->getAvaibleAllyTarget()[target])});
         }
         else {
             target -= skillToUse->getAvaibleAllyTarget().size();
-            skillToUse->use(battleField, entity, {battleField->getEnemySquad(entity)->getEntities()[skillToUse->getAvaibleEnemyTarget()[target]]});
+            skillToUse->use(battleField, entity, {battleField->getEnemySquad(entity)->getEntities().at(skillToUse->getAvaibleEnemyTarget()[target])});
         }
     }
 
