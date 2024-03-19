@@ -117,7 +117,6 @@ Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const size_t& y_size, cons
     for (int i = 0; i < num_of_col; i++) {
         m_columns.push_back(GameWindow(this->get_y(), col_size * block_size, pos_y, pos_x + block_size * (1 + (col_size + 1) * i)));
     }
-    this->get_binds();
 }
 
 Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const InterfaceColumnWindow& other) {
@@ -130,7 +129,7 @@ Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const InterfaceColumnWindo
     m_first_unbind = other.m_first_unbind;
 };
 
-char Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Action> action) {
+int Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Action> action) {
     for (auto& i : m_key_binds) {
         if (i.second == action) {
             return i.first;
@@ -139,7 +138,7 @@ char Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Acti
     return 0;
 }
 
- std::shared_ptr<actions::Action> Monitor::InterfaceColumnWindow::find_action(char key) {
+ std::shared_ptr<actions::Action> Monitor::InterfaceColumnWindow::find_action(int key) {
     if (m_key_binds.find(key) == m_key_binds.end()) {
         return nullptr;
     }
@@ -147,8 +146,8 @@ char Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Acti
  }
 //TODO: Add rebase or listing if the actions have a too much space
 void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
-    m_key_binds = {};
-    m_first_unbind = 'a';
+    
+    m_first_unbind = '0';
     size_t cur_y = 0;
     size_t cur_column = 0;
     for (auto& i : m_columns) {
@@ -163,7 +162,7 @@ void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<act
             m_key_binds[m_first_unbind] = i;
             m_first_unbind++;
         }
-        m_columns[cur_column].draw_text(cur_y, 0, std::string(1, this->find_bind_key(i)) + " : " + i->getName(), false, INTERFACE_COLOR);
+        m_columns[cur_column].draw_text(cur_y, 0, std::string(1, static_cast<char>(this->find_bind_key(i))) + " : " + i->getName(), false, INTERFACE_COLOR);
         cur_y += 2;
     }
 };
@@ -172,8 +171,34 @@ Monitor::InterfaceColumnWindow::InterfaceColumnWindow()
 :m_columns({})
 , m_key_binds({}) {}
 
-void Monitor::InterfaceColumnWindow::get_binds() {
-    // 
+void Monitor::InterfaceColumnWindow::get_binds(Player* player) {
+    if(player == nullptr){
+        throw std::logic_error("Player undefined");
+    }
+    for(auto& action:player->getActions()){
+        if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
+            switch (player->getMap()->getDirecrion(player->getPosition(), chooseNextRoom->getPostion())) {
+                case Map::direction::up:
+                    m_key_binds['p'] = chooseNextRoom;
+                    break;
+                case Map::direction::down:
+                    m_key_binds[';'] = chooseNextRoom;
+                    break;
+                case Map::direction::left:
+                    m_key_binds['l'] = chooseNextRoom;
+                    break;
+                case Map::direction::right:
+                    m_key_binds['\''] = chooseNextRoom;
+                    break;
+            }
+        }
+        else if(auto moveLeft = std::dynamic_pointer_cast<actions::MoveLeft>(action)){
+            m_key_binds['a'] = moveLeft;
+        }
+        else if(auto moveRight = std::dynamic_pointer_cast<actions::MoveRight>(action)){
+            m_key_binds['d'] = moveRight;
+        }
+    }
 }
 
 
@@ -284,12 +309,12 @@ void Monitor::draw(Player* current_player) {
         }
     }
 
+    
+    m_user_actions_display.m_key_binds = {};
+    m_user_actions_display.get_binds(current_player);
     m_user_actions_display.draw_interface(current_player->getActions());
-
-
-
     //TODO: Add inventory list display and other related to interface stuff to draw after discussion 
-    int cur_y = 0;
+    /*int cur_y = 0;
     int cur_column = 0;
     for (auto item : current_player->getInventory().getItems()) {
         if (m_inventory_display[cur_column].get_y() - 2 <= cur_y) {
@@ -298,13 +323,14 @@ void Monitor::draw(Player* current_player) {
         }
         m_inventory_display[cur_column].draw_text(cur_y, 0, item->draw(), false, Colors::ITEM_COLOR);
         cur_y += 2;
-    }
+    }*/
+    
 
 }
 
 
 
-void Monitor::keyEvent(char key, Player* player) {
+void Monitor::keyEvent(int key, Player* player) {
     if (m_user_actions_display.find_action(key) != nullptr && 
     player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);
@@ -318,32 +344,3 @@ void Monitor::keyEvent(Player* player) {
     keyEvent(pressed_key, player);
 }
 
-void Monitor::addKeysNavigation(Player* player){
-    if(player == nullptr){
-        throw std::logic_error("Player undefined");
-    }
-    for(auto& action:player->getActions()){
-        if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
-            switch (player->getMap()->getDirecrion(player->getPosition(), chooseNextRoom->getPostion())) {
-                case Map::direction::up:
-                    m_user_actions_display.m_key_binds['\38'] = chooseNextRoom;
-                    break;
-                case Map::direction::down:
-                    m_user_actions_display.m_key_binds['\40'] = chooseNextRoom;
-                    break;
-                case Map::direction::left:
-                    m_user_actions_display.m_key_binds['\37'] = chooseNextRoom;
-                    break;
-                case Map::direction::right:
-                    m_user_actions_display.m_key_binds['\39'] = chooseNextRoom;
-                    break;
-            }
-        }
-        else if(auto moveLeft = std::dynamic_pointer_cast<actions::MoveLeft>(action)){
-            m_user_actions_display.m_key_binds['a'] = moveLeft;
-        }
-        else if(auto moveRight = std::dynamic_pointer_cast<actions::MoveRight>(action)){
-            m_user_actions_display.m_key_binds['d'] = moveRight;
-        }
-    }
-}
