@@ -6,7 +6,7 @@ namespace Heroes {
 
         class Command: public skillDesigns::RangeSkill {
         public:
-            Command(); // buffs all allies 
+            Command();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,

@@ -6,7 +6,7 @@ namespace Heroes {
 
         class Bolster: public skillDesigns::RangeSkill {
         public:
-            Bolster(); // buffs all allies 
+            Bolster(); 
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,
