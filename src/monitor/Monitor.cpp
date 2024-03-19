@@ -23,7 +23,7 @@ namespace {
     enum Entity_position {HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
     
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
-    CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), INTERFACE_COLOR = COLOR_PAIR(5)};
+    CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6)};
     enum Map_symbols : char {CELL = '"', ROOM = '0'};
 }
 
@@ -155,7 +155,7 @@ void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<act
         i.clean();
     }
     for (auto& i : available_actions) {
-        if (cur_y >= m_columns[cur_column].get_y()) {
+        if (cur_y >= m_columns[cur_column].get_y() - 1) {
             cur_y = 0;
             cur_column++;
         }
@@ -186,7 +186,7 @@ Monitor::Monitor() {
     init_pair(3, COLOR_BLACK, COLOR_CYAN);
     init_pair(4, COLOR_GREEN, COLOR_GREEN);
     init_pair(5, COLOR_RED, COLOR_BLACK);
-    
+    init_pair(6, COLOR_WHITE, COLOR_BLACK);
 
     //        |--------------------|
     // 2 / 3  |  Battle            |
@@ -196,7 +196,8 @@ Monitor::Monitor() {
     // 1 / 3  | Inventory|      Map|
     //        |          |         |
     m_background_display = GameWindow ( 2 * row / 3, col, 0, 0);
-    m_inventory_display = GameWindow (8 * row / 9, col / 2, 7 * row / 9 + 1, 0);
+    m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, 0));
+    m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, col / 4 + 1));
     m_map_display = GameWindow (row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_user_actions_display = InterfaceColumnWindow(row / 9, col / 2, 2 * row / 3 + 1, 0);
     //Calculating x_distance and size
@@ -287,7 +288,17 @@ void Monitor::draw(Player* current_player) {
 
 
 
-    //TODO: Addinventory list display and other related to interface stuff to draw after discussion 
+    //TODO: Add inventory list display and other related to interface stuff to draw after discussion 
+    int cur_y = 0;
+    int cur_column = 0;
+    for (auto item : current_player->getInventory().getItems()) {
+        if (m_inventory_display[cur_column].get_y() - 2 <= cur_y) {
+            cur_column++;
+            cur_y = 0;
+        }
+        m_inventory_display[cur_column].draw_text(cur_y, 0, item->draw(), false, Colors::ITEM_COLOR);
+        cur_y += 2;
+    }
 
 }
 

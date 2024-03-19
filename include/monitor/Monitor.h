@@ -86,7 +86,7 @@ private:
     
 
 
-    GameWindow m_inventory_display;
+    std::vector<GameWindow> m_inventory_display;
     InterfaceColumnWindow m_user_actions_display;
     GameWindow m_map_display;
     std::vector<GameWindow> m_entity_window;
