@@ -12,6 +12,7 @@ namespace entity {
     class Enemy : public Entity, public MarkedAsAutoTurn {
     public:
         Enemy(std::string name, std::map<int, int> characteristics, std::set<std::shared_ptr<skillDesigns::Skill>> skills);
+        void autoTurn(std::shared_ptr<Player>, std::shared_ptr<BattleField>, std::shared_ptr<entity::Entity>, int) override;
     };
 } // namespace entity
 #endif //UNTITLED_ENEMY_H

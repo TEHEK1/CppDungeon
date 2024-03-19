@@ -23,24 +23,24 @@ namespace events {
 
         std::vector<std::shared_ptr<entity::Entity>> tmpEnemies;
         int numberOfEnemies = generators::NumberGenerator::generate(1, 3);
-        tmpEnemies.resize(numberOfEnemies);
+        tmpEnemies.reserve(numberOfEnemies);
 
-        for (auto &i: tmpEnemies) {
+        for (int i = 0;i<numberOfEnemies;i++) {
             int num = generators::NumberGenerator::generate(0, 2);
             switch (num) {
             case 0:
-                i = std::make_shared<enemies::BrigandRaider::BrigandRaider>();
+                tmpEnemies.push_back(std::make_shared<enemies::BrigandRaider::BrigandRaider>());
                 break;
             case 1:
-                i = std::make_shared<enemies::BrigandFusilier::BrigandFusilier>();
+                tmpEnemies.push_back(std::make_shared<enemies::BrigandFusilier::BrigandFusilier>());
                 break;
             default:
-                i = std::make_shared<enemies::CultistAcolyte::CultistAcolyte>();
+                tmpEnemies.push_back(std::make_shared<enemies::CultistAcolyte::CultistAcolyte>());
                 break;
             }
         }
 
-        m_enemies = std::shared_ptr<Squad>(new Squad(tmpEnemies, numberOfEnemies));
+        m_enemies = std::shared_ptr<Squad>(new Squad(tmpEnemies));
         m_priority = {};
         m_battleField = std::shared_ptr<BattleField>(new BattleField(m_enemies, m_enemies));
     }

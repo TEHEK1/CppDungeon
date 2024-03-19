@@ -34,7 +34,7 @@ int main() {
     auto player = std::shared_ptr<Player>(new Player(map, monitor, squad));
 
     std::cout << "Pre-battle" << std::endl;
-    // std::cout << check(enemyEncounter->getEnemies()->getEntities()) << " " << check(player->getSquad()->getEntities()) << std::endl;
+    std::cout << check(enemyEncounter->getEnemies()->getEntities()) << " " << check(player->getSquad()->getEntities()) << std::endl;
     while (check(player->getSquad()->getEntities()) && check(enemyEncounter->getEnemies()->getEntities())) {
         std::cout << "Mid-battle" << std::endl;
         enemyEncounter->turn(player.get());
