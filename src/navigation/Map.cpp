@@ -318,8 +318,13 @@ Position Map::moveRight(Position pos) {
     return pos;
 }
 
-char Map::getNextRoom(Position pos) {
-    return pos.m_destination;
+Position Map::getNextRoom(Position pos) {
+    if(pos.m_destination==-1){
+        return pos;
+    }
+    else {
+        return m_roomPositions[pos.m_destination];
+    }
 }
 
 int Map::getSeed() {
