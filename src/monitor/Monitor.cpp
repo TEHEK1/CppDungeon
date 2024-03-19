@@ -24,8 +24,9 @@ namespace {
     enum Entity_position {HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
     
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
-    CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6)};
-    enum Map_symbols : char {CELL = '"', ROOM = '0'};
+    CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
+    INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6), TARGETED_ROOM_COLOR = COLOR_PAIR(7)};
+    enum Map_symbols : char {CELL = '"', ROOM = '0', TARGET_ROOM = '#'};
 }
 
 
@@ -213,7 +214,7 @@ Monitor::Monitor() {
     init_pair(4, COLOR_GREEN, COLOR_GREEN);
     init_pair(5, COLOR_RED, COLOR_BLACK);
     init_pair(6, COLOR_WHITE, COLOR_BLACK);
-
+    init_pair(7, COLOR_RED, COLOR_WHITE);
     //        |--------------------|
     // 2 / 3  |  Battle            |
     //        |                    |
@@ -310,13 +311,19 @@ void Monitor::draw(Player* current_player) {
         }
     }
     //Current room drawing would be here
-    //current_player->getMap()->getNextRoom
+    Position next = current_player->getMap()->getNextRoom(current_player->getPosition());
+    if (!(next == current_player->getPosition())) {
+        int next_x = next.getColumn();
+        int next_y = next.getLine();
+        abs_coordinates_to_relative(next_y, next_x, m_map_display, current_player->getPosition());
+        m_map_display.draw_text(next_y, next_x, std::string(1, Map_symbols::TARGET_ROOM), false, TARGETED_ROOM_COLOR);
+    }
     
     m_user_actions_display.m_key_binds = {};
     m_user_actions_display.get_binds(current_player);
     m_user_actions_display.draw_interface(current_player->getActions());
 
-    //Useable chest drawing 
+    
     for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
         if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
             m_entity_window[Entity_position::CHEST].draw_sprite(0, 0, usableEvent->draw()); 
