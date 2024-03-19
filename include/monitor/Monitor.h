@@ -75,9 +75,21 @@ private:
             void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive = true);
             void get_binds(Player* player);
         private:
+            class Bind{
+            public:
+                Bind();
+
+                Bind(const std::shared_ptr<actions::Action>& action);
+                std::shared_ptr<actions::Action> getAction();
+                std::function<void(Player*)> getFunction();
+            private:
+                std::function<void(Player*)> m_function;
+                std::shared_ptr<actions::Action> m_action;
+
+            };
             std::vector<GameWindow> m_columns;
             int m_first_unbind = 'a';
-            std::map<int, std::shared_ptr<actions::Action>> m_key_binds;
+            std::map<int, Bind> m_key_binds;
     };
 
     static void abs_coordinates_to_relative(int& row, int& col, const GameWindow& cur_window, Position center);
