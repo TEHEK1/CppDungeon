@@ -7,6 +7,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <error.h>
 
 #include "skillDesigns/Skill.h"
 #include "entity/Characteristic.h"
