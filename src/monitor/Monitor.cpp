@@ -12,6 +12,7 @@
 #include "actions/MoveLeft.h"
 #include "actions/MoveRight.h"
 #include "Squad.h"
+#include "events/UsableEvent.h"
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
@@ -316,7 +317,11 @@ void Monitor::draw(Player* current_player) {
     m_user_actions_display.draw_interface(current_player->getActions());
 
     //Useable chest drawing 
-
+    for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
+        if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
+            usableEvent->draw();// got Useable chest drawing
+        }
+    }
 
     //inventory 
     /*int cur_y = 0;
