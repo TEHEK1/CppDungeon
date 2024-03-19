@@ -14,6 +14,7 @@
 
 bool check(std::vector<std::shared_ptr<entity::Entity>> entities) {
     for (auto i: entities) {
+        if (!i) std::cout << "i do not exitst" << std::endl;
         if (i && i->isAlive()) {
             return true;
         }
@@ -26,12 +27,19 @@ int main() {
     auto enemyEncounter = std::shared_ptr<events::EnemyEncounter>(new events::EnemyEncounter());
     auto monitor = std::shared_ptr<Monitor>(new Monitor(enemyEncounter));
     auto map = std::shared_ptr<Map>(new Map(12));
+    // if (std::make_shared<enemies::BrigandRaider::BrigandRaider>()) {
+    //     std::cout << "shared ptr exist" << std::endl;
+    // }
     auto squad = std::shared_ptr<Squad>(new Squad({std::make_shared<enemies::BrigandRaider::BrigandRaider>()}));
     auto player = std::shared_ptr<Player>(new Player(map, monitor, squad));
 
+    std::cout << "Pre-battle" << std::endl;
+    // std::cout << check(enemyEncounter->getEnemies()->getEntities()) << " " << check(player->getSquad()->getEntities()) << std::endl;
     while (check(player->getSquad()->getEntities()) && check(enemyEncounter->getEnemies()->getEntities())) {
+        std::cout << "Mid-battle" << std::endl;
         enemyEncounter->turn(player.get());
     }
+    std::cout << "Post-battle" << std::endl;
 
     return 0;
 }

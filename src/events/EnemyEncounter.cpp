@@ -42,6 +42,7 @@ namespace events {
 
         m_enemies = std::shared_ptr<Squad>(new Squad(tmpEnemies, numberOfEnemies));
         m_priority = {};
+        m_battleField = std::shared_ptr<BattleField>(new BattleField(m_enemies, m_enemies));
     }
 
     std::shared_ptr<Squad> EnemyEncounter::getEnemies() {
@@ -57,7 +58,7 @@ namespace events {
     }
 
     std::shared_ptr<BattleField> EnemyEncounter::getBattleField() {
-
+        return m_battleField;
     }
 
     void EnemyEncounter::_enemyMove(Player* player, std::shared_ptr<entity::Entity> entity, int rank, std::shared_ptr<BattleField> battleField) {
@@ -91,6 +92,7 @@ namespace events {
 
     void EnemyEncounter::turn(Player* player) {
         std::shared_ptr<BattleField> battleField = std::shared_ptr<BattleField>(new BattleField(player->getSquad(), m_enemies));
+        m_battleField = battleField;
         std::vector<std::shared_ptr<entity::Entity>> enemiesEntities = m_enemies->getEntities();
         if (m_priority.empty()) {
             std::vector<std::shared_ptr<entity::Entity>> priority = battleField->getEntities();
