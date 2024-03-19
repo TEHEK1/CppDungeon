@@ -10,11 +10,11 @@
 
 
 void Room::generateEvents(){
-    static bool used = false;
-    if(used){
+
+    if(m_used){
         return;
     }
-    used = true;
+    m_used = true;
     /*if(generators::NumberGenerator::generate(0, 1) == 1) {
         m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{
