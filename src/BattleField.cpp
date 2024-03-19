@@ -40,6 +40,10 @@ std::shared_ptr<Squad> BattleField::getSquad(const std::shared_ptr<entity::Entit
             return m_enemy;
         }
     }
+
+    if(!ans){
+        throw std::logic_error("No such entity on this squad");
+    }
     return ans;
 }
 

@@ -11,7 +11,17 @@ namespace skillDesigns {
                  std::vector<int> availableEnemyTarget, int accuracy, int criticalDamageChance) :
             m_name(name), m_availableRank(availableRank), m_availableAllyTarget(availableAllyTarget),
             m_availableEnemyTarget(availableEnemyTarget), m_accuracy(accuracy),
-            m_criticalDamageChance(criticalDamageChance) {}
+            m_criticalDamageChance(criticalDamageChance) {
+        for(auto& i:m_availableRank){
+            i--;
+        }
+        for(auto& i:m_availableAllyTarget){
+            i--;
+        }
+        for(auto& i:m_availableEnemyTarget){
+            i--;
+        }
+    }
 
     std::vector<int> Skill::getAvaibleRank() {
         return m_availableRank;
@@ -97,19 +107,19 @@ namespace skillDesigns {
 
         auto actorSquadVector = battleField->getSquad(actor)->getEntities(); // std::vector<std::shared_ptr<Entity>>
         if (std::find(m_availableRank.begin(), m_availableRank.end(),
-                      battleField->getSquad(actor)->getIndex(actor) + 1) == m_availableRank.end()) {
+                      battleField->getSquad(actor)->getIndex(actor)) == m_availableRank.end()) {
             return "Can't act from this rank";
         }
 
         for (const auto &obj: objects) {
             if (battleField->areAllies(actor, obj)) {
                 if (std::find(m_availableAllyTarget.begin(), m_availableAllyTarget.end(),
-                              battleField->getSquad(obj)->getIndex(obj) + 1) == m_availableAllyTarget.end()) {
+                              battleField->getSquad(obj)->getIndex(obj)) == m_availableAllyTarget.end()) {
                     return "Can't act on some ally target";
                 }
             } else {
                 if (std::find(m_availableEnemyTarget.begin(), m_availableEnemyTarget.end(),
-                              battleField->getSquad(obj)->getIndex(obj) + 1) == m_availableEnemyTarget.end()) {
+                              battleField->getSquad(obj)->getIndex(obj)) == m_availableEnemyTarget.end()) {
                     return "Can't act on some enemy target";
                 }
             }
