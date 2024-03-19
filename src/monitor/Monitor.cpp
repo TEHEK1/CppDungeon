@@ -319,7 +319,7 @@ void Monitor::draw(Player* current_player) {
     //Useable chest drawing 
     for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
         if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
-            usableEvent->draw();// got Useable chest drawing
+            m_entity_window[Entity_position::CHEST].draw_sprite(0, 0, usableEvent->draw()); 
         }
     }
 
