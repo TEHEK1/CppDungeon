@@ -5,6 +5,7 @@ namespace Bosses {
     namespace GardenGuardian {
 
         class AnnihilatingGlare : public skillDesigns::RangeSkill {
+        public:
             AnnihilatingGlare();
 
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

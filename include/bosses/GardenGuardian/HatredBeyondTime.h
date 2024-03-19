@@ -6,6 +6,7 @@ namespace Bosses {
     namespace GardenGuardian {
 
         class HatredBeyondTime : public skillDesigns::Skill {
+        public:
             HatredBeyondTime();
 
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
