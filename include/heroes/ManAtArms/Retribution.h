@@ -5,6 +5,7 @@ namespace Heroes {
     namespace ManAtArms {
 
         class Retribution: public skillDesigns::Skill {
+        public:
             Retribution();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

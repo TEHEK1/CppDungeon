@@ -1,6 +1,6 @@
 #include <iostream>
 #include "include/BattleField.h"
-#include "include/BattleFIeldChanger.h"
+#include "include/BattleFieldChanger.h"
 #include "Squad.h"
 #include "entity/Entity.h"
 #include <random>

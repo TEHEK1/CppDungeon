@@ -1,10 +1,8 @@
 #include "heroes/Hellion/AdrenalineRush.h"
 #include "generators/EffectGenerator.h"
 #include "effects/Damage.h"
-#include "effects/Mark.h"
 #include "effects/Heal.h"
-#include "effects/Bleed.h"
-#include "effects/Blight.h"
+#include "effects/Buff.h"
 namespace Heroes {
     namespace Hellion {
         AdrenalineRush::AdrenalineRush() : RangeSkill(0, "AdrenalineRush", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}

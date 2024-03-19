@@ -5,7 +5,8 @@ namespace Heroes {
     namespace Hellion {
 
         class AdrenalineRush: public skillDesigns::RangeSkill {
-            AdrenalineRush(); // use on herself
+        public:
+            AdrenalineRush();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor,

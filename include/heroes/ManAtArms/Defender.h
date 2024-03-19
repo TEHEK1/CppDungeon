@@ -5,6 +5,7 @@ namespace Heroes {
     namespace ManAtArms {
 
         class Defender: public skillDesigns::Skill {
+        public:
             Defender(); 
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

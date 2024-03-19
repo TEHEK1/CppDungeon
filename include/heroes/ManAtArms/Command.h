@@ -5,6 +5,7 @@ namespace Heroes {
     namespace ManAtArms {
 
         class Command: public skillDesigns::RangeSkill {
+        public:
             Command(); // buffs all allies 
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

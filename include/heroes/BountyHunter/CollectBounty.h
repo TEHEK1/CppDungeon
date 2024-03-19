@@ -5,6 +5,7 @@ namespace Heroes {
     namespace BountyHunter {
 
         class CollectBounty: public skillDesigns::Skill {
+        public:
             CollectBounty();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

@@ -5,6 +5,7 @@ namespace Heroes {
     namespace BountyHunter {
 
         class UpperCut: public skillDesigns::Skill {
+        public:
             UpperCut();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

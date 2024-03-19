@@ -5,6 +5,7 @@ namespace Heroes {
     namespace BountyHunter {
 
         class FlashBang: public skillDesigns::RangeSkill {
+        public:
             FlashBang();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

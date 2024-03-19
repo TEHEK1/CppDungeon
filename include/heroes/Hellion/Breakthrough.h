@@ -5,6 +5,7 @@ namespace Heroes {
     namespace Hellion {
 
         class Breakthrough: public skillDesigns::RangeSkill {
+        public:
             Breakthrough();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
