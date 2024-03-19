@@ -8,8 +8,8 @@
 void Cell::freeMoves(Player * player, events::Event* event) {
     m_endedEvents.insert(event);
     if (m_endedEvents.size() == getEvents().size()) {
-        addAction(player, std::make_shared<actions::MoveLeft>());
-        addAction(player, std::make_shared<actions::MoveRight>());
+        addUniqueAction(player, std::make_shared<actions::MoveLeft>());
+        addUniqueAction(player, std::make_shared<actions::MoveRight>());
     }
 }
 

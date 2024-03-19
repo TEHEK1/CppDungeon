@@ -21,7 +21,7 @@ class Trap : public events::UsableEvent, public changers::EffectChanger, public 
         int m_range_use_finish = 3;
         int m_range_dontUse_start = 0;
         int m_range_dontUse_finish = 2;
-        bool m_used = true;
+        bool m_used = false;
 //    /-----------------\
 //    |                 |
 //    |                 |

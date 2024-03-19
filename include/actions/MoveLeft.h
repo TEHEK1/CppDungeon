@@ -12,6 +12,7 @@ namespace actions {
     public:
         void act(Player *player) override;
         std::string getName() override;
+        bool operator==(const MoveLeft& moveLeft) const;
     };
 
 #endif //CPPDUNGEON_MOVELEFT_H

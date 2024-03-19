@@ -15,6 +15,7 @@ namespace actions {
         void act(Player *player) override;
         std::shared_ptr<events::UsableEvent> getUsableEvent();
         std::string getName() override;
+        bool operator==(const actions::Use &use) const;
     private:
         std::shared_ptr<events::UsableEvent> m_usableEvent;
     };

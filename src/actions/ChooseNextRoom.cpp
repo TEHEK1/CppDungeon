@@ -18,4 +18,8 @@ namespace actions{
     std::string ChooseNextRoom::getName() {
         return "ChooseNextRoom" + std::to_string(m_room.getLine()) + " " +  std::to_string(m_room.getColumn());
     }
+
+    bool ChooseNextRoom::operator==(const actions::ChooseNextRoom &other) const {
+        return static_cast<const Position>(m_room) == other.m_room;
+    }
 } // namespace actions

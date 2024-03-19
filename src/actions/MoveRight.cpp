@@ -21,4 +21,7 @@ namespace actions {
     std::string MoveRight::getName() {
         return "Move Player right";
     }
+    bool MoveRight::operator==(const actions::MoveRight &moveRight) const {
+        return true;
+    }
 }//namespace actions

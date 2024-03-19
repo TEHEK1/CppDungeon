@@ -22,11 +22,10 @@ bool events::Trap::comp(std::set<std::shared_ptr<actions::Action>>::iterator act
 
 void events::Trap::turn(Player * player) {
     player -> getMonitor() -> draw(player);
-    if(m_used) {
-        addAction(player, std::make_shared<actions::Use>(Trap::shared_from_this()));
+    if(!m_used) {
+        addUniqueAction(player, std::make_shared<actions::Use>(Trap::shared_from_this()));
     }
-
-    addAction(player, std::make_shared<actions::DontUse>(shared_from_this()));
+    addUniqueAction(player, std::make_shared<actions::DontUse>(shared_from_this()));
 }
 
 void events::Trap::dontUse(Player *player) {
@@ -39,9 +38,7 @@ void events::Trap::dontUse(Player *player) {
 }
 
 void events::Trap::use(Player *player) {
-    bool once = true;
-    if(once) {
-        once = false;
+    if(!m_used) {
         static int random = generators::NumberGenerator::generate(m_range_use_start, m_range_use_finish);
         std::vector<std::shared_ptr<entity::Entity>> entities = player->getSquad()->getEntities();
         for (int i = 0; i < entities.size(); i++) {
@@ -73,7 +70,7 @@ void events::Trap::use(Player *player) {
         m_drawing[11] = {'|',' ',' ',' ','|',' ',' ',' ','x',' ','x',' ',' ',' ','|',' ',' ',' ','|',' '};
         m_drawing[12] = {'|',' ',' ',' ','|',' ',' ','x',' ',' ',' ','x',' ',' ','|',' ',' ',' ','|',' '};
         player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
-        m_used = false;
+        m_used = true;
     }
 }
 

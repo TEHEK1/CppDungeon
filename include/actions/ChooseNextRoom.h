@@ -16,6 +16,7 @@ namespace actions {
         void act(Player *player) override;
         virtual std::string getName() override;
         Position getPostion();
+        bool operator==(const ChooseNextRoom&) const;
     private:
         Position m_room;
     };

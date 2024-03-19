@@ -20,4 +20,8 @@ namespace actions {
     std::string DontUse::getName() {
         return "Dont Use Trap(Known damage)";
     }
+
+    bool DontUse::operator==(const actions::DontUse &dontUse) const {
+        return m_trap == dontUse.m_trap;
+    }
 }//namespace actions
