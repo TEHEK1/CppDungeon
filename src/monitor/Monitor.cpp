@@ -59,6 +59,9 @@ void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
 
 void Monitor::GameWindow::clean() {
     wclear(m_current_window);
+    //DEBUG: for visual size of areas, will remove this when drawing ready sprites
+    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
+    wrefresh(m_current_window);
 }
 //TODO: add size checkers
 //draw_sprite draws with only either text formating attribute or pair of colors (text, font) 
@@ -155,7 +158,6 @@ void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<act
         if (cur_y >= m_columns[cur_column].get_y()) {
             cur_y = 0;
             cur_column++;
-            m_columns[cur_column].clean();
         }
         if (adaptive && this->find_bind_key(i) == 0) {
             m_key_binds[m_first_unbind] = i;
@@ -285,13 +287,13 @@ void Monitor::draw(Player* current_player) {
 
 
 
-    //TODO: Add interface and inventory list display and other related to interface stuff to draw after discussion 
+    //TODO: Addinventory list display and other related to interface stuff to draw after discussion 
 
 }
 
 
 
-void Monitor::keyEvent(char key, Player* plapuyer) {
+void Monitor::keyEvent(char key, Player* player) {
     if (m_user_actions_display.find_action(key) != nullptr && 
     player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);
