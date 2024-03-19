@@ -6,7 +6,8 @@ namespace skillDesigns {
     public:
         RangeSkill(int size, std::string name, std::vector<int> availableRank,
                    std::vector<int> availableAllyTarget = {},
-                   std::vector<int> availableEnemyTarget = {}, int accuracy = 0, int criticalDamageChance = 0);
+                   std::vector<int> availableEnemyTarget = {},
+                   int accuracy = 0, int criticalDamageChance = 0);
 
     protected:
         std::string isDesignUsable(std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> actor,
