@@ -34,7 +34,9 @@ int main()
     for(int i = 0;i<4;i++){
         allies.push_back(std::make_shared<enemies::BrigandRaider::BrigandRaider>());
     }
-    Player* player = new Player(map, monitor, std::make_shared<Squad>(allies));
+    auto alliesSquad = std::make_shared<Squad>(allies);
+    auto enemiesSquad = alliesSquad;
+    Player* player = new Player(map, monitor, enemiesSquad);
 
     /*for(auto action:player->getActions()){
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
