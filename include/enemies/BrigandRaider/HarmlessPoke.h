@@ -12,6 +12,7 @@ namespace enemies {
 
             void unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                std::shared_ptr<entity::Entity> object) override;
+                               
         };
     } // namespace BrigandFusilier
 } // namespace enemies

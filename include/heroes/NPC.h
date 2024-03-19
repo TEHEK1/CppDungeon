@@ -4,7 +4,8 @@
 
 #ifndef CPPDUNGEON_NPC_H
 #define CPPDUNGEON_NPC_H
-#include "heroes/Hero.h"
-class NPC:public Hero{
+#include "entity/Hero.h"
+class NPC:public entity::Hero{
+    
 };
 #endif //CPPDUNGEON_NPC_H
