@@ -32,10 +32,9 @@ Main::Main() {
     m_eventFactory.add<events::ChooseRoomEvent>(1);
     m_eventFactory.add<events::EmptyCell>(2);
     m_eventFactory.add<events::Trap>(3);
-    m_entityFactory.add<enemies::BrigandFusilier::BrigandFusilier>(0);
-    m_entityFactory.add<enemies::BrigandRaider::BrigandRaider>(1);
-    m_entityFactory.add<enemies::CultistAcolyte::CultistAcolyte>(2);
-    m_entityFactory.add<enemies::BrigandFusilier::BrigandFusilier>(3);
+//    m_entityFactory.add<enemies::BrigandFusilier::BrigandFusilier>(0);
+//    m_entityFactory.add<enemies::BrigandRaider::BrigandRaider>(1);
+//    m_entityFactory.add<enemies::CultistAcolyte::CultistAcolyte>(2);
 }
 
 //void Main::Init() {
@@ -64,9 +63,9 @@ entity::Entity* Main::getEntity() {
     return m_entityFactory.create(id);
 }
 
-//Monitor *Main::getGame() {
-//    Monitor monitor;
-//    Player player;
-//    Map map(m_seed);
-//    return &monitor;
-//}
+Player *Main::getGame() {
+    auto map = std::make_shared<Map>(12);
+    auto monitor = std::make_shared<Monitor>();
+    Player* player = new Player(map, monitor);
+    return player;
+}

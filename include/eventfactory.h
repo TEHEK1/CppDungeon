@@ -13,34 +13,32 @@ template <class Base, class IdType>
 class ObjectFactory
 {
 protected:
-    typedef AbstractCreator<Base> AbstractFactory;
-    typedef std::map<IdType, AbstractFactory*> FactoryMap;
-    FactoryMap	m_factory;
+    std::map<IdType, AbstractCreator<Base>*> m_factory;
 
 public:
     ObjectFactory() {}
     virtual ~ObjectFactory() = default;
-    FactoryMap getFactoryMap() {
+    std::map<IdType, AbstractCreator<Base>*> getFactoryMap() {
         return m_factory;
     }
-    template <class C>
+    template <class Object>
     void add(const IdType & id)
     {
-        registerClass(id, new Creator<C, Base>());
+        registerClass(id, new Creator<Object, Base>());
     }
 
     Base * create(const IdType   & id)
     {
-        typename FactoryMap::iterator it = m_factory.find(id);
+        typename std::map<IdType, AbstractCreator<Base>*>::iterator it = m_factory.find(id);
         if (it != m_factory.end())
             return it->second->create();
         return 0;
     }
 
 protected:
-    void registerClass(const IdType & id, AbstractFactory * p)
+    void registerClass(const IdType & id, AbstractCreator<Base> * p)
     {
-        typename FactoryMap::iterator it = m_factory.find(id);
+        typename std::map<IdType, AbstractCreator<Base>*>::iterator it = m_factory.find(id);
         if (it == m_factory.end())
             m_factory[id] = p;
         else

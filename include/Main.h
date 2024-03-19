@@ -25,7 +25,7 @@ public:
     int my_rand_entity(size_t);
     void setSeed(std::size_t);
     std::size_t getSeed();
-    Monitor* getGame();
+    Player* getGame();
     events::Event* getEvent();
     entity::Entity* getEntity();
 };

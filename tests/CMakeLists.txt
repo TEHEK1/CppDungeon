@@ -41,4 +41,7 @@ add_executable(test
         ../src/monitor/Monitor.cpp
         ../src/navigation/Cell.cpp
         ../src/effects/PermanentEffect.cpp
+#        ../src/enemies/BrigandFusilier/BrigandFusilier.cpp
+#        ../src/enemies/BrigandRaider/BrigandRaider.cpp
+#        ../src/enemies/CultistAcolyte/CultistAcolyte.cpp
 )

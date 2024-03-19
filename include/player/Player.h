@@ -26,7 +26,7 @@ class Player{
     Monitor* m_monitor;
     Map* m_map;
 public:
-    explicit Player(Map* map);
+    explicit Player(std::shared_ptr<Map> map, std::shared_ptr<Monitor> monitor);
     Monitor* getMonitor();
     void setMonitor(Monitor* map);
     Position getPosition();
