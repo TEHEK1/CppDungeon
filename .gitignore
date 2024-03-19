@@ -1,6 +1,5 @@
 .vscode
 build
-tests/
 .idea
 cmake-build-debug/
 CMakeLists.txt
