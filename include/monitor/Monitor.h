@@ -31,12 +31,11 @@ public:
     void draw(Player* player);//Ask draw functions realizations from Map, Entity and Event if needed
 
 
-    void keyEvent(char key, Player* player);
+    void keyEvent(int key, Player* player);
     void keyEvent(Player* player);
 
 private:
 
-    void addKeysNavigation(Player* player);
 
     // Don't want to give access to GameWindow and its childs in other files, it's only for Monitor usage
     class GameWindow {
@@ -71,14 +70,14 @@ private:
             InterfaceColumnWindow(const InterfaceColumnWindow& other);
             ~InterfaceColumnWindow() = default;
             friend Monitor;
-            char find_bind_key(std::shared_ptr<actions::Action> action);
-            std::shared_ptr<actions::Action> find_action(char key);
+            int find_bind_key(std::shared_ptr<actions::Action> action);
+            std::shared_ptr<actions::Action> find_action(int key);
             void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive = true);
-            void get_binds();
+            void get_binds(Player* player);
         private:
             std::vector<GameWindow> m_columns;
-            char m_first_unbind = 'a';
-            std::map<char, std::shared_ptr<actions::Action>> m_key_binds;
+            int m_first_unbind = 'a';
+            std::map<int, std::shared_ptr<actions::Action>> m_key_binds;
     };
 
     static void abs_coordinates_to_relative(int& row, int& col, const GameWindow& cur_window, Position center);
@@ -86,7 +85,7 @@ private:
     
 
 
-    GameWindow m_inventory_display;
+    std::vector<GameWindow> m_inventory_display;
     InterfaceColumnWindow m_user_actions_display;
     GameWindow m_map_display;
     std::vector<GameWindow> m_entity_window;
