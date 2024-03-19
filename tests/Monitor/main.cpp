@@ -61,5 +61,6 @@ int main()
         }
         monitor->keyEvent(key, player.get());
     }
+    endwin()
 	return 0;
 }

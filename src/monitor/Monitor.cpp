@@ -20,8 +20,8 @@
 
 
 namespace {
-    static const int ENTITY_NUM = 7;
-    enum Entity_position {HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
+    static const int ENTITY_NUM = 8;
+    enum Entity_position {HERO_4, HERO_3, HERO_2, HERO_1, CHEST, ENEMY_1, ENEMY_2, ENEMY_3};
     
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
     CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
@@ -228,9 +228,9 @@ Monitor::Monitor() {
     m_map_display = GameWindow (row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_user_actions_display = InterfaceColumnWindow(row / 9, col / 2, 2 * row / 3 + 1, 0);
     //Calculating x_distance and size
-    const int heroes_blocks = 4;
+    const int heroes_blocks = 7;
     const int edge_blocks = 1;
-    const int space_blocks = 1;
+    const int space_blocks = 2;
     int block_dictance = col / ((ENTITY_NUM - 1) * space_blocks + ENTITY_NUM * heroes_blocks + edge_blocks * 2);
     // blocks between heroes, blocks on hero, board edge blocks
     int left_dictance = col % ((ENTITY_NUM - 1) * space_blocks + ENTITY_NUM * heroes_blocks + edge_blocks * 2);
@@ -308,7 +308,7 @@ void Monitor::draw(Player* current_player) {
         int cur_x = i.getColumn();
         int cur_y = i.getLine();
         abs_coordinates_to_relative(cur_y, cur_x, m_map_display, current_player->getPosition());
-        if (cur_x != 0 && cur_x != m_map_display.get_x() && cur_y != 0 && cur_y != m_map_display.get_y()) {
+        if (cur_x > 0 && cur_x < m_map_display.get_x() - 1 && cur_y > 0 && cur_y < m_map_display.get_y() - 1) {
             m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4); 
         }
     }
@@ -317,7 +317,10 @@ void Monitor::draw(Player* current_player) {
         int next_x = next.getColumn();
         int next_y = next.getLine();
         abs_coordinates_to_relative(next_y, next_x, m_map_display, current_player->getPosition());
-        m_map_display.draw_text(next_y, next_x, std::string(1, Map_symbols::TARGET_ROOM), false, TARGETED_ROOM_COLOR);
+        if (next_x > 0 && next_x < m_map_display.get_x() - 1 && next_y > 0 && next_y < m_map_display.get_y() - 1) {
+            m_map_display.draw_text(next_y, next_x, std::string(1, Map_symbols::TARGET_ROOM), false, TARGETED_ROOM_COLOR);
+            
+        }
     }
     
     m_user_actions_display.m_key_binds = {};
