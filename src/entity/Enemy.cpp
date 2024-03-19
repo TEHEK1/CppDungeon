@@ -29,7 +29,7 @@ void entity::Enemy::autoTurn(std::shared_ptr<Player> player, std::shared_ptr<Bat
         }
     }
     int num = generators::NumberGenerator::generate(0, availableSkills.size() - 1);
-    auto skillToUse = availableSkills[num];
+    auto skillToUse = availableSkills.at(num);
     int target = generators::NumberGenerator::generate(0, skillToUse->getAvaibleAllyTarget().size() + skillToUse->getAvaibleEnemyTarget().size() - 1);
     if (target < skillToUse->getAvaibleAllyTarget().size()) {
         skillToUse->use(battleField, self, {player->getSquad()->getEntities()[skillToUse->getAvaibleAllyTarget()[target]]});
@@ -40,7 +40,7 @@ void entity::Enemy::autoTurn(std::shared_ptr<Player> player, std::shared_ptr<Bat
         auto realTarget = skillToUse->getAvaibleEnemyTarget().at(target);
         auto targetEntity = enemyVector.at(realTarget);
         std::cerr<<battleField->getEnemySquad(self)->getEntities().size();
-        std::cerr<<"\n"<<skillToUse->getAvaibleEnemyTarget()[target];
+        std::cerr<<"\n"<<skillToUse->getAvaibleEnemyTarget().at(target);
         skillToUse->use(battleField, self, {targetEntity});
     }
 }
