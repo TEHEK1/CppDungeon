@@ -7,6 +7,7 @@
 #include "memory"
 #include "namespaces/entity.h"
 #include "namespaces/battlefield.h"
+#include <vector>
 
 class BattleField {
 private:
