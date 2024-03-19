@@ -317,7 +317,7 @@ void Monitor::draw(Player* current_player) {
     m_user_actions_display.draw_interface(current_player->getActions());
 
     //Useable chest drawing 
-    for(const auto& event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
+    for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
         if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
             m_entity_window[Entity_position::CHEST].draw_sprite(0, 0, usableEvent->draw()); 
         }
