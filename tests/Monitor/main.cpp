@@ -28,7 +28,7 @@ int main()
     auto monitor = std::make_shared<Monitor>();
     Player* player = new Player(map, monitor);
 
-    for(auto action:player->getActions()){
+    /*for(auto action:player->getActions()){
         if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
             chooseNextRoom->act(player);
         }
@@ -41,7 +41,7 @@ int main()
         }
     }
     moveRight.act(player);
-
+*/
 
     while(1) {
         monitor->draw(player);

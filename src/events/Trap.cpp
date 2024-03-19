@@ -39,7 +39,7 @@ void events::Trap::dontUse(Player *player) {
 }
 
 void events::Trap::use(Player *player) {
-    static bool once = true;
+    bool once = true;
     if(once) {
         once = false;
         static int random = generators::NumberGenerator::generate(m_range_use_start, m_range_use_finish);
