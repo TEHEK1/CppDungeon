@@ -266,11 +266,13 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
         criticalDamageChance = trick::hash("criticalDamageChance")
         */
     full_content += std::string("  accuracyModifier: ") + std::to_string(person->get(Characteristic::accuracyModifier));
-    full_content += std::string("  dodge: ") + std::to_string(person->get(Characteristic::dodge));
-    full_content += std::string("  defence: ") + std::to_string(person->get(Characteristic::defence));
+    full_content += std::string("  damage: ") + std::to_string(person->get(Characteristic::minDamage)) + std::string("-") + 
+                    std::to_string(person->get(Characteristic::maxDamage));
+    full_content += std::string("  dodge: ") + std::to_string(person->get(Characteristic::dodge)) + std::string("%");
+    full_content += std::string("  defence: ") + std::to_string(person->get(Characteristic::defence)) + std::string("%");
     full_content += std::string("  speed: ") + std::to_string(person->get(Characteristic::speed));
     full_content += std::string("  marked: ") + std::to_string(person->get(Characteristic::marked));
-    full_content += std::string("  critChance: ") + std::to_string(person->get(Characteristic::criticalDamageChance));
+    full_content += std::string("  critChance: ") + std::to_string(person->get(Characteristic::criticalDamageChance)) + std::string("%");
     return full_content;
 }
 
@@ -383,7 +385,7 @@ void Monitor::draw(Player* current_player) {
         cur_y += 2;
     }*/
     
-
+    move(0, 0);
 }
 
 
