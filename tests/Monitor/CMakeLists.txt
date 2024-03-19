@@ -56,5 +56,13 @@ add_executable(monitorTest
         ../../src/effects/AutoAction.cpp
         ../../src/BattleFieldChanger.cpp
         ../../src/SquadChanger.cpp
+        ../../src/heroes/BountyHunter/BountyHunter.cpp
+        ../../src/heroes/BountyHunter/MarkForDeath.cpp
+        ../../src/heroes/BountyHunter/FinishHim.cpp
+        ../../src/heroes/BountyHunter/FlashBang.cpp
+        ../../src/heroes/BountyHunter/CollectBounty.cpp
+        ../../src/heroes/BountyHunter/Caltrops.cpp
+        ../../src/heroes/BountyHunter/ComeHither.cpp
+        ../../src/heroes/BountyHunter/UpperCut.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

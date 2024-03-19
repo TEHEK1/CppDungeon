@@ -11,6 +11,7 @@
 #include "actions/ChooseNextRoom.h"
 #include "enemies/BrigandFusier/BrigandFusilier.h"
 #include "enemies/BrigandRaider/BrigandRaider.h"
+#include "heroes/BountyHunter/BountyHunter.h"
 #include "Squad.h"
 class PositionChangerAdapter: public changers::PositionChanger{
 public:
@@ -32,7 +33,7 @@ int main()
     std::vector<std::shared_ptr<entity::Entity>> allies;
     allies.reserve(4);
     for(int i = 0;i<4;i++){
-        allies.push_back(std::make_shared<enemies::BrigandRaider::BrigandRaider>());
+        allies.push_back(std::make_shared<Heroes::BountyHunter::BountyHunter>());
     }
     auto alliesSquad = std::make_shared<Squad>(allies);
     auto enemiesSquad = alliesSquad;
