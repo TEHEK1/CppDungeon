@@ -5,6 +5,7 @@ namespace Heroes {
     namespace ManAtArms {
 
         class Bellow: public skillDesigns::RangeSkill {
+        public:
             Bellow();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

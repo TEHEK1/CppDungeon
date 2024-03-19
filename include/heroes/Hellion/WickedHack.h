@@ -5,6 +5,7 @@ namespace Heroes {
     namespace Hellion {
 
         class WickedHack: public skillDesigns::Skill {
+        public:
             WickedHack();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

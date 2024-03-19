@@ -5,6 +5,7 @@ namespace Heroes {
     namespace ManAtArms {
 
         class Crush: public skillDesigns::Skill {
+        public:
             Crush(); 
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

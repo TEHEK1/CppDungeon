@@ -4,9 +4,11 @@
 
 #ifndef CPPDUNGEON_BATTLEFIELD_H
 #define CPPDUNGEON_BATTLEFIELD_H
-#include <memory>
-#include "entity/Entity.h"
-
+#include "memory"
+#include "namespaces/entity.h"
+#include <vector>
+#include <stdexcept>
+#include <algorithm>
 class Squad;
 
 class BattleField {
