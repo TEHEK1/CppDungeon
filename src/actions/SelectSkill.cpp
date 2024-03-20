@@ -2,7 +2,7 @@
 // Created by Амир Кашапов on 20.03.2024.
 //
 #include "actions/SelectSkill.h"
-#include "actions/UseSkill.h"
+#include "actions/UserUseSkill.h"
 #include "skillDesigns/RangeSkill.h"
 #include "actions/SelectSkill.h"
 #include "player/Player.h"
@@ -13,7 +13,7 @@ namespace actions {
     void SelectSkill::act(Player *player) {
         addAction(player, std::make_shared<actions::DeselectSkills>(m_entity, m_battleField));
         for(const auto& useSkill:generators::SkillActionsGenerator::generateAvailableUseSkills(m_skill, m_battleField, m_entity)){
-            addAction(player, useSkill);
+            addAction(player, std::make_shared<UserUseSkill>(*useSkill));
         }
         removeAction(player, [](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return static_cast<bool>(std::dynamic_pointer_cast<SelectSkill>(*actionIterator));});
     }

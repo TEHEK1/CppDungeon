@@ -59,7 +59,12 @@ namespace skillDesigns {
                                 std::vector<std::shared_ptr<entity::Entity>> objects) {
         std::string firstToRet = isDesignUsable(battleField, actor, objects);
         if (firstToRet.empty()) {
-            return isImplementationUsable(battleField, actor, objects);
+            if(isImplementationUsable(battleField, actor, objects).empty()){
+                return "";
+            }
+            else {
+                return isImplementationUsable(battleField, actor, objects);
+            }
         }
         return firstToRet;
     }
@@ -88,7 +93,9 @@ namespace skillDesigns {
                           std::vector<std::shared_ptr<entity::Entity>> objects) {
         unsafeSelfUse(crited, battleField, actor);
         for (const auto &obj: objects) {
-            unsafeTargetUse(crited, battleField, actor, obj);
+            if(obj!= nullptr) {
+                unsafeTargetUse(crited, battleField, actor, obj);
+            }
         }
     }
 
@@ -101,12 +108,12 @@ namespace skillDesigns {
             return "Some entity not on battleField";
         }
         for (const auto &obj: objects) {
-            try {
-                battleField->getSquad(obj);
-            }
-            catch (const std::exception &e) {
-                return "Some entity not on battleField";
-            }
+                try {
+                    battleField->getSquad(obj);
+                }
+                catch (const std::exception &e) {
+                    return "Some entity not on battleField";
+                }
         }
 
         auto actorSquadVector = battleField->getSquad(actor)->getEntities(); // std::vector<std::shared_ptr<Entity>>

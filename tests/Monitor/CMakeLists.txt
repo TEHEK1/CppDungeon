@@ -101,5 +101,6 @@ add_executable(monitorTest
         ../../src/heroes/NPC/PlagueDoctor/PlagueDoctor.cpp
         ../../src/heroes/CommonSkills/MoveBackward.cpp
         ../../src/heroes/CommonSkills/MoveForward.cpp
+        ../../src/actions/UserUseSkill.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

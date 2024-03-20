@@ -4,7 +4,7 @@
 #include "effects/Damage.h"
 namespace enemies {
     namespace BrigandFusilier {
-        BlanketFire::BlanketFire() : RangeSkill(4, "Blanket Fire", {2, 3, 4}, {}, {1, 2, 3, 4}, 73, 0) {}
+        BlanketFire::BlanketFire() : RangeSkill(3, "Blanket Fire", {2, 3, 4}, {}, {1, 2, 3, 4}, 73, 0) {}
 
         void BlanketFire::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                           std::shared_ptr<entity::Entity> actor,

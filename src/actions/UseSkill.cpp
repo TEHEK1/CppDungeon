@@ -7,7 +7,6 @@
 #include "player/Player.h"
 #include "navigation/Map.h"
 #include "navigation/Cell.h"
-#include "events/EnemyEncounter.h"
 #include "monitor/Monitor.h"
 namespace actions{
     UseSkill::UseSkill(std::shared_ptr<skillDesigns::RangeSkill> skill, std::shared_ptr<BattleField> battleField,
@@ -17,11 +16,7 @@ namespace actions{
     void UseSkill::act(Player *player) {
         auto returnedSkill = m_skill -> use(m_battleField, m_actor, m_objects);
         player->getMonitor()->setBuffer("used " + m_skill->getName() + " " + returnedSkill);
-        for(auto event:player->getMap()->getCell(player->getPosition())->getEvents()){
-            if(auto enemyEncounter = std::dynamic_pointer_cast<events::EnemyEncounter>(event)){
-                enemyEncounter->turn(player);
-            }
-        }
+
     }
 
     std::string UseSkill::getName() {
