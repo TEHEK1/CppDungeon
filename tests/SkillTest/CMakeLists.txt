@@ -81,9 +81,28 @@ add_executable(skillTest
         ../../src/heroes/Musketeer/Sidearm.cpp
         ../../src/heroes/Musketeer/SkeetShot.cpp
         ../../src/heroes/Musketeer/Smokescreen.cpp
+
+        ../../src/enemies/CultistBrawler/CultistBrawler.cpp
+        ../../src/enemies/CultistBrawler/RendForTheOldGods.cpp
+        ../../src/enemies/CultistBrawler/StumblingScratch.cpp
+        ../../src/enemies/Ghoul/Ghoul.cpp
+        ../../src/enemies/Ghoul/Rend.cpp
+        ../../src/enemies/Ghoul/SkullToss.cpp
+        ../../src/enemies/PelagicGrouper/PelagicGrouper.cpp
+        ../../src/enemies/PelagicGrouper/SeawardSlash.cpp
+        ../../src/enemies/PelagicGrouper/Spearfishing.cpp
+        ../../src/enemies/Webber/Webber.cpp
+        ../../src/enemies/Webber/Bite.cpp
+        ../../src/enemies/Webber/Web.cpp
+        ../../src/enemies/SwineSlasher/SwineSlasher.cpp
+        ../../src/enemies/SwineSlasher/HookWhereItHurts.cpp
+        ../../src/enemies/RabidGnusher/RabidGnusher.cpp
+        ../../src/enemies/RabidGnusher/RabidRush.cpp
+
         ../../src/Item/FortifyingGarlic.cpp
         ../../src/Item/Absinthe.cpp
         ../../src/Item/LickWounds.cpp
         ../../src/Item/BloodiedNeckerchief.cpp
         ../../src/Item/Item.cpp
+
 )

@@ -8,6 +8,12 @@
 #include "enemies/BrigandRaider/BrigandRaider.h"
 #include "enemies/BrigandFusilier/BrigandFusilier.h"
 #include "enemies/CultistAcolyte/CultistAcolyte.h"
+#include "enemies/CultistBrawler/CultistBrawler.h"
+#include "enemies/Ghoul/Ghoul.h"
+#include "enemies/PelagicGrouper/PelagicGrouper.h"
+#include "enemies/RabidGnasher/RabidGnasher.h"
+#include "enemies/SwineSlasher/SwineSlasher.h"
+#include "enemies/Webber/Webber.h"
 #include "navigation/Map.h"
 #include "monitor/Monitor.h"
 #include "player/Player.h"
@@ -31,13 +37,31 @@ namespace events {
         tmpEnemies.reserve(numberOfEnemies);
 
         for (int i = 0;i<numberOfEnemies;i++) {
-            int num = generators::NumberGenerator::generate(0, 2);
+            int num = generators::NumberGenerator::generate(0, 8);
             switch (num) {
             case 0:
                 tmpEnemies.push_back(std::make_shared<enemies::BrigandRaider::BrigandRaider>());
                 break;
             case 1:
                 tmpEnemies.push_back(std::make_shared<enemies::BrigandFusilier::BrigandFusilier>());
+                break;
+            case 2:
+                tmpEnemies.push_back(std::make_shared<enemies::CulistBrawler::CulistBrawler>());
+                break;
+            case 3:
+                tmpEnemies.push_back(std::make_shared<enemies::Ghoul::Ghoul>());
+                break;
+            case 4:
+                tmpEnemies.push_back(std::make_shared<enemies::PelagicGrouper::PelagicGrouper>());
+                break;
+            case 5:
+                tmpEnemies.push_back(std::make_shared<enemies::SwineSlasher::SwineSlasher>());
+                break;
+            case 6:
+                tmpEnemies.push_back(std::make_shared<enemies::Webber::Webber>());
+                break;
+            case 7:
+                tmpEnemies.push_back(std::make_shared<enemies::RabidGnasher::RabidGnasher>());
                 break;
             default:
                 tmpEnemies.push_back(std::make_shared<enemies::CultistAcolyte::CultistAcolyte>());
