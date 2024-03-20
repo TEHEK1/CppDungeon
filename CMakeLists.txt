@@ -18,4 +18,9 @@ add_executable(CppDungeon
         src/navigation/Cell.cpp
         src/events/Trap.cpp
         src/events/Chest.cpp
+        include/enemies/Ghoul/Ghoul.h
+        include/enemies/Ghoul/Rend.h
+        include/enemies/Ghoul/SkullToss.h
+        include/enemies/Ghoul/Howl.h
+        src/enemies/Ghoul/Ghoul.cpp
 )
