@@ -88,5 +88,13 @@ add_executable(monitorTest
         ../../src/actions/SelectSkill.cpp
         ../../src/actions/SelectSkill.cpp
         ../../src/actions/DeselectSkills.cpp
+        ../../src/heroes/Hellion/WickedHack.cpp
+        ../../src/heroes/Hellion/Breakthrough.cpp
+        ../../src/heroes/Hellion/BarbaricYAWP.cpp
+        ../../src/heroes/Hellion/IronSwan.cpp
+        ../../src/heroes/Hellion/IfItBleeds.cpp
+        ../../src/heroes/Hellion/Hellion.cpp
+        ../../src/heroes/Hellion/BleedOut.cpp
+        ../../src/heroes/Hellion/AdrenalineRush.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

@@ -16,6 +16,7 @@ namespace actions {
         DeselectSkills(std::shared_ptr<entity::Entity> entity, std::shared_ptr<BattleField> battleField);
         void act(Player *) override;
         std::string getName() override;
+        bool operator==(const DeselectSkills&) const;
     private:
         std::shared_ptr<entity::Entity> m_entity;
         std::shared_ptr<BattleField> m_battleField;

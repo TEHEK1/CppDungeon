@@ -19,4 +19,5 @@ namespace actions {
     std::string SelectSkill::getName() {
         return "Select skill" + m_skill->draw();
     }
+
 } // actions

@@ -20,4 +20,8 @@ namespace actions {
     std::string DeselectSkills::getName() {
         return "Return to selecting skill";
     }
+
+    bool DeselectSkills::operator==(const actions::DeselectSkills &) const {
+        return true;
+    }
 } // actions
