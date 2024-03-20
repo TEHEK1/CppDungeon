@@ -1,7 +1,7 @@
-#include "PlagueDoctor.h"
+#include "heroes/PlagueDoctor/PlagueDoctor.h"
 #include "changers/EntityChanger.h"
-#include "EnemyType.h"
-
+#include "entity/EnemyType.h"
+#include "heroes/PlagueDoctor/BattlefieldMedicine.h"
 NPC::PlagueDoctor::PlagueDoctor::PlagueDoctor():
     NPC::NPC("PlagueDoctor",
     {{static_cast<int>(Characteristic::accuracyModifier), 1}, 

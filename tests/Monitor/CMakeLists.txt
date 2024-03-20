@@ -97,5 +97,9 @@ add_executable(monitorTest
         ../../src/heroes/Hellion/BleedOut.cpp
         ../../src/heroes/Hellion/AdrenalineRush.cpp
         ../../src/entity/NPC.cpp
+        ../../src/heroes/NPC/PlagueDoctor/BattlefieldMedicine.cpp
+        ../../src/heroes/NPC/PlagueDoctor/PlagueDoctor.cpp
+        ../../src/heroes/CommonSkills/MoveBackward.cpp
+        ../../src/heroes/CommonSkills/MoveForward.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})
