@@ -5,6 +5,7 @@
 #include "events/EmptyCell.h"
 #include "events/Trap.h"
 #include "events/Chest.h"
+#include "events/EnemyEncounter.h"
 #include <vector>
 #include <random>
 
@@ -13,7 +14,7 @@ void Hall::generateEvents() {
         return;
     }
     m_used = true;
-    m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
+    m_events.push_back(std::shared_ptr<events::Event>(new events::EnemyEncounter));
     /*if(random(1,2) == 1) {//TODO: Change it to grabbing from Main fabric
         m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{

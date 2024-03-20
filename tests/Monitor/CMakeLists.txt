@@ -75,5 +75,14 @@ add_executable(monitorTest
         ../../src/player/Inventory.cpp
         ../../src/actions/UseItem.cpp
         ../../src/actions/UseSkill.cpp
+        ../../src/generators/SkillActionsGenerator.cpp
+        ../../src/events/EnemyEncounter.cpp
+        ../../src/enemies/BrigandFusilier/BlanketFire.cpp
+        ../../src/enemies/BrigandFusilier/BrigandFusilier.cpp
+        ../../src/enemies/BrigandFusilier/RushedShot.cpp
+        ../../src/enemies/CultistAcolyte/CultistAcolyte.cpp
+        ../../src/enemies/CultistAcolyte/EldritchPull.cpp
+        ../../src/enemies/CultistAcolyte/EldritchPush.cpp
+        ../../src/enemies/CultistAcolyte/StressfulIncantation.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

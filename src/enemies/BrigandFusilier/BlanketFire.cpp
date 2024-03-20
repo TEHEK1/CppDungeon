@@ -1,4 +1,4 @@
-#include "enemies/BrigandFusier/BlanketFire.h"
+#include "enemies/BrigandFusilier/BlanketFire.h"
 #include "generators/EffectGenerator.h"
 #include "effects/Debuff.h"
 #include "effects/Damage.h"

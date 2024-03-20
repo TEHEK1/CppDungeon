@@ -2,6 +2,8 @@
 // Created by Арсений Бородулин on 10.03.2024.
 //
 #include "Squad.h"
+#include <stdexcept>
+#include <algorithm>
 
 Squad::Squad(std::vector<std::shared_ptr<entity::Entity>> new_squad) : m_squad(new_squad) {}
 Squad::Squad(std::vector<std::shared_ptr<entity::Entity>> new_squad, int size) : Squad(std::move(new_squad)) {
