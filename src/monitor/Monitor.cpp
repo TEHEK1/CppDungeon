@@ -414,9 +414,9 @@ void Monitor::draw(Player* current_player) {
                 m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, 8);
             }
         } else {
-            int position = battle_event_pointer->getEnemies()->getIndex(cur_acting_entity);
-            for (int i = 0; i < cur_acting_entity->draw().size(); i++) {
-                m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, 9);
+            int position = battle_event_pointer->getEnemies()->getIndex(battle_event_pointer->getLastToMove());
+            for (int i = 0; i < battle_event_pointer->getLastToMove()->draw().size(); i++) {
+                m_entity_window[position + Entity_position::ENEMY_1].set_atr(i, 0, -1, A_ITALIC, 9);
             }
         }
     } else {
