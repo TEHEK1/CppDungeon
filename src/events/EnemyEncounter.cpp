@@ -42,11 +42,21 @@ namespace events {
 
         m_enemies = std::shared_ptr<Squad>(new Squad(tmpEnemies));
         m_priority = {};
+        m_isInBattle = true;
+        m_lastToMove = nullptr;
         m_battleField = std::shared_ptr<BattleField>(new BattleField(m_enemies, m_enemies));
     }
 
     std::shared_ptr<Squad> EnemyEncounter::getEnemies() {
         return m_enemies;
+    }
+
+    std::shared_ptr<entity::Entity> EnemyEncounter::getLastToMove() {
+        return m_lastToMove;
+    }
+
+    bool EnemyEncounter::getIsInBattle() {
+        return m_isInBattle;
     }
 
     std::vector<std::vector<char>> EnemyEncounter::draw() {
@@ -117,6 +127,7 @@ namespace events {
             for (auto i: enemiesEntities) {
                 endBattleTurnEffects(i);
             }
+            m_isInBattle = false;
             player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
             return;
         }
@@ -153,6 +164,7 @@ namespace events {
                 player->getMonitor()->draw(player);
                 continue;
             }
+            m_lastToMove = entity;
             return;
         }
 
