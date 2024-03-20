@@ -3,12 +3,12 @@
 
 Heroes::BountyHunter::BountyHunter::BountyHunter():
     entity::Hero("BountyHunter",
-    {{static_cast<int>(Characteristic::accuracyModifier), 1},
+    {{static_cast<int>(Characteristic::accuracyModifier), 0},
     {static_cast<int>(Characteristic::dodge), 5},
     {static_cast<int>(Characteristic::defence), 0},
     {static_cast<int>(Characteristic::speed), 5},
     {static_cast<int>(Characteristic::HP), 25},
-    {static_cast<int>(Characteristic::maxHP), 16},
+    {static_cast<int>(Characteristic::maxHP), 25},
     {static_cast<int>(Characteristic::marked), 0},
     {static_cast<int>(Characteristic::turnable), 0},
     {static_cast<int>(Characteristic::movable), 0},
