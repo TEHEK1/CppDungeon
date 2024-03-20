@@ -21,23 +21,6 @@ bool events::Trap::comp(std::set<std::shared_ptr<actions::Action>>::iterator act
 }
 
 void events::Trap::turn(Player * player) {
-<<<<<<< HEAD
-//    player -> getMonitor() -> draw();
-//    std::shared_ptr<events::UsableEvent> ptr_Use(dynamic_cast<events::UsableEvent*>(this));
-//    if(m_used) {
-//        addAction(player, std::shared_ptr<actions::Use>(new actions::Use(ptr_Use)));
-//    }
-//    addAction(player, std::shared_ptr<actions::DontUse>(new actions::DontUse(std::shared_ptr<Trap>(this))));
-}
-
-void events::Trap::dontUse(Player *player) {
-//    static int random = generators::NumberGenerator::generate(m_range_dontUse_start, m_range_dontUse_finish);
-//    std::vector<std::shared_ptr<entity::Entity>> entities = player -> getSquad() -> getEntities();
-//    for(int i = 0; i < entities.size(); i++){
-//        addEffect(entities[i], std::make_shared<effects::Damage>(random));
-//    }
-//    player -> getMap() -> getCell(player->getPosition())->freeMoves(player, std::shared_ptr<events::Event>(this));
-=======
     player->getMap()->getCell(player->getPosition())->freeMoves(player);
     player -> getMonitor() -> draw(player);
     if(!m_used) {
@@ -53,7 +36,6 @@ void events::Trap::dontUse(Player *player) {
         addEffect(entities[i], std::make_shared<effects::Damage>(random));
     }
     player -> getMap() -> getCell(player->getPosition())->freeMoves(player, this);
->>>>>>> dev
 }
 
 void events::Trap::use(Player *player) {

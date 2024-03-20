@@ -24,37 +24,55 @@
 #include "items/BloodiedNeckerchief.h"
 #include "items/FortifyingGarlic.h"
 #include "items/LickWounds.h"
+#include "heroes/BountyHunter/BountyHunter.h"
+#include "heroes/Hellion/Hellion.h"
+#include "heroes/ManAtArms/ManAtArms.h"
+#include "heroes/Musketeer/Musketeer.h"
+#include "heroes/PlagueDoctor/PlagueDoctor.h"
 //#include "events/EnemyEncounter.h"
 #include <random>
-int Main::my_rand_event(size_t seed) { //TODO change on norm random function
+
+template <class C>
+int Main::my_rand(size_t seed, ObjectFactory<C, size_t> objectFactory) {
     seed = seed * 1103515245 + 12345;
-    return (seed / 65536) % m_eventFactory.getFactoryMap().size();
+    return (seed / 65536) % objectFactory.getFactoryMap().size();
 }
-int Main::my_rand_entity(size_t seed) { //TODO change on norm random function
-    seed = seed * 1103515245 + 12345;
-    return (seed / 65536) % m_entityFactory.getFactoryMap().size();
-}
-int Main::my_rand_item(size_t seed) { //TODO change on norm random function
-    seed = seed * 1103515245 + 12345;
-    return (seed / 65536) % m_itemsFactory.getFactoryMap().size();
-}
+//int Main::my_rand_entity(size_t seed) { //TODO change on norm random function
+//    seed = seed * 1103515245 + 12345;
+//    return (seed / 65536) % m_entityFactory.getFactoryMap().size();
+//}
+//int Main::my_rand_item(size_t seed) { //TODO change on norm random function
+//    seed = seed * 1103515245 + 12345;
+//    return (seed / 65536) % m_itemsFactory.getFactoryMap().size();
+//}
 
 Main::Main() {
     m_eventFactory.add<events::Chest>(0);
     //m_eventFactory.add<events::ChooseRoomEvent>(1);
     m_eventFactory.add<events::EmptyCell>(1);
     m_eventFactory.add<events::Trap>(2);
-    m_entityFactory.add<enemies::BrigandFusilier::BrigandFusilier>(0);
-    m_entityFactory.add<enemies::BrigandRaider::BrigandRaider>(1);
-    m_entityFactory.add<enemies::CultistAcolyte::CultistAcolyte>(2);
-    m_entityFactory.add<Bosses::BloodFount::BloodFount>(3);
-    m_entityFactory.add<Bosses::GardenGuardian::GardenGuardian>(4);
-    m_entityFactory.add<Bosses::StoneShield::StoneShield>(5);
-    m_entityFactory.add<Heroes::BountyHunter::BountyHunter>(6);
+
+    m_enemiesFactory.add<enemies::BrigandFusilier::BrigandFusilier>(0);
+    m_enemiesFactory.add<enemies::BrigandRaider::BrigandRaider>(1);
+    m_enemiesFactory.add<enemies::CultistAcolyte::CultistAcolyte>(2);
+
+    m_bossesFactory.add<Bosses::BloodFount::BloodFount>(0);
+    m_bossesFactory.add<Bosses::GardenGuardian::GardenGuardian>(1);
+    m_bossesFactory.add<Bosses::StoneShield::StoneShield>(2);
+
+    m_heroesFactory.add<Heroes::BountyHunter::BountyHunter>(0);
+
     m_itemsFactory.add<items::Absinthe::Absinthe>(0);
     m_itemsFactory.add<items::BloodiedNeckerchief::BloodiedNeckerchief>(1);
     m_itemsFactory.add<items::FortifyingGarlic::FortifyingGarlic>(2);
     m_itemsFactory.add<items::LickWounds::LickWounds>(3);
+
+    m_heroesFactory.add<Heroes::BountyHunter::BountyHunter>(0);
+    m_heroesFactory.add<Heroes::Hellion::Hellion>(1);
+    m_heroesFactory.add<Heroes::ManAtArms::ManAtArms>(2);
+    m_heroesFactory.add<Heroes::Musketeer::Musketeer>(3);
+
+    m_npcFactory.add<NPC::PlagueDoctor::PlagueDoctor>(0);
 }
 
 //void Main::Init() {
@@ -74,22 +92,37 @@ size_t Main::getSeed() {
 }
 
 events::Event* Main::getEvent() {
-    int id = my_rand_event(getSeed());
+    int id = my_rand<events::Event>(getSeed(), m_eventFactory);
     return m_eventFactory.create(id);
 }
 
-entity::Entity* Main::getEntity() {
-    int id = my_rand_entity(getSeed());
-    return m_entityFactory.create(id);
+entity::Entity* Main::getEnemy() {
+    int id = my_rand<entity::Entity>(getSeed(), m_enemiesFactory);
+    return m_enemiesFactory.create(id);
 }
 items::Item* Main::getItem() {
-    int id = my_rand_entity(getSeed());
+    int id = my_rand<items::Item>(getSeed(), m_itemsFactory);
     return m_itemsFactory.create(id);
 }
 
-Player *Main::getGame() {
-    auto map = std::make_shared<Map>(12);
-    auto monitor = std::make_shared<Monitor>();
-    Player* player = new Player(map, monitor);
-    return player;
+entity::Boss* Main::getBoss() {
+    int id = my_rand<entity::Boss>(getSeed(), m_bossesFactory);
+    return m_bossesFactory.create(id);
 }
+
+entity::Hero* Main::getHero() {
+    int id = my_rand<entity::Hero>(getSeed(), m_heroesFactory);
+    return m_heroesFactory.create(id);
+}
+
+entity::NPC* Main::getNPC() {
+    int id = my_rand<entity::NPC>(getSeed(), m_npcFactory);
+    return m_npcFactory.create(id);
+}
+
+//Player *Main::getGame() {
+//    auto map = std::make_shared<Map>(12);
+//    auto monitor = std::make_shared<Monitor>();
+//    Player* player = new Player(map, monitor);
+//    return player;
+//}

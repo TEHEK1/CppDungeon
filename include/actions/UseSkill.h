@@ -16,10 +16,6 @@ namespace actions {
         UseSkill(std::shared_ptr<skillDesigns::RangeSkill> skill, std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> actor,
                  std::vector<std::shared_ptr<entity::Entity>> objects);
         void act(Player *) override;
-<<<<<<< HEAD
-    };
-}
-=======
         std::string getName() override;
     private:
         std::shared_ptr<skillDesigns::RangeSkill> m_skill;
@@ -28,5 +24,4 @@ namespace actions {
         std::vector<std::shared_ptr<entity::Entity>> m_objects;
     };
 } // namespace actions
->>>>>>> dev
 #endif //CPPDUNGEON_USESKILL_H

@@ -11,13 +11,6 @@
 #include "events/NPCEncounter.h"
 
 void Hall::generateEvents() {
-<<<<<<< HEAD
-    if(random(1,2) == 1) {//TODO: Change it to grabbing from Main fabric
-        m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
-    }else{
-        m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
-    }
-=======
     if(m_used){
         return;
     }
@@ -28,5 +21,4 @@ void Hall::generateEvents() {
     }else{
 
     }*/
->>>>>>> dev
 }

@@ -10,16 +10,12 @@
 
 
 void Room::generateEvents(){
-<<<<<<< HEAD
-    if(random(1,2) == 1) {
-=======
 
     if(m_used){
         return;
     }
     m_used = true;
     /*if(generators::NumberGenerator::generate(0, 1) == 1) {
->>>>>>> dev
         m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{
         m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
@@ -28,12 +24,7 @@ void Room::generateEvents(){
         m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{
         m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
-<<<<<<< HEAD
-    }
-    m_events.push_back(std::shared_ptr<events::Event>(new events::ChooseRoomEvent));
-=======
     }*/
 
     m_events.push_back(std::make_shared<events::ChooseRoomEvent>());
->>>>>>> dev
 }

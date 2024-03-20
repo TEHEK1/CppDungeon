@@ -8,12 +8,8 @@
 namespace actions {
 
     void MoveRight::act(Player *player) {
-<<<<<<< HEAD
-        setPosition(player, player->getMap()->moveRight(player->getPosition()));
-=======
         setPosition(player, player -> getMap() -> moveRight(player->getPosition()));
         returnToDefault(player);
->>>>>>> dev
         std::shared_ptr<Cell> temp = player->getMap()->getCell(player->getPosition());
         temp->generateEvents();
         for(int i = 0; i < temp->getEvents().size(); i++) {

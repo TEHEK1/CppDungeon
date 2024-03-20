@@ -31,15 +31,15 @@ namespace events {
         for (int i = 0;i<numberOfEnemies;i++) {
             int num = generators::NumberGenerator::generate(0, 2);
             switch (num) {
-            case 0:
-                tmpEnemies.push_back(std::make_shared<enemies::BrigandRaider::BrigandRaider>());
-                break;
-            case 1:
-                tmpEnemies.push_back(std::make_shared<enemies::BrigandFusilier::BrigandFusilier>());
-                break;
-            default:
-                tmpEnemies.push_back(std::make_shared<enemies::CultistAcolyte::CultistAcolyte>());
-                break;
+                case 0:
+                    tmpEnemies.push_back(std::make_shared<enemies::BrigandRaider::BrigandRaider>());
+                    break;
+                case 1:
+                    tmpEnemies.push_back(std::make_shared<enemies::BrigandFusilier::BrigandFusilier>());
+                    break;
+                default:
+                    tmpEnemies.push_back(std::make_shared<enemies::CultistAcolyte::CultistAcolyte>());
+                    break;
             }
         }
 
@@ -187,6 +187,6 @@ namespace events {
                 deselectAction->act(player);
             }
         } while (m_lastToMove == nullptr);
-   }
+    }
 
 }

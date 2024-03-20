@@ -7,14 +7,9 @@
 #include "player/Player.h"
 
 void events::EmptyCell::turn(Player* player) {
-<<<<<<< HEAD
-    player->getMonitor()->draw();
-    player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<Event>(this));
-=======
     player->getMap()->getCell(player->getPosition())->freeMoves(player);
     player->getMonitor()->draw(player);
     player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
->>>>>>> dev
 }
 
 std::vector<std::vector<char>> events::EmptyCell::draw() {
