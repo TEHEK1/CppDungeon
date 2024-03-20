@@ -46,6 +46,7 @@ namespace skillDesigns {
 
             if (missed(actor) <= 0) {
                 unsafeUse(crited(actor), battleField, actor, objects);
+                return "passed";
             }
             else{
                 return "missed";

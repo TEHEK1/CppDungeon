@@ -33,14 +33,5 @@ void entity::Enemy::autoTurn(Player* player, std::shared_ptr<BattleField> battle
             }
         }
     }
-    for (const auto& i: self->getSkills()) {//FIXME: Delete IT
-        if(auto rangeSkill = std::dynamic_pointer_cast<skillDesigns::RangeSkill>(i)){
-            auto debug = i->isUsable(battleField, self, {battleField->getEnemySquad(self)->getEntity(0)});
-            for(auto i :generators::SkillActionsGenerator::generateAvailableUseSkills(rangeSkill, battleField, self)){
-                i->act(player);
-                return;
-            }
-        }
-    }
     throw std::logic_error("Skill not found");
 }

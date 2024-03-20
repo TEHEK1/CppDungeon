@@ -148,7 +148,7 @@ namespace events {
                 return;
             }
             turnEffects(entity);
-            if (entity->isTurnable()) {}
+            if (!entity->isTurnable()) {}
             else if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
                 markedAsAutoTurn->autoTurn(player, battleField, entity);
                 player->getMonitor()->draw(player);
