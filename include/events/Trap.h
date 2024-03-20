@@ -10,7 +10,6 @@ class Player;
 namespace events {
 class Trap : public events::UsableEvent, public changers::EffectChanger, public std::enable_shared_from_this<Trap>{
     public:
-        ~Trap() = default;
         void turn(Player *player) override;
         void use(Player *player) override;
         void dontUse(Player *player);

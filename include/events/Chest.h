@@ -15,7 +15,6 @@ namespace events {
         bool comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator);
 
     public:
-        virtual ~Chest() = default;
         void turn(Player *player) override;
 
         void use(Player *player) override;

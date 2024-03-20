@@ -8,7 +8,6 @@
 namespace events {
     class ChooseRoomEvent : public Event {
     public:
-        virtual ~ChooseRoomEvent() = default;
         void turn(Player *) override;
 
         std::vector<std::vector<char>> draw() override;

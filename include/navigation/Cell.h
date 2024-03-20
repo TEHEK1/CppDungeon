@@ -11,7 +11,7 @@ public:
     void freeMoves(Player*, events::Event*);
     void freeMoves(Player*);
     virtual void generateEvents() = 0;
-    virtual std::vector<std::shared_ptr<events::Event>> getEvents() final;
+    std::vector<std::shared_ptr<events::Event>> getEvents();
     char getLevel();
     virtual ~Cell() = default;
 protected:

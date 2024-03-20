@@ -1,6 +1,6 @@
-
- Created by Арсений Бородулин on 10.03.2024.
-
+//
+// Created by Арсений Бородулин on 10.03.2024.
+//
 #include "Squad.h"
 #include <stdexcept>
 #include <algorithm>
@@ -26,5 +26,3 @@ int Squad::getIndex(const std::shared_ptr<entity::Entity>& entity) const {
     }
     throw std::invalid_argument("entity is not in Squad");
 }
-
-
