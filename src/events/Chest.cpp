@@ -13,6 +13,7 @@
 #include <memory>
 #include "monitor/Monitor.h"
 #include "items/Absinthe.h"
+#include "generators/SkillActionsGenerator.h"
 
 bool events::Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
     auto use = std::dynamic_pointer_cast<actions::Use>((*actionIterator));
