@@ -2,8 +2,5 @@
 build
 .idea
 cmake-build-debug
-tests/build
-tests/MapTest/build
 CMakeLists.txt
 main.cpp
-tests/SkillTest/cmake-build-debug
