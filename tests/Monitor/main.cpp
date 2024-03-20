@@ -39,19 +39,7 @@ int main()
     auto enemiesSquad = alliesSquad;
     auto player = std::make_shared<Player>(map, monitor, enemiesSquad);
 
-    for(const auto& action:player->getActions()){
-        if(auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(action)){
-            chooseNextRoom->act(player.get());
-        }
-    }
-    auto moveRight = actions::MoveRight();
-    moveRight.act(player.get());
-    for(auto action:player->getActions()){
-        if(auto dontUse = std::dynamic_pointer_cast<actions::Use>(action)){
-            dontUse->act(player.get());
-        }
-    }
-    moveRight.act(player.get());
+    
 
     while (1) {
         monitor->draw(player.get());
