@@ -5,7 +5,7 @@
 #include "events/EnemyEncounter.h"
 #include "entity/Hero.h"
 #include "enemies/BrigandRaider/BrigandRaider.h"
-#include "enemies/BrigandFusier/BrigandFusilier.h"
+#include "enemies/BrigandFusilier/BrigandFusilier.h"
 #include "enemies/CultistAcolyte/CultistAcolyte.h"
 #include "navigation/Map.h"
 #include "monitor/Monitor.h"

@@ -25,7 +25,7 @@ bool check(std::vector<std::shared_ptr<entity::Entity>> entities) {
 int main() {
 
     auto enemyEncounter = std::shared_ptr<events::EnemyEncounter>(new events::EnemyEncounter());
-    auto monitor = std::shared_ptr<Monitor>(new Monitor(enemyEncounter));
+    auto monitor = std::shared_ptr<Monitor>(new Monitor());
     auto map = std::shared_ptr<Map>(new Map(12));
     auto squad = std::shared_ptr<Squad>(new Squad({std::make_shared<enemies::BrigandRaider::BrigandRaider>()}));
     auto player = std::shared_ptr<Player>(new Player(map, monitor, squad));

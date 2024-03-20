@@ -9,7 +9,7 @@
 #include "actions/Use.h"
 #include "actions/DontUse.h"
 #include "actions/ChooseNextRoom.h"
-#include "enemies/BrigandFusier/BrigandFusilier.h"
+#include "enemies/BrigandFusilier/BrigandFusilier.h"
 #include "enemies/BrigandRaider/BrigandRaider.h"
 #include "heroes/BountyHunter/BountyHunter.h"
 #include "Squad.h"
