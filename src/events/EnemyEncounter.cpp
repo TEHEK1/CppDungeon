@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include "actions/TurnEvent.h"
+#include "actions/DeselectSkills.h"
 namespace events {
     EnemyEncounter::EnemyEncounter() {
 
@@ -170,7 +171,7 @@ namespace events {
             changers::ActionsChanger::addAction(player, std::make_shared<actions::TurnEvent>(std::dynamic_pointer_cast<events::Event>(shared_from_this())));
         }
         else{
-
+            changers::ActionsChanger::addAction(player, std::make_shared<actions::DeselectSkills>(std::dynamic_pointer_cast<events::Event>(shared_from_this()), battleField));
         }
         return;
     }
