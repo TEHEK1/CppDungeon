@@ -5,6 +5,7 @@ namespace Heroes {
     namespace Musketeer {
 
         class CallTheShot: public skillDesigns::Skill {
+        public:
             CallTheShot();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

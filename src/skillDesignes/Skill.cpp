@@ -133,4 +133,8 @@ namespace skillDesigns {
             changers::EffectChanger::addEffect(object, effect, battleField);
         }
     }
+
+    std::string Skill::draw() {
+        return getName();
+    }
 } // namespace skillDesigns

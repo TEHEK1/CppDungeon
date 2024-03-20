@@ -12,7 +12,7 @@ class Monitor;
 namespace events{class Event;};
 namespace entity {class Entity;};
 #include "eventfactory.h"
-
+class Player;
 class Main {
     size_t m_seed = 1;
     std::map<size_t, std::string> m_map;

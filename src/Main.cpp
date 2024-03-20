@@ -16,6 +16,10 @@
 #include "enemies/BrigandFusier/BrigandFusilier.h"
 #include "enemies/BrigandRaider/BrigandRaider.h"
 #include "enemies/CultistAcolyte/CultistAcolyte.h"
+#include "bosses/GardenGuardian/BloodFount.h"
+#include "bosses/GardenGuardian/GardenGuardian.h"
+#include "bosses/GardenGuardian/StoneShield.h"
+#include "heroes/BountyHunter/BountyHunter.h"
 //#include "events/EnemyEncounter.h"
 #include <random>
 int Main::my_rand_event(size_t seed) { //TODO change on norm random function
@@ -32,9 +36,13 @@ Main::Main() {
     m_eventFactory.add<events::ChooseRoomEvent>(1);
     m_eventFactory.add<events::EmptyCell>(2);
     m_eventFactory.add<events::Trap>(3);
-//    m_entityFactory.add<enemies::BrigandFusilier::BrigandFusilier>(0);
-//    m_entityFactory.add<enemies::BrigandRaider::BrigandRaider>(1);
-//    m_entityFactory.add<enemies::CultistAcolyte::CultistAcolyte>(2);
+    m_entityFactory.add<enemies::BrigandFusilier::BrigandFusilier>(0);
+    m_entityFactory.add<enemies::BrigandRaider::BrigandRaider>(1);
+    m_entityFactory.add<enemies::CultistAcolyte::CultistAcolyte>(2);
+    m_entityFactory.add<Bosses::BloodFount::BloodFount>(3);
+    m_entityFactory.add<Bosses::GardenGuardian::GardenGuardian>(4);
+    m_entityFactory.add<Bosses::StoneShield::StoneShield>(5);
+    m_entityFactory.add<Heroes::BountyHunter::BountyHunter>(6);
 }
 
 //void Main::Init() {

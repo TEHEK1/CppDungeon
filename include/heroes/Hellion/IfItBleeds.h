@@ -5,6 +5,7 @@ namespace Heroes {
     namespace Hellion {
 
         class IfItBleeds: public skillDesigns::Skill {
+        public:
             IfItBleeds();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
