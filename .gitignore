@@ -5,4 +5,4 @@ cmake-build-debug
 tests/build
 tests/MapTest/build
 .clang-tidy
-.github
+.githubtests/SkillTest/cmake-build-debug
