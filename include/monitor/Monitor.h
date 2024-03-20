@@ -75,7 +75,7 @@ private:
             friend Monitor;
             int find_bind_key(std::shared_ptr<actions::Action> action);
             std::shared_ptr<actions::Action> find_action(int key);
-            void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive = true);
+            void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions,bool batalling, bool adaptive = true);
             void get_binds(Player* player);
         private:
             class Bind{
