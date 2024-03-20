@@ -1,0 +1,3 @@
+/Users/amir/CLionProjects/EnemyEncounter/CppDungeon/tests/SkillTest/cmake-build-debug/CMakeFiles/skillTest.dir
+/Users/amir/CLionProjects/EnemyEncounter/CppDungeon/tests/SkillTest/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/amir/CLionProjects/EnemyEncounter/CppDungeon/tests/SkillTest/cmake-build-debug/CMakeFiles/rebuild_cache.dir
