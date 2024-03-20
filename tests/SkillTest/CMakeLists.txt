@@ -81,6 +81,7 @@ add_executable(skillTest
         ../../src/heroes/Musketeer/Sidearm.cpp
         ../../src/heroes/Musketeer/SkeetShot.cpp
         ../../src/heroes/Musketeer/Smokescreen.cpp
+
         ../../src/enemies/CultistBrawler/CultistBrawler.cpp
         ../../src/enemies/CultistBrawler/RendForTheOldGods.cpp
         ../../src/enemies/CultistBrawler/StumblingScratch.cpp
@@ -97,6 +98,11 @@ add_executable(skillTest
         ../../src/enemies/SwineSlasher/HookWhereItHurts.cpp
         ../../src/enemies/RabidGnusher/RabidGnusher.cpp
         ../../src/enemies/RabidGnusher/RabidRush.cpp
-        
-        
+
+        ../../src/Item/FortifyingGarlic.cpp
+        ../../src/Item/Absinthe.cpp
+        ../../src/Item/LickWounds.cpp
+        ../../src/Item/BloodiedNeckerchief.cpp
+        ../../src/Item/Item.cpp
+
 )
