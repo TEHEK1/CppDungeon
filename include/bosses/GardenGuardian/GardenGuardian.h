@@ -1,6 +1,6 @@
 #include "entity/Boss.h"
-#include "GardenGuardian/AnnihilatingGlare.h"
-#include "GardenGuardian/HatredBeyondTime.h"
+#include "bosses/GardenGuardian/AnnihilatingGlare.h"
+#include "bosses/GardenGuardian/HatredBeyondTime.h"
 
 namespace Bosses {
 

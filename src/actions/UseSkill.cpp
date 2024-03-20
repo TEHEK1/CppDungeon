@@ -25,6 +25,6 @@ namespace actions{
             positions+=std::to_string(m_battleField->getSquad(i)->getIndex(i))+" ";
         }
         return "Use skill " + m_skill->getName() + " on " +
-        (m_battleField->areAllies(m_actor, m_objects[0])?"allies":"enemies") + " on " + positions + "positions";
+                (m_objects.size()>0&&m_objects[0]?(m_battleField->areAllies(m_actor, m_objects[0])?"allies":"enemies"):"") + " on " + positions + "positions";
     }
 } // namespace actions

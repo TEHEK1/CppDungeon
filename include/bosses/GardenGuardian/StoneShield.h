@@ -1,6 +1,6 @@
 #include "entity/Boss.h"
-#include "GardenGuardian/GardenGuardian.h"
-#include "GardenGuardian/GardenGuardianDefenceBonus.h"
+#include "bosses/GardenGuardian/GardenGuardian.h"
+#include "bosses/GardenGuardian/GardenGuardianDefenceBonus.h"
 
 namespace Bosses {
 

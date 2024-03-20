@@ -103,5 +103,31 @@ add_executable(monitorTest
         ../../src/heroes/CommonSkills/MoveForward.cpp
         ../../src/actions/UserUseSkill.cpp
         ../../src/events/NPCEncounter.cpp
+        ../../src/actions/Win.cpp
+        ../../src/events/BossEncounter.cpp
+        ../../src/heroes/ManAtArms/Bellow.cpp
+        ../../src/heroes/ManAtArms/Command.cpp
+        ../../src/heroes/ManAtArms/ManAtArms.cpp
+        ../../src/heroes/ManAtArms/Crush.cpp
+        ../../src/heroes/ManAtArms/Retribution.cpp
+        ../../src/heroes/ManAtArms/Defender.cpp
+        ../../src/heroes/ManAtArms/Rampart.cpp
+        ../../src/heroes/ManAtArms/Bolster.cpp
+        ../../src/heroes/Musketeer/AimedShot.cpp
+        ../../src/heroes/Musketeer/Smokescreen.cpp
+        ../../src/heroes/Musketeer/Musketeer.cpp
+        ../../src/heroes/Musketeer/SkeetShot.cpp
+        ../../src/heroes/Musketeer/CallTheShot.cpp
+        ../../src/heroes/Musketeer/PatchUp.cpp
+        ../../src/heroes/Musketeer/Buckshot.cpp
+        ../../src/heroes/Musketeer/Sidearm.cpp
+        ../../src/bosses/GardenGuardian/AnnihilatingGlare.cpp
+        ../../src/bosses/GardenGuardian/GardenGuardian.cpp
+        ../../src/bosses/GardenGuardian/GardenGuardianDefenceBonus.cpp
+        ../../src/bosses/GardenGuardian/BloodFount.cpp
+        ../../src/bosses/GardenGuardian/StoneShield.cpp
+        ../../src/bosses/GardenGuardian/GardenGuardianDamageBonus.cpp
+        ../../src/bosses/GardenGuardian/HatredBeyondTime.cpp
+        ../../src/entity/Boss.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

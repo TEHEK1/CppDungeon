@@ -9,13 +9,13 @@
 #include <vector>
 #include <random>
 #include "events/NPCEncounter.h"
-
+#include "events/BossEncounter.h"
 void Hall::generateEvents() {
     if(m_used){
         return;
     }
     m_used = true;
-    m_events.push_back(std::shared_ptr<events::Event>(new events::NPCEncounter));
+    m_events.push_back(std::shared_ptr<events::Event>(new events::BossEncounter()));
     /*if(random(1,2) == 1) {//TODO: Change it to grabbing from Main fabric
         m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{
