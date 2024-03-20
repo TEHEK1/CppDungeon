@@ -5,6 +5,7 @@ namespace Heroes {
     namespace Musketeer {
 
         class PatchUp: public skillDesigns::Skill {
+        public:
             PatchUp();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

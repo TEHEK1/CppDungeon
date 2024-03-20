@@ -1,6 +1,7 @@
 .vscode
 build
 .idea
-cmake-build-debug/
+cmake-build-debug
 CMakeLists.txt
 main.cpp
+tests/SkillTest/cmake-build-debug
