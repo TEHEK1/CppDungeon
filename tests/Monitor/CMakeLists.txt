@@ -96,5 +96,6 @@ add_executable(monitorTest
         ../../src/heroes/Hellion/Hellion.cpp
         ../../src/heroes/Hellion/BleedOut.cpp
         ../../src/heroes/Hellion/AdrenalineRush.cpp
+        ../../src/entity/NPC.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})
