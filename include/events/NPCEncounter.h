@@ -4,10 +4,13 @@
 #ifndef MONITORTEST_NPCENCOUNTER_H
 #define MONITORTEST_NPCENCOUNTER_H
 #include "events/Chest.h"
+#include "SquadChanger.h"
 namespace events {
 
-    class NPCEncounter: public Chest {
-//TODO:NPC
+    class NPCEncounter: public Chest, public SquadChanger {
+        void use(Player *player) override;
+
+        std::vector<std::vector<char>> draw() override;
     };
 
 } // events

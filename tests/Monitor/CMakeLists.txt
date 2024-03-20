@@ -102,5 +102,6 @@ add_executable(monitorTest
         ../../src/heroes/CommonSkills/MoveBackward.cpp
         ../../src/heroes/CommonSkills/MoveForward.cpp
         ../../src/actions/UserUseSkill.cpp
+        ../../src/events/NPCEncounter.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

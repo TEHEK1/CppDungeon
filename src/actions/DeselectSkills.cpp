@@ -16,9 +16,10 @@ namespace actions {
                 addAction(player, std::make_shared<SelectSkill>(rangeSkill, m_entity, m_battleField));
             }
         }
+        removeAction(player, [](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return static_cast<bool>(std::dynamic_pointer_cast<DeselectSkills>(*actionIterator));});
     }
     std::string DeselectSkills::getName() {
-        return "Return to selecting skill";
+        return "Return to selecting skills";
     }
 
     bool DeselectSkills::operator==(const actions::DeselectSkills &) const {
