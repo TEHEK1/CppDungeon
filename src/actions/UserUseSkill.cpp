@@ -9,7 +9,7 @@
 #include "navigation/Cell.h"
 namespace actions {
     UserUseSkill::UserUseSkill(std::shared_ptr<skillDesigns::RangeSkill> skill, std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> actor,
-                               std::vector<std::shared_ptr<entity::Entity>> objects): UseSkill(skill, battleField, actor, objects) {};
+                               std::vector<std::shared_ptr<entity::Entity>> objects, std::vector<SquadIndexer> indexer): UseSkill(skill, battleField, actor, objects, indexer) {};
     UserUseSkill::UserUseSkill(const actions::UseSkill &useSkill): UseSkill(useSkill) {};
     void UserUseSkill::act(Player *player) {
         UseSkill::act(player);

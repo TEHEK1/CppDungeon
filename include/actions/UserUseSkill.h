@@ -10,7 +10,7 @@ namespace actions {
     class UserUseSkill: public UseSkill{
     public:
         UserUseSkill(std::shared_ptr<skillDesigns::RangeSkill> skill, std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> actor,
-                     std::vector<std::shared_ptr<entity::Entity>> objects);
+                     std::vector<std::shared_ptr<entity::Entity>> objects, std::vector<SquadIndexer> indexe);
         UserUseSkill(const UseSkill&);
         void act(Player *) override;
     };

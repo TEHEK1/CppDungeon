@@ -39,5 +39,4 @@ void entity::NPC::autoTurn(Player* player, std::shared_ptr<BattleField> battleFi
             }
         }
     }
-    throw std::logic_error("Skill not found");
 }

@@ -3,7 +3,7 @@
 //
 #include "generators/SkillActionsGenerator.h"
 #include "BattleField.h"
-
+#include "Squad.h"
 template<typename T>
 std::vector<T> slice(std::vector<T> const &v, int m, int n)
 {
@@ -23,13 +23,26 @@ generators::SkillActionsGenerator::generateAvailableUseSkills(std::shared_ptr<sk
     if(skill->getSize()==0){
         if(skill->isUsable(battleField, actor, {}).empty()){
             answer.insert(std::make_shared<actions::UseSkill>(skill, battleField, actor,
-                                                              std::vector<std::shared_ptr<entity::Entity>>{}));
+                                                              std::vector<std::shared_ptr<entity::Entity>>{},std::vector<SquadIndexer>()));
         }
     }
-    for(int i = 0; i < temp.size() - skill->getSize() + 1; i++){
-        std::vector<std::shared_ptr<entity::Entity>> objects = slice(temp, i, i+skill->getSize());
-        if(skill->isUsable(battleField, actor, objects).empty()){
-            answer.insert(std::make_shared<actions::UseSkill>(skill, battleField, actor, objects));
+    else {
+        for (int i = 0; i < temp.size() - skill->getSize() + 1; i++) {
+            std::vector<std::shared_ptr<entity::Entity>> objects = slice(temp, i, i + skill->getSize());
+            if (skill->isUsable(battleField, actor, objects).empty()) {
+                std::vector<SquadIndexer> squadIndexer;
+                for (int j = i; j < i + skill->getSize(); j++) {
+                    if (j < battleField->getSquad(actor)->getEntities().size()) {
+                        squadIndexer.push_back({SquadIndexer::Type::ally,
+                                                static_cast<int>(battleField->getSquad(actor)->getEntities().size() -
+                                                                 j - 1)});
+                    } else {
+                        squadIndexer.push_back({SquadIndexer::Type::enemy, static_cast<int>(j - battleField->getSquad(
+                                actor)->getEntities().size())});
+                    }
+                }
+                answer.insert(std::make_shared<actions::UseSkill>(skill, battleField, actor, objects, squadIndexer));
+            }
         }
     }
     return answer;
