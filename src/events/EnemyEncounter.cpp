@@ -75,7 +75,7 @@ namespace events {
     void EnemyEncounter::_enemyMove(Player* player, std::shared_ptr<entity::Entity> entity, int rank, std::shared_ptr<BattleField> battleField) {
         std::cout << "i am attacking" << std::endl;
         auto skills = entity->getSkills();
-        std::vector<std::shared_ptr<skillDesigns::Skill>> availableSkills;
+        std::vector<std::szhared_ptr<skillDesigns::Skill>> availableSkills;
         for (auto i: skills) {
             if (std::find(i->getAvaibleRank().begin(), i->getAvaibleRank().end(), rank) != i->getAvaibleRank().end()) {
                 availableSkills.push_back(i);
