@@ -130,5 +130,6 @@ add_executable(monitorTest
         ../../src/bosses/GardenGuardian/HatredBeyondTime.cpp
         ../../src/entity/Boss.cpp
         ../../src/actions/Lose.cpp
+        ../../src/Main.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})

@@ -6,11 +6,12 @@
 #define UNTITLED_CELL_H
 #include "events/Event.h"
 #include <vector>
+class Player;
 class Cell: public changers::ActionsChanger{
 public:
     void freeMoves(Player*, events::Event*);
     void freeMoves(Player*);
-    virtual void generateEvents() = 0;
+    virtual void generateEvents(Player* player) = 0;
     std::vector<std::shared_ptr<events::Event>> getEvents();
     char getLevel();
     virtual ~Cell() = default;

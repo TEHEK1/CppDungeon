@@ -1,3 +1,5 @@
+#ifndef HatredBeyondTime_H
+#define HatredBeyondTime_H
 #include "skillDesigns/Skill.h"
 #include "skillDesigns/RangeSkill.h"
 
@@ -21,3 +23,4 @@ namespace Bosses {
     } // namespace GardenGuardian
 
 } // namespace Boss
+#endif // HatredBeyondTime_H

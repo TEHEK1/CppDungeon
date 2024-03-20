@@ -12,6 +12,7 @@
 #include "namespaces/entity.h"
 class Map;
 class Monitor;
+class Main;
 #include "namespaces/actions.h"
 #include "namespaces/changers.h"
 #include "namespaces/battlefield.h"
@@ -25,11 +26,14 @@ class Player{
     friend changers::InventoryChanger;
     std::shared_ptr<Monitor> m_monitor;
     std::shared_ptr<Map> m_map;
+    std::shared_ptr<Main> m_main;
 public:
-    explicit Player(const std::shared_ptr<Map>& map, const std::shared_ptr<Monitor>& monitor,const std::shared_ptr<Squad>& squad);
+    explicit Player(const std::shared_ptr<Map>& map, const std::shared_ptr<Monitor>& monitor,
+                    const std::shared_ptr<Squad>& squad, const std::shared_ptr<Main>& main);
     std::shared_ptr<Monitor> getMonitor();
     Position getPosition();
     std::shared_ptr<Squad> getSquad();
+    std::shared_ptr<Main> getMain();
     std::set<std::shared_ptr<actions::Action>> getActions();
     Inventory getInventory();
     std::shared_ptr<Map> getMap();

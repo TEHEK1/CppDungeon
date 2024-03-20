@@ -13,6 +13,7 @@
 #include "enemies/BrigandRaider/BrigandRaider.h"
 #include "heroes/BountyHunter/BountyHunter.h"
 #include "heroes/Hellion/Hellion.h"
+#include "Main.h"
 #include "Squad.h"
 class PositionChangerAdapter: public changers::PositionChanger{
 public:
@@ -31,6 +32,7 @@ int main()
     
     auto map = std::make_shared<Map>(12);
     auto monitor = std::make_shared<Monitor>();
+    auto main = std::make_shared<Main>();
     std::vector<std::shared_ptr<entity::Entity>> allies;
     allies.reserve(3);
     for(int i = 0;i<2;i++){
@@ -39,7 +41,7 @@ int main()
     allies.push_back(std::make_shared<Heroes::Hellion::Hellion>());
     auto alliesSquad = std::make_shared<Squad>(allies);
     auto enemiesSquad = alliesSquad;
-    auto player = std::make_shared<Player>(map, monitor, enemiesSquad);
+    auto player = std::make_shared<Player>(map, monitor, enemiesSquad, main);
 
     
 

@@ -1,3 +1,5 @@
+#ifndef GardenGuardian_H
+#define GardenGuardian_H
 #include "entity/Boss.h"
 #include "bosses/GardenGuardian/AnnihilatingGlare.h"
 #include "bosses/GardenGuardian/HatredBeyondTime.h"
@@ -15,3 +17,4 @@ namespace Bosses {
     } // namespace GardenGuardian
 
 } // namespace Boss
+#endif // GardenGuardian_H

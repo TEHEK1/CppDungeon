@@ -11,7 +11,7 @@ namespace actions {
         setPosition(player, player -> getMap() -> moveLeft(player->getPosition()));
         returnToDefault(player);
         std::shared_ptr<Cell> temp = player->getMap()->getCell(player->getPosition());
-        temp->generateEvents();
+        temp->generateEvents(player);
         for(const auto& event:temp->getEvents()) {
             if(event) {
                 event->turn(player);
