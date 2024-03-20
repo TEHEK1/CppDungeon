@@ -17,8 +17,10 @@ namespace skillDesigns {
     public:
         virtual ~Skill() = default;
 
-        Skill(std::string name, std::vector<int> availableRank, std::vector<int> availableAllyTarget = {},
-              std::vector<int> availableEnemyTarget = {}, int accuracy = 0, int criticalDamageChance = 0);
+        Skill(std::string name, std::vector<int> availableRank,
+        std::vector<int> availableAllyTarget = {},
+        std::vector<int> availableEnemyTarget = {},
+        int accuracy = 0, int criticalDamageChance = 0);
 
         virtual std::vector<int> getAvaibleRank();
 
@@ -33,6 +35,8 @@ namespace skillDesigns {
                                      std::vector<std::shared_ptr<entity::Entity>> objects) final;
 
         virtual std::string getName() final;
+
+        std::string draw();
 
     protected:
         virtual void

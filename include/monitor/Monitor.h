@@ -4,14 +4,13 @@
 
 #ifndef UNTITLED_MONITOR_H
 #define UNTITLED_MONITOR_H
-class Monitor{
-public:
-    void draw(){};
-};
-/*
+
 // Non-selfmade library for UI realisation
-//#include <ncurses.h>
+// #include <ncurses.h>
 #include <vector>
+#include <memory>
+#include "BattleField.h"
+#include "events/EnemyEncounter.h"
 class Player;
 //       x --->
 //  y
@@ -24,52 +23,8 @@ class Player;
 //At this moment ncurses mode starts with initialistion of Monitor
 class Monitor{
 public:
-    Monitor() = delete;
-    Monitor(Player* player);
-    ~Monitor();
-
-
+    Monitor(std::shared_ptr<events::EnemyEncounter> );
     void draw(Player* player);//Ask draw functions realizations from Map, Entity and Event if needed
-    void draw();
-
-
-    void keyEvent(char key);
-    void keyEvent();
-
-private:
-
-
-    // Don't want to give access to GameWindow and its childs in other files, it's only for Monitor usage
-    class GameWindow{
-    public:
-        GameWindow();
-        GameWindow(const GameWindow& other);
-        ~GameWindow() = default;
-        GameWindow(const size_t& pos_y, const size_t& pos_x, const size_t& y_size, const size_t& x_size);
-
-
-        //Just placing sprite or text without clearing all previous text
-//        void draw_sprite(const size_t& pos_y, const size_t& pos_x,
-//                        const std::vector<std::vector<char>>& sprite, int attribute = A_NORMAL);
-//        void draw_text(const size_t& pos_y, const size_t& pos_x,
-//                        const std::vector<char>& text, int attribute = A_NORMAL);
-
-
-        size_t get_x();
-        size_t get_y();
-
-    private:
-        //WINDOW* m_current_window;
-        size_t m_x_size;
-        size_t m_y_size;
-    };
-
-
-    Player* m_bounded_player;
-    GameWindow m_inventory_display;
-    GameWindow m_map_display;
-    std::vector<GameWindow> m_entity_window;
-    GameWindow m_background_display;
+    std::shared_ptr<events::EnemyEncounter> m_enemyEncounter;
 };
-*/
 #endif //UNTITLED_MONITOR_H

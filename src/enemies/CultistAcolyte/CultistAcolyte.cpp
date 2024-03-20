@@ -7,7 +7,7 @@ enemies::CultistAcolyte::CultistAcolyte::CultistAcolyte():
     {static_cast<int>(Characteristic::dodge), 13},
     {static_cast<int>(Characteristic::defence), 0},
     {static_cast<int>(Characteristic::speed), 7},
-    {static_cast<int>(Characteristic::HP), 13},
+    {static_cast<int>(Characteristic::HP), 16},
     {static_cast<int>(Characteristic::maxHP), 16},
     {static_cast<int>(Characteristic::marked), 0},
     {static_cast<int>(Characteristic::turnable), 0},
