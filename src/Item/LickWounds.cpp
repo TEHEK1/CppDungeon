@@ -8,7 +8,7 @@
 #include "effects/Heal.h"
 namespace items {
     namespace LickWounds{
-        LickWounds::LickWounds() : skillDesigns::RangeSkill(0, "Lick Wounds", {2, 3, 4},
+        LickWounds::LickWounds() : Item(0, "Lick Wounds", {2, 3, 4},
                                                             {1, 2, 3, 4}, {}, 100) {}
 
         void LickWounds::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

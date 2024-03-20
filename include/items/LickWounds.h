@@ -8,7 +8,7 @@
 #define UGABUGA_LICKWOUNDS_H
 namespace items {
     namespace LickWounds {
-        class LickWounds : public skillDesigns::RangeSkill {
+        class LickWounds : public Item {
         public:
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor, std::shared_ptr<entity::Entity> object) override;
