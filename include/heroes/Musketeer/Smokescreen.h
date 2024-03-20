@@ -5,6 +5,7 @@ namespace Heroes {
     namespace Musketeer {
 
         class Smokescreen: public skillDesigns::RangeSkill {
+        public:
             Smokescreen();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

@@ -5,6 +5,7 @@ namespace Heroes {
     namespace Musketeer {
 
         class Sidearm: public skillDesigns::Skill {
+        public:
             Sidearm();
             
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

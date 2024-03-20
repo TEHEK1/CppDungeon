@@ -7,7 +7,7 @@ enemies::BrigandRaider::BrigandRaider::BrigandRaider():
     {static_cast<int>(Characteristic::dodge), 26},
     {static_cast<int>(Characteristic::defence), 25},
     {static_cast<int>(Characteristic::speed), 5},
-    {static_cast<int>(Characteristic::HP), 25},
+    {static_cast<int>(Characteristic::HP), 30},
     {static_cast<int>(Characteristic::maxHP), 30},
     {static_cast<int>(Characteristic::marked), 0},
     {static_cast<int>(Characteristic::turnable), 0},
