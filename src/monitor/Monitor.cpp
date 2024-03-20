@@ -12,6 +12,7 @@
 #include "actions/MoveLeft.h"
 #include "actions/MoveRight.h"
 #include "Squad.h"
+#include "entity/Hero.h"
 #include "events/UsableEvent.h"
 #include <iostream>
 #include <vector>
@@ -232,7 +233,7 @@ Monitor::Monitor() {
     m_map_display = GameWindow (row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_user_actions_display = InterfaceColumnWindow(row / 9, col / 2, 2 * row / 3 + 1, 0);
     //Calculating x_distance and size
-    const int heroes_blocks = 9;
+    const int heroes_blocks = 6;
     const int edge_blocks = 1;
     const int space_blocks = 2;
     int block_dictance = col / ((ENTITY_NUM - 1) * space_blocks + ENTITY_NUM * heroes_blocks + edge_blocks * 2);
@@ -324,6 +325,9 @@ void Monitor::draw(Player* current_player) {
     m_map_display.clean();
     std::shared_ptr<events::EnemyEncounter> battle_event_pointer = have_battle(current_player);
     if (battle_event_pointer != nullptr) {
+        if (!m_have_battle && battle_event_pointer->getIsInBattle()) {
+            battle_event_pointer->turn();
+        }
         m_have_battle = battle_event_pointer->getIsInBattle();
     }
     
@@ -332,7 +336,6 @@ void Monitor::draw(Player* current_player) {
         
         int cur_y = 0;
 
-        //TODO: Make smth with enemies
         for (auto& i : current_player->getSquad()->getEntities()) {
             if (i != nullptr && i->isAlive()) {
                 m_map_display.draw_text(cur_y, 0, get_entity_characteristics(i));
@@ -390,9 +393,32 @@ void Monitor::draw(Player* current_player) {
     }
     
     if (m_have_battle) {
-        
-    }
-    else {
+        int draw_position = static_cast<int>(Entity_position::ENEMY_1);
+            for (const std::shared_ptr<entity::Entity>& i : battle_event_pointer->getEnemies()->getEntities()) {
+                if (i != nullptr) {
+                    m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
+                    m_entity_window[draw_position].draw_text(i->draw().size() + 2, 0, i->getName());
+                    m_entity_window[draw_position].draw_text(i->draw().size() + 3, 0, std::string("Hp: ") + 
+                                                            std::to_string(i->get(Characteristic::HP)) + std::string("/") +
+                                                            std::to_string(i->get(Characteristic::maxHP)));
+                }
+                draw_position++;
+            }
+        if(auto cur_acting_entity = std::dynamic_pointer_cast<entity::Hero>(battle_event_pointer->getLastToMove())){
+            int position = ENTITY_NUM - 5 - (std::find(current_player->getSquad()->getEntities().begin(),
+                            current_player->getSquad()->getEntities().end(),
+                            std::dynamic_pointer_cast<entity::Hero>(cur_acting_entity)) - current_player->getSquad()->getEntities().begin());
+            for (int i = 0; i < cur_acting_entity->draw().size(); i++) {
+                m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, Colors::SELECTED_HERO);
+            }
+        } else {
+            int position =(std::find(battle_event_pointer->getEnemies()->getEntities().begin(),
+                            battle_event_pointer->getEnemies()->getEntities().end(), cur_acting_entity) - battle_event_pointer->getEnemies()->getEntities().begin());
+            for (int i = 0; i < cur_acting_entity->draw().size(); i++) {
+                m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, Colors::SELECTED_ENEMY);
+            }
+        }
+    } else {
         m_user_actions_display.m_key_binds = {};
         m_user_actions_display.get_binds(current_player);
         m_user_actions_display.draw_interface(current_player->getActions());
@@ -404,8 +430,7 @@ void Monitor::draw(Player* current_player) {
         }
     }
 
-    //inventory 
-    /*int cur_y = 0;
+    int cur_y = 0;
     int cur_column = 0;
     for (auto item : current_player->getInventory().getItems()) {
         if (m_inventory_display[cur_column].get_y() - 2 <= cur_y) {
@@ -414,7 +439,7 @@ void Monitor::draw(Player* current_player) {
         }
         m_inventory_display[cur_column].draw_text(cur_y, 0, item->draw(), false, Colors::ITEM_COLOR);
         cur_y += 2;
-    }*/
+    }
     
     move(0, 0);
 }
@@ -423,7 +448,7 @@ void Monitor::draw(Player* current_player) {
 
 void Monitor::keyEvent(int key, Player* player) {
     if (key == 'c') {
-        draw_Characteristis ^= true;
+        m_draw_Characteristis ^= true;
     } else if (have_battle) {
 
     }  else if (m_user_actions_display.find_action(key) != nullptr && 
