@@ -9,7 +9,8 @@
 #include <vector>
 #include <stdexcept>
 #include <algorithm>
-class Squad;
+#include "namespaces/battlefield.h"
+#include <vector>
 
 class BattleField {
 private:

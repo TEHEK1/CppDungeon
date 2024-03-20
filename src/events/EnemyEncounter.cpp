@@ -1,11 +1,12 @@
 #include "BattleField.h"
 #include "changers/ActionsChanger.h"
+#include "actions/DeselectSkills.h"
 #include "entity/Enemy.h"
 #include "entity/MarkedAsAutoTurn.h"
 #include "events/EnemyEncounter.h"
 #include "entity/Hero.h"
 #include "enemies/BrigandRaider/BrigandRaider.h"
-#include "enemies/BrigandFusier/BrigandFusilier.h"
+#include "enemies/BrigandFusilier/BrigandFusilier.h"
 #include "enemies/CultistAcolyte/CultistAcolyte.h"
 #include "navigation/Map.h"
 #include "monitor/Monitor.h"
@@ -18,7 +19,8 @@
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
-
+#include "actions/TurnEvent.h"
+#include "actions/DeselectSkills.h"
 namespace events {
     EnemyEncounter::EnemyEncounter() {
 
@@ -101,63 +103,90 @@ namespace events {
         }
         return false;
     }
-
-    void EnemyEncounter::turn(Player* player) {
-        std::shared_ptr<BattleField> battleField = std::shared_ptr<BattleField>(new BattleField(player->getSquad(), m_enemies));
-        m_battleField = battleField;
-        std::vector<std::shared_ptr<entity::Entity>> enemiesEntities = m_enemies->getEntities();
+    void EnemyEncounter::_refreshPriority(){
         if (m_priority.empty()) {
-            std::vector<std::shared_ptr<entity::Entity>> priority = battleField->getEntities();
+            std::vector<std::shared_ptr<entity::Entity>> enemiesEntities = m_enemies->getEntities();
+            std::vector<std::shared_ptr<entity::Entity>> priority = m_battleField->getEntities();
             std::sort(priority.begin(), priority.end(), [enemiesEntities] (std::shared_ptr<entity::Entity> a, std::shared_ptr<entity::Entity> b) {
                 if (a->get(Characteristic::speed) == b->get(Characteristic::speed)) {
-                    return (std::find(enemiesEntities.begin(), enemiesEntities.end(), a) == enemiesEntities.end()) ? true : false;
+                    return (std::find(enemiesEntities.begin(), enemiesEntities.end(), a) == enemiesEntities.end());
                 }
                 return a->get(Characteristic::speed) > b->get(Characteristic::speed);
             });
             for (const auto& i: priority) {
-                if (i->isAlive()) {
+                if (i && i->isAlive()) {
                     m_priority.push(i);
                 }
             }
         }
-        bool heroesAlive = _checkAlive(player->getSquad()->getEntities());
-        bool enemiesAlive = _checkAlive(m_enemies->getEntities());
-        if (!(heroesAlive && enemiesAlive)) {
-            for (auto i: player->getSquad()->getEntities()) {
-                endBattleTurnEffects(i);
-            }
-            for (auto i: enemiesEntities) {
-                endBattleTurnEffects(i);
-            }
-            m_isInBattle = false;
-            player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
-            return;
-        }
-        std::shared_ptr<entity::Entity> entity = m_priority.back();
-        m_priority.pop();
-        if (!entity->isAlive()) {
-            m_lastToMove = entity;
-            return;
-        }
-        turnEffects(entity);
-        if (entity->isTurnable() < 0) {
-            m_lastToMove = entity;
-            return;
-        }
-        if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
-            markedAsAutoTurn->autoTurn(player, battleField, entity);
-            player->getMonitor()->draw(player);
-            m_lastToMove = entity;
-            return;
-        }
-        if (battleField->areAllies(entity, enemiesEntities[0])) {
-            _enemyMove(player, entity, std::distance(enemiesEntities.begin(), std::find(enemiesEntities.begin(), enemiesEntities.end(), entity)) + 1, battleField);
-            player->getMonitor()->draw(player);
-            m_lastToMove = entity;
-            return;
-        }
-        m_lastToMove = entity;
-        return;
     }
+
+    void EnemyEncounter::turn(Player* player) {
+        std::shared_ptr<BattleField> battleField = std::shared_ptr<BattleField>(new BattleField(player->getSquad(), m_enemies));
+        m_battleField = battleField;
+        _refreshPriority();
+        do {
+            std::vector<std::shared_ptr<entity::Entity>> enemiesEntities = m_enemies->getEntities();
+            bool heroesAlive = _checkAlive(player->getSquad()->getEntities());
+            bool enemiesAlive = _checkAlive(m_enemies->getEntities());
+            if (!(heroesAlive && enemiesAlive)) {
+                for (auto i: player->getSquad()->getEntities()) {
+                    endBattleTurnEffects(i);
+                }
+                for (auto i: enemiesEntities) {
+                    endBattleTurnEffects(i);
+                }
+                m_isInBattle = false;
+                player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
+                return;
+            }
+            _refreshPriority();
+            std::shared_ptr<entity::Entity> entity = m_priority.front();
+            m_priority.pop();
+            if (entity && !entity->isAlive()) {
+                m_lastToMove = entity;
+                return;
+            }
+            turnEffects(entity);
+            if (!entity->isTurnable()) {}
+            else if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
+                markedAsAutoTurn->autoTurn(player, battleField, entity);
+                player->getMonitor()->draw(player);
+            } else if (battleField->areAllies(entity, enemiesEntities[0])) {
+                _enemyMove(player, entity, std::distance(enemiesEntities.begin(),
+                                                         std::find(enemiesEntities.begin(), enemiesEntities.end(),
+                                                                   entity)) + 1, battleField);
+                player->getMonitor()->draw(player);
+            }
+
+            m_lastToMove = entity;
+            if (m_priority.empty()) {
+                std::vector<std::shared_ptr<entity::Entity>> priority = battleField->getEntities();
+                std::sort(priority.begin(), priority.end(),
+                          [enemiesEntities](std::shared_ptr<entity::Entity> a, std::shared_ptr<entity::Entity> b) {
+                              if (a->get(Characteristic::speed) == b->get(Characteristic::speed)) {
+                                  return (std::find(enemiesEntities.begin(), enemiesEntities.end(), a) ==
+                                          enemiesEntities.end()) ? true : false;
+                              }
+                              return a->get(Characteristic::speed) > b->get(Characteristic::speed);
+                          });
+                for (const auto &i: priority) {
+                    if (i->isAlive()) {
+                        m_priority.push(i);
+                    }
+                }
+            }
+            if (battleField->areAllies(getLastToMove(), enemiesEntities[0])) {
+                returnToDefault(player);
+                changers::ActionsChanger::addUniqueAction(player, std::make_shared<actions::TurnEvent>(
+                        std::dynamic_pointer_cast<events::Event>(shared_from_this())));
+            } else {
+                returnToDefault(player);
+                auto deselectAction = std::make_shared<actions::DeselectSkills>(getLastToMove(),
+                                                                                battleField);
+                deselectAction->act(player);
+            }
+        } while (m_lastToMove == nullptr);
+   }
 
 }

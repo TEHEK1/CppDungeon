@@ -2,7 +2,5 @@
 build
 .idea
 cmake-build-debug
-tests/build
-tests/MapTest/build
-.clang-tidy
-.githubtests/SkillTest/cmake-build-debug
+CMakeLists.txt
+main.cpp

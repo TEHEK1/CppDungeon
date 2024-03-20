@@ -14,7 +14,7 @@ class Map;
 class Monitor;
 #include "namespaces/actions.h"
 #include "namespaces/changers.h"
-class Squad;
+#include "namespaces/battlefield.h"
 class Player{
     Position m_position;
     Inventory m_inventory;
@@ -26,9 +26,8 @@ class Player{
     std::shared_ptr<Monitor> m_monitor;
     std::shared_ptr<Map> m_map;
 public:
-    explicit Player(std::shared_ptr<Map>, std::shared_ptr<Monitor>, std::shared_ptr<Squad>);
+    explicit Player(const std::shared_ptr<Map>& map, const std::shared_ptr<Monitor>& monitor,const std::shared_ptr<Squad>& squad);
     std::shared_ptr<Monitor> getMonitor();
-    void setMonitor(std::shared_ptr<Monitor> map);
     Position getPosition();
     std::shared_ptr<Squad> getSquad();
     std::set<std::shared_ptr<actions::Action>> getActions();

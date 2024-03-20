@@ -11,11 +11,11 @@
 #include "Squad.h"
 #include "BattleField.h"
 #include <vector>
+#include "namespaces/entity.h"
 #include <queue>
-class Enemy;
 class Player;
 namespace events {
-    class EnemyEncounter : public Event, public SquadChanger, public changers::EffectChanger {
+class EnemyEncounter : public Event, public SquadChanger, public changers::EffectChanger, public std::enable_shared_from_this<EnemyEncounter> {
     public:
         EnemyEncounter();
         void turn(Player* player) override;
@@ -25,6 +25,7 @@ namespace events {
         std::vector<std::vector<char>> draw() override;
         std::shared_ptr<BattleField> getBattleField();
     private:
+        void _refreshPriority();
         void _enemyMove(Player *, std::shared_ptr<entity::Entity>, int rank, std::shared_ptr<BattleField> battleField);
         bool _checkAlive(std::vector<std::shared_ptr<entity::Entity>>);
         bool m_isInBattle;

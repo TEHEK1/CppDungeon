@@ -7,7 +7,7 @@
 #include "items/Item.h"
 namespace items{
     namespace FortifyingGarlic{
-        class FortifyingGarlic : Item{
+        class FortifyingGarlic :public Item{
         public:
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor, std::shared_ptr<entity::Entity> object) override;

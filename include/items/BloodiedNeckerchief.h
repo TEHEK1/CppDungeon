@@ -8,7 +8,7 @@
 #include "items/Item.h"
 namespace items{
     namespace BloodiedNeckerchief{
-        class BloodiedNeckerchief : Item{
+        class BloodiedNeckerchief :public Item{
         public:
             void unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                  std::shared_ptr<entity::Entity> actor, std::shared_ptr<entity::Entity> object) override;

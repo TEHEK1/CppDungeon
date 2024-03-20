@@ -9,6 +9,7 @@
 class Cell: public changers::ActionsChanger{
 public:
     void freeMoves(Player*, events::Event*);
+    void freeMoves(Player*);
     virtual void generateEvents() = 0;
     std::vector<std::shared_ptr<events::Event>> getEvents();
     char getLevel();

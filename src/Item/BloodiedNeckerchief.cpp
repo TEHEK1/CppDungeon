@@ -10,7 +10,7 @@ namespace items {
     namespace BloodiedNeckerchief{
         BloodiedNeckerchief::BloodiedNeckerchief() : Item(0, "Bloodied Neckerchief Effect", {1, 2, 3, 4},
                                                           {1, 2, 3, 4}, {}, 100) {};
-        std::string drawItem(){
+        std::string BloodiedNeckerchief::drawItem(){
             return "Bloodied Neckerchief - +2 speed, +10 dodge";
         }
         void BloodiedNeckerchief::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

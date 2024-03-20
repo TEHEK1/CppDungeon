@@ -43,8 +43,13 @@ namespace skillDesigns {
                     std::vector<std::shared_ptr<entity::Entity>> objects) {
         std::string tryUse = isUsable(battleField, actor, objects);
         if (tryUse.empty()) {
+
             if (missed(actor) <= 0) {
                 unsafeUse(crited(actor), battleField, actor, objects);
+                return "passed";
+            }
+            else{
+                return "missed";
             }
         }
         return tryUse;
@@ -54,7 +59,12 @@ namespace skillDesigns {
                                 std::vector<std::shared_ptr<entity::Entity>> objects) {
         std::string firstToRet = isDesignUsable(battleField, actor, objects);
         if (firstToRet.empty()) {
-            return isImplementationUsable(battleField, actor, objects);
+            if(isImplementationUsable(battleField, actor, objects).empty()){
+                return "";
+            }
+            else {
+                return isImplementationUsable(battleField, actor, objects);
+            }
         }
         return firstToRet;
     }
@@ -83,7 +93,9 @@ namespace skillDesigns {
                           std::vector<std::shared_ptr<entity::Entity>> objects) {
         unsafeSelfUse(crited, battleField, actor);
         for (const auto &obj: objects) {
-            unsafeTargetUse(crited, battleField, actor, obj);
+            if(obj!= nullptr) {
+                unsafeTargetUse(crited, battleField, actor, obj);
+            }
         }
     }
 
@@ -96,12 +108,12 @@ namespace skillDesigns {
             return "Some entity not on battleField";
         }
         for (const auto &obj: objects) {
-            try {
-                battleField->getSquad(obj);
-            }
-            catch (const std::exception &e) {
-                return "Some entity not on battleField";
-            }
+                try {
+                    battleField->getSquad(obj);
+                }
+                catch (const std::exception &e) {
+                    return "Some entity not on battleField";
+                }
         }
 
         auto actorSquadVector = battleField->getSquad(actor)->getEntities(); // std::vector<std::shared_ptr<Entity>>
@@ -140,10 +152,9 @@ namespace skillDesigns {
 
     void Skill::addEffect(std::shared_ptr<entity::Entity> object, std::shared_ptr<effects::Effect> effect, std::shared_ptr<BattleField> battleField, int crited,
                           int accuracyModifier) {
-        std::shared_ptr<effects::MarkedAsResistable> markedAsResistable =
-                std::shared_ptr<effects::MarkedAsResistable>{effect, dynamic_cast<effects::MarkedAsResistable *>(effect.get())};
-        if (markedAsResistable == nullptr ||
-            resisted(object, markedAsResistable->resistanceHash(), crited) - (accuracyModifier - 100) < 0) {
+        std::shared_ptr<effects::MarkedAsResistable> markedAsResistable = std::dynamic_pointer_cast<effects::MarkedAsResistable>(effect);
+        if (object!= nullptr && (markedAsResistable == nullptr ||
+            resisted(object, markedAsResistable->resistanceHash(), crited) - (accuracyModifier - 100) < 0)) {
             changers::EffectChanger::addEffect(object, effect, battleField);
         }
     }

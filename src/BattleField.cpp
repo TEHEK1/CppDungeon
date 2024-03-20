@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <vector>
-
+#include <algorithm>
 
 BattleField::BattleField(
     std::shared_ptr<Squad> ally,

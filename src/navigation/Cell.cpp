@@ -7,10 +7,17 @@
 
 void Cell::freeMoves(Player * player, events::Event* event) {
     m_endedEvents.insert(event);
-    /*if (m_endedEvents.size() == getEvents().size()) {//TODO:Make ActionController
-        addAction(player, std::shared_ptr<actions::Action>(new actions::MoveLeft));
-        addAction(player, std::shared_ptr<actions::Action>(new actions::MoveRight));
-    }*/
+    if (m_endedEvents.size() == getEvents().size()) {
+        addUniqueAction(player, std::make_shared<actions::MoveLeft>());
+        addUniqueAction(player, std::make_shared<actions::MoveRight>());
+    }
+}
+
+void Cell::freeMoves(Player * player) {
+    if (m_endedEvents.size() == getEvents().size()) {
+        addUniqueAction(player, std::make_shared<actions::MoveLeft>());
+        addUniqueAction(player, std::make_shared<actions::MoveRight>());
+    }
 }
 
 char Cell::getLevel() {

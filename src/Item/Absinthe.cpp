@@ -9,8 +9,8 @@ namespace items {
     namespace Absinthe{
         Absinthe::Absinthe() : Item(0, "Absinthe Effect", {1, 2, 3, 4},
                                     {1, 2, 3, 4}, {}, 100) {};
-        std::string drawItem(){
-            return "Absinthe - Denis approves";
+        std::string Absinthe::drawItem(){
+            return "Absinthe - -2 speed , 10 damage";
         }
         void Absinthe::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                        std::shared_ptr<entity::Entity> actor,
