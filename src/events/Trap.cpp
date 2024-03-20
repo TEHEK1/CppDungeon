@@ -34,42 +34,42 @@ void events::Trap::dontUse(Player *player) {
 }
 
 void events::Trap::use(Player *player) {
-//    static bool once = true;
-//    if(once) {
-//        once = false;
-//        static int random = generators::NumberGenerator::generate(m_range_use_start, m_range_use_finish);
-//        std::vector<std::shared_ptr<entity::Entity>> entities = player->getSquad()->getEntities();
-//        for (int i = 0; i < entities.size(); i++) {
-//            addEffect(entities[i], std::make_shared<effects::Damage>(random));
+    static bool once = true;
+    if(once) {
+        once = false;
+        static int random = generators::NumberGenerator::generate(m_range_use_start, m_range_use_finish);
+        std::vector<std::shared_ptr<entity::Entity>> entities = player->getSquad()->getEntities();
+        for (int i = 0; i < entities.size(); i++) {
+            addEffect(entities[i], std::make_shared<effects::Damage>(random));
         }
-////    |      __0__      |
-////    |     /     \     |
-////    |    / 0 0 0 \    |
-////    |   | 0     0 |   |
-////    |   | 0     0 |   |
-////    |   | 0     0 |   |
-////    |   |  0 0 0  |   |
-////    |    \-------/    |
-////
-////
-////    |      __x__      |
-////    |     /     \     |
-////    |    / x   x \    |
-////    |   |   x x   |   |
-////    |   |    x    |   |
-////    |   |   x x   |   |
-////    |   |  x   x  |   |
-////    |    \-------/    |
-//        m_drawing[6]  = {'|',' ',' ',' ',' ',' ',' ','_','_','x','_','_',' ',' ',' ',' ',' ',' ','|',' '};
-//        m_drawing[8]  = {'|',' ',' ',' ',' ','/',' ','x',' ',' ',' ','x',' ','\\',' ',' ',' ',' ','|',' '};
-//        m_drawing[9]  = {'|',' ',' ',' ','|',' ',' ',' ','x',' ','x',' ',' ',' ','|',' ',' ',' ','|',' '};
-//        m_drawing[10] = {'|',' ',' ',' ','|',' ',' ',' ',' ','x',' ',' ',' ',' ','|',' ',' ',' ','|',' '};
-//        m_drawing[11] = {'|',' ',' ',' ','|',' ',' ',' ','x',' ','x',' ',' ',' ','|',' ',' ',' ','|',' '};
-//        m_drawing[12] = {'|',' ',' ',' ','|',' ',' ','x',' ',' ',' ','x',' ',' ','|',' ',' ',' ','|',' '};
-//        player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<events::Event>(this));
-//        m_used = false;
-//    }
-//}
+//    |      __0__      |
+//    |     /     \     |
+//    |    / 0 0 0 \    |
+//    |   | 0     0 |   |
+//    |   | 0     0 |   |
+//    |   | 0     0 |   |
+//    |   |  0 0 0  |   |
+//    |    \-------/    |
+//
+//
+//    |      __x__      |
+//    |     /     \     |
+//    |    / x   x \    |
+//    |   |   x x   |   |
+//    |   |    x    |   |
+//    |   |   x x   |   |
+//    |   |  x   x  |   |
+//    |    \-------/    |
+        m_drawing[6]  = {'|',' ',' ',' ',' ',' ',' ','_','_','x','_','_',' ',' ',' ',' ',' ',' ','|',' '};
+        m_drawing[8]  = {'|',' ',' ',' ',' ','/',' ','x',' ',' ',' ','x',' ','\\',' ',' ',' ',' ','|',' '};
+        m_drawing[9]  = {'|',' ',' ',' ','|',' ',' ',' ','x',' ','x',' ',' ',' ','|',' ',' ',' ','|',' '};
+        m_drawing[10] = {'|',' ',' ',' ','|',' ',' ',' ',' ','x',' ',' ',' ',' ','|',' ',' ',' ','|',' '};
+        m_drawing[11] = {'|',' ',' ',' ','|',' ',' ',' ','x',' ','x',' ',' ',' ','|',' ',' ',' ','|',' '};
+        m_drawing[12] = {'|',' ',' ',' ','|',' ',' ','x',' ',' ',' ','x',' ',' ','|',' ',' ',' ','|',' '};
+        player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<events::Event>(this));
+        m_used = false;
+    }
+}
 
 std::vector<std::vector<char>> events::Trap::draw() {
     return m_drawing;

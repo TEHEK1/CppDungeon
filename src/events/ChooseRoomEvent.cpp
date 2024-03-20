@@ -9,14 +9,14 @@
 
 
 void events::ChooseRoomEvent::turn(Player *player) {
-//    player->getMonitor()->draw();
-//    player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<Event>(this));
-//    for (int coords : player->getMap()->getNextRooms()) {
-//        this->addAction(
-//            player,
-//            std::move(std::shared_ptr<actions::ChooseNextRoom>(new actions::ChooseNextRoom(coords)))
-//        );
-//    }
+    player->getMonitor()->draw();
+    player->getMap()->getCell(player->getPosition())->freeMoves(player, std::shared_ptr<Event>(this));
+    for (int coords : player->getMap()->getNextRooms()) {
+        this->addAction(
+            player,
+            std::move(std::shared_ptr<actions::ChooseNextRoom>(new actions::ChooseNextRoom(coords)))
+        );
+    }
 }
 
 std::vector<std::vector<char>> events::ChooseRoomEvent::draw() {

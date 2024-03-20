@@ -9,7 +9,7 @@
 
 
 void Room::generateEvents(){
-    /*if(random(1,2) == 1) {
+    if(random(1,2) == 1) {
         m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
     }else{
         m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
@@ -19,5 +19,5 @@ void Room::generateEvents(){
     }else{
         m_events.push_back(std::shared_ptr<events::Event>(new events::Chest));
     }
-    m_events.push_back(std::shared_ptr<events::Event>(new events::ChooseRoomEvent));*/
+    m_events.push_back(std::shared_ptr<events::Event>(new events::ChooseRoomEvent));
 }

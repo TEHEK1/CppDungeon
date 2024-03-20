@@ -1,7 +1,7 @@
 //
 // Created by neb_orion on 09.03.2024.
 //
-/*
+
 #include "player/Player.h"
 #include "navigation/Map.h"
 #include "entity/Entity.h"
@@ -157,4 +157,3 @@ void Monitor::keyEvent() {
     char pressed_key = getch();
     keyEvent(pressed_key);
 }
-*/
