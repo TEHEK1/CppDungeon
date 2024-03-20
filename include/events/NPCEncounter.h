@@ -7,7 +7,7 @@
 namespace events {
 
     class NPCEncounter: public Chest {
-
+//TODO:NPC
     };
 
 } // events

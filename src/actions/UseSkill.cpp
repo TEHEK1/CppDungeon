@@ -14,7 +14,8 @@ namespace actions{
                        m_skill(skill), m_battleField(battleField), m_actor(actor), m_objects(objects){};
 
     void UseSkill::act(Player *player) {
-        m_skill -> use(m_battleField, m_actor, m_objects);
+        auto returnedSkill = m_skill -> use(m_battleField, m_actor, m_objects);
+        player->getMonitor();
         for(auto event:player->getMap()->getCell(player->getPosition())->getEvents()){
             if(auto enemyEncounter = std::dynamic_pointer_cast<events::EnemyEncounter>(event)){
                 enemyEncounter->turn(player);

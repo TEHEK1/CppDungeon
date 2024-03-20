@@ -43,8 +43,12 @@ namespace skillDesigns {
                     std::vector<std::shared_ptr<entity::Entity>> objects) {
         std::string tryUse = isUsable(battleField, actor, objects);
         if (tryUse.empty()) {
+
             if (missed(actor) <= 0) {
                 unsafeUse(crited(actor), battleField, actor, objects);
+            }
+            else{
+                return "missed";
             }
         }
         return tryUse;
