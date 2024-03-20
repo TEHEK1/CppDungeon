@@ -5,13 +5,11 @@
 #include <iostream>
 #include <vector>
 
-
 constexpr int MAP_SIZE = 50; // doesn't depenend on window size
 constexpr int MINIMAL_ROOMS = 5;
 
 enum CellType {empty = 0, room = 1, hall = 2, new_hall = 3};
 enum RoomPosition {top = 0, right = 1, bottom = 2, left = 3, center = 4};
-
 
 
 struct MyDefinitionRoom {

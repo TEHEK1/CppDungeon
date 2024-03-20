@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 #include "namespaces/entity.h"
+#include <stdexcept>
 
 class Squad {
 private:

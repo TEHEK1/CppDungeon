@@ -7,6 +7,8 @@
 #include <memory>
 #include "namespaces/effects.h"
 #include "namespaces/entity.h"
+#include <set>
+#include <functional>
 class BattleField;
 namespace changers {
     class EffectChanger {
@@ -17,6 +19,7 @@ namespace changers {
         static void endBattleTurnEffects(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<BattleField>& battlefield = nullptr);
         static void addEffect(const std::shared_ptr<entity::Entity>& entity, std::shared_ptr<effects::Effect> effect, const std::shared_ptr<BattleField>& battlefield = nullptr);
         static void removeEffect(const std::shared_ptr<entity::Entity>& entity, const std::shared_ptr<effects::Effect>& effect);
+        static void removeEffect(const std::shared_ptr<entity::Entity>& entity, std::function<bool(std::set<std::shared_ptr<effects::Effect>>::iterator)> actionIterator);
     };
 } // namespace changers
 
