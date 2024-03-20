@@ -21,6 +21,7 @@ add_executable(CppDungeon
         include/enemies/Ghoul/Ghoul.h
         include/enemies/Ghoul/Rend.h
         include/enemies/Ghoul/SkullToss.h
-        include/enemies/Ghoul/Howl.h
         src/enemies/Ghoul/Ghoul.cpp
+        src/enemies/Ghoul/Rend.cpp
+        src/enemies/Ghoul/SkullToss.cpp
 )
