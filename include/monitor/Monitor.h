@@ -91,10 +91,10 @@ private:
 
             };
             std::vector<GameWindow> m_columns;
-            int m_first_unbind = 'a';
+            int m_first_unbind = '0';
             std::map<int, Bind> m_key_binds;
     };
-
+    bool changed(std::shared_ptr<entity::Entity>);
     static void abs_coordinates_to_relative(int& row, int& col, const GameWindow& cur_window, Position center);
     void update_characteristics(std::shared_ptr<entity::Entity>);
     static void init_colors();
@@ -105,7 +105,6 @@ private:
     bool m_draw_Characteristics = false;
     bool m_have_battle = false;
     bool m_if_skill_selected = false;
-    bool m_channged = false;
     int m_ended = 0;
     std::string m_buffer = "Nothing"; 
     std::vector<GameWindow> m_inventory_display;
