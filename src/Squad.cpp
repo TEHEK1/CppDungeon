@@ -26,3 +26,5 @@ int Squad::getIndex(const std::shared_ptr<entity::Entity>& entity) const {
     }
     throw std::invalid_argument("entity is not in Squad");
 }
+
+

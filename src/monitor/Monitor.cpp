@@ -25,11 +25,11 @@
 namespace {
     static const int ENTITY_NUM = 8;
     enum Entity_position {HERO_4, HERO_3, HERO_2, HERO_1, ENEMY_1, ENEMY_2, ENEMY_3, ENEMY_4};
-
-    enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2),
-        CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4),
-        INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6), TARGETED_ROOM_COLOR = COLOR_PAIR(7),
-        SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9), BUFFER = COLOR_PAIR(10)};
+    
+    enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
+    CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
+    INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6), TARGETED_ROOM_COLOR = COLOR_PAIR(7),
+    SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9), BUFFER = COLOR_PAIR(10)};
     enum Map_symbols : char {CELL = '"', ROOM = '0', TARGET_ROOM = '#'};
 }
 void Monitor::init_colors() {
@@ -47,8 +47,8 @@ void Monitor::init_colors() {
 }
 
 Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
-        : m_y_size(y_size)
-        , m_x_size(x_size) {
+: m_y_size(y_size)
+, m_x_size(x_size) {
     m_current_window = newwin(m_y_size, m_x_size, pos_y, pos_x);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
     wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
@@ -56,9 +56,9 @@ Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, cons
 }
 
 Monitor::GameWindow::GameWindow()
-        : m_y_size(0)
-        , m_x_size(0)
-        , m_current_window(nullptr) {}
+: m_y_size(0)
+, m_x_size(0)
+, m_current_window(nullptr) {}
 
 
 void Monitor::GameWindow::set_atr(size_t row, size_t col, size_t num, attr_t atr, short color) {
@@ -88,7 +88,7 @@ void Monitor::GameWindow::clean() {
 //TODO: add size checkers
 //draw_sprite draws with only either text formating attribute or pair of colors (text, font) 
 void Monitor::GameWindow::draw_sprite(const size_t& pos_y, const size_t& pos_x,
-                                      const std::vector<std::vector<char>>& sprite, bool skip_spaces, int attribute) {
+                        const std::vector<std::vector<char>>& sprite, bool skip_spaces, int attribute) {
     wattron(m_current_window, attribute);
     size_t current_y = pos_y;
     size_t current_x = pos_x;
@@ -112,7 +112,7 @@ void Monitor::GameWindow::draw_sprite(const size_t& pos_y, const size_t& pos_x,
 
 
 void Monitor::GameWindow::draw_text(const size_t& pos_y, const size_t& pos_x,
-                                    const std::string& text, bool skip_spaces, int attribute) {
+                        const std::string& text, bool skip_spaces, int attribute) {
     draw_sprite(pos_y, pos_x, {1, std::vector<char>(text.begin(), text.end())}, skip_spaces, attribute);
 }
 
@@ -124,14 +124,14 @@ size_t Monitor::GameWindow::get_y() const{
     return m_y_size;
 }
 
-Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) {
+Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) { 
     m_current_window = other.m_current_window;
     m_x_size = other.m_x_size;
     m_y_size = other.m_y_size;
 }
 
 Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
-        : GameWindow(y_size, x_size, pos_y, pos_x) {
+: GameWindow(y_size, x_size, pos_y, pos_x) {
     int num_of_col = 7;
     int col_size = 10;
     int block_size  = this->get_x() / (num_of_col * col_size + (num_of_col + 1));
@@ -142,7 +142,7 @@ Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const size_t& y_size, cons
 }
 
 Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const InterfaceColumnWindow& other) {
-
+    
     m_columns = other.m_columns;
     m_current_window = other.m_current_window;
     m_key_binds = other.m_key_binds;
@@ -160,15 +160,15 @@ int Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Actio
     return 0;
 }
 
-std::shared_ptr<actions::Action> Monitor::InterfaceColumnWindow::find_action(int key) {
+ std::shared_ptr<actions::Action> Monitor::InterfaceColumnWindow::find_action(int key) {
     if (m_key_binds.find(key) == m_key_binds.end()) {
         return nullptr;
     }
     return m_key_binds[key].getAction();
-}
+ }
 //TODO: Add rebase or listing if the actions have a too much space
 void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
-
+    
     m_first_unbind = '0';
     size_t cur_y = 0;
     size_t cur_column = 0;
@@ -190,8 +190,8 @@ void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<act
 };
 
 Monitor::InterfaceColumnWindow::InterfaceColumnWindow()
-        :m_columns({})
-        , m_key_binds({}) {}
+:m_columns({})
+, m_key_binds({}) {}
 
 void Monitor::InterfaceColumnWindow::get_binds(Player* player) {
     if(player == nullptr){
@@ -251,8 +251,8 @@ Monitor::Monitor() {
 
     for (int i = 0; i < ENTITY_NUM; i++) {
         m_entity_window.push_back(GameWindow(8 * m_background_display.get_y() / 10,
-                                             heroes_blocks * block_dictance, m_background_display.get_y() / 10,
-                                             block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2));
+                                            heroes_blocks * block_dictance, m_background_display.get_y() / 10,
+                                            block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2));
     }
 }
 
@@ -286,7 +286,7 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
         criticalDamageChance = trick::hash("criticalDamageChance")
         */
     full_content += std::string("  accuracyModifier: ") + std::to_string(person->get(Characteristic::accuracyModifier));
-    full_content += std::string("  damage: ") + std::to_string(person->get(Characteristic::minDamage)) + std::string("-") +
+    full_content += std::string("  damage: ") + std::to_string(person->get(Characteristic::minDamage)) + std::string("-") + 
                     std::to_string(person->get(Characteristic::maxDamage));
     full_content += std::string("  dodge: ") + std::to_string(person->get(Characteristic::dodge)) + std::string("%");
     full_content += std::string("  defence: ") + std::to_string(person->get(Characteristic::defence)) + std::string("%");
@@ -312,15 +312,15 @@ void Monitor::draw(Player* current_player) {
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
             m_entity_window[draw_position].draw_text(0, 0, i->getName());
             m_entity_window[draw_position].draw_text(1, 0, std::string("Hp: ") +
-                                                           std::to_string(i->get(Characteristic::HP)) + std::string("/") +
-                                                           std::to_string(i->get(Characteristic::maxHP)));
+                                                    std::to_string(i->get(Characteristic::HP)) + std::string("/") +
+                                                    std::to_string(i->get(Characteristic::maxHP)));
         }
         draw_position--;
     }
     std::vector<std::vector<char>> drawing_map = current_player->getMap()->draw(current_player->getPosition(),
-                                                                                m_map_display.get_y() - 2,
+                                                                                m_map_display.get_y() - 2, 
                                                                                 m_map_display.get_x() - 2);
-
+    
     for (auto& row : drawing_map) {
         for (auto& symbol : row) {
             if (symbol != 1) {
@@ -343,8 +343,8 @@ void Monitor::draw(Player* current_player) {
     if (!m_have_battle){
         m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::ROOM_COLOR);
         drawing_map = current_player->getMap()->draw(current_player->getPosition(),
-                                                     m_map_display.get_y() - 2,
-                                                     m_map_display.get_x() - 2);
+                                                                                    m_map_display.get_y() - 2, 
+                                                                                    m_map_display.get_x() - 2);
 
         for (auto& row : drawing_map) {
             for (auto& symbol : row) {
@@ -366,7 +366,7 @@ void Monitor::draw(Player* current_player) {
             int cur_y = i.getLine();
             abs_coordinates_to_relative(cur_y, cur_x, m_map_display, current_player->getPosition());
             if (cur_x > 0 && cur_x < m_map_display.get_x() - 1 && cur_y > 0 && cur_y < m_map_display.get_y() - 1) {
-                m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4);
+                m_map_display.set_atr(cur_y, cur_x, 1, A_BLINK, 4); 
             }
         }
         Position next = current_player->getMap()->getNextRoom(current_player->getPosition());
@@ -380,26 +380,26 @@ void Monitor::draw(Player* current_player) {
             }
         }
     }
-
+    
     for (auto& i : m_user_actions_display.m_columns) {
         i.clean();
     }
     if (m_have_battle) {
         int draw_position = static_cast<int>(Entity_position::ENEMY_1);
-        for (const std::shared_ptr<entity::Entity>& i : battle_event_pointer->getEnemies()->getEntities()) {
-            if (i != nullptr) {
-                auto enemy_sprite = i->draw();
-                for (auto& j : enemy_sprite) {
-                    std::reverse(j.begin(), j.end());
+            for (const std::shared_ptr<entity::Entity>& i : battle_event_pointer->getEnemies()->getEntities()) {
+                if (i != nullptr) {
+                    auto enemy_sprite = i->draw();
+                    for (auto& j : enemy_sprite) {
+                        std::reverse(j.begin(), j.end());
+                    }
+                    m_entity_window[draw_position].draw_sprite(0, 0, enemy_sprite);
+                    m_entity_window[draw_position].draw_text(enemy_sprite.size() + 2, 0, i->getName());
+                    m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: ") + 
+                                                            std::to_string(i->get(Characteristic::HP)) + std::string("/") +
+                                                            std::to_string(i->get(Characteristic::maxHP)));
                 }
-                m_entity_window[draw_position].draw_sprite(0, 0, enemy_sprite);
-                m_entity_window[draw_position].draw_text(enemy_sprite.size() + 2, 0, i->getName());
-                m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: ") +
-                                                                                     std::to_string(i->get(Characteristic::HP)) + std::string("/") +
-                                                                                     std::to_string(i->get(Characteristic::maxHP)));
+                draw_position++;
             }
-            draw_position++;
-        }
         if(auto cur_acting_entity = std::dynamic_pointer_cast<entity::Hero>(battle_event_pointer->getLastToMove())){
             int position = ENTITY_NUM - 5 - current_player->getSquad()->getIndex(cur_acting_entity);
             for (int i = 0; i < m_entity_window[position].get_y(); i++) {
@@ -422,7 +422,7 @@ void Monitor::draw(Player* current_player) {
     }
     m_user_actions_display.m_key_binds = {};
     m_user_actions_display.get_binds(current_player);
-    m_user_actions_display.draw_interface(current_player->getActions());
+        m_user_actions_display.draw_interface(current_player->getActions());
     int cur_y = 0;
     int cur_column = 0;
     for (auto item : current_player->getInventory().getItems()) {
@@ -466,7 +466,7 @@ void Monitor::keyEvent(int key, Player* player) {
         m_draw_Characteristis ^= true;
     }
     else if (m_user_actions_display.find_action(key) != nullptr &&
-             player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
+                player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);
     }
 }
