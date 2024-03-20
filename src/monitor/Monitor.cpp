@@ -22,14 +22,25 @@
 
 namespace {
     static const int ENTITY_NUM = 8;
-    enum Entity_position {HERO_4, HERO_3, HERO_2, HERO_1, ENEMY_1, ENEMY_2, ENEMY_3};
+    enum Entity_position {HERO_4, HERO_3, HERO_2, HERO_1, ENEMY_1, ENEMY_2, ENEMY_3, ENEMY_4};
     
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
     CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
-    INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6), TARGETED_ROOM_COLOR = COLOR_PAIR(7)};
+    INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6), TARGETED_ROOM_COLOR = COLOR_PAIR(7),
+    SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9)};
     enum Map_symbols : char {CELL = '"', ROOM = '0', TARGET_ROOM = '#'};
 }
-
+void Monitor::init_colors() {
+    init_pair(1, COLOR_BLACK, COLOR_WHITE);
+    init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
+    init_pair(3, COLOR_BLACK, COLOR_CYAN);
+    init_pair(4, COLOR_GREEN, COLOR_GREEN);
+    init_pair(5, COLOR_RED, COLOR_BLACK);
+    init_pair(6, COLOR_WHITE, COLOR_BLACK);
+    init_pair(7, COLOR_RED, COLOR_WHITE);
+    init_pair(8, COLOR_GREEN, COLOR_WHITE);
+    init_pair(9, COLOR_RED, COLOR_WHITE);
+}
 
 Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
 : m_y_size(y_size)
@@ -207,14 +218,7 @@ void Monitor::InterfaceColumnWindow::get_binds(Player* player) {
 Monitor::Monitor() {
     int row, col;
     getmaxyx(stdscr, row, col);
-    
-    init_pair(1, COLOR_BLACK, COLOR_WHITE);
-    init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
-    init_pair(3, COLOR_BLACK, COLOR_CYAN);
-    init_pair(4, COLOR_GREEN, COLOR_GREEN);
-    init_pair(5, COLOR_RED, COLOR_BLACK);
-    init_pair(6, COLOR_WHITE, COLOR_BLACK);
-    init_pair(7, COLOR_RED, COLOR_WHITE);
+    init_colors();
     //        |--------------------|
     // 2 / 3  |  Battle            |
     //        |                    |
@@ -228,7 +232,7 @@ Monitor::Monitor() {
     m_map_display = GameWindow (row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_user_actions_display = InterfaceColumnWindow(row / 9, col / 2, 2 * row / 3 + 1, 0);
     //Calculating x_distance and size
-    const int heroes_blocks = 7;
+    const int heroes_blocks = 9;
     const int edge_blocks = 1;
     const int space_blocks = 2;
     int block_dictance = col / ((ENTITY_NUM - 1) * space_blocks + ENTITY_NUM * heroes_blocks + edge_blocks * 2);
@@ -251,6 +255,14 @@ void Monitor::abs_coordinates_to_relative(int& row, int& col, const GameWindow& 
     int col_difference = center.getColumn() - col;
     row = row_realtive_center - row_difference;
     col = col_realtive_center - col_difference;
+}
+std::shared_ptr<events::EnemyEncounter> Monitor::have_battle(Player* player) {
+    for(auto event:player->getMap()->getCell(player->getPosition())->getEvents()){
+        if(auto battleEvent = std::dynamic_pointer_cast<events::EnemyEncounter>(event)){
+            return battleEvent;
+        }
+    }
+    return nullptr;
 }
 std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> person) {
     std::string full_content = person->getName() + std::string(":");
@@ -310,17 +322,32 @@ void Monitor::draw(Player* current_player) {
         }
     }
     m_map_display.clean();
-    if (draw_Characteristis) {
+    std::shared_ptr<events::EnemyEncounter> battle_event_pointer = have_battle(current_player);
+    if (battle_event_pointer != nullptr) {
+        m_have_battle = battle_event_pointer->getIsInBattle();
+    }
+    
+    
+    if (m_draw_Characteristis) {
         
         int cur_y = 0;
 
         //TODO: Make smth with enemies
         for (auto& i : current_player->getSquad()->getEntities()) {
-            if (i != nullptr) {
+            if (i != nullptr && i->isAlive()) {
                 m_map_display.draw_text(cur_y, 0, get_entity_characteristics(i));
             }
-            draw_position--;
+            cur_y += 2;
         }
+        if (have_battle) {
+            for (auto& i : battle_event_pointer->getEnemies()) {
+                if (i != nullptr && i->isAlive()) {
+                    m_map_display.draw_text(cur_y, 0, get_entity_characteristics(i));
+                }
+                cur_y += 2;
+            }
+        }
+
     } else {
         m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::ROOM_COLOR);
         drawing_map = current_player->getMap()->draw(current_player->getPosition(),
@@ -362,14 +389,18 @@ void Monitor::draw(Player* current_player) {
         }
     }
     
-    m_user_actions_display.m_key_binds = {};
-    m_user_actions_display.get_binds(current_player);
-    m_user_actions_display.draw_interface(current_player->getActions());
+    if (m_have_battle) {
+        
+    }
+    else {
+        m_user_actions_display.m_key_binds = {};
+        m_user_actions_display.get_binds(current_player);
+        m_user_actions_display.draw_interface(current_player->getActions());
 
-    
-    for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
-        if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
-            m_entity_window[Entity_position::ENEMY_1].draw_sprite(0, 0, usableEvent->draw()); 
+        for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
+            if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
+                m_entity_window[Entity_position::ENEMY_1].draw_sprite(0, 0, usableEvent->draw()); 
+            }
         }
     }
 
@@ -393,8 +424,10 @@ void Monitor::draw(Player* current_player) {
 void Monitor::keyEvent(int key, Player* player) {
     if (key == 'c') {
         draw_Characteristis ^= true;
+    } else if (have_battle) {
+
     }  else if (m_user_actions_display.find_action(key) != nullptr && 
-    player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
+                player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);
     }
 }
