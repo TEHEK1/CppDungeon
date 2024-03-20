@@ -169,6 +169,9 @@ namespace events {
             returnToDefault(player);
             changers::ActionsChanger::addAction(player, std::make_shared<actions::TurnEvent>(std::dynamic_pointer_cast<events::Event>(shared_from_this())));
         }
+        else{
+
+        }
         return;
     }
 

@@ -85,5 +85,8 @@ add_executable(monitorTest
         ../../src/enemies/CultistAcolyte/EldritchPush.cpp
         ../../src/enemies/CultistAcolyte/StressfulIncantation.cpp
         ../../src/actions/TurnEvent.cpp
+        ../../src/actions/SelectSkill.cpp
+        ../../src/actions/SelectSkill.cpp
+        ../../src/actions/DeselectSkills.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})
