@@ -327,7 +327,7 @@ void Monitor::draw(Player* current_player) {
     std::shared_ptr<events::EnemyEncounter> battle_event_pointer = have_battle(current_player);
     if (battle_event_pointer != nullptr) {
         if (!m_have_battle && battle_event_pointer->getIsInBattle()) {
-            battle_event_pointer->turn();
+            battle_event_pointer->turn(current_player);
         }
         m_have_battle = battle_event_pointer->getIsInBattle();
     }
@@ -344,7 +344,7 @@ void Monitor::draw(Player* current_player) {
             cur_y += 2;
         }
         if (have_battle) {
-            for (auto& i : battle_event_pointer->getEnemies()) {
+            for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
                 if (i != nullptr && i->isAlive()) {
                     m_map_display.draw_text(cur_y, 0, get_entity_characteristics(i));
                 }
@@ -441,9 +441,6 @@ void Monitor::draw(Player* current_player) {
         m_inventory_display[cur_column].draw_text(cur_y, 0, item->drawItem(), false, Colors::ITEM_COLOR);
         cur_y += 2;
     }
-    }
-    
-    move(0, 0);
 }
 
 

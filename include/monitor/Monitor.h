@@ -12,6 +12,7 @@
 #include <memory>
 #include <actions/Action.h>
 #include <navigation/Map.h>
+#include "events/EnemyEncounter.h"
 class Player;
 //       x --->
 //  y
