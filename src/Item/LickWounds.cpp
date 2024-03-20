@@ -20,5 +20,8 @@ namespace items {
             skillDesigns::Skill::addEffect(object, generators::EffectGenerator::generateImmediateCharacteristicEffect<effects::Heal>
                     (crited, 4, 4), battleField, crited, 100);
         }
+        std::string LickWounds::drawItem(){
+            return "Fortifying Garlic - Heal 4";
+        }
     } // namespace LickWounds
 } // namespace items

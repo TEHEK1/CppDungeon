@@ -19,7 +19,7 @@ namespace items {
                     (crited, std::map<int, int>{{static_cast<int>(Resistances::Bleed), 33},
                                                 {static_cast<int>(Resistances::Blight), 33}}), battleField, crited, 100);
         }
-        std::string drawItem(){
+        std::string FortifyingGarlic::drawItem(){
             return "Fortifying Garlic - Bleed, Blight 33%";
         }
     } // namespace FortifyingGarlic

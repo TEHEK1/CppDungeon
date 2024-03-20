@@ -14,6 +14,7 @@ namespace items{
             void unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                std::shared_ptr<entity::Entity> object) override;
             FortifyingGarlic();
+            std::string drawItem() override;
         };
     }// namespace FortifyingGarlic
 }//namespace items
