@@ -17,7 +17,9 @@
 #include "events/EmptyCell.h"
 #include "events/Trap.h"
 #include "events/Chest.h"
-#include "events/EnemyEncounter.h"
+#include "events/EnemyEncounter1.h"
+#include "events/EnemyEncounter2.h"
+#include "events/EnemyEncounter3.h"
 #include "events/EmptyCell.h"
 #include "events/BossEncounter.h"
 #include <vector>
@@ -32,16 +34,21 @@ void Room::generateEvents(Player* player){
         return;
     }
     m_used = true;
-    int num = generators::NumberGenerator::generate(0, 2);
+    int num = generators::NumberGenerator::generate(0, 4);
     switch (num) {
         case 0:
             m_events.push_back(std::make_shared<events::BossEncounter>());
             break;
         case 1:
-            m_events.push_back(std::make_shared<events::EmptyCell>());
+            m_events.push_back(std::make_shared<events::EnemyEncounter1>());
             break;
+        case 2:
+            m_events.push_back(std::make_shared<events::EnemyEncounter2>());
+            break;
+        case 3:
+            m_events.push_back(std::make_shared<events::EnemyEncounter3>());
         default:
-            m_events.push_back(std::make_shared<events::EnemyEncounter>());
+            m_events.push_back(std::make_shared<events::EmptyCell>());
             break;
     }
     num = generators::NumberGenerator::generate(0, 3);

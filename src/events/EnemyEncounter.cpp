@@ -46,7 +46,7 @@ namespace events {
                 tmpEnemies.push_back(std::make_shared<enemies::BrigandFusilier::BrigandFusilier>());
                 break;
             case 2:
-                tmpEnemies.push_back(std::make_shared<enemies::CulistBrawler::CulistBrawler>());
+                tmpEnemies.push_back(std::make_shared<enemies::CultistBrawler::CultistBrawler>());
                 break;
             case 3:
                 tmpEnemies.push_back(std::make_shared<enemies::Ghoul::Ghoul>());
@@ -75,7 +75,13 @@ namespace events {
         m_lastToMove = nullptr;
         m_battleField = std::shared_ptr<BattleField>(new BattleField(m_enemies, m_enemies));
     }
-
+    EnemyEncounter::EnemyEncounter(const std::vector<std::shared_ptr<entity::Entity>>& entities) {
+        m_enemies = std::make_shared<Squad>(entities);
+        m_priority = {};
+        m_isInBattle = true;
+        m_lastToMove = nullptr;
+        m_battleField = std::shared_ptr<BattleField>(new BattleField(m_enemies, m_enemies));
+    }
     std::shared_ptr<Squad> EnemyEncounter::getEnemies() {
         return m_enemies;
     }

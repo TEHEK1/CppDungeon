@@ -18,6 +18,7 @@ namespace events {
 class EnemyEncounter : public Event, public SquadChanger, public changers::EffectChanger, public std::enable_shared_from_this<EnemyEncounter> {
     public:
         EnemyEncounter();
+        EnemyEncounter(const std::vector<std::shared_ptr<entity::Entity>>& entities);
         void turn(Player* player) override;
         bool getIsInBattle();
         std::shared_ptr<entity::Entity> getLastToMove();

@@ -5,7 +5,9 @@
 #include "events/EmptyCell.h"
 #include "events/Trap.h"
 #include "events/Chest.h"
-#include "events/EnemyEncounter.h"
+#include "events/EnemyEncounter1.h"
+#include "events/EnemyEncounter2.h"
+#include "events/EnemyEncounter3.h"
 #include "events/EmptyCell.h"
 #include "events/BossEncounter.h"
 #include <vector>
@@ -19,7 +21,7 @@ void Hall::generateEvents(Player* player) {
         return;
     }
     m_used = true;
-    int num = generators::NumberGenerator::generate(0, 5);
+    int num = generators::NumberGenerator::generate(0, 7);
     switch (num) {
         case 0:
             m_events.push_back(std::make_shared<events::BossEncounter>());
@@ -31,10 +33,16 @@ void Hall::generateEvents(Player* player) {
             m_events.push_back(std::make_shared<events::EmptyCell>());
             break;
         case 3:
-            m_events.push_back(std::make_shared<events::EnemyEncounter>());
+            m_events.push_back(std::make_shared<events::NPCEncounter>());
             break;
         case 4:
-            m_events.push_back(std::make_shared<events::NPCEncounter>());
+            m_events.push_back(std::make_shared<events::EnemyEncounter1>());
+            break;
+        case 5:
+            m_events.push_back(std::make_shared<events::EnemyEncounter2>());
+            break;
+        case 6:
+            m_events.push_back(std::make_shared<events::EnemyEncounter3>());
             break;
         default:
             m_events.push_back(std::make_shared<events::Trap>());

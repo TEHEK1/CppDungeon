@@ -131,5 +131,26 @@ add_executable(monitorTest
         ../../src/entity/Boss.cpp
         ../../src/actions/Lose.cpp
         ../../src/Main.cpp
+        ../../src/enemies/CultistBrawler/CultistBrawler.cpp
+        ../../src/enemies/CultistBrawler/RendForTheOldGods.cpp
+        ../../src/enemies/CultistBrawler/StumblingScratch.cpp
+        ../../src/enemies/Ghoul/Ghoul.cpp
+        ../../src/enemies/Ghoul/SkullToss.cpp
+        ../../src/enemies/Ghoul/Rend.cpp
+        ../../src/enemies/PelagicGrouper/PelagicGrouper.cpp
+        ../../src/enemies/PelagicGrouper/SeawardSlash.cpp
+        ../../src/enemies/PelagicGrouper/Spearfishing.cpp
+        ../../src/enemies/RabidGnasher/RabidGnasher.cpp
+        ../../src/enemies/RabidGnasher/RabidRush.cpp
+        ../../src/enemies/SwineSlasher/HookWhereItHurts.cpp
+        ../../src/enemies/SwineSlasher/SwineSlasher.cpp
+        ../../src/enemies/Webber/Bite.cpp
+        ../../src/enemies/Webber/Webber.cpp
+        ../../src/enemies/Webber/Web.cpp
+        ../../src/effects/Stun.cpp
+        ../../src/effects/Blight.cpp
+        ../../src/events/EnemyEncounter1.cpp
+        ../../src/events/EnemyEncounter3.cpp
+        ../../src/events/EnemyEncounter2.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})
