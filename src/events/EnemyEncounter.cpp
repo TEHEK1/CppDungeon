@@ -21,6 +21,7 @@
 #include <cstdlib>
 #include "actions/TurnEvent.h"
 #include "actions/DeselectSkills.h"
+#include "actions/Lose.h"
 namespace events {
     EnemyEncounter::EnemyEncounter() {
 
@@ -137,7 +138,13 @@ namespace events {
                     endBattleTurnEffects(i);
                 }
                 m_isInBattle = false;
+                if(heroesAlive){
                 player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
+                }
+                else{
+                    returnToDefault(player);
+                    addAction(player, std::make_shared<actions::Lose>());
+                }
                 return;
             }
             _refreshPriority();

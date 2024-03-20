@@ -19,7 +19,7 @@ namespace events {
 
     void BossEncounter::turn(Player *player) {
         EnemyEncounter::turn(player);
-        if(!getIsInBattle()){
+        if(!getIsInBattle() && _checkAlive(player->getSquad()->getEntities())){
             addAction(player, std::make_shared<actions::Win>());
         }
     }
