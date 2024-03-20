@@ -8,7 +8,6 @@
 namespace items {
     class Item : public skillDesigns::RangeSkill {
     public:
-        std::vector<std::vector<char>> draw();
         Item(int size, std::string name, std::vector<int> availableRank,
                    std::vector<int> availableAllyTarget = {},
                    std::vector<int> availableEnemyTarget = {}, int accuracy = 0, int criticalDamageChance = 0);

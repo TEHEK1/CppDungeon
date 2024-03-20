@@ -5,6 +5,9 @@
 #include <memory>
 #include <algorithm>
 namespace skillDesigns {
+    int RangeSkill::getSize() {
+        return m_size;
+    }
     RangeSkill::RangeSkill(int size, std::string name, std::vector<int> availableRank,
                            std::vector<int> availableAllyTarget,
                            std::vector<int> availableEnemyTarget, int accuracy, int criticalDamageChance) : m_size(
