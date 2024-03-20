@@ -12,8 +12,9 @@
 #include "actions/MoveLeft.h"
 #include "actions/MoveRight.h"
 #include "Squad.h"
-#include "entity/Hero.h"
 #include "events/UsableEvent.h"
+#include "entity/Hero.h"
+#include "items/Item.h"
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
@@ -437,8 +438,9 @@ void Monitor::draw(Player* current_player) {
             cur_column++;
             cur_y = 0;
         }
-        m_inventory_display[cur_column].draw_text(cur_y, 0, item->draw(), false, Colors::ITEM_COLOR);
+        m_inventory_display[cur_column].draw_text(cur_y, 0, item->drawItem(), false, Colors::ITEM_COLOR);
         cur_y += 2;
+    }
     }
     
     move(0, 0);

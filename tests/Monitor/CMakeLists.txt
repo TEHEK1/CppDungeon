@@ -73,5 +73,7 @@ add_executable(monitorTest
         ../../src/effects/Heal.cpp
         ../../src/changers/InventoryChanger.cpp
         ../../src/player/Inventory.cpp
+        ../../src/actions/UseItem.cpp
+        ../../src/actions/UseSkill.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})
