@@ -51,7 +51,7 @@ Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, cons
 , m_x_size(x_size) {
     m_current_window = newwin(m_y_size, m_x_size, pos_y, pos_x);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
-    //wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
+    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
     wrefresh(m_current_window);
 }
 
@@ -82,7 +82,7 @@ void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
 void Monitor::GameWindow::clean() {
     wclear(m_current_window);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
-    //wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
+    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
     wrefresh(m_current_window);
 }
 //TODO: add size checkers
@@ -132,8 +132,8 @@ Monitor::GameWindow::GameWindow (const Monitor::GameWindow& other) {
 
 Monitor::InterfaceColumnWindow::InterfaceColumnWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
 : GameWindow(y_size, x_size, pos_y, pos_x) {
-    int num_of_col = 5;
-    int col_size = 8;
+    int num_of_col = 7;
+    int col_size = 10;
     int block_size  = this->get_x() / (num_of_col * col_size + (num_of_col + 1));
     int number_of_blocks = this->get_x() / block_size;
     for (int i = 0; i < num_of_col; i++) {
@@ -238,22 +238,21 @@ Monitor::Monitor() {
     m_characteristics_display = GameWindow(row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, 0));
     m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, col / 4 + 1));
-    m_map_display = GameWindow (row , col / 3, 0, 2 * col / 3 + 1);
-    m_user_actions_display = InterfaceColumnWindow(row / 9, col / 2, 2 * row / 3 + 1, 0);
+    m_map_display = GameWindow (2 * row / 3 , col / 3, 0, 2 * col / 3 + 1);
+    m_user_actions_display = InterfaceColumnWindow(row / 9, col, 2 * row / 3 + 1, 0);
     //Calculating x_distance and size
-    const int heroes_blocks = 6;
-    const int edge_blocks = 1;
-    const int space_blocks = 2;
-    int block_dictance = col / ((ENTITY_NUM - 1) * space_blocks + ENTITY_NUM * heroes_blocks + edge_blocks * 2);
+    const int heroes_blocks = 8;
+    const int space_blocks = 1;
+    int block_dictance = col / ((ENTITY_NUM - 1) * space_blocks + ENTITY_NUM * heroes_blocks);
     // blocks between heroes, blocks on hero, board edge blocks
-    int left_dictance = col % ((ENTITY_NUM - 1) * space_blocks + ENTITY_NUM * heroes_blocks + edge_blocks * 2);
+    int left_dictance = col % ((ENTITY_NUM - 1) * space_blocks + ENTITY_NUM * heroes_blocks);
 
 
 
     for (int i = 0; i < ENTITY_NUM; i++) {
         m_entity_window.push_back(GameWindow(8 * m_background_display.get_y() / 10,
                                             heroes_blocks * block_dictance, m_background_display.get_y() / 10,
-                                            block_dictance * ((heroes_blocks + space_blocks) * i + edge_blocks) + left_dictance / 2));
+                                            block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2));
     }
 }
 
@@ -381,27 +380,7 @@ void Monitor::draw(Player* current_player) {
             }
         }
     }
-    if (m_draw_Characteristis) {
-        int cur_y = 1;
-        wborder(m_characteristics_display.m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
-        for (auto& i : current_player->getSquad()->getEntities()) {
-            if (i != nullptr && i->isAlive()) {
-                m_characteristics_display.draw_text(cur_y, 1, get_entity_characteristics(i));
-            }
-            cur_y += 2;
-        }
-        if (m_have_battle) {
-            for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
-                if (i != nullptr && i->isAlive()) {
-                    m_characteristics_display.draw_text(cur_y, 1, get_entity_characteristics(i));
-                }
-                cur_y += 2;
-            }
-        }
-
-        m_characteristics_display.draw_text(m_characteristics_display.get_y() - 2, 1,
-                                            m_buffer, false, BUFFER | A_BOLD);
-    }
+    
     for (auto& i : m_user_actions_display.m_columns) {
         i.clean();
     }
@@ -409,9 +388,13 @@ void Monitor::draw(Player* current_player) {
         int draw_position = static_cast<int>(Entity_position::ENEMY_1);
             for (const std::shared_ptr<entity::Entity>& i : battle_event_pointer->getEnemies()->getEntities()) {
                 if (i != nullptr) {
-                    m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
-                    m_entity_window[draw_position].draw_text(i->draw().size() + 2, 0, i->getName());
-                    m_entity_window[draw_position].draw_text(i->draw().size() + 3, 0, std::string("Hp: ") + 
+                    auto enemy_sprite = i->draw();
+                    for (auto& j : enemy_sprite) {
+                        std::reverse(j.begin(), j.end());
+                    }
+                    m_entity_window[draw_position].draw_sprite(0, 0, enemy_sprite);
+                    m_entity_window[draw_position].draw_text(enemy_sprite.size() + 2, 0, i->getName());
+                    m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: ") + 
                                                             std::to_string(i->get(Characteristic::HP)) + std::string("/") +
                                                             std::to_string(i->get(Characteristic::maxHP)));
                 }
@@ -419,12 +402,12 @@ void Monitor::draw(Player* current_player) {
             }
         if(auto cur_acting_entity = std::dynamic_pointer_cast<entity::Hero>(battle_event_pointer->getLastToMove())){
             int position = ENTITY_NUM - 5 - current_player->getSquad()->getIndex(cur_acting_entity);
-            for (int i = 0; i < cur_acting_entity->draw().size(); i++) {
+            for (int i = 0; i < m_entity_window[position].get_y(); i++) {
                 m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, 8);
             }
         } else {
             int position = battle_event_pointer->getEnemies()->getIndex(battle_event_pointer->getLastToMove());
-            for (int i = 0; i < battle_event_pointer->getLastToMove()->draw().size(); i++) {
+            for (int i = 0; i < m_entity_window[position + Entity_position::ENEMY_1].get_y(); i++) {
                 m_entity_window[position + Entity_position::ENEMY_1].set_atr(i, 0, -1, A_ITALIC, 9);
             }
         }
@@ -453,6 +436,27 @@ void Monitor::draw(Player* current_player) {
     m_user_actions_display.m_key_binds = {};
     m_user_actions_display.get_binds(current_player);
     m_user_actions_display.draw_interface(current_player->getActions());
+    if (m_draw_Characteristis) {
+        int cur_y = 1;
+        wborder(m_characteristics_display.m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
+        for (auto& i : current_player->getSquad()->getEntities()) {
+            if (i != nullptr && i->isAlive()) {
+                m_characteristics_display.draw_text(cur_y, 1, get_entity_characteristics(i));
+            }
+            cur_y += 2;
+        }
+        if (m_have_battle) {
+            for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
+                if (i != nullptr && i->isAlive()) {
+                    m_characteristics_display.draw_text(cur_y, 1, get_entity_characteristics(i));
+                }
+                cur_y += 2;
+            }
+        }
+
+        m_characteristics_display.draw_text(m_characteristics_display.get_y() - 2, 1,
+                                            m_buffer, false, BUFFER | A_BOLD);
+    }
 }
 
 
