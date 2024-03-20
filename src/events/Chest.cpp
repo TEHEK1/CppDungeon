@@ -12,6 +12,7 @@
 #include <vector>
 #include <memory>
 #include "monitor/Monitor.h"
+#include "items/Absinthe.h"
 
 bool events::Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
     auto use = std::dynamic_pointer_cast<actions::Use>((*actionIterator));
@@ -28,8 +29,7 @@ void events::Chest::turn(Player *player) {
 }
 
 void events::Chest::use(Player *player) {
-    /*std::shared_ptr<items::Item> item = std::make_shared<items::Item>();//TODO: Change it to grabbing from Main fabric
-    addItem(player, item);*/
+    addItem(player, std::make_shared<items::Absinthe::Absinthe>());
     removeAction(player, [this](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return comp(actionIterator);});
     m_used = true;
 }

@@ -6,7 +6,4 @@ tests/build
 tests/MapTest/build
 CMakeLists.txt
 main.cpp
-.clang-tidy
-.github
-src/.DS_Store
-.DS_Store
+tests/SkillTest/cmake-build-debug
