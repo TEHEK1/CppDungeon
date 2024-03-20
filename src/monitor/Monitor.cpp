@@ -29,7 +29,7 @@ namespace {
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
     CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
     INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6), TARGETED_ROOM_COLOR = COLOR_PAIR(7),
-    SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9)};
+    SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9), BUFFER = COLOR_PAIR(10)};
     enum Map_symbols : char {CELL = '"', ROOM = '0', TARGET_ROOM = '#'};
 }
 void Monitor::init_colors() {
@@ -42,6 +42,8 @@ void Monitor::init_colors() {
     init_pair(7, COLOR_RED, COLOR_WHITE);
     init_pair(8, COLOR_GREEN, COLOR_BLACK);
     init_pair(9, COLOR_RED, COLOR_BLACK);
+    init_pair(10, COLOR_RED, COLOR_BLACK);
+
 }
 
 Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
@@ -49,7 +51,7 @@ Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, cons
 , m_x_size(x_size) {
     m_current_window = newwin(m_y_size, m_x_size, pos_y, pos_x);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
-    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
+    //wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
     wrefresh(m_current_window);
 }
 
@@ -64,6 +66,10 @@ void Monitor::GameWindow::set_atr(size_t row, size_t col, size_t num, attr_t atr
     wrefresh(m_current_window);
 }
 
+void Monitor::setBuffer(std::string new_string) {
+    m_buffer = new_string;
+}
+
 void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
     if (num == -1) {
         wattrset(m_current_window, A_NORMAL);
@@ -76,7 +82,7 @@ void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
 void Monitor::GameWindow::clean() {
     wclear(m_current_window);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
-    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
+    //wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
     wrefresh(m_current_window);
 }
 //TODO: add size checkers
@@ -229,9 +235,10 @@ Monitor::Monitor() {
     // 1 / 3  | Inventory|      Map|
     //        |          |         |
     m_background_display = GameWindow ( 2 * row / 3, col, 0, 0);
+    m_characteristics_display = GameWindow(row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, 0));
     m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, col / 4 + 1));
-    m_map_display = GameWindow (row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
+    m_map_display = GameWindow (row , col / 3, 0, 2 * col / 3 + 1);
     m_user_actions_display = InterfaceColumnWindow(row / 9, col / 2, 2 * row / 3 + 1, 0);
     //Calculating x_distance and size
     const int heroes_blocks = 6;
@@ -333,27 +340,8 @@ void Monitor::draw(Player* current_player) {
         m_have_battle = battle_event_pointer->getIsInBattle();
     }
 
-    
-    if (m_draw_Characteristis) {
-        
-        int cur_y = 0;
-
-        for (auto& i : current_player->getSquad()->getEntities()) {
-            if (i != nullptr && i->isAlive()) {
-                m_map_display.draw_text(cur_y, 0, get_entity_characteristics(i));
-            }
-            cur_y += 2;
-        }
-        if (m_have_battle) {
-            for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
-                if (i != nullptr && i->isAlive()) {
-                    m_map_display.draw_text(cur_y, 0, get_entity_characteristics(i));
-                }
-                cur_y += 2;
-            }
-        }
-
-    } else {
+    m_characteristics_display.clean();
+    if (!m_have_battle){
         m_map_display.draw_sprite(1, 1, drawing_map, true, Colors::ROOM_COLOR);
         drawing_map = current_player->getMap()->draw(current_player->getPosition(),
                                                                                     m_map_display.get_y() - 2, 
@@ -392,6 +380,27 @@ void Monitor::draw(Player* current_player) {
 
             }
         }
+    }
+    if (m_draw_Characteristis) {
+        int cur_y = 1;
+        wborder(m_characteristics_display.m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
+        for (auto& i : current_player->getSquad()->getEntities()) {
+            if (i != nullptr && i->isAlive()) {
+                m_characteristics_display.draw_text(cur_y, 1, get_entity_characteristics(i));
+            }
+            cur_y += 2;
+        }
+        if (m_have_battle) {
+            for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
+                if (i != nullptr && i->isAlive()) {
+                    m_characteristics_display.draw_text(cur_y, 1, get_entity_characteristics(i));
+                }
+                cur_y += 2;
+            }
+        }
+
+        m_characteristics_display.draw_text(m_characteristics_display.get_y() - 2, 1,
+                                            m_buffer, false, BUFFER | A_BOLD);
     }
     for (auto& i : m_user_actions_display.m_columns) {
         i.clean();

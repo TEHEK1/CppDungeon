@@ -25,6 +25,7 @@ class Player;
 //At this moment ncurses mode starts with initialistion of Monitor
 class Monitor{
 public:
+    void setBuffer(std::string new_string);
     Monitor();
     ~Monitor() = default;
 
@@ -41,6 +42,7 @@ private:
     // Don't want to give access to GameWindow and its childs in other files, it's only for Monitor usage
     class GameWindow {
         public:
+        friend Monitor;
             GameWindow();
             GameWindow(const GameWindow& other);
             ~GameWindow() = default;
@@ -102,10 +104,11 @@ private:
     bool m_have_battle = false;
     bool m_if_skill_selected = false;
     int m_selected_skill = -1;
-    
+    std::string m_buffer = "DEBUG"; 
     std::vector<GameWindow> m_inventory_display;
     InterfaceColumnWindow m_user_actions_display;
     GameWindow m_map_display;
+    GameWindow m_characteristics_display;
     std::vector<GameWindow> m_entity_window;
     GameWindow m_background_display;
 };
