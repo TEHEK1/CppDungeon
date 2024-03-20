@@ -169,10 +169,11 @@ namespace events {
         }
         if (battleField->areAllies(m_priority.front(), enemiesEntities[0])) {
             returnToDefault(player);
-            changers::ActionsChanger::addAction(player, std::make_shared<actions::TurnEvent>(std::dynamic_pointer_cast<events::Event>(shared_from_this())));
+            changers::ActionsChanger::addUniqueAction(player, std::make_shared<actions::TurnEvent>(std::dynamic_pointer_cast<events::Event>(shared_from_this())));
         }
         else{
-            changers::ActionsChanger::addAction(player, std::make_shared<actions::DeselectSkills>(m_priority.front(), battleField));
+
+            changers::ActionsChanger::addUniqueAction(player, std::make_shared<actions::DeselectSkills>(m_priority.front(), battleField));
         }
         return;
     }
