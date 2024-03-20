@@ -306,14 +306,14 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
         marked = trick::hash("marked"),
         criticalDamageChance = trick::hash("criticalDamageChance")
     */
-    m_channged =((person->get(Characteristic::accuracyModifier) == m_prev_characteristics[person][0]) ||
-    (person->get(Characteristic::minDamage) == m_prev_characteristics[person][1])||
-    (person->get(Characteristic::maxDamage) == m_prev_characteristics[person][2]) ||
-    (person->get(Characteristic::dodge) == m_prev_characteristics[person][3]) ||
-    (person->get(Characteristic::defence) == m_prev_characteristics[person][4]) ||
-    (person->get(Characteristic::speed) == m_prev_characteristics[person][5]) ||
-    (person->get(Characteristic::marked) == m_prev_characteristics[person][6]) ||
-    (person->get(Characteristic::criticalDamageChance) == m_prev_characteristics[person][7]));
+    m_channged =((person->get(Characteristic::accuracyModifier) != m_prev_characteristics[person][0]) ||
+    (person->get(Characteristic::minDamage) != m_prev_characteristics[person][1])||
+    (person->get(Characteristic::maxDamage) != m_prev_characteristics[person][2]) ||
+    (person->get(Characteristic::dodge) != m_prev_characteristics[person][3]) ||
+    (person->get(Characteristic::defence) != m_prev_characteristics[person][4]) ||
+    (person->get(Characteristic::speed) != m_prev_characteristics[person][5]) ||
+    (person->get(Characteristic::marked) != m_prev_characteristics[person][6]) ||
+    (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][7]));
     full_content += std::string("  accuracyModifier: ") + std::to_string(person->get(Characteristic::accuracyModifier));
     full_content += std::string("  damage: ") + std::to_string(person->get(Characteristic::minDamage)) + std::string("-") + 
                     std::to_string(person->get(Characteristic::maxDamage));
@@ -505,7 +505,7 @@ void Monitor::draw(Player* current_player) {
                 if (m_channged){
                     m_characteristics_display.draw_text(cur_y, 1, chars, false, Colors::CHANGED | A_ITALIC);
                 } else {
-                     m_characteristics_display.draw_text(cur_y, 1, chars);
+                    m_characteristics_display.draw_text(cur_y, 1, chars);
                 }
             }
             cur_y += 2;
