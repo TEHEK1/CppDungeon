@@ -170,7 +170,7 @@ int Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Actio
     return m_key_binds[key].getAction();
  }
 //TODO: Add rebase or listing if the actions have a too much space
-void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
+void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool batalling, bool adaptive) {
     
     m_first_unbind = '0';
     size_t cur_y = 0;
@@ -179,6 +179,13 @@ void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<act
         i.clean();
     }
     for (auto& i : available_actions) {
+        if (batalling) {
+            if (auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(i)) {
+                continue;
+            } else if (auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(i)) {
+                continue;
+            }
+        }
         if (cur_y >= m_columns[cur_column].get_y() - 1) {
             cur_y = 0;
             cur_column++;
@@ -467,9 +474,6 @@ void Monitor::draw(Player* current_player) {
             }
         }
     }
-    m_user_actions_display.m_key_binds = {};
-    m_user_actions_display.get_binds(current_player);
-        m_user_actions_display.draw_interface(current_player->getActions());
     int cur_y = 0;
     int cur_column = 0;
     for (auto item : current_player->getInventory().getItems()) {
@@ -482,7 +486,7 @@ void Monitor::draw(Player* current_player) {
     }
     m_user_actions_display.m_key_binds = {};
     m_user_actions_display.get_binds(current_player);
-    m_user_actions_display.draw_interface(current_player->getActions());
+    m_user_actions_display.draw_interface(current_player->getActions(), m_have_battle);
     if (m_draw_Characteristics) {
         int cur_y = 1;
         wborder(m_characteristics_display.m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
