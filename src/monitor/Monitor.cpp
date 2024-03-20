@@ -40,8 +40,8 @@ void Monitor::init_colors() {
     init_pair(5, COLOR_RED, COLOR_BLACK);
     init_pair(6, COLOR_WHITE, COLOR_BLACK);
     init_pair(7, COLOR_RED, COLOR_WHITE);
-    init_pair(8, COLOR_GREEN, COLOR_WHITE);
-    init_pair(9, COLOR_RED, COLOR_WHITE);
+    init_pair(8, COLOR_GREEN, COLOR_BLACK);
+    init_pair(9, COLOR_RED, COLOR_BLACK);
 }
 
 Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
@@ -292,6 +292,7 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
 
 //TODO: Change start postion of all sprites
 void Monitor::draw(Player* current_player) {
+
     //Heroes
     if(current_player->getSquad() == nullptr){
         throw std::logic_error("Squad is not initialized");
@@ -303,8 +304,8 @@ void Monitor::draw(Player* current_player) {
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
         if (i != nullptr) {
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
-            m_entity_window[draw_position].draw_text(i->draw().size() + 2, 0, i->getName());
-            m_entity_window[draw_position].draw_text(i->draw().size() + 3, 0, std::string("Hp: ") + 
+            m_entity_window[draw_position].draw_text(0, 0, i->getName());
+            m_entity_window[draw_position].draw_text(1, 0, std::string("Hp: ") + 
                                                     std::to_string(i->get(Characteristic::HP)) + std::string("/") +
                                                     std::to_string(i->get(Characteristic::maxHP)));
         }
@@ -392,7 +393,9 @@ void Monitor::draw(Player* current_player) {
             }
         }
     }
-    
+    for (auto& i : m_user_actions_display.m_columns) {
+        i.clean();
+    }
     if (m_have_battle) {
         int draw_position = static_cast<int>(Entity_position::ENEMY_1);
             for (const std::shared_ptr<entity::Entity>& i : battle_event_pointer->getEnemies()->getEntities()) {
@@ -406,17 +409,14 @@ void Monitor::draw(Player* current_player) {
                 draw_position++;
             }
         if(auto cur_acting_entity = std::dynamic_pointer_cast<entity::Hero>(battle_event_pointer->getLastToMove())){
-            int position = ENTITY_NUM - 5 - (std::find(current_player->getSquad()->getEntities().begin(),
-                            current_player->getSquad()->getEntities().end(),
-                            std::dynamic_pointer_cast<entity::Hero>(cur_acting_entity)) - current_player->getSquad()->getEntities().begin());
+            int position = ENTITY_NUM - 5 - current_player->getSquad()->getIndex(cur_acting_entity);
             for (int i = 0; i < cur_acting_entity->draw().size(); i++) {
-                m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, Colors::SELECTED_HERO);
+                m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, 8);
             }
         } else {
-            int position =(std::find(battle_event_pointer->getEnemies()->getEntities().begin(),
-                            battle_event_pointer->getEnemies()->getEntities().end(), cur_acting_entity) - battle_event_pointer->getEnemies()->getEntities().begin());
+            int position = battle_event_pointer->getEnemies()->getIndex(cur_acting_entity);
             for (int i = 0; i < cur_acting_entity->draw().size(); i++) {
-                m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, Colors::SELECTED_ENEMY);
+                m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, 9);
             }
         }
     } else {
@@ -424,7 +424,7 @@ void Monitor::draw(Player* current_player) {
         m_user_actions_display.get_binds(current_player);
         m_user_actions_display.draw_interface(current_player->getActions());
 
-        for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
+        for(auto event : current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
             if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
                 m_entity_window[Entity_position::ENEMY_1].draw_sprite(0, 0, usableEvent->draw()); 
             }
@@ -448,7 +448,10 @@ void Monitor::keyEvent(int key, Player* player) {
     if (key == 'c') {
         m_draw_Characteristis ^= true;
     } else if (m_have_battle) {
-
+        if (auto cur_acting_entity = std::dynamic_pointer_cast<entity::Enemy>(have_battle(player)->getLastToMove())) {
+            getch();
+            have_battle(player)->turn(player);
+        }
     }  else if (m_user_actions_display.find_action(key) != nullptr && 
                 player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);

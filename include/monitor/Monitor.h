@@ -101,6 +101,8 @@ private:
     bool m_draw_Characteristis = false;
     bool m_have_battle = false;
     bool m_if_skill_selected = false;
+    int m_selected_skill = -1;
+    
     std::vector<GameWindow> m_inventory_display;
     InterfaceColumnWindow m_user_actions_display;
     GameWindow m_map_display;
