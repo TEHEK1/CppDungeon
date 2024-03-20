@@ -95,7 +95,6 @@ namespace skillDesigns {
         catch (const std::exception &e) {
             return "Some entity not on battleField";
         }
-
         for (const auto &obj: objects) {
             try {
                 battleField->getSquad(obj);
@@ -131,6 +130,11 @@ namespace skillDesigns {
     std::string
     Skill::isImplementationUsable(std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> actor,
                                   std::vector<std::shared_ptr<entity::Entity>> objects) {
+        for (const auto &obj: objects) {
+            if(!obj || !obj->isAlive()){
+                return "all objects must be alive";
+            }
+        }
         return "";
     }
 

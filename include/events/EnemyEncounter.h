@@ -20,7 +20,7 @@ namespace events {
         EnemyEncounter();
         void turn(Player* player) override;
         bool getIsInBattle();
-        std::shared_ptr<events::Entity> getLastToMove();
+        std::shared_ptr<entity::Entity> getLastToMove();
         std::shared_ptr<Squad> getEnemies();
         std::vector<std::vector<char>> draw() override;
         std::shared_ptr<BattleField> getBattleField();
