@@ -29,7 +29,7 @@ namespace {
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
     CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
     INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6), TARGETED_ROOM_COLOR = COLOR_PAIR(7),
-    SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9)};
+    SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9), BUFFER = COLOR_PAIR(10)};
     enum Map_symbols : char {CELL = '"', ROOM = '0', TARGET_ROOM = '#'};
 }
 void Monitor::init_colors() {
@@ -42,6 +42,8 @@ void Monitor::init_colors() {
     init_pair(7, COLOR_RED, COLOR_WHITE);
     init_pair(8, COLOR_GREEN, COLOR_BLACK);
     init_pair(9, COLOR_RED, COLOR_BLACK);
+    init_pair(10, COLOR_RED, COLOR_BLACK);
+
 }
 
 Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
@@ -62,6 +64,10 @@ Monitor::GameWindow::GameWindow()
 void Monitor::GameWindow::set_atr(size_t row, size_t col, size_t num, attr_t atr, short color) {
     mvwchgat(m_current_window, row, col, num, atr, color, NULL);
     wrefresh(m_current_window);
+}
+
+void Monitor::setBuffer(std::string new_string) {
+    m_buffer = new_string;
 }
 
 void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
@@ -393,6 +399,8 @@ void Monitor::draw(Player* current_player) {
             }
         }
 
+        m_characteristics_display.draw_text(m_characteristics_display.get_y() - 2, 1,
+                                            m_buffer, false, BUFFER | A_BOLD);
     }
     for (auto& i : m_user_actions_display.m_columns) {
         i.clean();

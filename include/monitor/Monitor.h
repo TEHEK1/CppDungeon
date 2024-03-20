@@ -25,6 +25,7 @@ class Player;
 //At this moment ncurses mode starts with initialistion of Monitor
 class Monitor{
 public:
+    void setBuffer(std::string new_string);
     Monitor();
     ~Monitor() = default;
 
@@ -103,7 +104,7 @@ private:
     bool m_have_battle = false;
     bool m_if_skill_selected = false;
     int m_selected_skill = -1;
-
+    std::string m_buffer = "DEBUG"; 
     std::vector<GameWindow> m_inventory_display;
     InterfaceColumnWindow m_user_actions_display;
     GameWindow m_map_display;
