@@ -15,10 +15,13 @@
 #include "events/UsableEvent.h"
 #include "entity/Hero.h"
 #include "items/Item.h"
+#include "actions/Lose.h"
+#include "actions/Win.h"
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
 #include <string>
+
 //Refresh correct pos and size coordinates and add some cooments about resolution and fixed or not sprites 
 
 

@@ -13,28 +13,51 @@
 #include <vector>
 #include "player/Player.h"
 #include "Main.h"
+#include "navigation/Hall.h"
+#include "events/EmptyCell.h"
+#include "events/Trap.h"
+#include "events/Chest.h"
+#include "events/EnemyEncounter.h"
+#include "events/EmptyCell.h"
+#include "events/BossEncounter.h"
+#include <vector>
+#include <random>
+#include "events/NPCEncounter.h"
+#include "player/Player.h"
+#include "Main.h"
+#include "generators/NumberGenerator.h"
 void Room::generateEvents(Player* player){
 
     if(m_used){
         return;
     }
     m_used = true;
-    /*while(true){
-        auto event = std::shared_ptr<events::Event>(player->getMain()->getEvent());
-        if(!std::dynamic_pointer_cast<events::EnemyEncounter>(event) &&
-                !std::dynamic_pointer_cast<events::BossEncounter>(event)){
-            m_events.push_back(event);
+    int num = generators::NumberGenerator::generate(0, 2);
+    switch (num) {
+        case 0:
+            m_events.push_back(std::make_shared<events::BossEncounter>());
             break;
-        }
+        case 1:
+            m_events.push_back(std::make_shared<events::EmptyCell>());
+            break;
+        default:
+            m_events.push_back(std::make_shared<events::EnemyEncounter>());
+            break;
     }
-    while(true){
-        auto event = std::shared_ptr<events::Event>(player->getMain()->getEvent());
-        if(!std::dynamic_pointer_cast<events::Chest>(event) &&
-           !std::dynamic_pointer_cast<events::Trap>(event) &&
-                   !std::dynamic_pointer_cast<events::NPCEncounter>(event)){
-            m_events.push_back(event);
+    num = generators::NumberGenerator::generate(0, 3);
+    switch (num) {
+        case 0:
+            m_events.push_back(std::make_shared<events::Chest>());
             break;
-        }
-    }*/
+        case 1:
+            m_events.push_back(std::make_shared<events::EmptyCell>());
+            break;
+        case 2:
+            m_events.push_back(std::make_shared<events::NPCEncounter>());
+            break;
+        default:
+            m_events.push_back(std::make_shared<events::Trap>());
+            break;
+    }
     m_events.push_back(std::make_shared<events::ChooseRoomEvent>());
 }

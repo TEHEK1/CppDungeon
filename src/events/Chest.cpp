@@ -14,7 +14,7 @@
 #include "monitor/Monitor.h"
 #include "items/Absinthe.h"
 #include "generators/SkillActionsGenerator.h"
-
+#include "Main.h"
 bool events::Chest::comp(std::set<std::shared_ptr<actions::Action>>::iterator actionIterator) {
     auto use = std::dynamic_pointer_cast<actions::Use>((*actionIterator));
     return static_cast<bool>(use && (use->getUsableEvent()).get() == this);
@@ -30,7 +30,7 @@ void events::Chest::turn(Player *player) {
 }
 
 void events::Chest::use(Player *player) {
-    addItem(player, std::make_shared<items::Absinthe::Absinthe>());
+    addItem(player, std::shared_ptr<items::Item>(player->getMain()->getItem()));
     removeAction(player, [this](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return comp(actionIterator);});
     m_used = true;
 }

@@ -6,7 +6,7 @@
 #include "navigation/Map.h"
 #include "monitor/Monitor.h"
 #include "player/Player.h"
-
+#include "events/EnemyEncounter.h"
 
 void events::ChooseRoomEvent::turn(Player *player) {
     player->getMap()->getCell(player->getPosition())->freeMoves(player);
