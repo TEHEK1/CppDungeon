@@ -144,7 +144,7 @@ namespace events {
                 continue;
             }
             if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
-                markedAsAutoTurn->autoTurn(std::shared_ptr<Player>(player), battleField, entity, 1);
+                markedAsAutoTurn->autoTurn(player, battleField, entity);
                 player->getMonitor()->draw(player);
                 continue;
             }

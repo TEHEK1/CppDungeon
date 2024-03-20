@@ -57,4 +57,6 @@ add_executable(EnemyEncounterTest
         ../../src/navigation/Cell.cpp
         ../../src/monitor/Monitor.cpp
         ../../src/entity/MarkedAsAutoTurn.cpp
+        ../../src/generators/SkillActionsGenerator.cpp
+        ../../src/actions/UseSkill.cpp
 )

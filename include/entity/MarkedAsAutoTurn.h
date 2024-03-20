@@ -2,12 +2,12 @@
 #define UNTITLED_MARKEDASAUTOTURN_H
 #include <memory>
 #include "entity/Entity.h"
-#include "player/Player.h"
+class Player;
 class BattleField;
 namespace entity {
     class MarkedAsAutoTurn{
     public:
-        virtual void autoTurn(std::shared_ptr<Player>, std::shared_ptr<BattleField>, std::shared_ptr<entity::Entity>, int) = 0;
+        virtual void autoTurn(Player*, std::shared_ptr<BattleField>, std::shared_ptr<entity::Entity>) = 0;
     };
 };
 

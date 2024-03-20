@@ -13,7 +13,8 @@
 #include "actions/UseSkill.h"
 #include "actions/UseItem.h"
 #include "generators/NumberGenerator.h"
-#include "generators/"
+#include "generators/SkillActionsGenerator.h"
+#include "player/Player.h"
 #include <memory>
 #include <vector>
 #include <algorithm>
@@ -21,10 +22,14 @@
 #include <iostream>
 entity::Enemy::Enemy(std::string name, std::map<int, int> characteristics, std::set<std::shared_ptr<skillDesigns::Skill>> skills) : Entity(name, characteristics, skills) {}
 
-void entity::Enemy::autoTurn(std::shared_ptr<Player> player, std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> self, int rank) {
+void entity::Enemy::autoTurn(Player* player, std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> self) {
     auto skills = self->getSkills();
-    std::vector<std::shared_ptr<skillDesigns::Skill>> availableSkills;
-    for (auto i: self->getSkills()) {
-
+    for (const auto& i: self->getSkills()) {
+        if(auto rangeSkill = std::dynamic_pointer_cast<skillDesigns::RangeSkill>(i)){
+            for(auto i :generators::SkillActionsGenerator::generateAvailableUseSkills(rangeSkill, battleField, self)){
+                i->act(player);
+                return;
+            }
+        }
     }
 }
