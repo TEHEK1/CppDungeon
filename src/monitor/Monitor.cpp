@@ -173,6 +173,13 @@ int Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Actio
 void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool batalling, bool adaptive) {
     
     m_first_unbind = '0';
+    for (auto i : available_actions) {
+        if (auto action = std::dynamic_pointer_cast<actions::Deselect>(i)) {
+            m_key_binds[m_first_unbind] = i;
+            m_first_unbind++;
+            break;
+        }
+    }
     size_t cur_y = 0;
     size_t cur_column = 0;
     for (auto& i : m_columns) {
@@ -293,6 +300,20 @@ std::shared_ptr<events::EnemyEncounter> Monitor::have_battle(Player* player) {
     }
     return nullptr;
 }
+
+bool Monitor::changed(std::shared_ptr<entity::Entity> person) {
+    return (!m_prev_characteristics.empty() && !m_prev_characteristics[person].empty() &&
+            ((person->get(Characteristic::accuracyModifier) != m_prev_characteristics[person][0]) ||
+            (person->get(Characteristic::minDamage) != m_prev_characteristics[person][1])||
+            (person->get(Characteristic::maxDamage) != m_prev_characteristics[person][2]) ||
+            (person->get(Characteristic::dodge) != m_prev_characteristics[person][3]) ||
+            (person->get(Characteristic::defence) != m_prev_characteristics[person][4]) ||
+            (person->get(Characteristic::speed) != m_prev_characteristics[person][5]) ||
+            (person->get(Characteristic::marked) != m_prev_characteristics[person][6]) ||
+            (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][7])));
+    
+}
+
 std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> person) {
     std::string full_content = person->getName() + std::string(":");
     //To much time(yeah) to do this cleaner
@@ -306,14 +327,8 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
         marked = trick::hash("marked"),
         criticalDamageChance = trick::hash("criticalDamageChance")
     */
-    m_channged =((person->get(Characteristic::accuracyModifier) != m_prev_characteristics[person][0]) ||
-    (person->get(Characteristic::minDamage) != m_prev_characteristics[person][1])||
-    (person->get(Characteristic::maxDamage) != m_prev_characteristics[person][2]) ||
-    (person->get(Characteristic::dodge) != m_prev_characteristics[person][3]) ||
-    (person->get(Characteristic::defence) != m_prev_characteristics[person][4]) ||
-    (person->get(Characteristic::speed) != m_prev_characteristics[person][5]) ||
-    (person->get(Characteristic::marked) != m_prev_characteristics[person][6]) ||
-    (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][7]));
+
+   
     full_content += std::string("  accuracyModifier: ") + std::to_string(person->get(Characteristic::accuracyModifier));
     full_content += std::string("  damage: ") + std::to_string(person->get(Characteristic::minDamage)) + std::string("-") + 
                     std::to_string(person->get(Characteristic::maxDamage));
@@ -361,7 +376,6 @@ void Monitor::draw(Player* current_player) {
     int draw_position = static_cast<int>(Entity_position::HERO_1);
     for (const std::shared_ptr<entity::Entity>& i : current_player->getSquad()->getEntities()) {
         if (i != nullptr) {
-            update_characteristics(i);
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
             m_entity_window[draw_position].draw_text(0, 0, i->getName());
             if (i->isAlive())   {
@@ -392,6 +406,7 @@ void Monitor::draw(Player* current_player) {
     if (battle_event_pointer != nullptr) {
         if (!m_have_battle && battle_event_pointer->getIsInBattle()) {
             battle_event_pointer->turn(current_player);
+            //m_prev_characteristics.clear();
         }
         m_have_battle = battle_event_pointer->getIsInBattle();
     }
@@ -445,7 +460,6 @@ void Monitor::draw(Player* current_player) {
         int draw_position = static_cast<int>(Entity_position::ENEMY_1);
             for (const std::shared_ptr<entity::Entity>& i : battle_event_pointer->getEnemies()->getEntities()) {
                 if (i != nullptr) {
-                    update_characteristics(i);
                     auto enemy_sprite = i->draw();
                     for (auto& j : enemy_sprite) {
                         std::reverse(j.begin(), j.end());
@@ -500,9 +514,8 @@ void Monitor::draw(Player* current_player) {
         wborder(m_characteristics_display.m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
         for (auto& i : current_player->getSquad()->getEntities()) {
             if (i != nullptr && i->isAlive()) {
-                m_channged = false;
                 std::string chars = get_entity_characteristics(i);
-                if (m_channged){
+                if (changed(i)){
                     m_characteristics_display.draw_text(cur_y, 1, chars, false, Colors::CHANGED | A_ITALIC);
                 } else {
                     m_characteristics_display.draw_text(cur_y, 1, chars);
@@ -513,22 +526,27 @@ void Monitor::draw(Player* current_player) {
         if (m_have_battle) {
             for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
                 if (i != nullptr && i->isAlive()) {
-                    m_channged = false;
                     std::string chars = get_entity_characteristics(i);
-                    if (m_channged){
+                    
+                    if (changed(i)){
                         m_characteristics_display.draw_text(cur_y, 1, chars, false, Colors::CHANGED | A_ITALIC);
                     } else {
                         m_characteristics_display.draw_text(cur_y, 1, chars);
                     }
+                    
                 }
                 cur_y += 2;
             }
         }
-
-        m_characteristics_display.draw_text(m_characteristics_display.get_y() - 2, 1,
-                                            m_buffer, false, BUFFER | A_BLINK);
     }
-    m_prev_characteristics.clear();
+    if (m_have_battle) {
+        for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
+            update_characteristics(i);
+        }
+        for (auto& i : current_player->getSquad()->getEntities()) {
+            update_characteristics(i);
+        }
+    }
 }
 
 
