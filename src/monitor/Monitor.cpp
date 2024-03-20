@@ -420,9 +420,7 @@ void Monitor::draw(Player* current_player) {
             }
         }
     } else {
-        m_user_actions_display.m_key_binds = {};
-        m_user_actions_display.get_binds(current_player);
-        m_user_actions_display.draw_interface(current_player->getActions());
+
 
         for(auto event:current_player->getMap()->getCell(current_player->getPosition())->getEvents()){
             if(auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(event)){
@@ -440,16 +438,19 @@ void Monitor::draw(Player* current_player) {
         }
         m_inventory_display[cur_column].draw_text(cur_y, 0, item->drawItem(), false, Colors::ITEM_COLOR);
         cur_y += 2;
-    }}
+    }
+    m_user_actions_display.m_key_binds = {};
+    m_user_actions_display.get_binds(current_player);
+    m_user_actions_display.draw_interface(current_player->getActions());
+}
 
 
 
 void Monitor::keyEvent(int key, Player* player) {
     if (key == 'c') {
         m_draw_Characteristis ^= true;
-    } else if (m_have_battle) {
-
-    }  else if (m_user_actions_display.find_action(key) != nullptr && 
+    }
+    else if (m_user_actions_display.find_action(key) != nullptr &&
                 player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
         m_user_actions_display.find_action(key)->act(player);
     }

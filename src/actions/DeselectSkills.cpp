@@ -17,7 +17,7 @@ namespace actions {
             }
         }
     }
-    std::string SelectSkill::getName() {
+    std::string DeselectSkills::getName() {
         return "Return to selecting skill";
     }
 } // actions

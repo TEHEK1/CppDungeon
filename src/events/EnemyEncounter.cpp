@@ -1,5 +1,6 @@
 #include "BattleField.h"
 #include "changers/ActionsChanger.h"
+#include "actions/DeselectSkills.h"
 #include "entity/Enemy.h"
 #include "entity/MarkedAsAutoTurn.h"
 #include "events/EnemyEncounter.h"
@@ -171,7 +172,7 @@ namespace events {
             changers::ActionsChanger::addAction(player, std::make_shared<actions::TurnEvent>(std::dynamic_pointer_cast<events::Event>(shared_from_this())));
         }
         else{
-            changers::ActionsChanger::addAction(player, std::make_shared<actions::DeselectSkills>(std::dynamic_pointer_cast<events::Event>(shared_from_this()), battleField));
+            changers::ActionsChanger::addAction(player, std::make_shared<actions::DeselectSkills>(m_priority.front(), battleField));
         }
         return;
     }
