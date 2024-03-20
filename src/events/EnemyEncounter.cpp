@@ -14,6 +14,7 @@
 #include "actions/UseItem.h"
 #include "generators/NumberGenerator.h"
 #include <memory>
+#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
@@ -72,6 +73,7 @@ namespace events {
     }
 
     void EnemyEncounter::_enemyMove(Player* player, std::shared_ptr<entity::Entity> entity, int rank, std::shared_ptr<BattleField> battleField) {
+        std::cout << "i am attacking" << std::endl;
         auto skills = entity->getSkills();
         std::vector<std::shared_ptr<skillDesigns::Skill>> availableSkills;
         for (auto i: skills) {
@@ -131,44 +133,31 @@ namespace events {
             player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
             return;
         }
-
-        while (!m_priority.empty()) {
-            bool heroesAlive = _checkAlive(player->getSquad()->getEntities());
-            bool enemiesAlive = _checkAlive(m_enemies->getEntities());
-            if (!(heroesAlive && enemiesAlive)) {
-                for (auto i: player->getSquad()->getEntities()) {
-                    endBattleTurnEffects(i);
-                }
-                for (auto i: enemiesEntities) {
-                    endBattleTurnEffects(i);
-                }
-                player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
-                return;
-            }
-            std::shared_ptr<entity::Entity> entity = m_priority.back();
-            m_priority.pop();
-            if (!entity->isAlive()) {
-                continue;
-            }
-            turnEffects(entity);
-            if (entity->isTurnable() < 0) {
-                continue;
-            }
-            if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
-                markedAsAutoTurn->autoTurn(player, battleField, entity);
-                player->getMonitor()->draw(player);
-                continue;
-            }
-            if (battleField->areAllies(entity, enemiesEntities[0])) {
-                _enemyMove(player, entity, std::distance(enemiesEntities.begin(), std::find(enemiesEntities.begin(), enemiesEntities.end(), entity)) + 1, battleField);
-                player->getMonitor()->draw(player);
-                continue;
-            }
+        std::shared_ptr<entity::Entity> entity = m_priority.back();
+        m_priority.pop();
+        if (!entity->isAlive()) {
             m_lastToMove = entity;
             return;
         }
-
-        turn(player);
+        turnEffects(entity);
+        if (entity->isTurnable() < 0) {
+            m_lastToMove = entity;
+            return;
+        }
+        if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
+            markedAsAutoTurn->autoTurn(player, battleField, entity);
+            player->getMonitor()->draw(player);
+            m_lastToMove = entity;
+            return;
+        }
+        if (battleField->areAllies(entity, enemiesEntities[0])) {
+            _enemyMove(player, entity, std::distance(enemiesEntities.begin(), std::find(enemiesEntities.begin(), enemiesEntities.end(), entity)) + 1, battleField);
+            player->getMonitor()->draw(player);
+            m_lastToMove = entity;
+            return;
+        }
+        m_lastToMove = entity;
+        return;
     }
 
 }
