@@ -364,9 +364,13 @@ void Monitor::draw(Player* current_player) {
             update_characteristics(i);
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
             m_entity_window[draw_position].draw_text(0, 0, i->getName());
-            m_entity_window[draw_position].draw_text(1, 0, std::string("Hp: ") +
-                                                    std::to_string(i->get(Characteristic::HP)) + std::string("/") +
-                                                    std::to_string(i->get(Characteristic::maxHP)));
+            if (i->isAlive())   {
+                m_entity_window[draw_position].draw_text(1, 0, std::string("Hp: ") +
+                                std::to_string(i->get(Characteristic::HP)) + std::string("/") +
+                                std::to_string(i->get(Characteristic::maxHP)));
+            } else {
+                    m_entity_window[draw_position].draw_text(1, 0, std::string("Hp: -/-"));
+            }
         }
         draw_position--;
     }
@@ -448,9 +452,13 @@ void Monitor::draw(Player* current_player) {
                     }
                     m_entity_window[draw_position].draw_sprite(0, 0, enemy_sprite);
                     m_entity_window[draw_position].draw_text(enemy_sprite.size() + 2, 0, i->getName());
-                    m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: ") + 
-                                                            std::to_string(i->get(Characteristic::HP)) + std::string("/") +
-                                                            std::to_string(i->get(Characteristic::maxHP)));
+                    if (i->isAlive())   {
+                        m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: ") + 
+                                                                std::to_string(i->get(Characteristic::HP)) + std::string("/") +
+                                                                std::to_string(i->get(Characteristic::maxHP)));
+                    } else {
+                        m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: -/-"));
+                    }
                 }
                 draw_position++;
             }
