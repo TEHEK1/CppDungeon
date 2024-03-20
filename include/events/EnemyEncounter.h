@@ -15,7 +15,7 @@
 #include <queue>
 class Player;
 namespace events {
-    class EnemyEncounter : public Event, public SquadChanger, public changers::EffectChanger {
+class EnemyEncounter : public Event, public SquadChanger, public changers::EffectChanger, public std::enable_shared_from_this<EnemyEncounter> {
     public:
         EnemyEncounter();
         void turn(Player* player) override;

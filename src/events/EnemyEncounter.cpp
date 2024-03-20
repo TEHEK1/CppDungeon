@@ -18,7 +18,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
-
+#include "actions/TurnEvent.h"
 namespace events {
     EnemyEncounter::EnemyEncounter() {
 
@@ -140,23 +140,34 @@ namespace events {
             return;
         }
         turnEffects(entity);
-        if (entity->isTurnable() < 0) {
-            m_lastToMove = entity;
-            return;
-        }
-        if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
+        if (entity->isTurnable()) {}
+        else if (auto markedAsAutoTurn = std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity)) {
             markedAsAutoTurn->autoTurn(player, battleField, entity);
             player->getMonitor()->draw(player);
-            m_lastToMove = entity;
-            return;
         }
-        if (battleField->areAllies(entity, enemiesEntities[0])) {
+        else if (battleField->areAllies(entity, enemiesEntities[0])) {
             _enemyMove(player, entity, std::distance(enemiesEntities.begin(), std::find(enemiesEntities.begin(), enemiesEntities.end(), entity)) + 1, battleField);
             player->getMonitor()->draw(player);
-            m_lastToMove = entity;
-            return;
         }
+
         m_lastToMove = entity;
+        if (m_priority.empty()) {
+            std::vector<std::shared_ptr<entity::Entity>> priority = battleField->getEntities();
+            std::sort(priority.begin(), priority.end(), [enemiesEntities] (std::shared_ptr<entity::Entity> a, std::shared_ptr<entity::Entity> b) {
+                if (a->get(Characteristic::speed) == b->get(Characteristic::speed)) {
+                    return (std::find(enemiesEntities.begin(), enemiesEntities.end(), a) == enemiesEntities.end()) ? true : false;
+                }
+                return a->get(Characteristic::speed) > b->get(Characteristic::speed);
+            });
+            for (const auto& i: priority) {
+                if (i->isAlive()) {
+                    m_priority.push(i);
+                }
+            }
+        }
+        if (battleField->areAllies(m_priority.front(), enemiesEntities[0])) {
+            changers::ActionsChanger::addAction(player, std::make_shared<actions::TurnEvent>(std::dynamic_pointer_cast<events::Event>(shared_from_this())));
+        }
         return;
     }
 
