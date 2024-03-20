@@ -1,12 +1,15 @@
-#include "enemies/BrigandFusier/BrigandFusilier.h"
+#include "enemies/BrigandFusilier/BrigandFusilier.h"
 #include "changers/EntityChanger.h"
+#include "enemies/BrigandFusilier/BlanketFire.h"
+#include "enemies/BrigandFusilier/RushedShot.h"
+
 enemies::BrigandFusilier::BrigandFusilier::BrigandFusilier():
     entity::Enemy("BrigandFusilier",
     {{static_cast<int>(Characteristic::accuracyModifier), 1}, 
     {static_cast<int>(Characteristic::dodge), 8},
     {static_cast<int>(Characteristic::defence), 0},
     {static_cast<int>(Characteristic::speed), 6},
-    {static_cast<int>(Characteristic::HP), 12},
+    {static_cast<int>(Characteristic::HP), 15},
     {static_cast<int>(Characteristic::maxHP), 15},
     {static_cast<int>(Characteristic::marked), 0},
     {static_cast<int>(Characteristic::turnable), 0},
