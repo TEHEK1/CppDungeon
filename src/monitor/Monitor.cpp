@@ -12,6 +12,7 @@
 #include "actions/MoveLeft.h"
 #include "actions/MoveRight.h"
 #include "Squad.h"
+#include "items/Item.h"
 #include "events/UsableEvent.h"
 #include <iostream>
 #include <vector>
@@ -372,16 +373,16 @@ void Monitor::draw(Player* current_player) {
     }
 
     //inventory 
-    /*int cur_y = 0;
+    int cur_y = 0;
     int cur_column = 0;
     for (auto item : current_player->getInventory().getItems()) {
         if (m_inventory_display[cur_column].get_y() - 2 <= cur_y) {
             cur_column++;
             cur_y = 0;
         }
-        m_inventory_display[cur_column].draw_text(cur_y, 0, item->draw(), false, Colors::ITEM_COLOR);
+        m_inventory_display[cur_column].draw_text(cur_y, 0, item->drawItem(), false, Colors::ITEM_COLOR);
         cur_y += 2;
-    }*/
+    }
     
 
 }
