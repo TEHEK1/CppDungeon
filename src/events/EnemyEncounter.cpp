@@ -22,6 +22,7 @@
 #include "actions/TurnEvent.h"
 #include "actions/DeselectSkills.h"
 #include "actions/Lose.h"
+#include "events/ChooseRoomEvent.h"
 namespace events {
     EnemyEncounter::EnemyEncounter() {
 
@@ -139,6 +140,11 @@ namespace events {
                 }
                 m_isInBattle = false;
                 if(heroesAlive){
+                    for(auto event:player->getMap()->getCell(player->getPosition())->getEvents()){
+                        if(auto chooseNextRoom = std::dynamic_pointer_cast<events::ChooseRoomEvent>(event)){
+                            chooseNextRoom->turn(player);
+                        }
+                    }
                 player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
                 }
                 else{
