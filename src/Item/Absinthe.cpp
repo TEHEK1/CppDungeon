@@ -9,7 +9,7 @@ namespace items {
     namespace Absinthe{
         Absinthe::Absinthe() : Item(0, "Absinthe Effect", {1, 2, 3, 4},
                                     {1, 2, 3, 4}, {}, 100) {};
-        std::string drawItem(){
+        std::string Absinthe::drawItem(){
             return "Absinthe - Denis approves";
         }
         void Absinthe::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,

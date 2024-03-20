@@ -65,5 +65,13 @@ add_executable(monitorTest
         ../../src/heroes/BountyHunter/ComeHither.cpp
         ../../src/heroes/BountyHunter/UpperCut.cpp
         ../../src/entity/Hero.cpp
+        ../../src/Item/Absinthe.cpp
+        ../../src/Item/LickWounds.cpp
+        ../../src/Item/Item.cpp
+        ../../src/Item/FortifyingGarlic.cpp
+        ../../src/Item/BloodiedNeckerchief.cpp
+        ../../src/effects/Heal.cpp
+        ../../src/changers/InventoryChanger.cpp
+        ../../src/player/Inventory.cpp
 )
 target_link_libraries(monitorTest ${CURSES_LIBRARIES})
