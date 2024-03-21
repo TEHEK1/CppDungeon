@@ -5,7 +5,7 @@
 #include "effects/Blight.h"
 namespace enemies {
     namespace Webber {
-        Bite::Bite() : RangeSkill(1, "Bite", {1, 2, 3, 4}, {}, {1,2,3,4}, 73, 2) {}
+        Bite::Bite() : skillDesigns::RangeSkill(1, "Bite", {1, 2, 3, 4}, {}, {1,2,3,4}, 73, 2) {}
 
         void Bite::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                    std::shared_ptr<entity::Entity> actor,

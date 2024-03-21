@@ -162,4 +162,12 @@ namespace skillDesigns {
     std::string Skill::draw() {
         return getName();
     }
+
+    std::string Skill::getEffectDescription() {
+        return std::string();
+    }
+
+    std::string Skill::getSelfDescription() {
+        return std::string();
+    }
 } // namespace skillDesigns

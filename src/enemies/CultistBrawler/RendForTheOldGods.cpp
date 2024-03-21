@@ -8,7 +8,7 @@
 
 namespace enemies {
     namespace CultistBrawler {
-        RendForTheOldGods::RendForTheOldGods() : RangeSkill(1, "RendForTheOldGods", {1, 2}, {}, {1, 2}, 73, 12) {}
+        RendForTheOldGods::RendForTheOldGods() : skillDesigns::RangeSkill(1, "RendForTheOldGods", {1, 2}, {}, {1, 2}, 73, 12) {}
 
         void RendForTheOldGods::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,

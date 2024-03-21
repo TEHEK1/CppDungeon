@@ -3,7 +3,7 @@
 #include "effects/Buff.h"
 namespace Bosses {
     namespace StoneShield {
-        GardenGuardianDefenceBonus::GardenGuardianDefenceBonus() : RangeSkill(4, "GardenGuardianDefenceBonus", {1, 2, 3, 4}, {1}, {}, 100, 0) {}
+        GardenGuardianDefenceBonus::GardenGuardianDefenceBonus() : skillDesigns::RangeSkill(4, "GardenGuardianDefenceBonus", {1, 2, 3, 4}, {1}, {}, 100, 0) {}
 
         void GardenGuardianDefenceBonus::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,

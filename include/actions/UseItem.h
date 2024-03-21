@@ -20,7 +20,7 @@ namespace actions {
     class UseItem : public UseSkill, public changers::InventoryChanger {
     public:
         UseItem(std::shared_ptr<items::Item> skill, std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> actor,
-                 std::vector<std::shared_ptr<entity::Entity>> objects);
+                 std::vector<std::shared_ptr<entity::Entity>> objects, std::vector<SquadIndexer> indexer);
         void act(Player *) override;
         std::string getName() override;
     private:

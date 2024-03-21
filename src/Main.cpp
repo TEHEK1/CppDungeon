@@ -2,11 +2,16 @@
 // Created by artem on 16.03.2024.
 //
 #include "Main.h"
+
+#include "events/EnemyEncounter1.h"
+#include "events/EnemyEncounter2.h"
+#include "events/EnemyEncounter3.h"
+#include "events/NPCEncounter.h"
+#include "events/BossEncounter.h"
 #include "events/Event.h"
 #include "events/Chest.h"
 #include "events/ChooseRoomEvent.h"
 #include "events/EmptyCell.h"
-#include "events/Chest.h"
 #include "events/Trap.h"
 #include "monitor/Monitor.h"
 #include "player/Player.h"
@@ -29,13 +34,13 @@
 #include "heroes/ManAtArms/ManAtArms.h"
 #include "heroes/Musketeer/Musketeer.h"
 #include "heroes/PlagueDoctor/PlagueDoctor.h"
+#include "generators/NumberGenerator.h"
 //#include "events/EnemyEncounter.h"
 #include <random>
 
 template <class C>
 int Main::my_rand(size_t seed, ObjectFactory<C, size_t> objectFactory) {
-    seed = seed * 1103515245 + 12345;
-    return (seed / 65536) % objectFactory.getFactoryMap().size();
+    return generators::NumberGenerator::generate(0,objectFactory.getFactoryMap().size()-1);
 }
 //int Main::my_rand_entity(size_t seed) { //TODO change on norm random function
 //    seed = seed * 1103515245 + 12345;
@@ -51,6 +56,13 @@ Main::Main() {
     //m_eventFactory.add<events::ChooseRoomEvent>(1);
     m_eventFactory.add<events::EmptyCell>(1);
     m_eventFactory.add<events::Trap>(2);
+    m_eventFactory.add<events::EmptyCell>(3);
+    m_eventFactory.add<events::BossEncounter>(4);
+    m_eventFactory.add<events::NPCEncounter>(5);
+    m_eventFactory.add<events::EnemyEncounter1>(6);
+    m_eventFactory.add<events::EnemyEncounter2>(7);
+    m_eventFactory.add<events::EnemyEncounter3>(8);
+
 
     m_enemiesFactory.add<enemies::BrigandFusilier::BrigandFusilier>(0);
     m_enemiesFactory.add<enemies::BrigandRaider::BrigandRaider>(1);
@@ -91,31 +103,31 @@ size_t Main::getSeed() {
     return m_seed;
 }
 
-events::Event* Main::getEvent() {
+std::shared_ptr<events::Event> Main::getEvent() {
     int id = my_rand<events::Event>(getSeed(), m_eventFactory);
     return m_eventFactory.create(id);
 }
 
-entity::Entity* Main::getEnemy() {
-    int id = my_rand<entity::Entity>(getSeed(), m_enemiesFactory);
+std::shared_ptr<entity::Enemy> Main::getEnemy() {
+    int id = my_rand<entity::Enemy>(getSeed(), m_enemiesFactory);
     return m_enemiesFactory.create(id);
 }
-items::Item* Main::getItem() {
+std::shared_ptr<items::Item> Main::getItem() {
     int id = my_rand<items::Item>(getSeed(), m_itemsFactory);
     return m_itemsFactory.create(id);
 }
 
-entity::Boss* Main::getBoss() {
+std::shared_ptr<entity::Boss> Main::getBoss() {
     int id = my_rand<entity::Boss>(getSeed(), m_bossesFactory);
     return m_bossesFactory.create(id);
 }
 
-entity::Hero* Main::getHero() {
+std::shared_ptr<entity::Hero> Main::getHero() {
     int id = my_rand<entity::Hero>(getSeed(), m_heroesFactory);
     return m_heroesFactory.create(id);
 }
 
-entity::NPC* Main::getNPC() {
+std::shared_ptr<entity::NPC> Main::getNPC() {
     int id = my_rand<entity::NPC>(getSeed(), m_npcFactory);
     return m_npcFactory.create(id);
 }

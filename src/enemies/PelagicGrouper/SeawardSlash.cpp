@@ -4,7 +4,7 @@
 #include "effects/Move.h"
 namespace enemies {
     namespace PelagicGrouper {
-        SeawardSlash::SeawardSlash(): RangeSkill(1, "Seaward Slash", {1, 2}, {}, {1, 2}, 78, 2) {}
+        SeawardSlash::SeawardSlash(): skillDesigns::RangeSkill(1, "Seaward Slash", {1, 2}, {}, {1, 2}, 78, 2) {}
 
         void SeawardSlash::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                           std::shared_ptr<entity::Entity> actor,

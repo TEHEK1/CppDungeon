@@ -4,7 +4,7 @@
 
 namespace enemies {
     namespace CultistAcolyte {
-        StressfulIncantation::StressfulIncantation() : RangeSkill(1, "StressfulIncantation", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 84, 0) {}
+        StressfulIncantation::StressfulIncantation() : skillDesigns::RangeSkill(1, "StressfulIncantation", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 84, 0) {}
 
         void StressfulIncantation::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                                    std::shared_ptr<entity::Entity> actor,

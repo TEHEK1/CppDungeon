@@ -1,13 +1,12 @@
 #ifndef HatredBeyondTime_H
 #define HatredBeyondTime_H
-#include "skillDesigns/Skill.h"
 #include "skillDesigns/RangeSkill.h"
 
 namespace Bosses {
 
     namespace GardenGuardian {
 
-        class HatredBeyondTime : public skillDesigns::Skill {
+        class HatredBeyondTime : public skillDesigns::RangeSkill {
         public:
             HatredBeyondTime();
 

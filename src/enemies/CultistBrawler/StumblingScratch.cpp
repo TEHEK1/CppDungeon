@@ -8,7 +8,7 @@
 
 namespace enemies {
     namespace CultistBrawler {
-        StumblingScratch::StumblingScratch() : RangeSkill(1, "StumblingScratch", {3, 4}, {}, {3, 4}, 43, 12) {}
+        StumblingScratch::StumblingScratch() : skillDesigns::RangeSkill(1, "StumblingScratch", {3, 4}, {}, {3, 4}, 43, 12) {}
 
         void StumblingScratch::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,

@@ -11,6 +11,6 @@ class Creator: public AbstractCreator<Base>
 public:
     Creator() { }
     virtual ~Creator()	{}
-    Base * create() const { return new Object(); }
+    std::shared_ptr<Base> create() const { return std::make_shared<Object>(); }
 };
 #endif //CPPDUNGEON_CREATIR_H

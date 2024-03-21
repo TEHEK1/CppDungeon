@@ -21,7 +21,8 @@ namespace skillDesigns {
         std::vector<int> availableAllyTarget = {},
         std::vector<int> availableEnemyTarget = {},
         int accuracy = 0, int criticalDamageChance = 0);
-
+        virtual std::string getEffectDescription();
+        virtual std::string getSelfDescription();
         virtual std::vector<int> getAvaibleRank();
 
         virtual std::vector<int> getAvaibleAllyTarget();

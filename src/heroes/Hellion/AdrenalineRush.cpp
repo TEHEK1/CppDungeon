@@ -5,7 +5,7 @@
 #include "effects/Buff.h"
 namespace Heroes {
     namespace Hellion {
-        AdrenalineRush::AdrenalineRush() : RangeSkill(0, "AdrenalineRush", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
+        AdrenalineRush::AdrenalineRush() : skillDesigns::RangeSkill(0, "AdrenalineRush", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
 
         void AdrenalineRush::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -21,6 +21,14 @@ namespace Heroes {
             (crited, 4, std::map<int, int>{{static_cast<int>(Characteristic::accuracyModifier), 5},
             {static_cast<int>(Characteristic::minDamage), 20}, {static_cast<int>(Characteristic::maxDamage), 20}}), battleField, crited, 100);
             // TODO Cure Bleed and Blight
+        }
+
+        std::string AdrenalineRush::getEffectDescription() {
+            return "";
+        }
+
+        std::string AdrenalineRush::getSelfDescription() {
+            return "Cure Blight/Bleed +5 ACC +20% DMG (4 rds)";
         }
     } // namespace Hellion
 } // namespace Heroes

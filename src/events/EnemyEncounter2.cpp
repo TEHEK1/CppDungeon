@@ -10,5 +10,5 @@ namespace events {
     EnemyEncounter2::EnemyEncounter2():EnemyEncounter(
             {std::make_shared<enemies::RabidGnasher::RabidGnasher>(),
              std::make_shared<enemies::SwineSlasher::SwineSlasher>(),
-             std::make_shared<enemies::Webber::Webber>()}) {}
+             std::make_shared<enemies::Webber::Webber>()}, 1) {}
 } // events

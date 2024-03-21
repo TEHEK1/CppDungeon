@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace Hellion {
-        IronSwan::IronSwan() : Skill("IronSwan", {1}, {}, {4}, 85, 5) {}
+        IronSwan::IronSwan(): skillDesigns::RangeSkill(1, "IronSwan", {1}, {}, {4}, 85, 5) {}
 
         void IronSwan::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -19,6 +19,12 @@ namespace Heroes {
         void IronSwan::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string IronSwan::getEffectDescription() {
+            return "Damage 0% ";
+        }
+        std::string IronSwan::getSelfDescription() {
+            return "";
         }
     } // namespace Hellion
 } // namespace Heroes

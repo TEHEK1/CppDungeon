@@ -4,7 +4,7 @@
 #include "effects/ForceMove.h"
 namespace enemies {
     namespace CultistAcolyte {
-        EldritchPush::EldritchPush() : RangeSkill(1, "Eldritch Push", {2, 3, 4}, {}, {1, 2}, 83, 6) {}
+        EldritchPush::EldritchPush() : skillDesigns::RangeSkill(1, "Eldritch Push", {2, 3, 4}, {}, {1, 2}, 83, 6) {}
 
         void EldritchPush::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                            std::shared_ptr<entity::Entity> actor,

@@ -13,7 +13,7 @@ namespace events {
             {std::make_shared<Bosses::StoneShield::StoneShield>(),
              std::make_shared<Bosses::GardenGuardian::GardenGuardian>(),
              std::make_shared<Bosses::BloodFount::BloodFount>(),
-             }
+             }, 4
             ) {
     }
 

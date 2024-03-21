@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace Hellion {
-        IfItBleeds::IfItBleeds() : Skill("IfItBleeds", {1, 2, 3}, {}, {2, 3}, 85, -1) {}
+        IfItBleeds::IfItBleeds() : skillDesigns::RangeSkill(1, "IfItBleeds", {1, 2, 3}, {}, {2, 3}, 85, -1) {}
 
         void IfItBleeds::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -19,6 +19,12 @@ namespace Heroes {
         void IfItBleeds::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string IfItBleeds::getEffectDescription() {
+            return "Damage -35% Bleed (100% base) 2 pts/rd for 3 rds";
+        }
+        std::string IfItBleeds::getSelfDescription() {
+            return "";
         }
     } // namespace Hellion
 } // namespace Heroes

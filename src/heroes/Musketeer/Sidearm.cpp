@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace Musketeer {
-        Sidearm::Sidearm() : Skill("Sidearm", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 75, 0) {}
+        Sidearm::Sidearm(): skillDesigns::RangeSkill(1, "Sidearm", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 75, 0) {}
 
         void Sidearm::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -20,6 +20,12 @@ namespace Heroes {
         void Sidearm::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Sidearm::getEffectDescription() {
+            return "Damage -10% ";
+        }
+        std::string Sidearm::getSelfDescription() {
+            return "+3 SPD";
         }
     } // namespace Musketeer
 } // namespace Heroes

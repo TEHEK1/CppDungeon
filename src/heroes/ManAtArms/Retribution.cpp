@@ -7,7 +7,7 @@
 
 namespace Heroes {
     namespace ManAtArms {
-        Retribution::Retribution() : Skill("Retribution", {1, 2, 3}, {1, 2, 3}, {}, 85, 3) {}
+        Retribution::Retribution(): skillDesigns::RangeSkill(1, "Retribution", {1, 2, 3}, {1, 2, 3}, {}, 85, 3) {}
 
         void Retribution::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -23,6 +23,12 @@ namespace Heroes {
         void Retribution::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Retribution::getEffectDescription() {
+            return "Damage -75%";
+        }
+        std::string Retribution::getSelfDescription() {
+            return "Mark Self";
         }
     } // namespace ManAtArms
 } // namespace Heroes

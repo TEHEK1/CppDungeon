@@ -1,10 +1,10 @@
-#include "skillDesigns/Skill.h"
+#include "skillDesigns/RangeSkill.h"
 
 namespace Heroes {
 
     namespace Hellion {
 
-        class IronSwan: public skillDesigns::Skill {
+        class IronSwan: public skillDesigns::RangeSkill {
         public:
             IronSwan();
       
@@ -14,6 +14,8 @@ namespace Heroes {
 
             void unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                std::shared_ptr<entity::Entity> object) override;
+            std::string getEffectDescription() override;
+            std::string getSelfDescription() override;
         };
 
     } // namespace Hellion

@@ -21,7 +21,7 @@ void Hall::generateEvents(Player* player) {
         return;
     }
     m_used = true;
-    int num = generators::NumberGenerator::generate(0, 7);
+    /*int num = generators::NumberGenerator::generate(0, 7);
     switch (num) {
         case 0:
             m_events.push_back(std::make_shared<events::BossEncounter>());
@@ -47,11 +47,13 @@ void Hall::generateEvents(Player* player) {
         default:
             m_events.push_back(std::make_shared<events::Trap>());
             break;
-    }
-    m_events.push_back(std::shared_ptr<events::Event>());
-    /*if(random(1,2) == 1) {//TODO: Change it to grabbing from Main fabric
-        m_events.push_back(std::shared_ptr<events::Event>(new events::EmptyCell));
-    }else{
-
     }*/
+    while (true) {
+        auto event = player->getMain()->getEvent();
+        if(!std::dynamic_pointer_cast<events::BossEncounter>(event)){
+            m_events.push_back(event);
+            break;
+        }
+
+    }
 }

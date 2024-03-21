@@ -33,5 +33,4 @@ void entity::Enemy::autoTurn(Player* player, std::shared_ptr<BattleField> battle
             }
         }
     }
-    throw std::logic_error("Skill not found");
 }
