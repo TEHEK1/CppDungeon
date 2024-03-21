@@ -41,7 +41,7 @@ void Monitor::init_colors() {
     init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
     init_pair(3, COLOR_BLACK, COLOR_CYAN);
     init_pair(4, COLOR_GREEN, COLOR_GREEN);
-    init_pair(5, COLOR_RED, COLOR_BLACK);
+    init_pair(5, COLOR_YELLOW, COLOR_BLACK);
     init_pair(6, COLOR_WHITE, COLOR_BLACK);
     init_pair(7, COLOR_RED, COLOR_WHITE);
     init_pair(8, COLOR_GREEN, COLOR_BLACK);
@@ -270,14 +270,16 @@ Monitor::Monitor() {
 }
 
 void Monitor::update_characteristics(std::shared_ptr<entity::Entity> cur_entity) {
-    m_prev_characteristics[cur_entity] = {cur_entity->get(Characteristic::accuracyModifier), 
+    m_prev_characteristics[cur_entity] = {
+    cur_entity->get(Characteristic::accuracyModifier), 
     cur_entity->get(Characteristic::minDamage), 
     cur_entity->get(Characteristic::maxDamage), 
     cur_entity->get(Characteristic::dodge), 
     cur_entity->get(Characteristic::defence),
     cur_entity->get(Characteristic::speed),
     cur_entity->get(Characteristic::marked),
-    cur_entity->get(Characteristic::criticalDamageChance)};
+    cur_entity->get(Characteristic::criticalDamageChance), 
+    cur_entity->get(Characteristic::HP)};
 }
 
 void Monitor::abs_coordinates_to_relative(int& row, int& col, const GameWindow& cur_window, Position center) {
@@ -306,7 +308,8 @@ bool Monitor::changed(std::shared_ptr<entity::Entity> person) {
             (person->get(Characteristic::defence) != m_prev_characteristics[person][4]) ||
             (person->get(Characteristic::speed) != m_prev_characteristics[person][5]) ||
             (person->get(Characteristic::marked) != m_prev_characteristics[person][6]) ||
-            (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][7])));
+            (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][7]) ||
+            (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][8])));
     
 }
 
@@ -501,6 +504,7 @@ void Monitor::draw(Player* current_player) {
     }
     int cur_y = 0;
     int cur_column = 0;
+    m_inventory_display.clear();
     for (auto item : current_player->getInventory().getItems()) {
         if (m_inventory_display[cur_column].get_y() - 2 <= cur_y) {
             cur_column++;
