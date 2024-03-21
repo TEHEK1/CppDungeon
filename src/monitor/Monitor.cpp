@@ -26,8 +26,8 @@
 
 
 namespace {
-    static const int ENTITY_NUM = 8;
-    enum Entity_position {HERO_4, HERO_3, HERO_2, HERO_1, ENEMY_1, ENEMY_2, ENEMY_3, ENEMY_4};
+    static const int ENTITY_NUM = 6;
+    enum Entity_position {HERO_3, HERO_2, HERO_1, ENEMY_1, ENEMY_2, ENEMY_3};
     
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
     CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
@@ -54,7 +54,6 @@ Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, cons
 , m_x_size(x_size) {
     m_current_window = newwin(m_y_size, m_x_size, pos_y, pos_x);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
-    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
     wrefresh(m_current_window);
 }
 
@@ -85,7 +84,6 @@ void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
 void Monitor::GameWindow::clean() {
     wclear(m_current_window);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
-    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
     wrefresh(m_current_window);
 }
 //TODO: add size checkers
@@ -244,13 +242,6 @@ Monitor::Monitor() {
     int row, col;
     getmaxyx(stdscr, row, col);
     init_colors();
-    //        |--------------------|
-    // 2 / 3  |  Battle            |
-    //        |                    |
-    //        |                    |
-    //        |----------| ------- |
-    // 1 / 3  | Inventory|      Map|
-    //        |          |         |
     m_background_display = GameWindow ( 2 * row / 3, col, 0, 0);
     m_characteristics_display = GameWindow(row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, 0));
@@ -270,6 +261,10 @@ Monitor::Monitor() {
         m_entity_window.push_back(GameWindow(8 * m_background_display.get_y() / 10,
                                             heroes_blocks * block_dictance, m_background_display.get_y() / 10,
                                             block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2));
+        if ((block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2) >= col || col < 120) {
+            m_not_safe_screen = true;
+        }
+
     }
 }
 
@@ -341,8 +336,14 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
     return full_content;
 }
 
-//TODO: Change start postion of all sprites
 void Monitor::draw(Player* current_player) {
+    if (m_not_safe_screen) {
+        int row, col;
+        getmaxyx(stdscr, row, col);
+        wattron(stdscr, Colors::SELECTED_ENEMY | A_BLINK);
+        mvprintw(row / 2, col / 2 - 9, "Not enough space to run game :(");
+        return;
+    }
     for(auto action : current_player->getActions()){
             if(auto usableEvent = std::dynamic_pointer_cast<actions::Lose>(action)){
                 m_ended = -1;
@@ -353,6 +354,7 @@ void Monitor::draw(Player* current_player) {
                 break;
             } 
         }
+    
     if (m_ended == 1) {
         int row, col;
         getmaxyx(stdscr, row, col);
@@ -406,7 +408,7 @@ void Monitor::draw(Player* current_player) {
     if (battle_event_pointer != nullptr) {
         if (!m_have_battle && battle_event_pointer->getIsInBattle()) {
             battle_event_pointer->turn(current_player);
-            //m_prev_characteristics.clear();
+            m_prev_characteristics.clear();
         }
         m_have_battle = battle_event_pointer->getIsInBattle();
     }
@@ -477,7 +479,7 @@ void Monitor::draw(Player* current_player) {
                 draw_position++;
             }
         if(auto cur_acting_entity = std::dynamic_pointer_cast<entity::Hero>(battle_event_pointer->getLastToMove())){
-            int position = ENTITY_NUM - 5 - current_player->getSquad()->getIndex(cur_acting_entity);
+            int position = ENTITY_NUM - 4 - current_player->getSquad()->getIndex(cur_acting_entity);
             for (int i = 0; i < m_entity_window[position].get_y(); i++) {
                 m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, 8);
             }
@@ -539,19 +541,21 @@ void Monitor::draw(Player* current_player) {
             }
         }
     }
-    if (m_have_battle) {
-        for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
-            update_characteristics(i);
-        }
-        for (auto& i : current_player->getSquad()->getEntities()) {
-            update_characteristics(i);
-        }
-    }
+    
 }
 
 
 
 void Monitor::keyEvent(int key, Player* player) {
+    if (m_have_battle) {
+        for (auto& i : have_battle(player)->getEnemies()->getEntities()) {
+            update_characteristics(i);
+        }
+        for (auto& i : player->getSquad()->getEntities()) {
+            update_characteristics(i);
+        }
+    }
+
     if (key == 'c') {
         m_draw_Characteristics ^= true;
     }

@@ -105,6 +105,7 @@ private:
     bool m_draw_Characteristics = false;
     bool m_have_battle = false;
     bool m_if_skill_selected = false;
+    bool m_not_safe_screen = false;
     int m_ended = 0;
     std::string m_buffer = "Nothing"; 
     std::vector<GameWindow> m_inventory_display;
