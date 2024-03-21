@@ -1,80 +1,156 @@
 cmake_minimum_required(VERSION 3.24)
-project(ugabuga)
-
-set(CMAKE_CXX_STANDARD 11)
-
-add_subdirectory(tests/MapTest)
-
+project(MonitorTest)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
+find_package(PkgConfig REQUIRED)
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
 include_directories(include)
-
 
 add_executable(CppDungeon
         main.cpp
-        src/events/Chest.cpp
-        src/events/EmptyCell.cpp
+        src/monitor/Monitor.cpp
+        src/entity/Entity.cpp
+        src/player/Player.cpp
+        src/effects/PermanentEffect.cpp
+        src/Squad.cpp
+        src/navigation/Map.cpp
+        src/navigation/Cell.cpp
+        src/navigation/Hall.cpp
+        src/navigation/Room.cpp
+        src/navigation/Position.cpp
+        src/generators/NumberGenerator.cpp
         src/events/ChooseRoomEvent.cpp
-        include/actions/Action.h
-        include/navigation/Cell.h
-        include/events/Chest.h
-        include/enemies/Enemy.h
-        include/namespaces/Entity.h
-        include/events/Event.h
-        include/navigation/Hall.h
-        include/heroes/Hero.h
-        include/items/Item.h
-        include/navigation/Map.h
-        include/monitor/Monitor.h
-        include/player/Player.h
-        include/navigation/Room.h
-        include/skillDesigns/Skill.h
-        include/actions/MoveLeft.h
-        include/actions/MoveRight.h
-        include/actions/ChooseNextRoom.h
-        include/events/ChooseRoomEvent.h
-        include/events/EmptyCell.h
-        include/actions/Use.h
-        include/events/Trap.h
-        include/actions/DontUse.h
-        include/navigation/Position.h
-        include/actions/UseSkill.h
-        include/actions/UseItem.h
-        include/enemies/Boss.h
-        include/heroes/NPC.h
-        include/changers/ActionsChanger.h
-        include/changers/PositionChanger.h
+        src/actions/ChooseNextRoom.cpp
+        src/changers/ActionsChanger.cpp
+        src/changers/PositionChanger.cpp
+        src/actions/MoveLeft.cpp
+        src/actions/MoveRight.cpp
+        src/events/Chest.cpp
         src/actions/Use.cpp
         src/actions/DontUse.cpp
-        src/player/Player.cpp
-        include/effects/Effect.h
-        src/effects/Effect.cpp
-        include/effects/Buff.h
-        src/effects/Buff.cpp
-        include/effects/Guard.h
-        src/effects/Guard.cpp
-        include/effects/Debuff.h
-        src/effects/Debuff.cpp
-        include/effects/Stun.h
-        src/effects/Stun.cpp
-        include/effects/PassiveBuff.h
-        include/entity/trick.h
-        src/effects/PassiveBuff.cpp
-        include/effects/PassiveDebuff.h
-        src/effects/PassiveDebuff.cpp
-        include/effects/Disease.h
-        src/effects/Disease.cpp
-        include/effects/AutoAction.h
-        src/effects/AutoAction.cpp
-        include/effects/Bleed.h
-        src/effects/Bleed.cpp
-        include/effects/Blight.h
-        src/effects/Blight.cpp
-        include/effects/Damage.h
+        src/events/Trap.cpp
+        src/changers/EffectChanger.cpp
         src/effects/Damege.cpp
-        include/effects/Heal.h
+        src/effects/ImmediateCharacteristicEffect.cpp
+        src/effects/ImmediateEffect.cpp
+        src/effects/MarkedAsTurnable.cpp
+        src/changers/EntityChanger.cpp
+        src/effects/MarkedAsEndBattle.cpp
+        src/events/EmptyCell.cpp
+        src/enemies/BrigandRaider/BrigandRaider.cpp
+        src/enemies/BrigandRaider/HarmlessPoke.cpp
+        src/enemies/BrigandRaider/Shank.cpp
+        src/enemies/BrigandRaider/SliceAndDice.cpp
+        src/enemies/BrigandRaider/UppercutSlice.cpp
+        src/skillDesignes/RangeSkill.cpp
+        src/skillDesignes/Skill.cpp
+        src/BattleField.cpp
+        src/entity/Enemy.cpp
+        src/effects/Mark.cpp
+        src/effects/Buff.cpp
+        src/effects/Debuff.cpp
+        src/effects/Move.cpp
+        src/effects/ForceMove.cpp
+        src/effects/Bleed.cpp
+        src/effects/AutoAction.cpp
+        src/BattleFieldChanger.cpp
+        src/SquadChanger.cpp
+        src/heroes/BountyHunter/BountyHunter.cpp
+        src/heroes/BountyHunter/MarkForDeath.cpp
+        src/heroes/BountyHunter/FinishHim.cpp
+        src/heroes/BountyHunter/FlashBang.cpp
+        src/heroes/BountyHunter/CollectBounty.cpp
+        src/heroes/BountyHunter/Caltrops.cpp
+        src/heroes/BountyHunter/ComeHither.cpp
+        src/heroes/BountyHunter/UpperCut.cpp
+        src/entity/Hero.cpp
+        src/Item/Absinthe.cpp
+        src/Item/LickWounds.cpp
+        src/Item/Item.cpp
+        src/Item/FortifyingGarlic.cpp
+        src/Item/BloodiedNeckerchief.cpp
         src/effects/Heal.cpp
-        src/entity/Entity.cpp)
-
+        src/changers/InventoryChanger.cpp
+        src/player/Inventory.cpp
+        src/actions/UseItem.cpp
+        src/actions/UseSkill.cpp
+        src/generators/SkillActionsGenerator.cpp
+        src/events/EnemyEncounter.cpp
+        src/enemies/BrigandFusilier/BlanketFire.cpp
+        src/enemies/BrigandFusilier/BrigandFusilier.cpp
+        src/enemies/BrigandFusilier/RushedShot.cpp
+        src/enemies/CultistAcolyte/CultistAcolyte.cpp
+        src/enemies/CultistAcolyte/EldritchPull.cpp
+        src/enemies/CultistAcolyte/EldritchPush.cpp
+        src/enemies/CultistAcolyte/StressfulIncantation.cpp
+        src/actions/TurnEvent.cpp
+        src/actions/SelectSkill.cpp
+        src/actions/SelectSkill.cpp
+        src/actions/DeselectSkills.cpp
+        src/heroes/Hellion/WickedHack.cpp
+        src/heroes/Hellion/Breakthrough.cpp
+        src/heroes/Hellion/BarbaricYAWP.cpp
+        src/heroes/Hellion/IronSwan.cpp
+        src/heroes/Hellion/IfItBleeds.cpp
+        src/heroes/Hellion/Hellion.cpp
+        src/heroes/Hellion/BleedOut.cpp
+        src/heroes/Hellion/AdrenalineRush.cpp
+        src/entity/NPC.cpp
+        src/heroes/NPC/PlagueDoctor/BattlefieldMedicine.cpp
+        src/heroes/NPC/PlagueDoctor/PlagueDoctor.cpp
+        src/heroes/CommonSkills/MoveBackward.cpp
+        src/heroes/CommonSkills/MoveForward.cpp
+        src/actions/UserUseSkill.cpp
+        src/events/NPCEncounter.cpp
+        src/actions/Win.cpp
+        src/events/BossEncounter.cpp
+        src/heroes/ManAtArms/Bellow.cpp
+        src/heroes/ManAtArms/Command.cpp
+        src/heroes/ManAtArms/ManAtArms.cpp
+        src/heroes/ManAtArms/Crush.cpp
+        src/heroes/ManAtArms/Retribution.cpp
+        src/heroes/ManAtArms/Defender.cpp
+        src/heroes/ManAtArms/Rampart.cpp
+        src/heroes/ManAtArms/Bolster.cpp
+        src/heroes/Musketeer/AimedShot.cpp
+        src/heroes/Musketeer/Smokescreen.cpp
+        src/heroes/Musketeer/Musketeer.cpp
+        src/heroes/Musketeer/SkeetShot.cpp
+        src/heroes/Musketeer/CallTheShot.cpp
+        src/heroes/Musketeer/PatchUp.cpp
+        src/heroes/Musketeer/Buckshot.cpp
+        src/heroes/Musketeer/Sidearm.cpp
+        src/bosses/GardenGuardian/AnnihilatingGlare.cpp
+        src/bosses/GardenGuardian/GardenGuardian.cpp
+        src/bosses/GardenGuardian/GardenGuardianDefenceBonus.cpp
+        src/bosses/GardenGuardian/BloodFount.cpp
+        src/bosses/GardenGuardian/StoneShield.cpp
+        src/bosses/GardenGuardian/GardenGuardianDamageBonus.cpp
+        src/bosses/GardenGuardian/HatredBeyondTime.cpp
+        src/entity/Boss.cpp
+        src/actions/Lose.cpp
+        src/Main.cpp
+        src/enemies/CultistBrawler/CultistBrawler.cpp
+        src/enemies/CultistBrawler/RendForTheOldGods.cpp
+        src/enemies/CultistBrawler/StumblingScratch.cpp
+        src/enemies/Ghoul/Ghoul.cpp
+        src/enemies/Ghoul/SkullToss.cpp
+        src/enemies/Ghoul/Rend.cpp
+        src/enemies/PelagicGrouper/PelagicGrouper.cpp
+        src/enemies/PelagicGrouper/SeawardSlash.cpp
+        src/enemies/PelagicGrouper/Spearfishing.cpp
+        src/enemies/RabidGnasher/RabidGnasher.cpp
+        src/enemies/RabidGnasher/RabidRush.cpp
+        src/enemies/SwineSlasher/HookWhereItHurts.cpp
+        src/enemies/SwineSlasher/SwineSlasher.cpp
+        src/enemies/Webber/Bite.cpp
+        src/enemies/Webber/Webber.cpp
+        src/enemies/Webber/Web.cpp
+        src/effects/Stun.cpp
+        src/effects/Blight.cpp
+        src/events/EnemyEncounter1.cpp
+        src/events/EnemyEncounter3.cpp
+        src/events/EnemyEncounter2.cpp
+)
+target_link_libraries(CppDungeon ${CURSES_LIBRARIES})

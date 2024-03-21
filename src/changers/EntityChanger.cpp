@@ -15,13 +15,13 @@ void changers::EntityChanger::set(std::shared_ptr<entity::Entity> entity, Charac
         case Characteristic::dodge:
         case Characteristic::defence:
         case Characteristic::speed:
-
             entity->m_characteristics[static_cast<int>(characteristic)] = std::max(0, value);
             break;
         case Characteristic::HP:
-
-            int maxHP = entity->get(Characteristic::maxHP);
-            entity->m_characteristics[static_cast<int>(characteristic)] = std::min(maxHP, value);
+            entity->m_characteristics[static_cast<int>(characteristic)] = std::min(entity->get(Characteristic::maxHP), value);
+            break;
+        default:
+            entity->m_characteristics[static_cast<int>(characteristic)] = value;
             break;
     }
 }

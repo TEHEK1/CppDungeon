@@ -35,17 +35,12 @@ int main()
     auto main = std::make_shared<Main>();
     std::vector<std::shared_ptr<entity::Entity>> allies;
     allies.reserve(3);
-    /*for(int i = 0;i<2;i++){
-        allies.push_back(main->getHero());
-    }*/
     allies.push_back(std::make_shared<Heroes::ManAtArms::ManAtArms>());
     allies.push_back(std::make_shared<Heroes::Hellion::Hellion>());
     allies.push_back(std::make_shared<Heroes::Musketeer::Musketeer>());
     auto alliesSquad = std::make_shared<Squad>(allies);
     auto enemiesSquad = alliesSquad;
     auto player = std::make_shared<Player>(map, monitor, enemiesSquad, main);
-
-    
 
     while (1) {
         monitor->draw(player.get());

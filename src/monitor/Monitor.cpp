@@ -261,8 +261,8 @@ Monitor::Monitor() {
     for (int i = 0; i < ENTITY_NUM; i++) {
         m_entity_window.push_back(GameWindow(8 * m_background_display.get_y() / 10,
                                             heroes_blocks * block_dictance, m_background_display.get_y() / 10,
-                                            block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2));
-        if ((block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2) >= col || col < 120) {
+                                            block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 4));
+        if ((block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 4) >= col || col < 120) {
             m_not_safe_screen = true;
         }
 
