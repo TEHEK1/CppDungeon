@@ -247,7 +247,7 @@ Monitor::Monitor() {
     m_characteristics_display = GameWindow(row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, 0));
     m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, col / 4 + 1));
-    m_map_display = GameWindow (2 * row / 3 , col / 3, 0, 2 * col / 3 + 1);
+    m_map_display = GameWindow (2 * row / 3 , 7 * col / 24, 0, 2 * col / 3 + 1);
     m_user_actions_display = InterfaceColumnWindow(row / 9, col, 2 * row / 3 + 1, 0);
     //Calculating x_distance and size
     const int heroes_blocks = 8;
@@ -309,7 +309,7 @@ bool Monitor::changed(std::shared_ptr<entity::Entity> person) {
             (person->get(Characteristic::speed) != m_prev_characteristics[person][5]) ||
             (person->get(Characteristic::marked) != m_prev_characteristics[person][6]) ||
             (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][7]) ||
-            (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][8])));
+            (person->get(Characteristic::HP) != m_prev_characteristics[person][8])));
     
 }
 
