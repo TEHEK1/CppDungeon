@@ -23,10 +23,10 @@ namespace Heroes {
 
         }
         std::string Breakthrough::getEffectDescription() {
-            return "Damage -50%\n";
+            return "Damage -50% ";
         }
         std::string Breakthrough::getSelfDescription() {
-            return "Forward 1\n-10% DMG\n-1 SPD\n(3 rds)";
+            return "Forward 1 -10% DMG -1 SPD (3 rds)";
         }
     } // namespace Hellion
 } // namespace Heroes

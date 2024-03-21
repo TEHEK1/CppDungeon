@@ -10,5 +10,5 @@ namespace events {
     EnemyEncounter1::EnemyEncounter1():EnemyEncounter(
             {std::make_shared<enemies::BrigandRaider::BrigandRaider>(),
              std::make_shared<enemies::BrigandFusilier::BrigandFusilier>(),
-             std::make_shared<enemies::CultistAcolyte::CultistAcolyte>()}) {}
+             std::make_shared<enemies::CultistAcolyte::CultistAcolyte>()}, 2) {}
 } // events

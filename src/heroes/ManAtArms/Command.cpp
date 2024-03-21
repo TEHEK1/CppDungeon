@@ -22,7 +22,7 @@ namespace Heroes {
 
         }
         std::string Command::getEffectDescription() {
-            return "+5 ACC\n+4% CRT\n+15% DMG while Guarded";
+            return "+5 ACC +4% CRT +15% DMG while Guarded";
         }
         std::string Command::getSelfDescription() {
             return "";

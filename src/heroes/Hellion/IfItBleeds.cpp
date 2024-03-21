@@ -21,7 +21,7 @@ namespace Heroes {
 
         }
         std::string IfItBleeds::getEffectDescription() {
-            return "Damage -35%\nBleed (100% base)\n2 pts/rd for 3 rds";
+            return "Damage -35% Bleed (100% base) 2 pts/rd for 3 rds";
         }
         std::string IfItBleeds::getSelfDescription() {
             return "";

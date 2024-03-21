@@ -31,7 +31,7 @@ namespace Heroes {
 
         }
         std::string CollectBounty::getEffectDescription() {
-            return "Damage 0%\n+90% DMG vs Marked\n+15% DMG vs Human";
+            return "Damage 0% +90% DMG vs Marked +15% DMG vs Human";
         }
         std::string CollectBounty::getSelfDescription() {
             return "";

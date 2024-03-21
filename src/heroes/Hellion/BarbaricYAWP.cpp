@@ -27,10 +27,10 @@ namespace Heroes {
         }
 
         std::string BarbaricYAWP::getEffectDescription() {
-            return "Damage -100%\nStun (110% base)";
+            return "Damage -100% Stun (110% base)";
         }
         std::string BarbaricYAWP::getSelfDescription() {
-            return "-20% DMG\n-3 SPD (3 rds)";
+            return "-20% DMG -3 SPD (3 rds)";
         }
     } // namespace Hellion
 } // namespace Heroes

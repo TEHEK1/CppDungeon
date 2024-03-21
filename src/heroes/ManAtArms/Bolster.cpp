@@ -20,7 +20,7 @@ namespace Heroes {
 
         }
         std::string Bolster::getEffectDescription() {
-            return "+5 DODGE\n-10% Stress";
+            return "+5 DODGE -10% Stress";
         }
         std::string Bolster::getSelfDescription() {
             return "";

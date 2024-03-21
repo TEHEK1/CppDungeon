@@ -22,7 +22,7 @@ namespace Heroes {
 
         }
         std::string Sidearm::getEffectDescription() {
-            return "Damage -10%\n";
+            return "Damage -10% ";
         }
         std::string Sidearm::getSelfDescription() {
             return "+3 SPD";

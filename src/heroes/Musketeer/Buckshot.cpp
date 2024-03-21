@@ -23,7 +23,7 @@ namespace Heroes {
 
         }
         std::string Buckshot::getEffectDescription() {
-            return "Damage -50%\nKnockback 1";
+            return "Damage -50% Knockback 1";
         }
         std::string Buckshot::getSelfDescription() {
             return "";

@@ -23,7 +23,7 @@ namespace Heroes {
 
         }
         std::string Smokescreen::getEffectDescription() {
-            return "Damage -80%\n-15 ACC\n-15% CRIT ";
+            return "Damage -80% -15 ACC -15% CRIT ";
         }
         std::string Smokescreen::getSelfDescription() {
             return "";

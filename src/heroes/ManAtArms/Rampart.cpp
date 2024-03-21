@@ -29,7 +29,7 @@ namespace Heroes {
 
         }
         std::string Rampart::getEffectDescription() {
-            return "Damage -60%\nKnockback 1\nStun ";
+            return "Damage -60% Knockback 1 Stun ";
         }
         std::string Rampart::getSelfDescription() {
             return "Forward 1";

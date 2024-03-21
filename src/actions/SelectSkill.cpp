@@ -17,7 +17,7 @@ namespace actions {
             addAction(player, std::make_shared<UserUseSkill>(*useSkill));
         }
         removeAction(player, [](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return static_cast<bool>(std::dynamic_pointer_cast<SelectSkill>(*actionIterator));});
-        player->getMonitor()->setBuffer(m_skill->getEffectDescription() + m_skill->getSelfDescription());
+        player->getMonitor()->setBuffer(m_skill->getEffectDescription() +" SELF:"+ m_skill->getSelfDescription());
     }
 
     std::string SelectSkill::getName() {

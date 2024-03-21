@@ -24,7 +24,7 @@ namespace Heroes {
 
         }
         std::string AimedShot::getEffectDescription() {
-            return "Damage +0%\n+50% DMG vs Marked\n+9% CRIT vs Marked";
+            return "Damage +0% +50% DMG vs Marked +9% CRIT vs Marked";
         }
         std::string AimedShot::getSelfDescription() {
             return "";

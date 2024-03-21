@@ -23,7 +23,7 @@ namespace Heroes {
 
         }
         std::string UpperCut::getEffectDescription() {
-            return "Damage -67%\nKnockback 2 (100% base)\nStun (100% base)";
+            return "Damage -67% Knockback 2 (100% base) Stun (100% base)";
         }
         std::string UpperCut::getSelfDescription() {
             return "";

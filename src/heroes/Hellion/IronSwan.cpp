@@ -21,7 +21,7 @@ namespace Heroes {
 
         }
         std::string IronSwan::getEffectDescription() {
-            return "Damage 0%\n";
+            return "Damage 0% ";
         }
         std::string IronSwan::getSelfDescription() {
             return "";

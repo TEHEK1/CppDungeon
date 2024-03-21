@@ -28,7 +28,7 @@ namespace Heroes {
         }
 
         std::string AdrenalineRush::getSelfDescription() {
-            return "Cure Blight/Bleed\n+5 ACC\n+20% DMG (4 rds)";
+            return "Cure Blight/Bleed +5 ACC +20% DMG (4 rds)";
         }
     } // namespace Hellion
 } // namespace Heroes

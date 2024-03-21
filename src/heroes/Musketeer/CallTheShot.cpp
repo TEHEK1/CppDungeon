@@ -25,7 +25,7 @@ namespace Heroes {
 
         }
         std::string CallTheShot::getEffectDescription() {
-            return "Damage -100%\nMark Target\n-20 DODGE";
+            return "Damage -100% Mark Target -20 DODGE";
         }
         std::string CallTheShot::getSelfDescription() {
             return "";

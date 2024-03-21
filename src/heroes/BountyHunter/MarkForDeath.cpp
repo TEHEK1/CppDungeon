@@ -31,7 +31,7 @@ namespace Heroes {
 
         }
         std::string MarkForDeath::getEffectDescription() {
-            return "Damage -100%\nMark Target (3 rds)\n-10% PROT (100% base, 3 rds)";
+            return "Damage -100% Mark Target (3 rds) -10% PROT (100% base, 3 rds)";
         }
         std::string MarkForDeath::getSelfDescription() {
             return "";

@@ -10,5 +10,5 @@ namespace events {
     EnemyEncounter3::EnemyEncounter3():EnemyEncounter(
             {std::make_shared<enemies::CultistBrawler::CultistBrawler>(),
              std::make_shared<enemies::Ghoul::Ghoul>(),
-             std::make_shared<enemies::PelagicGrouper::PelagicGrouper>()}) {}
+             std::make_shared<enemies::PelagicGrouper::PelagicGrouper>()}, 3) {}
 } // events

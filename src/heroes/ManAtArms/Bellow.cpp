@@ -23,7 +23,7 @@ namespace Heroes {
 
         }
         std::string Bellow::getEffectDescription() {
-            return "Damage -100%\n-5 DODGE\n-5 SPD\n+5% Crits Received while Marked (3 rds)";
+            return "Damage -100% -5 DODGE -5 SPD +5% Crits Received while Marked (3 rds)";
         }
         std::string Bellow::getSelfDescription() {
             return "";

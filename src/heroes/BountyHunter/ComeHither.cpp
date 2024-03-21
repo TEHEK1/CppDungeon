@@ -26,7 +26,7 @@ namespace Heroes {
 
         }
         std::string ComeHither::getEffectDescription() {
-            return "Damage -80%\nMark Target (2 rds)\nPull 2 (100% base)";
+            return "Damage -80% Mark Target (2 rds) Pull 2 (100% base)";
         }
         std::string ComeHither::getSelfDescription() {
             return "";

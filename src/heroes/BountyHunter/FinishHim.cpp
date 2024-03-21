@@ -24,7 +24,7 @@ namespace Heroes {
 
         }
         std::string FinishHim::getEffectDescription() {
-            return "Damage 0%\n+25% DMG vs Stunned";
+            return "Damage 0% +25% DMG vs Stunned";
         }
         std::string FinishHim::getSelfDescription() {
             return "";

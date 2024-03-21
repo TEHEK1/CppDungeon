@@ -539,6 +539,9 @@ void Monitor::draw(Player* current_player) {
                 cur_y += 2;
             }
         }
+
+        m_characteristics_display.draw_text(m_characteristics_display.get_y() - 2, 1,
+                                            m_buffer, false, BUFFER | A_BLINK);
     }
     if (m_have_battle) {
         for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {

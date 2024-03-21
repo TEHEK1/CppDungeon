@@ -27,7 +27,7 @@ namespace Heroes {
         }
 
         std::string Caltrops::getEffectDescription() {
-            return "Damage -95%\nBleed (100% base) 2 pts/rd for 3 rds\n+10% DMG Taken (100% base)\n-4 SPD (100% base)\n(3 rds)";
+            return "Damage -95% Bleed (100% base) 2 pts/rd for 3 rds +10% DMG Taken (100% base) -4 SPD (100% base) (3 rds)";
         }
         std::string Caltrops::getSelfDescription() {
             return "";

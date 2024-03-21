@@ -8,6 +8,7 @@
 #include "player/Player.h"
 #include "entity/Entity.h"
 #include "items/Item.h"
+#include "monitor/Monitor.h"
 namespace actions {
     DeselectSkills::DeselectSkills(std::shared_ptr<entity::Entity> entity, std::shared_ptr<BattleField> battleField):m_entity(entity), m_battleField(battleField) {}
     void DeselectSkills::act(Player *player) {
@@ -23,6 +24,7 @@ namespace actions {
             }
         }
         removeAction(player, [](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return static_cast<bool>(std::dynamic_pointer_cast<DeselectSkills>(*actionIterator));});
+        player->getMonitor()->setBuffer("Select skill from list");
     }
     std::string DeselectSkills::getName() {
         return "Return to selecting skills";

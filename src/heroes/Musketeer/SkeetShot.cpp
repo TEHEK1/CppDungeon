@@ -23,7 +23,7 @@ namespace Heroes {
 
         }
         std::string SkeetShot::getEffectDescription() {
-            return "Damage -100%\nClear Stun\nClear Marked Target";
+            return "Damage -100% Clear Stun Clear Marked Target";
         }
         std::string SkeetShot::getSelfDescription() {
             return "";

@@ -30,10 +30,10 @@ namespace Heroes {
         }
 
         std::string BleedOut::getEffectDescription() {
-            return "Damage 20%\nBleed (100% base)\n3 pts/rd for 3 rds";
+            return "Damage 20% Bleed (100% base) 3 pts/rd for 3 rds";
         }
         std::string BleedOut::getSelfDescription() {
-            return "-20% DMG\n-3 SPD\n(3 rds)";
+            return "-20% DMG -3 SPD (3 rds)";
         }
     } // namespace Hellion
 } // namespace Heroes

@@ -22,7 +22,7 @@ namespace Heroes {
 
         }
         std::string FlashBang::getEffectDescription() {
-            return "Damage -100%\nStun (110% base)\nShuffle Single (100% base)";
+            return "Damage -100% Stun (110% base) Shuffle Single (100% base)";
         }
         std::string FlashBang::getSelfDescription() {
             return "";

@@ -19,7 +19,7 @@ namespace Heroes {
 
         }
         std::string Crush::getEffectDescription() {
-            return "Damage +0%\n";
+            return "Damage +0% ";
         }
         std::string Crush::getSelfDescription() {
             return "";

@@ -75,7 +75,7 @@ namespace events {
         m_lastToMove = nullptr;
         m_battleField = std::shared_ptr<BattleField>(new BattleField(m_enemies, m_enemies));
     }
-    EnemyEncounter::EnemyEncounter(const std::vector<std::shared_ptr<entity::Entity>>& entities) {
+    EnemyEncounter::EnemyEncounter(const std::vector<std::shared_ptr<entity::Entity>>& entities, int level):m_level(level) {
         m_enemies = std::make_shared<Squad>(entities);
         m_priority = {};
         m_isInBattle = true;
@@ -85,7 +85,9 @@ namespace events {
     std::shared_ptr<Squad> EnemyEncounter::getEnemies() {
         return m_enemies;
     }
-
+    int EnemyEncounter::getLevel() {
+        return m_level;
+    }
     std::shared_ptr<entity::Entity> EnemyEncounter::getLastToMove() {
         return m_lastToMove;
     }
