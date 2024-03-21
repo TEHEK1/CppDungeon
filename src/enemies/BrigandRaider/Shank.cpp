@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace enemies {
     namespace BrigandRaider {
-        Shank::Shank() : RangeSkill(1, "Shank", {1, 2, 3}, {}, {1, 2, 3, 4}, 93, 11) {}
+        Shank::Shank(): skillDesigns::RangeSkill(1, "Shank", {1, 2, 3}, {}, {1, 2, 3, 4}, 93, 11) {}
 
         void Shank::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,

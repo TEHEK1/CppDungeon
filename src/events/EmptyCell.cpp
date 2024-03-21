@@ -8,9 +8,9 @@
 
 void events::EmptyCell::turn(Player* player) {
     player->getMap()->getCell(player->getPosition())->freeMoves(player);
-    player->getMonitor()->draw(player);
     player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
     player->getMap()->getCell(player->getPosition())->freeMoves(player);
+    player->getMonitor()->draw(player);
 }
 
 std::vector<std::vector<char>> events::EmptyCell::draw() {

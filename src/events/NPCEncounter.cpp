@@ -5,12 +5,13 @@
 #include "events/NPCEncounter.h"
 #include "heroes/PlagueDoctor/PlagueDoctor.h"
 #include "Squad.h"
+#include "Main.h"
 #include <memory>
 #include <exception>
 namespace events {
     void NPCEncounter::use(Player *player) {
         try {
-            add(player->getSquad(), std::make_shared<NPC::PlagueDoctor::PlagueDoctor>());
+            add(player->getSquad(), player->getMain()->getNPC());
         }
         catch (std::exception) {}
         removeAction(player, [this](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return comp(actionIterator);});

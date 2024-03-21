@@ -6,7 +6,7 @@
 #include "effects/Heal.h"
 namespace Heroes {
     namespace Musketeer {
-        PatchUp::PatchUp() : Skill("PatchUp", {3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
+        PatchUp::PatchUp(): skillDesigns::RangeSkill(1, "PatchUp", {3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
 
         void PatchUp::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -18,6 +18,12 @@ namespace Heroes {
         void PatchUp::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string PatchUp::getEffectDescription() {
+            return "+20% Healing";
+        }
+        std::string PatchUp::getSelfDescription() {
+            return "";
         }
     } // namespace Musketeer
 } // namespace Heroes

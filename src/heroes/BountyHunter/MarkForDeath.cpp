@@ -8,7 +8,7 @@
 
 namespace Heroes {
     namespace BountyHunter {
-        MarkForDeath::MarkForDeath() : RangeSkill(1, "MarkForDeath", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 100, 0) {}
+        MarkForDeath::MarkForDeath() : skillDesigns::RangeSkill(1, "MarkForDeath", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 100, 0) {}
 
         void MarkForDeath::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -29,6 +29,12 @@ namespace Heroes {
         void MarkForDeath::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string MarkForDeath::getEffectDescription() {
+            return "Damage -100%\nMark Target (3 rds)\n-10% PROT (100% base, 3 rds)";
+        }
+        std::string MarkForDeath::getSelfDescription() {
+            return "";
         }
     } // namespace BrigandFusilier
 } // namespace enemies

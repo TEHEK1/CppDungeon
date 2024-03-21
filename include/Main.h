@@ -10,7 +10,8 @@
 #include <string>
 class Monitor;
 namespace events{class Event;};
-namespace entity {class Entity;};
+namespace entity {class Enemy;};
+
 namespace items {class Item;};
 namespace entity {class Boss;};
 namespace entity {class Hero;};
@@ -21,7 +22,7 @@ class Main {
     size_t m_seed = 1;
     std::map<size_t, std::string> m_map;
     ObjectFactory<events::Event, size_t> m_eventFactory;
-    ObjectFactory<entity::Entity, size_t> m_enemiesFactory;
+    ObjectFactory<entity::Enemy, size_t> m_enemiesFactory;
     ObjectFactory<items::Item, size_t> m_itemsFactory;
     ObjectFactory<entity::Boss, size_t> m_bossesFactory;
     ObjectFactory<entity::Hero, size_t> m_heroesFactory;
@@ -37,12 +38,12 @@ public:
     void setSeed(std::size_t);
     std::size_t getSeed();
     Player* getGame();
-    events::Event* getEvent();
-    entity::Entity* getEnemy();
-    items::Item* getItem();
-    entity::Boss* getBoss();
-    entity::Hero* getHero();
-    entity::NPC* getNPC();
+    std::shared_ptr<events::Event> getEvent();
+    std::shared_ptr<entity::Enemy> getEnemy();
+    std::shared_ptr<items::Item> getItem();
+    std::shared_ptr<entity::Boss> getBoss();
+    std::shared_ptr<entity::Hero> getHero();
+    std::shared_ptr<entity::NPC> getNPC();
 
 
 };

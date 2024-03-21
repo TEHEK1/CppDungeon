@@ -5,7 +5,7 @@
 #include "effects/ForceMove.h"
 namespace Heroes {
     namespace BountyHunter {
-        UpperCut::UpperCut() : Skill("UpperCut", {1, 2}, {}, {1, 2}, 90, 0) {}
+        UpperCut::UpperCut() : skillDesigns::RangeSkill(1, "UpperCut", {1, 2}, {}, {1, 2}, 90, 0) {}
 
         void UpperCut::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -21,6 +21,12 @@ namespace Heroes {
         void UpperCut::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string UpperCut::getEffectDescription() {
+            return "Damage -67%\nKnockback 2 (100% base)\nStun (100% base)";
+        }
+        std::string UpperCut::getSelfDescription() {
+            return "";
         }
     } // namespace BountyHunter
 } // namespace enemies

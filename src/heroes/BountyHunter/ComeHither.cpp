@@ -6,7 +6,7 @@
 #include "effects/ForceMove.h"
 namespace Heroes {
     namespace BountyHunter {
-        ComeHither::ComeHither() : RangeSkill(1, "ComeHither", {1, 2, 3, 4}, {}, {3, 4}, 90, 0) {}
+        ComeHither::ComeHither() : skillDesigns::RangeSkill(1, "ComeHither", {1, 2, 3, 4}, {}, {3, 4}, 90, 0) {}
 
         void ComeHither::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -24,6 +24,12 @@ namespace Heroes {
         void ComeHither::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string ComeHither::getEffectDescription() {
+            return "Damage -80%\nMark Target (2 rds)\nPull 2 (100% base)";
+        }
+        std::string ComeHither::getSelfDescription() {
+            return "";
         }
     } // namespace BrigandFusilier
 } // namespace enemies

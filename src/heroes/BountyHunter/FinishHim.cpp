@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace BountyHunter {
-        FinishHim::FinishHim() : Skill("FinishHim", {1, 2, 3}, {}, {1, 2, 3}, 85, 5) {}
+        FinishHim::FinishHim() : skillDesigns::RangeSkill(1, "FinishHim", {1, 2, 3}, {}, {1, 2, 3}, 85, 5) {}
 
         void FinishHim::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -22,6 +22,12 @@ namespace Heroes {
         void FinishHim::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string FinishHim::getEffectDescription() {
+            return "Damage 0%\n+25% DMG vs Stunned";
+        }
+        std::string FinishHim::getSelfDescription() {
+            return "";
         }
     } // namespace BrigandFusilier
 } // namespace enemies

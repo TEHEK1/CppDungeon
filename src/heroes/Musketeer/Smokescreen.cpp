@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace Musketeer {
-        Smokescreen::Smokescreen() : RangeSkill(2, "Smokescreen", {3, 4}, {}, {3, 4}, 95, -10) {}
+        Smokescreen::Smokescreen() : skillDesigns::RangeSkill(2, "Smokescreen", {3, 4}, {}, {3, 4}, 95, -10) {}
 
         void Smokescreen::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -21,6 +21,12 @@ namespace Heroes {
         void Smokescreen::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Smokescreen::getEffectDescription() {
+            return "Damage -80%\n-15 ACC\n-15% CRIT ";
+        }
+        std::string Smokescreen::getSelfDescription() {
+            return "";
         }
     } // namespace Musketeer
 } // namespace Heroes

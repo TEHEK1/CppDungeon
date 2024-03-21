@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace ManAtArms {
-        Crush::Crush() : Skill("Crush", {1, 2}, {}, {1, 2, 3}, 85, 5) {}
+        Crush::Crush(): skillDesigns::RangeSkill(1, "Crush", {1, 2}, {}, {1, 2, 3}, 85, 5) {}
 
         void Crush::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -17,6 +17,12 @@ namespace Heroes {
         void Crush::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Crush::getEffectDescription() {
+            return "Damage +0%\n";
+        }
+        std::string Crush::getSelfDescription() {
+            return "";
         }
     } // namespace ManAtArms
 } // namespace Heroes

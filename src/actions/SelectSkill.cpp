@@ -8,6 +8,7 @@
 #include "player/Player.h"
 #include "generators/SkillActionsGenerator.h"
 #include "actions/DeselectSkills.h"
+#include "monitor/Monitor.h"
 namespace actions {
     SelectSkill::SelectSkill(std::shared_ptr<skillDesigns::RangeSkill> skill, std::shared_ptr<entity::Entity> entity, std::shared_ptr<BattleField> battleField):m_skill(skill), m_entity(entity), m_battleField(battleField) {}
     void SelectSkill::act(Player *player) {
@@ -16,6 +17,7 @@ namespace actions {
             addAction(player, std::make_shared<UserUseSkill>(*useSkill));
         }
         removeAction(player, [](std::set<std::shared_ptr<actions::Action>>::iterator actionIterator){return static_cast<bool>(std::dynamic_pointer_cast<SelectSkill>(*actionIterator));});
+        player->getMonitor()->setBuffer(m_skill->getEffectDescription() + m_skill->getSelfDescription());
     }
 
     std::string SelectSkill::getName() {

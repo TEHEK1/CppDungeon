@@ -3,7 +3,7 @@
 #include "effects/Move.h"
 
 namespace Heroes {
-        MoveBackward::MoveBackward() : RangeSkill(0, "MoveBackward", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
+        MoveBackward::MoveBackward() : skillDesigns::RangeSkill(0, "MoveBackward", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
 
         void MoveBackward::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,

@@ -4,7 +4,7 @@
 #include "effects/ForceMove.h"
 namespace enemies {
     namespace BrigandRaider {
-        UppercutSlice::UppercutSlice() : RangeSkill(1, "Uppercut Slice", {1, 2}, {}, {1, 2, 3}, 94, 15) {}
+        UppercutSlice::UppercutSlice() : skillDesigns::RangeSkill(1, "Uppercut Slice", {1, 2}, {}, {1, 2, 3}, 94, 15) {}
 
         void UppercutSlice::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                             std::shared_ptr<entity::Entity> actor,

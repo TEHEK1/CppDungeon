@@ -6,7 +6,7 @@
 #include "generators/NumberGenerator.h"
 namespace Heroes {
     namespace BountyHunter {
-        FlashBang::FlashBang() : RangeSkill(1, "FlashBang", {2, 3, 4}, {}, {2, 3, 4}, 95, 0) {}
+        FlashBang::FlashBang() : skillDesigns::RangeSkill(1, "FlashBang", {2, 3, 4}, {}, {2, 3, 4}, 95, 0) {}
 
         void FlashBang::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -20,6 +20,12 @@ namespace Heroes {
         void FlashBang::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string FlashBang::getEffectDescription() {
+            return "Damage -100%\nStun (110% base)\nShuffle Single (100% base)";
+        }
+        std::string FlashBang::getSelfDescription() {
+            return "";
         }
     } // namespace BrigandFusilier
 } // namespace enemies

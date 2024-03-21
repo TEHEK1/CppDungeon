@@ -4,10 +4,11 @@
 #include "effects/Mark.h"
 #include "effects/Bleed.h"
 #include "entity/EnemyType.h"
+#include "skillDesigns/RangeSkill.h"
 
 namespace Heroes {
     namespace BountyHunter {
-        CollectBounty::CollectBounty() : Skill("CollectBounty", {1, 2, 3}, {}, {1, 2}, 85, 7) {}
+        CollectBounty::CollectBounty() : skillDesigns::RangeSkill(1, "CollectBounty", {1, 2, 3}, {}, {1, 2}, 85, 7) {}
 
         void CollectBounty::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -28,6 +29,12 @@ namespace Heroes {
         void CollectBounty::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string CollectBounty::getEffectDescription() {
+            return "Damage 0%\n+90% DMG vs Marked\n+15% DMG vs Human";
+        }
+        std::string CollectBounty::getSelfDescription() {
+            return "";
         }
     } // namespace BrigandFusilier
 } // namespace enemies

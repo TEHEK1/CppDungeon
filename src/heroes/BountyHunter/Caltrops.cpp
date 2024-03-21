@@ -6,7 +6,7 @@
 #include "effects/Debuff.h"
 namespace Heroes {
     namespace BountyHunter {
-        Caltrops::Caltrops() : RangeSkill(1, "Caltrops", {1, 2, 3}, {}, {3, 4}, 90, 5) {}
+        Caltrops::Caltrops() : skillDesigns::RangeSkill(1, "Caltrops", {1, 2, 3}, {}, {3, 4}, 90, 5) {}
 
         void Caltrops::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -24,6 +24,13 @@ namespace Heroes {
         void Caltrops::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+
+        std::string Caltrops::getEffectDescription() {
+            return "Damage -95%\nBleed (100% base) 2 pts/rd for 3 rds\n+10% DMG Taken (100% base)\n-4 SPD (100% base)\n(3 rds)";
+        }
+        std::string Caltrops::getSelfDescription() {
+            return "";
         }
     } // namespace BountyHunter
 } // namespace enemies

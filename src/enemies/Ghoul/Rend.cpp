@@ -4,7 +4,7 @@
 #include "effects/Bleed.h"
 namespace enemies {
     namespace Ghoul {
-        Rend::Rend() : RangeSkill(2, "Rend", {1, 2}, {}, {1, 2}, 89, 16) {}
+        Rend::Rend() : skillDesigns::RangeSkill(2, "Rend", {1, 2}, {}, {1, 2}, 89, 16) {}
 
         void Rend::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                            std::shared_ptr<entity::Entity> actor,

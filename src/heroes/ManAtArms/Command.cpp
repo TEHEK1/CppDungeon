@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace ManAtArms {
-        Command::Command() : RangeSkill(3, "Command", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100) {}
+        Command::Command() : skillDesigns::RangeSkill(3, "Command", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100) {}
 
         void Command::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -20,6 +20,12 @@ namespace Heroes {
         void Command::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Command::getEffectDescription() {
+            return "+5 ACC\n+4% CRT\n+15% DMG while Guarded";
+        }
+        std::string Command::getSelfDescription() {
+            return "";
         }
     } // namespace ManAtArms
 } // namespace Heroes

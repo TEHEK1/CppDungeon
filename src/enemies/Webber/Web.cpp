@@ -6,7 +6,7 @@
 #include "effects/Mark.h"
 namespace enemies {
     namespace Webber {
-        Web::Web() : RangeSkill(1, "Web", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 83, 6) {}
+        Web::Web() : skillDesigns::RangeSkill(1, "Web", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 83, 6) {}
 
         void Web::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> actor,

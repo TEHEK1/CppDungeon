@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace Musketeer {
-        AimedShot::AimedShot() : Skill("AimedShot", {3, 4}, {}, {2, 3, 4}, 95, 5) {}
+        AimedShot::AimedShot(): skillDesigns::RangeSkill(1, "AimedShot", {3, 4}, {}, {2, 3, 4}, 95, 5) {}
 
         void AimedShot::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -22,6 +22,12 @@ namespace Heroes {
         void AimedShot::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string AimedShot::getEffectDescription() {
+            return "Damage +0%\n+50% DMG vs Marked\n+9% CRIT vs Marked";
+        }
+        std::string AimedShot::getSelfDescription() {
+            return "";
         }
     } // namespace Musketeer
 } // namespace Heroes

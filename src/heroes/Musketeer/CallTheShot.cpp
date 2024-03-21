@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace Musketeer {
-        CallTheShot::CallTheShot() : Skill("CallTheShot", {3, 4}, {}, {2, 3, 4}, 100, 0) {}
+        CallTheShot::CallTheShot(): skillDesigns::RangeSkill(1, "CallTheShot", {3, 4}, {}, {2, 3, 4}, 100, 0) {}
 
         void CallTheShot::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -23,6 +23,12 @@ namespace Heroes {
         void CallTheShot::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string CallTheShot::getEffectDescription() {
+            return "Damage -100%\nMark Target\n-20 DODGE";
+        }
+        std::string CallTheShot::getSelfDescription() {
+            return "";
         }
     } // namespace Musketeer
 } // namespace Heroes

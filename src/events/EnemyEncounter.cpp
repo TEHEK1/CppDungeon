@@ -170,9 +170,10 @@ namespace events {
                 }
                 m_isInBattle = false;
                 if(heroesAlive){
+                    returnToDefault(player);
                     for(auto event:player->getMap()->getCell(player->getPosition())->getEvents()){
-                        if(auto chooseNextRoom = std::dynamic_pointer_cast<events::ChooseRoomEvent>(event)){
-                            chooseNextRoom->turn(player);
+                        if(!std::dynamic_pointer_cast<events::EnemyEncounter>(event)){
+                            event->turn(player);
                         }
                     }
                 player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
@@ -186,8 +187,11 @@ namespace events {
             _refreshPriority();
             std::shared_ptr<entity::Entity> entity = m_priority.front();
             m_priority.pop();
-            if (entity && !entity->isAlive()) {
+            if (std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity) && !entity->isAlive()) {
                 m_lastToMove = entity;
+                returnToDefault(player);
+                changers::ActionsChanger::addUniqueAction(player, std::make_shared<actions::TurnEvent>(
+                        std::dynamic_pointer_cast<events::Event>(shared_from_this())));
                 return;
             }
             turnEffects(entity);
@@ -219,7 +223,7 @@ namespace events {
                     }
                 }
             }
-            if (battleField->areAllies(getLastToMove(), enemiesEntities[0])) {
+            if (std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(getLastToMove())) {
                 returnToDefault(player);
                 changers::ActionsChanger::addUniqueAction(player, std::make_shared<actions::TurnEvent>(
                         std::dynamic_pointer_cast<events::Event>(shared_from_this())));
@@ -229,7 +233,7 @@ namespace events {
                                                                                 battleField);
                 deselectAction->act(player);
             }
-        } while (m_lastToMove == nullptr);
+        } while (m_lastToMove == nullptr||(!std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(m_lastToMove)&&!m_lastToMove->isAlive()));
    }
 
 }

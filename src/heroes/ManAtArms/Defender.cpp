@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace ManAtArms {
-        Defender::Defender() : Skill("Defender", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
+        Defender::Defender(): skillDesigns::RangeSkill(1, "Defender", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
 
         void Defender::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -17,6 +17,12 @@ namespace Heroes {
         void Defender::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Defender::getEffectDescription() {
+            return "Guard Ally";
+        }
+        std::string Defender::getSelfDescription() {
+            return "+15% PROT";
         }
     } // namespace ManAtArms
 } // namespace Heroes

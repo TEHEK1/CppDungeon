@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace ManAtArms {
-        Bolster::Bolster() : RangeSkill(3, "Bolster", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100) {}
+        Bolster::Bolster() : skillDesigns::RangeSkill(3, "Bolster", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100) {}
 
         void Bolster::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -18,6 +18,12 @@ namespace Heroes {
         void Bolster::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Bolster::getEffectDescription() {
+            return "+5 DODGE\n-10% Stress";
+        }
+        std::string Bolster::getSelfDescription() {
+            return "";
         }
     } // namespace ManAtArms
 } // namespace Heroes

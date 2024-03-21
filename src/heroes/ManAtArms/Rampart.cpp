@@ -5,7 +5,7 @@
 #include "effects/Debuff.h"
 namespace Heroes {
     namespace ManAtArms {
-        Rampart::Rampart() : Skill("Rampart", {1, 2, 3}, {1, 2}, {}, 90, 5) {}
+        Rampart::Rampart(): skillDesigns::RangeSkill(1, "Rampart", {1, 2, 3}, {1, 2}, {}, 90, 5) {}
 
         void Rampart::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -27,6 +27,12 @@ namespace Heroes {
         void Rampart::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Rampart::getEffectDescription() {
+            return "Damage -60%\nKnockback 1\nStun ";
+        }
+        std::string Rampart::getSelfDescription() {
+            return "Forward 1";
         }
     } // namespace ManAtArms
 } // namespace Heroes

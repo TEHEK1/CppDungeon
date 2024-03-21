@@ -4,7 +4,7 @@
 #include "effects/Move.h"
 namespace enemies {
     namespace PelagicGrouper {
-        Spearfishing::Spearfishing(): RangeSkill(1, "Spearfishing", {3, 4}, {}, {3, 4}, 78, 6) {}
+        Spearfishing::Spearfishing(): skillDesigns::RangeSkill(1, "Spearfishing", {3, 4}, {}, {3, 4}, 78, 6) {}
 
         void Spearfishing::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                           std::shared_ptr<entity::Entity> actor,

@@ -17,6 +17,7 @@
 #include "items/Item.h"
 #include "actions/Lose.h"
 #include "actions/Win.h"
+#include "actions/DeselectSkills.h"
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
@@ -174,7 +175,7 @@ void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<act
     
     m_first_unbind = '0';
     for (auto i : available_actions) {
-        if (auto action = std::dynamic_pointer_cast<actions::Deselect>(i)) {
+        if (auto action = std::dynamic_pointer_cast<actions::DeselectSkills>(i)) {
             m_key_binds[m_first_unbind] = i;
             m_first_unbind++;
             break;

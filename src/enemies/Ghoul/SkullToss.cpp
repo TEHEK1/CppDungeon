@@ -9,7 +9,7 @@
 
 namespace enemies {
     namespace Ghoul {
-        SkullToss::SkullToss() : RangeSkill(1, "SkullToss", {1, 2, 3, 4}, {}, {3, 4}, 89, 12) {}
+        SkullToss::SkullToss() : skillDesigns::RangeSkill(1, "SkullToss", {1, 2, 3, 4}, {}, {3, 4}, 89, 12) {}
 
         void SkullToss::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                    std::shared_ptr<entity::Entity> actor,
