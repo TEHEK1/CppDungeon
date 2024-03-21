@@ -11,6 +11,6 @@ class AbstractCreator
 public:
     AbstractCreator() {}
     virtual ~AbstractCreator(){}
-    virtual Base* create() const = 0;
+    virtual std::shared_ptr<Base> create() const = 0;
 };
 #endif //CPPDUNGEON_ABSTRACTEVENTCREATOR_H

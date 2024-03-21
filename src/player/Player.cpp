@@ -8,15 +8,18 @@
 #include "player/Player.h"
 #include "navigation/Position.h"
 #include "navigation/Map.h"
+#include "Main.h"
 #include "Squad.h"
 #include <memory>
 
-Player::Player(const std::shared_ptr<Map>& map, const std::shared_ptr<Monitor>& monitor, const std::shared_ptr<Squad>& squad) : m_map(map), m_monitor(monitor), m_squad(squad) {
+Player::Player(const std::shared_ptr<Map>& map, const std::shared_ptr<Monitor>& monitor,
+               const std::shared_ptr<Squad>& squad, const std::shared_ptr<Main>& main) : m_map(map), m_monitor(monitor), m_squad(squad), m_main(main) {
+    m_main->setSeed(12);
     m_position = map->getStartPosition();
     if(map->getCell(m_position) == nullptr){
         throw std::logic_error("No such Cell");
     }
-    map->getCell(m_position)->generateEvents();
+    map->getCell(m_position)->generateEvents(this);
     for(auto& event:map->getCell(m_position)->getEvents()){
         if(event!= nullptr) {
             event->turn(this);
@@ -45,4 +48,8 @@ std::shared_ptr<Map> Player::getMap() {
 
 std::set<std::shared_ptr<actions::Action>> Player::getActions() {
     return m_actions;
+}
+
+std::shared_ptr<Main> Player::getMain() {
+    return m_main;
 }

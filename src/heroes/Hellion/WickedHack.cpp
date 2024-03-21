@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace Hellion {
-        WickedHack::WickedHack() : Skill("WickedHack", {1, 2}, {}, {1, 2}, 85, 4) {}
+        WickedHack::WickedHack(): skillDesigns::RangeSkill(1, "WickedHack", {1, 2}, {}, {1, 2}, 85, 4) {}
 
         void WickedHack::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -17,6 +17,12 @@ namespace Heroes {
         void WickedHack::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string WickedHack::getEffectDescription() {
+            return "Damage 0% ";
+        }
+        std::string WickedHack::getSelfDescription() {
+            return "";
         }
     } // namespace Hellion
 } // namespace Heroes

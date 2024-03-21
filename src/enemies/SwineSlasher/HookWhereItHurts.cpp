@@ -5,7 +5,7 @@
 #include "effects/Move.h"
 namespace enemies {
     namespace SwineSlasher {
-        HookWhereItHurts::HookWhereItHurts(): RangeSkill(1, "HookWhereItHurts", {1, 2, 3, 4}, {}, {1, 2, 3}, 83, 16) {}
+        HookWhereItHurts::HookWhereItHurts(): skillDesigns::RangeSkill(1, "HookWhereItHurts", {1, 2, 3, 4}, {}, {1, 2, 3}, 83, 16) {}
 
         void HookWhereItHurts::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                           std::shared_ptr<entity::Entity> actor,

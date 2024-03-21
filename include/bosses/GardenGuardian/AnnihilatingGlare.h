@@ -1,3 +1,5 @@
+#ifndef AnnihilatingGlare_H
+#define AnnihilatingGlare_H
 #include "skillDesigns/RangeSkill.h"
 
 namespace Bosses {
@@ -20,3 +22,4 @@ namespace Bosses {
     } // namespace GardenGuardian
 
 } // namespace Boss
+#endif // AnnihilatingGlare_H

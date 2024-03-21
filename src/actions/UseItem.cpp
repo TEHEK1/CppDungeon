@@ -7,8 +7,8 @@
 #include "Squad.h"
 namespace actions{
     UseItem::UseItem(std::shared_ptr<items::Item> skill, std::shared_ptr<BattleField> battleField,
-                       std::shared_ptr<entity::Entity> actor, std::vector<std::shared_ptr<entity::Entity>> objects):
-            UseSkill(skill, battleField, actor, objects){}
+                       std::shared_ptr<entity::Entity> actor, std::vector<std::shared_ptr<entity::Entity>> objects, std::vector<SquadIndexer> indexer):
+            UseSkill(skill, battleField, actor, objects, indexer){}
 
     void UseItem::act(Player *player) {
         m_skill -> use(m_battleField, m_actor, m_objects);

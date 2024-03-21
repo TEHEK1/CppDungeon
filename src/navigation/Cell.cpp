@@ -4,6 +4,7 @@
 #include "navigation/Cell.h"
 #include "actions/MoveLeft.h"
 #include "actions/MoveRight.h"
+#include "events/EnemyEncounter.h"
 
 void Cell::freeMoves(Player * player, events::Event* event) {
     m_endedEvents.insert(event);
@@ -21,8 +22,13 @@ void Cell::freeMoves(Player * player) {
 }
 
 char Cell::getLevel() {
-    char a = '5';
-    return a;
+    int level = 1;
+    for(auto event:getEvents()){
+        if(auto enemyEncounter = std::dynamic_pointer_cast<events::EnemyEncounter>(event)) {
+            level = std::max(level, enemyEncounter->getLevel());
+        }
+    }
+    return level;
 }
 
 std::vector<std::shared_ptr<events::Event>> Cell::getEvents(){

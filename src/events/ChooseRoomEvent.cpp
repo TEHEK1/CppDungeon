@@ -6,12 +6,19 @@
 #include "navigation/Map.h"
 #include "monitor/Monitor.h"
 #include "player/Player.h"
-
+#include "events/EnemyEncounter.h"
 
 void events::ChooseRoomEvent::turn(Player *player) {
     player->getMap()->getCell(player->getPosition())->freeMoves(player);
     player->getMonitor()->draw(player);
     player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
+    for(auto event:player->getMap()->getCell(player->getPosition())->getEvents()){
+        if(auto enemyEncounter = std::dynamic_pointer_cast<EnemyEncounter>(event)){
+            if(enemyEncounter->getIsInBattle()){
+                return;
+            }
+        }
+    }
     for (Position coords : player->getMap()->getNextRooms(player->getPosition())) {
         addUniqueAction(player, std::make_shared<actions::ChooseNextRoom>(coords));
     }

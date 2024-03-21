@@ -5,7 +5,7 @@
 #include "effects/Bleed.h"
 namespace Heroes {
     namespace ManAtArms {
-        Bellow::Bellow() : RangeSkill(3, "Bellow", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 90) {}
+        Bellow::Bellow() : skillDesigns::RangeSkill(3, "Bellow", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 90) {}
 
         void Bellow::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,
@@ -21,6 +21,12 @@ namespace Heroes {
         void Bellow::unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                   std::shared_ptr<entity::Entity> object) {
 
+        }
+        std::string Bellow::getEffectDescription() {
+            return "Damage -100% -5 DODGE -5 SPD +5% Crits Received while Marked (3 rds)";
+        }
+        std::string Bellow::getSelfDescription() {
+            return "";
         }
     } // namespace ManAtArms
 } // namespace Heroes

@@ -75,7 +75,7 @@ private:
             friend Monitor;
             int find_bind_key(std::shared_ptr<actions::Action> action);
             std::shared_ptr<actions::Action> find_action(int key);
-            void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive = true);
+            void draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions,bool batalling, bool adaptive = true);
             void get_binds(Player* player);
         private:
             class Bind{
@@ -91,25 +91,29 @@ private:
 
             };
             std::vector<GameWindow> m_columns;
-            int m_first_unbind = 'a';
+            int m_first_unbind = '0';
             std::map<int, Bind> m_key_binds;
     };
-
+    bool changed(std::shared_ptr<entity::Entity>);
     static void abs_coordinates_to_relative(int& row, int& col, const GameWindow& cur_window, Position center);
+    void update_characteristics(std::shared_ptr<entity::Entity>);
     static void init_colors();
     static std::shared_ptr<events::EnemyEncounter> have_battle(Player* player);
     
-    static std::string get_entity_characteristics(std::shared_ptr<entity::Entity> person);
-    bool m_draw_Characteristis = false;
+    std::string get_entity_characteristics(std::shared_ptr<entity::Entity> person);
+
+    bool m_draw_Characteristics = false;
     bool m_have_battle = false;
     bool m_if_skill_selected = false;
-    int m_selected_skill = -1;
-    std::string m_buffer = "DEBUG"; 
+    bool m_not_safe_screen = false;
+    int m_ended = 0;
+    std::string m_buffer = "Nothing"; 
     std::vector<GameWindow> m_inventory_display;
     InterfaceColumnWindow m_user_actions_display;
     GameWindow m_map_display;
     GameWindow m_characteristics_display;
     std::vector<GameWindow> m_entity_window;
     GameWindow m_background_display;
+    std::map<std::shared_ptr<entity::Entity>, std::vector<int>> m_prev_characteristics;
 };
 #endif //UNTITLED_MONITOR_H

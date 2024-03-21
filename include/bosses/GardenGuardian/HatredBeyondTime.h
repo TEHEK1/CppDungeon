@@ -1,11 +1,12 @@
-#include "skillDesigns/Skill.h"
+#ifndef HatredBeyondTime_H
+#define HatredBeyondTime_H
 #include "skillDesigns/RangeSkill.h"
 
 namespace Bosses {
 
     namespace GardenGuardian {
 
-        class HatredBeyondTime : public skillDesigns::Skill {
+        class HatredBeyondTime : public skillDesigns::RangeSkill {
         public:
             HatredBeyondTime();
 
@@ -21,3 +22,4 @@ namespace Bosses {
     } // namespace GardenGuardian
 
 } // namespace Boss
+#endif // HatredBeyondTime_H

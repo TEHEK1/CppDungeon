@@ -27,6 +27,8 @@
 #include <cstdlib>
 #include "actions/TurnEvent.h"
 #include "actions/DeselectSkills.h"
+#include "actions/Lose.h"
+#include "events/ChooseRoomEvent.h"
 namespace events {
     EnemyEncounter::EnemyEncounter() {
 
@@ -44,7 +46,7 @@ namespace events {
                 tmpEnemies.push_back(std::make_shared<enemies::BrigandFusilier::BrigandFusilier>());
                 break;
             case 2:
-                tmpEnemies.push_back(std::make_shared<enemies::CulistBrawler::CulistBrawler>());
+                tmpEnemies.push_back(std::make_shared<enemies::CultistBrawler::CultistBrawler>());
                 break;
             case 3:
                 tmpEnemies.push_back(std::make_shared<enemies::Ghoul::Ghoul>());
@@ -73,11 +75,19 @@ namespace events {
         m_lastToMove = nullptr;
         m_battleField = std::shared_ptr<BattleField>(new BattleField(m_enemies, m_enemies));
     }
-
+    EnemyEncounter::EnemyEncounter(const std::vector<std::shared_ptr<entity::Entity>>& entities, int level):m_level(level) {
+        m_enemies = std::make_shared<Squad>(entities);
+        m_priority = {};
+        m_isInBattle = true;
+        m_lastToMove = nullptr;
+        m_battleField = std::shared_ptr<BattleField>(new BattleField(m_enemies, m_enemies));
+    }
     std::shared_ptr<Squad> EnemyEncounter::getEnemies() {
         return m_enemies;
     }
-
+    int EnemyEncounter::getLevel() {
+        return m_level;
+    }
     std::shared_ptr<entity::Entity> EnemyEncounter::getLastToMove() {
         return m_lastToMove;
     }
@@ -161,14 +171,29 @@ namespace events {
                     endBattleTurnEffects(i);
                 }
                 m_isInBattle = false;
+                if(heroesAlive){
+                    returnToDefault(player);
+                    for(auto event:player->getMap()->getCell(player->getPosition())->getEvents()){
+                        if(!std::dynamic_pointer_cast<events::EnemyEncounter>(event)){
+                            event->turn(player);
+                        }
+                    }
                 player->getMap()->getCell(player->getPosition())->freeMoves(player, this);
+                }
+                else{
+                    returnToDefault(player);
+                    addAction(player, std::make_shared<actions::Lose>());
+                }
                 return;
             }
             _refreshPriority();
             std::shared_ptr<entity::Entity> entity = m_priority.front();
             m_priority.pop();
-            if (entity && !entity->isAlive()) {
+            if (std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(entity) && !entity->isAlive()) {
                 m_lastToMove = entity;
+                returnToDefault(player);
+                changers::ActionsChanger::addUniqueAction(player, std::make_shared<actions::TurnEvent>(
+                        std::dynamic_pointer_cast<events::Event>(shared_from_this())));
                 return;
             }
             turnEffects(entity);
@@ -200,7 +225,7 @@ namespace events {
                     }
                 }
             }
-            if (battleField->areAllies(getLastToMove(), enemiesEntities[0])) {
+            if (std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(getLastToMove())) {
                 returnToDefault(player);
                 changers::ActionsChanger::addUniqueAction(player, std::make_shared<actions::TurnEvent>(
                         std::dynamic_pointer_cast<events::Event>(shared_from_this())));
@@ -210,7 +235,7 @@ namespace events {
                                                                                 battleField);
                 deselectAction->act(player);
             }
-        } while (m_lastToMove == nullptr);
+        } while (m_lastToMove == nullptr||(!std::dynamic_pointer_cast<entity::MarkedAsAutoTurn>(m_lastToMove)&&!m_lastToMove->isAlive()));
    }
 
 }

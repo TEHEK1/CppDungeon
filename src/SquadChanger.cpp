@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <cmath>
-
+#include "entity/Entity.h"
 void SquadChanger::move(const std::shared_ptr<Squad>& squad, int index1, int index2) {
     if (index1 < 0 || index1 >= squad->m_squad.size()) { throw std::invalid_argument("index is out of range"); }
     if (index2 >= squad->m_squad.size())  { index2 = static_cast<int>(squad->m_squad.size()) - 1;}
@@ -73,10 +73,11 @@ void SquadChanger::add(const std::shared_ptr<Squad>& squad, std::shared_ptr<enti
 }
 void SquadChanger::add(const std::shared_ptr<Squad>& squad, std::shared_ptr<entity::Entity> entity) {
     for (int i = 0; i < squad->m_squad.size(); ++i) {
-        if (squad->m_squad[i] != nullptr) {
+        if (squad->m_squad[i] == nullptr|| !squad->m_squad[i] -> isAlive()) {
             squad->m_squad[i] = std::move(entity);
             return;
         }
     }
-    throw std::length_error("m_squad is full!");
+    squad->m_squad[0] = std::move(entity);
+//throw std::length_error("m_squad is full!");
 }

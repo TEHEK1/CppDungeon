@@ -3,7 +3,7 @@
 #include "effects/Move.h"
 
 namespace Heroes {
-        MoveForward::MoveForward() : RangeSkill(0, "MoveForward", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
+        MoveForward::MoveForward() : skillDesigns::RangeSkill(0, "MoveForward", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
 
         void MoveForward::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,

@@ -27,7 +27,7 @@ public:
         registerClass(id, new Creator<Object, Base>());
     }
 
-    Base * create(const IdType   & id)
+    std::shared_ptr<Base> create(const IdType   & id)
     {
         typename std::map<IdType, AbstractCreator<Base>*>::iterator it = m_factory.find(id);
         if (it != m_factory.end())

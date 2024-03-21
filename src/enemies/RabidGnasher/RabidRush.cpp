@@ -5,7 +5,7 @@
 #include "effects/Move.h"
 namespace enemies {
     namespace RabidGnasher {
-        RabidRush::RabidRush(): RangeSkill(1, "RabidRush", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 83, 16) {}
+        RabidRush::RabidRush(): skillDesigns::RangeSkill(1, "RabidRush", {1, 2, 3, 4}, {}, {1, 2, 3, 4}, 83, 16) {}
 
         void RabidRush::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                           std::shared_ptr<entity::Entity> actor,

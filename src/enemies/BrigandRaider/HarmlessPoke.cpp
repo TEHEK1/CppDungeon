@@ -5,7 +5,7 @@
 #include "effects/Buff.h"
 namespace enemies {
     namespace BrigandRaider {
-        HarmlessPoke::HarmlessPoke() : RangeSkill(1, "Harmless Poke", {4}, {}, {1, 2, 3, 4}, 63, 0) {}
+        HarmlessPoke::HarmlessPoke() : skillDesigns::RangeSkill(1, "Harmless Poke", {4}, {}, {1, 2, 3, 4}, 63, 0) {}
 
         void HarmlessPoke::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                            std::shared_ptr<entity::Entity> actor,

@@ -7,7 +7,7 @@
 #include "effects/Blight.h"
 namespace Bosses {
     namespace GardenGuardian {
-        HatredBeyondTime::HatredBeyondTime() : Skill("HatredBeyondTime", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
+        HatredBeyondTime::HatredBeyondTime() : skillDesigns::RangeSkill(1, "HatredBeyondTime", {1, 2, 3, 4}, {1, 2, 3, 4}, {}, 100, 0) {}
 
         void HatredBeyondTime::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                     std::shared_ptr<entity::Entity> actor,

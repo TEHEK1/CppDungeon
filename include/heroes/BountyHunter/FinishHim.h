@@ -1,10 +1,10 @@
-#include "skillDesigns/Skill.h"
+#include "skillDesigns/RangeSkill.h"
 
 namespace Heroes {
 
     namespace BountyHunter {
 
-        class FinishHim: public skillDesigns::Skill {
+        class FinishHim: public skillDesigns::RangeSkill {
         public:
             FinishHim();
        
@@ -14,6 +14,8 @@ namespace Heroes {
 
             void unsafeSelfUse(int crited, std::shared_ptr<BattleField> battleField,
                                std::shared_ptr<entity::Entity> object) override;
+            std::string getEffectDescription() override;
+            std::string getSelfDescription() override;
         };
 
     } // namespace BountyHunter

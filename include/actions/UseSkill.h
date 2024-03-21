@@ -9,12 +9,16 @@
 #include <memory>
 #include "namespaces/entity.h"
 #include "skillDesigns/RangeSkill.h"
-
+struct SquadIndexer{
+    enum class Type{ally, enemy};
+    Type type;
+    int index;
+};
 namespace actions {
     class UseSkill : public Action {
     public:
         UseSkill(std::shared_ptr<skillDesigns::RangeSkill> skill, std::shared_ptr<BattleField> battleField, std::shared_ptr<entity::Entity> actor,
-                 std::vector<std::shared_ptr<entity::Entity>> objects);
+                 std::vector<std::shared_ptr<entity::Entity>> objects, std::vector<SquadIndexer> indexes);
         void act(Player *) override;
         std::string getName() override;
     private:
@@ -22,6 +26,7 @@ namespace actions {
         std::shared_ptr<BattleField> m_battleField;
         std::shared_ptr<entity::Entity> m_actor;
         std::vector<std::shared_ptr<entity::Entity>> m_objects;
+        std::vector<SquadIndexer> m_indexes;
     };
 } // namespace actions
 #endif //CPPDUNGEON_USESKILL_H

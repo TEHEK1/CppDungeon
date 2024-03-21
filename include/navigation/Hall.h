@@ -8,6 +8,6 @@
 class Hall:public Cell{
     bool m_used = false;
 public:
-    void generateEvents() override;
+    void generateEvents(Player* player) override;
 };
 #endif //UNTITLED_HALL_H

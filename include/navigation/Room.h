@@ -8,6 +8,6 @@
 class Room:public Cell{
     bool m_used = false;
 public:
-    void generateEvents() override;
+    void generateEvents(Player* player) override;
 };
 #endif //UNTITLED_ROOM_H

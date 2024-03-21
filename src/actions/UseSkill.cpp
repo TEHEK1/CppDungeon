@@ -10,8 +10,8 @@
 #include "monitor/Monitor.h"
 namespace actions{
     UseSkill::UseSkill(std::shared_ptr<skillDesigns::RangeSkill> skill, std::shared_ptr<BattleField> battleField,
-                       std::shared_ptr<entity::Entity> actor, std::vector<std::shared_ptr<entity::Entity>> objects):
-                       m_skill(skill), m_battleField(battleField), m_actor(actor), m_objects(objects){};
+                       std::shared_ptr<entity::Entity> actor, std::vector<std::shared_ptr<entity::Entity>> objects, std::vector<SquadIndexer> indexes):
+                       m_skill(skill), m_battleField(battleField), m_actor(actor), m_objects(objects), m_indexes(indexes){};
 
     void UseSkill::act(Player *player) {
         auto returnedSkill = m_skill -> use(m_battleField, m_actor, m_objects);
@@ -21,10 +21,16 @@ namespace actions{
 
     std::string UseSkill::getName() {
         std::string positions;
-        for(auto i:m_objects){
-            positions+=std::to_string(m_battleField->getSquad(i)->getIndex(i))+" ";
+        for(auto i:m_indexes){
+            positions+=std::to_string(i.index)+" ";
         }
-        return "Use skill " + m_skill->getName() + " on " +
-        (m_battleField->areAllies(m_actor, m_objects[0])?"allies":"enemies") + " on " + positions + "positions";
+        std::string answer = "Use skill " + m_skill->getName() ;
+        if(m_indexes.size()>0){
+          answer+=  " on ";
+          if(m_indexes[0].type==SquadIndexer::Type::ally){answer+="allies";}
+          else{answer+="enemies";}
+          answer+=" on " + positions + "positions";
+        }
+        return answer;
     }
 } // namespace actions

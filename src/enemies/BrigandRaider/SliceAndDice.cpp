@@ -4,7 +4,7 @@
 #include "effects/Debuff.h"
 namespace enemies {
     namespace BrigandRaider {
-        SliceAndDice::SliceAndDice() : RangeSkill(2, "Slice And Dice", {1, 2, 3}, {}, {1, 2}, 94, 20) {}
+        SliceAndDice::SliceAndDice() : skillDesigns::RangeSkill(2, "Slice And Dice", {1, 2, 3}, {}, {1, 2}, 94, 20) {}
 
         void SliceAndDice::unsafeTargetUse(int crited, std::shared_ptr<BattleField> battleField,
                                            std::shared_ptr<entity::Entity> actor,

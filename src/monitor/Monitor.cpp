@@ -15,21 +15,25 @@
 #include "events/UsableEvent.h"
 #include "entity/Hero.h"
 #include "items/Item.h"
+#include "actions/Lose.h"
+#include "actions/Win.h"
+#include "actions/DeselectSkills.h"
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
 #include <string>
+
 //Refresh correct pos and size coordinates and add some cooments about resolution and fixed or not sprites 
 
 
 namespace {
-    static const int ENTITY_NUM = 8;
-    enum Entity_position {HERO_4, HERO_3, HERO_2, HERO_1, ENEMY_1, ENEMY_2, ENEMY_3, ENEMY_4};
+    static const int ENTITY_NUM = 6;
+    enum Entity_position {HERO_3, HERO_2, HERO_1, ENEMY_1, ENEMY_2, ENEMY_3};
     
     enum Colors : short {CELL_COLOR = COLOR_PAIR(1), ROOM_COLOR = COLOR_PAIR(2), 
     CUR_ROOM_COLOR = COLOR_PAIR(3), NEXT_ROOM_COLOR = COLOR_PAIR(4), 
     INTERFACE_COLOR = COLOR_PAIR(5), ITEM_COLOR = COLOR_PAIR(6), TARGETED_ROOM_COLOR = COLOR_PAIR(7),
-    SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9), BUFFER = COLOR_PAIR(10)};
+    SELECTED_HERO = COLOR_PAIR(8), SELECTED_ENEMY = COLOR_PAIR(9), BUFFER = COLOR_PAIR(10), CHANGED = COLOR_PAIR(11)};
     enum Map_symbols : char {CELL = '"', ROOM = '0', TARGET_ROOM = '#'};
 }
 void Monitor::init_colors() {
@@ -43,7 +47,7 @@ void Monitor::init_colors() {
     init_pair(8, COLOR_GREEN, COLOR_BLACK);
     init_pair(9, COLOR_RED, COLOR_BLACK);
     init_pair(10, COLOR_RED, COLOR_BLACK);
-
+    init_pair(11, COLOR_CYAN, COLOR_BLACK);
 }
 
 Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, const size_t& pos_y, const size_t& pos_x)
@@ -51,7 +55,6 @@ Monitor::GameWindow::GameWindow(const size_t& y_size, const size_t& x_size, cons
 , m_x_size(x_size) {
     m_current_window = newwin(m_y_size, m_x_size, pos_y, pos_x);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
-    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
     wrefresh(m_current_window);
 }
 
@@ -82,7 +85,6 @@ void Monitor::GameWindow::clear_atr(size_t row, size_t col, int num) {
 void Monitor::GameWindow::clean() {
     wclear(m_current_window);
     //DEBUG: for visual size of areas, will remove this when drawing ready sprites
-    wborder(m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
     wrefresh(m_current_window);
 }
 //TODO: add size checkers
@@ -167,15 +169,29 @@ int Monitor::InterfaceColumnWindow::find_bind_key(std::shared_ptr<actions::Actio
     return m_key_binds[key].getAction();
  }
 //TODO: Add rebase or listing if the actions have a too much space
-void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool adaptive) {
+void Monitor::InterfaceColumnWindow::draw_interface(std::set<std::shared_ptr<actions::Action>> available_actions, bool batalling, bool adaptive) {
     
     m_first_unbind = '0';
+    for (auto i : available_actions) {
+        if (auto action = std::dynamic_pointer_cast<actions::DeselectSkills>(i)) {
+            m_key_binds[m_first_unbind] = i;
+            m_first_unbind++;
+            break;
+        }
+    }
     size_t cur_y = 0;
     size_t cur_column = 0;
     for (auto& i : m_columns) {
         i.clean();
     }
     for (auto& i : available_actions) {
+        if (batalling) {
+            if (auto chooseNextRoom = std::dynamic_pointer_cast<actions::ChooseNextRoom>(i)) {
+                continue;
+            } else if (auto usableEvent = std::dynamic_pointer_cast<events::UsableEvent>(i)) {
+                continue;
+            }
+        }
         if (cur_y >= m_columns[cur_column].get_y() - 1) {
             cur_y = 0;
             cur_column++;
@@ -227,13 +243,6 @@ Monitor::Monitor() {
     int row, col;
     getmaxyx(stdscr, row, col);
     init_colors();
-    //        |--------------------|
-    // 2 / 3  |  Battle            |
-    //        |                    |
-    //        |                    |
-    //        |----------| ------- |
-    // 1 / 3  | Inventory|      Map|
-    //        |          |         |
     m_background_display = GameWindow ( 2 * row / 3, col, 0, 0);
     m_characteristics_display = GameWindow(row / 3, col / 2, row * 2 / 3 + 1, col / 2 + 1);
     m_inventory_display.push_back(GameWindow (8 * row / 9, col / 4, 7 * row / 9 + 1, 0));
@@ -253,7 +262,22 @@ Monitor::Monitor() {
         m_entity_window.push_back(GameWindow(8 * m_background_display.get_y() / 10,
                                             heroes_blocks * block_dictance, m_background_display.get_y() / 10,
                                             block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2));
+        if ((block_dictance * ((heroes_blocks + space_blocks) * i + space_blocks) + left_dictance / 2) >= col || col < 120) {
+            m_not_safe_screen = true;
+        }
+
     }
+}
+
+void Monitor::update_characteristics(std::shared_ptr<entity::Entity> cur_entity) {
+    m_prev_characteristics[cur_entity] = {cur_entity->get(Characteristic::accuracyModifier), 
+    cur_entity->get(Characteristic::minDamage), 
+    cur_entity->get(Characteristic::maxDamage), 
+    cur_entity->get(Characteristic::dodge), 
+    cur_entity->get(Characteristic::defence),
+    cur_entity->get(Characteristic::speed),
+    cur_entity->get(Characteristic::marked),
+    cur_entity->get(Characteristic::criticalDamageChance)};
 }
 
 void Monitor::abs_coordinates_to_relative(int& row, int& col, const GameWindow& cur_window, Position center) {
@@ -272,6 +296,20 @@ std::shared_ptr<events::EnemyEncounter> Monitor::have_battle(Player* player) {
     }
     return nullptr;
 }
+
+bool Monitor::changed(std::shared_ptr<entity::Entity> person) {
+    return (!m_prev_characteristics.empty() && !m_prev_characteristics[person].empty() &&
+            ((person->get(Characteristic::accuracyModifier) != m_prev_characteristics[person][0]) ||
+            (person->get(Characteristic::minDamage) != m_prev_characteristics[person][1])||
+            (person->get(Characteristic::maxDamage) != m_prev_characteristics[person][2]) ||
+            (person->get(Characteristic::dodge) != m_prev_characteristics[person][3]) ||
+            (person->get(Characteristic::defence) != m_prev_characteristics[person][4]) ||
+            (person->get(Characteristic::speed) != m_prev_characteristics[person][5]) ||
+            (person->get(Characteristic::marked) != m_prev_characteristics[person][6]) ||
+            (person->get(Characteristic::criticalDamageChance) != m_prev_characteristics[person][7])));
+    
+}
+
 std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> person) {
     std::string full_content = person->getName() + std::string(":");
     //To much time(yeah) to do this cleaner
@@ -284,7 +322,9 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
         maxHP = trick::hash("maxHP"),
         marked = trick::hash("marked"),
         criticalDamageChance = trick::hash("criticalDamageChance")
-        */
+    */
+
+   
     full_content += std::string("  accuracyModifier: ") + std::to_string(person->get(Characteristic::accuracyModifier));
     full_content += std::string("  damage: ") + std::to_string(person->get(Characteristic::minDamage)) + std::string("-") + 
                     std::to_string(person->get(Characteristic::maxDamage));
@@ -293,12 +333,42 @@ std::string Monitor::get_entity_characteristics(std::shared_ptr<entity::Entity> 
     full_content += std::string("  speed: ") + std::to_string(person->get(Characteristic::speed));
     full_content += std::string("  marked: ") + std::to_string(person->get(Characteristic::marked));
     full_content += std::string("  critChance: ") + std::to_string(person->get(Characteristic::criticalDamageChance)) + std::string("%");
+
     return full_content;
 }
 
-//TODO: Change start postion of all sprites
 void Monitor::draw(Player* current_player) {
-
+    if (m_not_safe_screen) {
+        int row, col;
+        getmaxyx(stdscr, row, col);
+        wattron(stdscr, Colors::SELECTED_ENEMY | A_BLINK);
+        mvprintw(row / 2, col / 2 - 9, "Not enough space to run game :(");
+        return;
+    }
+    for(auto action : current_player->getActions()){
+            if(auto usableEvent = std::dynamic_pointer_cast<actions::Lose>(action)){
+                m_ended = -1;
+                break;
+            }
+            if(auto usableEvent = std::dynamic_pointer_cast<actions::Win>(action)){
+                m_ended = 1;
+                break;
+            } 
+        }
+    
+    if (m_ended == 1) {
+        int row, col;
+        getmaxyx(stdscr, row, col);
+        wattron(stdscr, Colors::SELECTED_HERO | A_BLINK);
+        mvprintw(row / 2, col / 2 - 9, "You win :>");
+        return;
+    } else if(m_ended == -1) {
+        int row, col;
+        getmaxyx(stdscr, row, col);
+        wattron(stdscr, Colors::SELECTED_ENEMY | A_BLINK);
+        mvprintw(row / 2, col / 2 - 9, "You lose :<");
+        return;
+    }
     //Heroes
     if(current_player->getSquad() == nullptr){
         throw std::logic_error("Squad is not initialized");
@@ -311,9 +381,13 @@ void Monitor::draw(Player* current_player) {
         if (i != nullptr) {
             m_entity_window[draw_position].draw_sprite(0, 0, i->draw());
             m_entity_window[draw_position].draw_text(0, 0, i->getName());
-            m_entity_window[draw_position].draw_text(1, 0, std::string("Hp: ") +
-                                                    std::to_string(i->get(Characteristic::HP)) + std::string("/") +
-                                                    std::to_string(i->get(Characteristic::maxHP)));
+            if (i->isAlive())   {
+                m_entity_window[draw_position].draw_text(1, 0, std::string("Hp: ") +
+                                std::to_string(i->get(Characteristic::HP)) + std::string("/") +
+                                std::to_string(i->get(Characteristic::maxHP)));
+            } else {
+                    m_entity_window[draw_position].draw_text(1, 0, std::string("Hp: -/-"));
+            }
         }
         draw_position--;
     }
@@ -335,6 +409,7 @@ void Monitor::draw(Player* current_player) {
     if (battle_event_pointer != nullptr) {
         if (!m_have_battle && battle_event_pointer->getIsInBattle()) {
             battle_event_pointer->turn(current_player);
+            m_prev_characteristics.clear();
         }
         m_have_battle = battle_event_pointer->getIsInBattle();
     }
@@ -394,14 +469,18 @@ void Monitor::draw(Player* current_player) {
                     }
                     m_entity_window[draw_position].draw_sprite(0, 0, enemy_sprite);
                     m_entity_window[draw_position].draw_text(enemy_sprite.size() + 2, 0, i->getName());
-                    m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: ") + 
-                                                            std::to_string(i->get(Characteristic::HP)) + std::string("/") +
-                                                            std::to_string(i->get(Characteristic::maxHP)));
+                    if (i->isAlive())   {
+                        m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: ") + 
+                                                                std::to_string(i->get(Characteristic::HP)) + std::string("/") +
+                                                                std::to_string(i->get(Characteristic::maxHP)));
+                    } else {
+                        m_entity_window[draw_position].draw_text(enemy_sprite.size() + 3, 0, std::string("Hp: -/-"));
+                    }
                 }
                 draw_position++;
             }
         if(auto cur_acting_entity = std::dynamic_pointer_cast<entity::Hero>(battle_event_pointer->getLastToMove())){
-            int position = ENTITY_NUM - 5 - current_player->getSquad()->getIndex(cur_acting_entity);
+            int position = ENTITY_NUM - 4 - current_player->getSquad()->getIndex(cur_acting_entity);
             for (int i = 0; i < m_entity_window[position].get_y(); i++) {
                 m_entity_window[position].set_atr(i, 0, -1, A_ITALIC, 8);
             }
@@ -420,9 +499,6 @@ void Monitor::draw(Player* current_player) {
             }
         }
     }
-    m_user_actions_display.m_key_binds = {};
-    m_user_actions_display.get_binds(current_player);
-        m_user_actions_display.draw_interface(current_player->getActions());
     int cur_y = 0;
     int cur_column = 0;
     for (auto item : current_player->getInventory().getItems()) {
@@ -435,35 +511,57 @@ void Monitor::draw(Player* current_player) {
     }
     m_user_actions_display.m_key_binds = {};
     m_user_actions_display.get_binds(current_player);
-    m_user_actions_display.draw_interface(current_player->getActions());
-    if (m_draw_Characteristis) {
+    m_user_actions_display.draw_interface(current_player->getActions(), m_have_battle);
+    if (m_draw_Characteristics) {
         int cur_y = 1;
         wborder(m_characteristics_display.m_current_window, '|', '|', '-', '-', '+', '+', '+', '+');
         for (auto& i : current_player->getSquad()->getEntities()) {
             if (i != nullptr && i->isAlive()) {
-                m_characteristics_display.draw_text(cur_y, 1, get_entity_characteristics(i));
+                std::string chars = get_entity_characteristics(i);
+                if (changed(i)){
+                    m_characteristics_display.draw_text(cur_y, 1, chars, false, Colors::CHANGED | A_ITALIC);
+                } else {
+                    m_characteristics_display.draw_text(cur_y, 1, chars);
+                }
             }
             cur_y += 2;
         }
         if (m_have_battle) {
             for (auto& i : battle_event_pointer->getEnemies()->getEntities()) {
                 if (i != nullptr && i->isAlive()) {
-                    m_characteristics_display.draw_text(cur_y, 1, get_entity_characteristics(i));
+                    std::string chars = get_entity_characteristics(i);
+                    
+                    if (changed(i)){
+                        m_characteristics_display.draw_text(cur_y, 1, chars, false, Colors::CHANGED | A_ITALIC);
+                    } else {
+                        m_characteristics_display.draw_text(cur_y, 1, chars);
+                    }
+                    
                 }
                 cur_y += 2;
             }
         }
 
         m_characteristics_display.draw_text(m_characteristics_display.get_y() - 2, 1,
-                                            m_buffer, false, BUFFER | A_BOLD);
+                                            m_buffer, false, BUFFER | A_BLINK);
     }
+    
 }
 
 
 
 void Monitor::keyEvent(int key, Player* player) {
+    if (m_have_battle) {
+        for (auto& i : have_battle(player)->getEnemies()->getEntities()) {
+            update_characteristics(i);
+        }
+        for (auto& i : player->getSquad()->getEntities()) {
+            update_characteristics(i);
+        }
+    }
+
     if (key == 'c') {
-        m_draw_Characteristis ^= true;
+        m_draw_Characteristics ^= true;
     }
     else if (m_user_actions_display.find_action(key) != nullptr &&
                 player->getActions().find(m_user_actions_display.find_action(key)) != player->getActions().end()) {
